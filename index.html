@@ -1,0 +1,3196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>School Social – Campus Hub</title>
+    <style>
+        /* ── Reset & Base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        :root {
+            --bg-primary: #0a0617;
+            --bg-card: #120f22;
+            --bg-input: #1e1835;
+            --border-soft: rgba(255, 255, 255, 0.06);
+            --neon-pink: #ff2f8e;
+            --neon-cyan: #22e5ff;
+            --neon-purple: #a855f7;
+            --text-white: #ffffff;
+            --text-dim: #a0aec0;
+            --text-faint: #6a7a8e;
+            --glow-pink: 0 0 12px rgba(255, 47, 142, 0.6);
+            --glow-cyan: 0 0 12px rgba(34, 229, 255, 0.6);
+            --glow-gold: 0 0 16px rgba(255, 215, 0, 0.7);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+            --transition: 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        body {
+            background: var(--bg-primary);
+            color: var(--text-white);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 84px;
+            position: relative;
+            background: radial-gradient(ellipse at top, #130b24, #06030d);
+            overflow-x: hidden;
+        }
+
+        /* ── Loading ── */
+        #app-loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            height: 100vh;
+            background: var(--bg-primary);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 3px solid rgba(34, 229, 255, 0.12);
+            border-top-color: var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .loading-status {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--neon-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* ── Auth ── */
+        .auth-screen {
+            padding: 32px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .auth-box {
+            background: rgba(18, 15, 34, 0.75);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 28px 22px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .auth-logo h1 {
+            font-size: 34px;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .auth-logo p {
+            color: var(--text-dim);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .auth-switch {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+        .auth-switch span {
+            color: var(--neon-cyan);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .auth-switch span:hover {
+            text-decoration: underline;
+        }
+        .forgot-link {
+            font-size: 12px;
+            color: var(--text-faint);
+            cursor: pointer;
+            text-align: right;
+            margin-top: -4px;
+        }
+        .forgot-link:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* ── Header ── */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(10, 6, 23, 0.92);
+            backdrop-filter: blur(18px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-soft);
+            flex-shrink: 0;
+        }
+        .app-title {
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-soft);
+            color: var(--text-dim);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .logout-btn:hover {
+            background: rgba(255, 60, 60, 0.12);
+            border-color: rgba(255, 60, 60, 0.3);
+            color: #ffb3b3;
+        }
+
+        /* ── Tabs ── */
+        .tab-content {
+            display: none;
+            padding: 14px;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            animation: fadeUp 0.2s var(--transition);
+            flex: 1;
+        }
+        .tab-content.active {
+            display: flex;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Bottom Nav ── */
+        .bottom-navbar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(10, 6, 23, 0.95);
+            backdrop-filter: blur(18px);
+            border-top: 1px solid var(--border-soft);
+            height: 70px;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+            padding-bottom: 6px;
+            flex-shrink: 0;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            color: var(--text-faint);
+            font-size: 9px;
+            font-weight: 600;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 20%;
+            height: 100%;
+            justify-content: center;
+            transition: var(--transition);
+            padding: 4px 0;
+            flex-shrink: 0;
+        }
+        .nav-item.active {
+            color: var(--neon-cyan);
+        }
+        .nav-item .nav-icon {
+            font-size: 20px;
+            margin-bottom: 1px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+        }
+
+        /* ── Cards & Inputs ── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+        .input-box {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: white;
+            outline: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        .input-box:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 0 3px rgba(34, 229, 255, 0.15);
+        }
+        .input-box::placeholder {
+            color: var(--text-faint);
+        }
+        select.input-box {
+            appearance: none;
+            cursor: pointer;
+        }
+        .action-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 14px rgba(255, 47, 142, 0.25);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .action-btn:hover {
+            opacity: 0.92;
+            transform: scale(0.98);
+        }
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: none;
+            border: 1px solid var(--border-soft);
+        }
+        .action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.10);
+        }
+        .action-btn.small {
+            padding: 6px 14px;
+            font-size: 10px;
+            width: auto;
+            flex-shrink: 0;
+        }
+        .action-btn.follow-btn {
+            padding: 6px 16px;
+            font-size: 11px;
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+        .action-btn.follow-btn.following {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-soft);
+            box-shadow: none;
+        }
+
+        .coin-balance-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(90deg, rgba(255, 159, 28, 0.12), rgba(255, 215, 0, 0.08));
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 14px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffd479;
+            flex-shrink: 0;
+        }
+
+        /* ── Notes Tray ── */
+        .notes-tray {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 6px 0;
+            scrollbar-width: none;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+        }
+        .notes-tray::-webkit-scrollbar {
+            display: none;
+        }
+        .note-bubble {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 70px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .note-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-cyan);
+            background: #221741;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .note-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .note-text-popup {
+            position: absolute;
+            top: -8px;
+            background: #fff;
+            color: #080511;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            max-width: 74px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+        .note-username {
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: 4px;
+            max-width: 64px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ── Post Cards ── */
+        .post-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            transition: var(--transition);
+        }
+        .post-card:hover {
+            border-color: rgba(34, 229, 255, 0.15);
+        }
+        .post-header {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .post-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .post-user-img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--neon-cyan);
+            background: #1a1130;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .post-user-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .post-img-container {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: #0a0617;
+            overflow: hidden;
+        }
+        .post-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .post-actions {
+            padding: 12px 16px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .like-btn-heart {
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            padding: 6px 14px;
+            border-radius: 999px;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .like-btn-heart.liked {
+            color: var(--neon-pink);
+            background: rgba(255, 47, 142, 0.08);
+            border-color: rgba(255, 47, 142, 0.25);
+        }
+        .post-caption {
+            padding: 4px 16px 14px;
+            font-size: 13px;
+            color: #c6cede;
+            word-break: break-word;
+        }
+        .post-caption strong {
+            color: var(--neon-cyan);
+            margin-right: 6px;
+        }
+        .post-delete-btn {
+            background: none;
+            border: none;
+            color: #ff5c5c;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .post-delete-btn:hover {
+            opacity: 1;
+        }
+
+        /* ── Chat ── */
+        .chat-stream {
+            height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .chat-stream::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-stream::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 10px;
+        }
+        .chat-msg {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 100%;
+        }
+        .chat-msg.me {
+            align-items: flex-end;
+        }
+        .chat-sender {
+            font-size: 9px;
+            color: var(--text-faint);
+            margin: 0 4px 2px 4px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .chat-bubble {
+            max-width: 85%;
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 12.5px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        .chat-msg.me .chat-bubble {
+            background: linear-gradient(135deg, var(--neon-purple), #7b2cbf);
+            border: none;
+        }
+
+        /* ── User List ── */
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 240px;
+            overflow-y: auto;
+        }
+        .user-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .user-item:hover {
+            border-color: rgba(34, 229, 255, 0.2);
+        }
+        .user-item .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            min-width: 0;
+        }
+        .user-avatar-small {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #221741;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .user-avatar-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .user-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-white);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .user-badges-mini {
+            display: flex;
+            gap: 2px;
+            flex-wrap: wrap;
+        }
+        .user-badges-mini .mini-badge {
+            font-size: 10px;
+        }
+
+        /* ── Profile ── */
+        .profile-avatar-large {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--neon-cyan);
+            background: #221741;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .profile-avatar-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-avatar-large .avatar-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: var(--bg-card);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .profile-avatar-large .avatar-badge:hover {
+            transform: scale(1.1);
+        }
+        .profile-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            margin-top: 6px;
+            word-break: break-word;
+        }
+        .profile-bio {
+            font-size: 13px;
+            color: var(--text-dim);
+            word-break: break-word;
+        }
+        .profile-stats {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .profile-stats .stat {
+            text-align: center;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .profile-stats .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+        .profile-stats .stat-label {
+            font-size: 10px;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+        .profile-stats .stat:hover .stat-label {
+            color: var(--neon-cyan);
+        }
+
+        /* ── Badges ── */
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 6px 0;
+        }
+        .badge-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 14px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            color: var(--text-white);
+            transition: var(--transition);
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+        }
+        .badge-item.owner {
+            background: linear-gradient(135deg, #ffd700, #ff6b00);
+            color: #000;
+            border-color: #ffd700;
+            box-shadow: var(--glow-gold);
+        }
+        .badge-item.co_owner {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            border-color: #a855f7;
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+        }
+        .badge-item.beta_tester {
+            background: linear-gradient(135deg, #22e5ff, #0ea5e9);
+            border-color: #22e5ff;
+            box-shadow: var(--glow-cyan);
+        }
+        .badge-item.tsa_pro {
+            background: linear-gradient(135deg, #ff2f8e, #ec4899);
+            border-color: #ff2f8e;
+            box-shadow: var(--glow-pink);
+        }
+        .badge-item.big_ferni {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-color: #f59e0b;
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+        }
+
+        /* ── Badge Admin ── */
+        .badge-admin-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .badge-admin-item:last-child {
+            border-bottom: none;
+        }
+        .badge-admin-item .badge-admin-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ── Change Password Form ── */
+        .change-password-form {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 14px;
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+        }
+        .change-password-form.active {
+            display: flex;
+        }
+
+        /* ── Games ── */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .game-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 14px 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .game-card:hover {
+            border-color: var(--neon-cyan);
+            transform: scale(1.03);
+        }
+        .game-card .game-icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .game-card .game-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        .game-container {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .game-container.active {
+            display: flex;
+        }
+        .game-back-btn {
+            background: none;
+            border: none;
+            color: var(--neon-cyan);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            align-self: flex-start;
+            padding: 4px 0;
+        }
+        .game-back-btn:hover {
+            text-decoration: underline;
+        }
+        .game-box {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            border: 1px solid var(--border-soft);
+            text-align: center;
+        }
+        .game-box .game-result {
+            font-size: 28px;
+            font-weight: 900;
+            padding: 10px 0;
+            min-height: 60px;
+        }
+        .game-box .game-bet-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .game-box .game-bet-row input {
+            width: 80px;
+            padding: 8px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: white;
+            text-align: center;
+        }
+        .game-box .game-bet-row button {
+            padding: 8px 18px;
+            background: linear-gradient(90deg, #f7971e, #ffd200);
+            color: #080511;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+        .game-box .game-bet-row button:hover {
+            opacity: 0.85;
+        }
+
+        .chess-board,
+        .connect-board {
+            display: grid;
+            gap: 2px;
+            background: var(--bg-input);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            margin: 0 auto;
+            max-width: 300px;
+        }
+        .cell {
+            background: var(--bg-card);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .cell:hover {
+            background: rgba(34, 229, 255, 0.1);
+        }
+
+        .battleship-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .battleship-cell {
+            aspect-ratio: 1;
+            background: var(--bg-input);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .battleship-cell.hit {
+            background: #ff2f8e;
+        }
+        .battleship-cell.miss {
+            background: #2a2a3a;
+        }
+        .battleship-cell.ship {
+            background: #22e5ff;
+        }
+
+        .hangman-word {
+            font-size: 24px;
+            letter-spacing: 6px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin: 8px 0;
+        }
+        .hangman-letters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            margin: 8px 0;
+        }
+        .hangman-letters button {
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .hangman-letters button:hover {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+        .hangman-letters button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .coin-clicker-area {
+            font-size: 72px;
+            cursor: pointer;
+            user-select: none;
+            padding: 20px;
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            display: inline-block;
+        }
+        .coin-clicker-area:active {
+            transform: scale(0.92);
+        }
+
+        #snake-canvas {
+            background: #1a1a2a;
+            border-radius: 8px;
+            border: 1px solid var(--border-soft);
+            max-width: 100%;
+        }
+
+        /* ── Modal ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+            padding: 20px;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-soft);
+        }
+        .modal-box .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--neon-cyan);
+        }
+        .modal-box .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* ── Store ── */
+        .store-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-soft);
+            gap: 8px;
+        }
+        .store-item:last-child {
+            border-bottom: none;
+        }
+        .store-item .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+        .store-item .item-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        .store-item .item-desc {
+            font-size: 11px;
+            color: var(--text-faint);
+        }
+        .store-item .item-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffd479;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .store-item .action-btn {
+            flex-shrink: 0;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .auth-screen {
+                padding: 20px 14px;
+            }
+            .auth-box {
+                padding: 20px 16px;
+            }
+            .tab-content {
+                padding: 10px;
+            }
+            .card {
+                padding: 14px;
+            }
+            .games-grid {
+                gap: 6px;
+            }
+            .game-card {
+                padding: 10px 2px;
+            }
+            .game-card .game-icon {
+                font-size: 22px;
+            }
+            .profile-stats {
+                gap: 16px;
+            }
+            .profile-stats .stat-value {
+                font-size: 16px;
+            }
+        }
+
+        /* ── Utilities ── */
+        .flex-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .flex-row .action-btn {
+            width: auto;
+            padding: 12px 18px;
+            flex-shrink: 0;
+        }
+        .text-success {
+            color: #58d68d;
+        }
+        .text-error {
+            color: var(--neon-pink);
+        }
+        .text-faint {
+            color: var(--text-faint);
+        }
+        .text-dim {
+            color: var(--text-dim);
+        }
+        .text-center {
+            text-align: center;
+        }
+        .mt-1 {
+            margin-top: var(--sp-2);
+        }
+        .mb-1 {
+            margin-bottom: var(--sp-2);
+        }
+        .gap-1 {
+            gap: var(--sp-2);
+        }
+        .w-full {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── LOADING OVERLAY ─── -->
+    <div id="app-loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-status">Connecting to Campus Grid…</div>
+    </div>
+
+    <!-- ─── APP CONTAINER ─── -->
+    <div class="app-container">
+
+        <!-- AUTH VIEW -->
+        <div id="view-auth" class="auth-screen">
+            <div class="auth-logo">
+                <h1>SCHOOL SOCIAL</h1>
+                <p>Connect · Trade · Level Up</p>
+            </div>
+
+            <div id="box-login" class="auth-box">
+                <h3 class="section-title" style="margin-bottom:2px;">Sign In</h3>
+                <input type="text" id="login-username" class="input-box" placeholder="Username" />
+                <input type="password" id="login-pass" class="input-box" placeholder="Password" />
+                <div class="forgot-link" id="forgot-password-link">Forgot password?</div>
+                <button id="btn-login" class="action-btn">Authorize</button>
+                <p class="auth-switch">New? <span id="switch-to-signup">Create Profile</span></p>
+            </div>
+
+            <div id="box-signup" class="auth-box" style="display:none;">
+                <h3 class="section-title" style="margin-bottom:2px;">Initialize Profile</h3>
+                <input type="text" id="signup-username" class="input-box" placeholder="Username" />
+                <input type="password" id="signup-pass" class="input-box" placeholder="Password (min 6)" />
+                <div style="text-align:left;font-size:12px;color:var(--text-dim);margin-top:4px;">
+                    <label style="display:block;margin-bottom:2px;">🔐 Security Question</label>
+                    <select id="signup-security-q" class="input-box" style="margin-bottom:6px;">
+                        <option value="">Select a question…</option>
+                        <option value="What is your mother's maiden name?">Mother's maiden name?</option>
+                        <option value="What is the name of your first pet?">First pet?</option>
+                        <option value="What is your favorite teacher's name?">Favorite teacher?</option>
+                        <option value="What city were you born in?">Birth city?</option>
+                        <option value="What is your favorite book?">Favorite book?</option>
+                    </select>
+                    <input type="text" id="signup-security-a" class="input-box" placeholder="Your answer" />
+                </div>
+                <button id="btn-signup" class="action-btn">Register</button>
+                <p class="auth-switch">Already registered? <span id="switch-to-login">Sign In</span></p>
+            </div>
+
+            <div id="box-reset" class="auth-box" style="display:none;">
+                <h3 class="section-title" style="margin-bottom:2px;">Reset Password</h3>
+                <div id="reset-step-1">
+                    <p style="font-size:12px;color:var(--text-dim);margin-bottom:4px;">Enter your username.</p>
+                    <input type="text" id="reset-username" class="input-box" placeholder="Username" />
+                    <button id="btn-reset-step1" class="action-btn">Continue</button>
+                </div>
+                <div id="reset-step-2" style="display:none;">
+                    <p style="font-size:12px;color:var(--text-dim);margin-bottom:4px;" id="reset-question-display">Answer your question:</p>
+                    <input type="text" id="reset-answer" class="input-box" placeholder="Your answer" />
+                    <button id="btn-reset-step2" class="action-btn">Verify</button>
+                    <button id="btn-reset-email-fallback" class="action-btn secondary" style="margin-top:4px;font-size:10px;">📧 Email reset</button>
+                </div>
+                <div id="reset-step-3" style="display:none;">
+                    <p style="font-size:13px;color:var(--text-dim);">Enter new password:</p>
+                    <input type="password" id="reset-new-pass" class="input-box" placeholder="New password (min 6)" />
+                    <button id="btn-reset-step3" class="action-btn">Set Password</button>
+                </div>
+                <div id="reset-status" style="font-size:12px;color:var(--text-dim);text-align:center;margin-top:6px;"></div>
+                <p class="auth-switch" style="margin-top:8px;">Remember? <span id="switch-to-login-from-reset">Sign In</span></p>
+            </div>
+        </div>
+
+        <!-- ─── MAIN APP ─── -->
+        <div id="view-main-app" style="display:none; width:100%;">
+
+            <!-- HEADER -->
+            <header class="app-header">
+                <div class="app-title">School Social</div>
+                <button id="global-logout-btn" class="logout-btn">DISCONNECT</button>
+            </header>
+
+            <!-- TAB: FEED -->
+            <main id="tab-feed" class="tab-content active">
+                <div class="card" style="padding:12px 14px;">
+                    <div class="notes-tray" id="dynamic-notes-tray"></div>
+                </div>
+
+                <div class="card" style="display:flex;flex-direction:column;gap:10px;">
+                    <h3 class="section-title" style="margin-bottom:2px;">Publish Update</h3>
+                    <input type="text" id="new-post-caption" class="input-box" placeholder="What's happening?" />
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                        <input type="text" id="new-post-url" class="input-box" placeholder="Image URL" style="flex:1;" />
+                        <span style="color:var(--text-faint);">or</span>
+                        <input type="file" id="new-post-file" accept="image/*" style="flex:1; color:var(--text-faint); background:var(--bg-input); border:1px solid var(--border-soft); border-radius:var(--radius-sm); padding:8px;" />
+                    </div>
+                    <button id="btn-submit-post" class="action-btn" style="padding:10px;">Post</button>
+                    <div id="post-upload-progress" style="font-size:11px;color:var(--text-faint);text-align:center;"></div>
+                </div>
+
+                <div id="home-feed-stream" style="display:flex;flex-direction:column;gap:14px;"></div>
+            </main>
+
+            <!-- TAB: GAMES -->
+            <section id="tab-games" class="tab-content">
+                <div class="coin-balance-banner">
+                    <span>🪙</span>
+                    <span id="games-coin-display">0</span>
+                    <span style="font-size:12px;color:var(--text-dim);font-weight:400;margin-left:4px;">Coins</span>
+                </div>
+                <div class="card">
+                    <h3 class="section-title">🎮 Arcade</h3>
+                    <div id="games-list" class="games-grid">
+                        <div class="game-card" data-game="chess"><span class="game-icon">♟️</span><span class="game-label">Chess</span></div>
+                        <div class="game-card" data-game="connect4"><span class="game-icon">🟡</span><span class="game-label">Connect 4</span></div>
+                        <div class="game-card" data-game="battleship"><span class="game-icon">⛴️</span><span class="game-label">Battleship</span></div>
+                        <div class="game-card" data-game="coinclicker"><span class="game-icon">🪙</span><span class="game-label">Coin Clicker</span></div>
+                        <div class="game-card" data-game="hangman"><span class="game-icon">🔤</span><span class="game-label">Hangman</span></div>
+                        <div class="game-card" data-game="snake"><span class="game-icon">🐍</span><span class="game-label">Snake</span></div>
+                        <div class="game-card" data-game="flipcoin"><span class="game-icon">🪙</span><span class="game-label">Flip Coin</span></div>
+                    </div>
+                    <div id="game-container" class="game-container">
+                        <button class="game-back-btn" id="game-back-btn">⬅ Back</button>
+                        <div id="game-content"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: STORE -->
+            <section id="tab-store" class="tab-content">
+                <div class="coin-balance-banner">
+                    <span>🪙</span>
+                    <span id="store-coin-display">0</span>
+                    <span style="font-size:12px;color:var(--text-dim);font-weight:400;margin-left:4px;">Coins</span>
+                </div>
+                <div class="card">
+                    <h3 class="section-title">🛒 Store</h3>
+                    <div id="store-items-list"></div>
+                </div>
+                <div class="card">
+                    <h3 class="section-title">🎟️ Redeem Voucher</h3>
+                    <div class="flex-row">
+                        <input type="text" id="redeem-code-input" class="input-box" placeholder="CODE" style="text-transform:uppercase;" />
+                        <button id="btn-redeem-code" class="action-btn" style="padding:12px 20px; width:auto;">Redeem</button>
+                    </div>
+                    <div id="redeem-feedback-msg" style="padding:8px 0;font-weight:700;text-align:left;"></div>
+                </div>
+                <div class="card">
+                    <h3 class="section-title">🎁 Daily Bonus</h3>
+                    <button id="btn-daily-bonus" class="action-btn secondary" style="padding:10px;">Claim +25 Coins</button>
+                    <div id="daily-bonus-status" style="font-size:12px;color:var(--text-faint);text-align:center;"></div>
+                </div>
+            </section>
+
+            <!-- TAB: MESSAGES -->
+            <section id="tab-messages" class="tab-content">
+                <div class="card">
+                    <h3 class="section-title">💬 Campus Chat</h3>
+                    <div id="global-chat-stream" class="chat-stream"></div>
+                    <div class="flex-row">
+                        <input type="text" id="chat-input-message" class="input-box" placeholder="Type…" />
+                        <button id="btn-send-chat" class="action-btn" style="padding:12px 20px;width:auto;">Send</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="section-title">📬 Private Messages</h3>
+                    <div id="private-chat-user-list" class="user-list"></div>
+                    <div id="private-chat-box" style="display:none; margin-top:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <span id="private-chat-with" style="font-weight:700;color:var(--neon-cyan);">Chat</span>
+                            <button id="private-chat-back" style="background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:12px;">⬅ Back</button>
+                        </div>
+                        <div id="private-chat-stream" class="chat-stream" style="height:160px;"></div>
+                        <div class="flex-row">
+                            <input type="text" id="private-chat-input" class="input-box" placeholder="Type…" />
+                            <button id="btn-send-private" class="action-btn" style="padding:12px 20px;width:auto;">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: DISCOVER -->
+            <section id="tab-discover" class="tab-content">
+                <div class="card">
+                    <h3 class="section-title">🔍 Discover People</h3>
+                    <input type="text" id="discover-search" class="input-box" placeholder="Search by username…" style="margin-bottom:10px;" />
+                    <div id="discover-user-list" class="user-list"></div>
+                </div>
+            </section>
+
+            <!-- TAB: PROFILE -->
+            <section id="tab-profile" class="tab-content">
+                <div class="card" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;">
+                    <div class="profile-avatar-large" id="profile-avatar-node">
+                        <span>👤</span>
+                        <div class="avatar-badge" id="avatar-upload-trigger">📷</div>
+                    </div>
+                    <div class="profile-name" id="profile-username-node">@username</div>
+                    <div class="profile-bio" id="profile-bio-node">No bio yet</div>
+                    <div class="badges-container" id="profile-badges-container"></div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-value" id="profile-post-count">0</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                        <div class="stat" id="stat-followers" style="cursor:pointer;">
+                            <div class="stat-value" id="profile-follower-count">0</div>
+                            <div class="stat-label">Followers</div>
+                        </div>
+                        <div class="stat" id="stat-following" style="cursor:pointer;">
+                            <div class="stat-value" id="profile-following-count">0</div>
+                            <div class="stat-label">Following</div>
+                        </div>
+                    </div>
+                    <div id="follow-btn-container" style="display:none; margin-top:4px;">
+                        <button id="btn-follow-user" class="action-btn follow-btn">Follow</button>
+                    </div>
+                </div>
+
+                <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+                    <h3 class="section-title">✏️ Edit Profile</h3>
+                    <input type="text" id="edit-display-name" class="input-box" placeholder="Display name" />
+                    <textarea id="edit-bio" class="input-box" placeholder="Bio" rows="2"></textarea>
+                    <div class="flex-row">
+                        <input type="file" id="edit-avatar-file" accept="image/*" style="flex:1; color:var(--text-faint); background:var(--bg-input); border:1px solid var(--border-soft); border-radius:var(--radius-sm); padding:8px;" />
+                        <button id="btn-update-profile" class="action-btn" style="padding:10px 16px; width:auto;">Update</button>
+                    </div>
+                    <div id="profile-update-status" style="font-size:11px;color:var(--text-faint);text-align:center;"></div>
+                </div>
+
+                <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+                    <h3 class="section-title">💬 Status Note</h3>
+                    <input type="text" id="input-status-note" class="input-box" placeholder="Bubble message (max 15)" maxlength="15" />
+                    <button id="btn-save-note" class="action-btn" style="padding:10px;">Broadcast</button>
+                    <div id="note-status-msg" style="font-size:11px;color:var(--text-faint);text-align:center;"></div>
+                </div>
+
+                <div class="card" id="badge-admin-panel" style="display:none;">
+                    <h3 class="section-title">👑 Badge Admin</h3>
+                    <div id="badge-admin-list"></div>
+                </div>
+
+                <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+                    <h3 class="section-title">🔐 Security</h3>
+                    <button id="btn-toggle-change-password" class="action-btn secondary" style="padding:10px;">Change Password</button>
+                    <div id="change-password-form" class="change-password-form">
+                        <input type="password" id="cp-current-pass" class="input-box" placeholder="Current password" />
+                        <input type="password" id="cp-new-pass" class="input-box" placeholder="New password (min 6)" />
+                        <button id="btn-save-new-password" class="action-btn" style="padding:8px;">Save</button>
+                        <div id="cp-status" style="font-size:11px;color:var(--text-dim);text-align:center;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BOTTOM NAV -->
+            <nav class="bottom-navbar" id="global-navbar">
+                <button class="nav-item active" data-tab="tab-feed">
+                    <span class="nav-icon">🔮</span><span>Feed</span>
+                </button>
+                <button class="nav-item" data-tab="tab-games">
+                    <span class="nav-icon">🎮</span><span>Games</span>
+                </button>
+                <button class="nav-item" data-tab="tab-store">
+                    <span class="nav-icon">🛒</span><span>Store</span>
+                </button>
+                <button class="nav-item" data-tab="tab-messages">
+                    <span class="nav-icon">💬</span><span>Chat</span>
+                </button>
+                <button class="nav-item" data-tab="tab-discover">
+                    <span class="nav-icon">🔍</span><span>Discover</span>
+                </button>
+                <button class="nav-item" data-tab="tab-profile">
+                    <span class="nav-icon">👤</span><span>Profile</span>
+                </button>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- ─── FOLLOWERS MODAL ─── -->
+    <div class="modal-overlay" id="followers-modal">
+        <div class="modal-box">
+            <button class="modal-close" id="modal-close">✕</button>
+            <div class="modal-title" id="modal-title">Followers</div>
+            <div id="modal-user-list"></div>
+        </div>
+    </div>
+
+    <!-- ─── FIREBASE MODULE ─── -->
+    <script type="module">
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  IMPORTS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged,
+            sendPasswordResetEmail,
+            updatePassword,
+            reauthenticateWithCredential,
+            EmailAuthProvider
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            getDoc,
+            updateDoc,
+            deleteDoc,
+            collection,
+            addDoc,
+            query,
+            orderBy,
+            onSnapshot,
+            serverTimestamp,
+            increment,
+            runTransaction,
+            getDocs,
+            arrayUnion,
+            arrayRemove
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+        import {
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL,
+            deleteObject
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-storage.js";
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  CONFIG
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtYQa0nVUrzdBNoYbSojunbq-yk9QZKcw",
+            authDomain: "school-soical.firebaseapp.com",
+            databaseURL: "https://school-soical-default-rtdb.firebaseio.com",
+            projectId: "school-soical",
+            storageBucket: "school-soical.firebasestorage.app",
+            messagingSenderId: "189089843034",
+            appId: "1:189089843034:web:88720923a3c5b4935dd563",
+            measurementId: "G-3KJS0JP5K6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        let currentUser = null;
+        let profileUnsub = null;
+        let feedUnsub = null;
+        let chatUnsub = null;
+        let usersUnsub = null;
+        let dailyBonusClaimed = false;
+        let isProcessing = false;
+        let privateChatPartner = null;
+        let privateChatUnsub = null;
+        let currentGame = null;
+        let viewedProfileUid = null;
+
+        const BADGES = {
+            big_ferni: { label: 'Big Ferni', icon: '🌿', class: 'big_ferni' },
+            beta_tester: { label: 'Beta Tester', icon: '🧪', class: 'beta_tester' },
+            tsa_pro: { label: 'TSA Pro', icon: '✈️', class: 'tsa_pro' },
+            owner: { label: 'Owner', icon: '👑', class: 'owner' },
+            co_owner: { label: 'Co-Owner', icon: '⚜️', class: 'co_owner' }
+        };
+        const BADGE_KEYS = ['big_ferni', 'beta_tester', 'tsa_pro', 'owner', 'co_owner'];
+
+        const $ = (id) => document.getElementById(id);
+        const loadingOverlay = $('app-loading-overlay');
+        const authView = $('view-auth');
+        const mainApp = $('view-main-app');
+        const bottomNav = $('global-navbar');
+        const boxLogin = $('box-login');
+        const boxSignup = $('box-signup');
+        const boxReset = $('box-reset');
+
+        // ─── Utils ───
+        function usernameToEmail(username) {
+            return `${username.trim().toLowerCase()}@schoolsocial.local`;
+        }
+
+        function withLoading(buttonId, asyncFn) {
+            return async (...args) => {
+                if (isProcessing) return;
+                const btn = $(buttonId);
+                if (btn) {
+                    btn.disabled = true;
+                    btn.dataset.originalText = btn.textContent;
+                    btn.textContent = '⏳';
+                }
+                isProcessing = true;
+                try {
+                    await asyncFn(...args);
+                } catch (e) {
+                    console.error(e);
+                    alert(e.message || 'Error');
+                } finally {
+                    isProcessing = false;
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = btn.dataset.originalText || btn.textContent;
+                    }
+                }
+            };
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  AUTH STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        onAuthStateChanged(auth, async (user) => {
+            loadingOverlay.style.display = 'flex';
+            if (user) {
+                currentUser = user;
+                authView.style.display = 'none';
+                mainApp.style.display = 'block';
+                bottomNav.style.display = 'flex';
+                await setupProfileSync(user.uid);
+                startRealtimeFeeds();
+                loadUserList();
+                loadStoreItems();
+                loadDiscoverUsers();
+                loadingOverlay.style.display = 'none';
+            } else {
+                currentUser = null;
+                if (profileUnsub) { profileUnsub();
+                    profileUnsub = null; }
+                if (feedUnsub) { feedUnsub();
+                    feedUnsub = null; }
+                if (chatUnsub) { chatUnsub();
+                    chatUnsub = null; }
+                if (usersUnsub) { usersUnsub();
+                    usersUnsub = null; }
+                if (privateChatUnsub) { privateChatUnsub();
+                    privateChatUnsub = null; }
+                authView.style.display = 'flex';
+                mainApp.style.display = 'none';
+                bottomNav.style.display = 'none';
+                loadingOverlay.style.display = 'none';
+            }
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  AUTH ACTIONS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('switch-to-signup').addEventListener('click', () => {
+            boxLogin.style.display = 'none';
+            boxSignup.style.display = 'flex';
+            boxReset.style.display = 'none';
+        });
+        $('switch-to-login').addEventListener('click', () => {
+            boxSignup.style.display = 'none';
+            boxLogin.style.display = 'flex';
+            boxReset.style.display = 'none';
+        });
+        $('switch-to-login-from-reset').addEventListener('click', () => {
+            boxReset.style.display = 'none';
+            boxLogin.style.display = 'flex';
+        });
+        $('forgot-password-link').addEventListener('click', () => {
+            boxLogin.style.display = 'none';
+            boxReset.style.display = 'flex';
+            $('reset-status').textContent = '';
+            $('reset-username').value = '';
+            $('reset-step-1').style.display = 'block';
+            $('reset-step-2').style.display = 'none';
+            $('reset-step-3').style.display = 'none';
+        });
+
+        // ── Sign Up ──
+        $('btn-signup').addEventListener('click', withLoading('btn-signup', async () => {
+            const username = $('signup-username').value.trim().toLowerCase();
+            const password = $('signup-pass').value;
+            const secQ = $('signup-security-q').value;
+            const secA = $('signup-security-a').value.trim();
+
+            if (!username || password.length < 6) {
+                alert('Username required and password ≥ 6 chars.');
+                return;
+            }
+            if (!secQ || !secA) {
+                alert('Please select a security question and answer.');
+                return;
+            }
+
+            const usernameDoc = await getDoc(doc(db, 'usernames', username));
+            if (usernameDoc.exists()) {
+                alert('Username already taken.');
+                return;
+            }
+
+            const email = usernameToEmail(username);
+            const cred = await createUserWithEmailAndPassword(auth, email, password);
+            const uid = cred.user.uid;
+
+            await setDoc(doc(db, 'users', uid), {
+                uid,
+                username,
+                displayName: username,
+                bio: '',
+                avatarURL: '',
+                coins: 100,
+                statusNote: 'Just joined! 🚀',
+                dailyBonusLast: null,
+                createdAt: serverTimestamp(),
+                postCount: 0,
+                inventory: [],
+                badges: [],
+                followers: [],
+                following: [],
+                securityQuestion: secQ,
+                securityAnswer: secA.toLowerCase()
+            });
+            await setDoc(doc(db, 'usernames', username), { uid });
+        }));
+
+        // ── Login ──
+        $('btn-login').addEventListener('click', withLoading('btn-login', async () => {
+            const username = $('login-username').value.trim().toLowerCase();
+            const password = $('login-pass').value;
+            if (!username || !password) {
+                alert('Please enter username and password.');
+                return;
+            }
+            const usernameDoc = await getDoc(doc(db, 'usernames', username));
+            if (!usernameDoc.exists()) {
+                alert('Username not found.');
+                return;
+            }
+            const email = usernameToEmail(username);
+            await signInWithEmailAndPassword(auth, email, password);
+        }));
+
+        // ── Reset Password ──
+        let resetTargetUid = null;
+        let resetTargetEmail = null;
+
+        $('btn-reset-step1').addEventListener('click', withLoading('btn-reset-step1', async () => {
+            const username = $('reset-username').value.trim().toLowerCase();
+            if (!username) { alert('Enter your username.'); return; }
+            const usernameDoc = await getDoc(doc(db, 'usernames', username));
+            if (!usernameDoc.exists()) {
+                alert('Username not found.');
+                return;
+            }
+            resetTargetUid = usernameDoc.data().uid;
+            const userDoc = await getDoc(doc(db, 'users', resetTargetUid));
+            if (!userDoc.exists()) { alert('User profile not found.'); return; }
+            const data = userDoc.data();
+            resetTargetEmail = usernameToEmail(username);
+
+            if (data.securityQuestion && data.securityAnswer) {
+                $('reset-question-display').textContent = `🔐 ${data.securityQuestion}`;
+                $('reset-step-1').style.display = 'none';
+                $('reset-step-2').style.display = 'block';
+                $('reset-step-3').style.display = 'none';
+                $('reset-status').textContent = '';
+                $('reset-answer').value = '';
+            } else {
+                await sendPasswordResetEmail(auth, resetTargetEmail);
+                $('reset-status').textContent = '✅ Reset email sent!';
+                $('reset-status').style.color = '#58d68d';
+                setTimeout(() => {
+                    boxReset.style.display = 'none';
+                    boxLogin.style.display = 'flex';
+                }, 2500);
+            }
+        }));
+
+        $('btn-reset-step2').addEventListener('click', withLoading('btn-reset-step2', async () => {
+            const answer = $('reset-answer').value.trim().toLowerCase();
+            if (!answer) { alert('Please enter your answer.'); return; }
+            const userDoc = await getDoc(doc(db, 'users', resetTargetUid));
+            if (!userDoc.exists()) { alert('User not found.'); return; }
+            const data = userDoc.data();
+            if (data.securityAnswer !== answer) {
+                $('reset-status').textContent = '❌ Incorrect answer.';
+                $('reset-status').style.color = '#ff2f8e';
+                return;
+            }
+            $('reset-step-2').style.display = 'none';
+            $('reset-step-3').style.display = 'block';
+            $('reset-status').textContent = '✅ Verified! Enter new password.';
+            $('reset-status').style.color = '#58d68d';
+            $('reset-new-pass').value = '';
+        }));
+
+        $('btn-reset-step3').addEventListener('click', withLoading('btn-reset-step3', async () => {
+            const newPass = $('reset-new-pass').value;
+            if (newPass.length < 6) { alert('Password must be ≥ 6 characters.'); return; }
+            await sendPasswordResetEmail(auth, resetTargetEmail);
+            $('reset-status').textContent = '✅ Reset email sent! Check your inbox.';
+            $('reset-status').style.color = '#58d68d';
+            setTimeout(() => {
+                boxReset.style.display = 'none';
+                boxLogin.style.display = 'flex';
+            }, 2500);
+        }));
+
+        $('btn-reset-email-fallback').addEventListener('click', withLoading('btn-reset-email-fallback', async () => {
+            if (!resetTargetEmail) {
+                const username = $('reset-username').value.trim().toLowerCase();
+                if (!username) { alert('Enter your username.'); return; }
+                const usernameDoc = await getDoc(doc(db, 'usernames', username));
+                if (!usernameDoc.exists()) { alert('Username not found.'); return; }
+                resetTargetEmail = usernameToEmail(username);
+            }
+            await sendPasswordResetEmail(auth, resetTargetEmail);
+            $('reset-status').textContent = '✅ Reset email sent!';
+            $('reset-status').style.color = '#58d68d';
+            setTimeout(() => {
+                boxReset.style.display = 'none';
+                boxLogin.style.display = 'flex';
+            }, 2500);
+        }));
+
+        // ── Logout ──
+        $('global-logout-btn').addEventListener('click', () => signOut(auth));
+
+        // ── Change Password ──
+        $('btn-toggle-change-password').addEventListener('click', () => {
+            $('change-password-form').classList.toggle('active');
+            if (!$('change-password-form').classList.contains('active')) {
+                $('cp-current-pass').value = '';
+                $('cp-new-pass').value = '';
+                $('cp-status').textContent = '';
+            }
+        });
+
+        $('btn-save-new-password').addEventListener('click', withLoading('btn-save-new-password', async () => {
+            const currentPass = $('cp-current-pass').value;
+            const newPass = $('cp-new-pass').value;
+            if (!currentPass || !newPass) {
+                alert('Please fill in both fields.');
+                return;
+            }
+            if (newPass.length < 6) {
+                alert('New password must be at least 6 characters.');
+                return;
+            }
+            const user = auth.currentUser;
+            const credential = EmailAuthProvider.credential(user.email, currentPass);
+            try {
+                await reauthenticateWithCredential(user, credential);
+                await updatePassword(user, newPass);
+                $('cp-status').textContent = '✅ Password updated!';
+                $('cp-status').style.color = '#58d68d';
+                $('cp-current-pass').value = '';
+                $('cp-new-pass').value = '';
+                setTimeout(() => {
+                    $('change-password-form').classList.remove('active');
+                    $('cp-status').textContent = '';
+                }, 2000);
+            } catch (err) {
+                $('cp-status').textContent = '❌ ' + err.message;
+                $('cp-status').style.color = '#ff2f8e';
+            }
+        }));
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  PROFILE SYNC
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        async function setupProfileSync(uid) {
+            if (profileUnsub) profileUnsub();
+            profileUnsub = onSnapshot(doc(db, 'users', uid), (snap) => {
+                if (snap.exists()) {
+                    const data = snap.data();
+                    const coins = data.coins ?? 0;
+                    $('store-coin-display').textContent = coins;
+                    $('games-coin-display').textContent = coins;
+
+                    $('profile-username-node').textContent = `@${data.username || 'user'}`;
+                    const avatarNode = $('profile-avatar-node');
+                    if (data.avatarURL) {
+                        avatarNode.innerHTML =
+                            `<img src="${data.avatarURL}" alt="avatar" /><div class="avatar-badge" id="avatar-upload-trigger">📷</div>`;
+                    } else {
+                        avatarNode.innerHTML =
+                            `<span>${(data.username?.[0] || '?').toUpperCase()}</span><div class="avatar-badge" id="avatar-upload-trigger">📷</div>`;
+                    }
+                    $('profile-bio-node').textContent = data.bio || 'No bio yet';
+                    $('edit-display-name').value = data.displayName || data.username || '';
+                    $('edit-bio').value = data.bio || '';
+                    $('profile-post-count').textContent = data.postCount || 0;
+
+                    const followers = data.followers || [];
+                    const following = data.following || [];
+                    $('profile-follower-count').textContent = followers.length;
+                    $('profile-following-count').textContent = following.length;
+
+                    // Badges
+                    const badges = data.badges || [];
+                    const badgesContainer = $('profile-badges-container');
+                    badgesContainer.innerHTML = '';
+                    if (badges.length === 0) {
+                        badgesContainer.innerHTML = '<span style="font-size:11px;color:var(--text-faint);">No badges</span>';
+                    } else {
+                        badges.forEach(badgeKey => {
+                            const b = BADGES[badgeKey];
+                            if (b) {
+                                const el = document.createElement('span');
+                                el.className = `badge-item ${b.class}`;
+                                el.textContent = `${b.icon} ${b.label}`;
+                                badgesContainer.appendChild(el);
+                            }
+                        });
+                    }
+
+                    const last = data.dailyBonusLast?.toDate?.() || null;
+                    if (last) {
+                        const now = new Date();
+                        dailyBonusClaimed = (now - last) < 24 * 60 * 60 * 1000;
+                        $('daily-bonus-status').textContent = dailyBonusClaimed ?
+                            `✅ Claimed today (${last.toLocaleTimeString()})` :
+                            '⏳ Ready!';
+                    } else {
+                        dailyBonusClaimed = false;
+                        $('daily-bonus-status').textContent = '⏳ Ready!';
+                    }
+
+                    // Badge admin
+                    const userBadges = data.badges || [];
+                    if (userBadges.includes('owner') || userBadges.includes('co_owner')) {
+                        $('badge-admin-panel').style.display = 'block';
+                        loadBadgeAdmin();
+                    } else {
+                        $('badge-admin-panel').style.display = 'none';
+                    }
+
+                    // Follow button
+                    const isOwnProfile = viewedProfileUid === null || viewedProfileUid === uid;
+                    if (isOwnProfile) {
+                        $('follow-btn-container').style.display = 'none';
+                    } else {
+                        $('follow-btn-container').style.display = 'block';
+                        const isFollowing = followers.includes(currentUser.uid);
+                        const btn = $('btn-follow-user');
+                        btn.textContent = isFollowing ? '✅ Following' : '➕ Follow';
+                        btn.className = isFollowing ? 'action-btn follow-btn following' : 'action-btn follow-btn';
+                    }
+                }
+            });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  FOLLOW
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        async function toggleFollow(targetUid) {
+            if (!targetUid || targetUid === currentUser.uid) return;
+            const userRef = doc(db, 'users', currentUser.uid);
+            const targetRef = doc(db, 'users', targetUid);
+
+            await runTransaction(db, async (tx) => {
+                const userSnap = await tx.get(userRef);
+                const targetSnap = await tx.get(targetRef);
+                if (!userSnap.exists() || !targetSnap.exists()) return;
+
+                const userData = userSnap.data();
+                const targetData = targetSnap.data();
+                const following = userData.following || [];
+                const followers = targetData.followers || [];
+
+                const isFollowing = following.includes(targetUid);
+                if (isFollowing) {
+                    tx.update(userRef, { following: arrayRemove(targetUid) });
+                    tx.update(targetRef, { followers: arrayRemove(currentUser.uid) });
+                } else {
+                    tx.update(userRef, { following: arrayUnion(targetUid) });
+                    tx.update(targetRef, { followers: arrayUnion(currentUser.uid) });
+                }
+            });
+            if (viewedProfileUid) setupProfileSync(viewedProfileUid);
+            loadDiscoverUsers();
+        }
+
+        $('btn-follow-user').addEventListener('click', async () => {
+            if (viewedProfileUid) await toggleFollow(viewedProfileUid);
+        });
+
+        function viewUserProfile(uid) {
+            viewedProfileUid = uid;
+            setupProfileSync(uid);
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            $('tab-profile').classList.add('active');
+            document.querySelector('[data-tab="tab-profile"]').classList.add('active');
+        }
+
+        // ─── Followers Modal ───
+        function showFollowersModal(mode, uids) {
+            $('modal-title').textContent = mode === 'followers' ? 'Followers' : 'Following';
+            const list = $('modal-user-list');
+            list.innerHTML = '';
+            if (uids.length === 0) {
+                list.innerHTML = `<div style="color:var(--text-faint);padding:10px;text-align:center;">No ${mode}.</div>`;
+            } else {
+                uids.forEach(async (uid) => {
+                    const docSnap = await getDoc(doc(db, 'users', uid));
+                    if (docSnap.exists()) {
+                        const u = docSnap.data();
+                        const div = document.createElement('div');
+                        div.className = 'modal-user-item';
+                        const avatarHTML = u.avatarURL ?
+                            `<img src="${u.avatarURL}" alt="avatar" />` :
+                            (u.username?.[0] || '?').toUpperCase();
+                        div.innerHTML = `
+                            <div class="modal-user-avatar">${avatarHTML}</div>
+                            <span class="modal-user-name">@${u.username}</span>
+                        `;
+                        div.style.cursor = 'pointer';
+                        div.addEventListener('click', () => {
+                            $('followers-modal').classList.remove('show');
+                            viewUserProfile(uid);
+                        });
+                        list.appendChild(div);
+                    }
+                });
+            }
+            $('followers-modal').classList.add('show');
+        }
+
+        $('modal-close').addEventListener('click', () => $('followers-modal').classList.remove('show'));
+        $('followers-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) $('followers-modal').classList.remove('show');
+        });
+
+        $('stat-followers').addEventListener('click', async () => {
+            const uid = viewedProfileUid || currentUser.uid;
+            const docSnap = await getDoc(doc(db, 'users', uid));
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                showFollowersModal('followers', data.followers || []);
+            }
+        });
+        $('stat-following').addEventListener('click', async () => {
+            const uid = viewedProfileUid || currentUser.uid;
+            const docSnap = await getDoc(doc(db, 'users', uid));
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                showFollowersModal('following', data.following || []);
+            }
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  BADGE ADMIN
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        async function loadBadgeAdmin() {
+            const container = $('badge-admin-list');
+            container.innerHTML = '';
+            const usersSnapshot = await getDocs(collection(db, 'users'));
+            usersSnapshot.forEach((docSnap) => {
+                const u = docSnap.data();
+                if (u.uid === currentUser.uid) return;
+                const div = document.createElement('div');
+                div.className = 'badge-admin-item';
+                const userBadges = u.badges || [];
+                const availableBadges = BADGE_KEYS.filter(b => !userBadges.includes(b));
+                div.innerHTML = `
+                    <span style="font-weight:600;font-size:13px;">@${u.username}</span>
+                    <div class="badge-admin-actions">
+                        ${userBadges.map(b => {
+                            const badge = BADGES[b];
+                            return `<span class="badge-item ${badge.class}" style="font-size:10px;padding:2px 8px;">${badge.icon} ${badge.label}</span>`;
+                        }).join('')}
+                        ${availableBadges.length > 0 ? `
+                            <select class="input-box" style="width:auto;padding:4px 8px;font-size:11px;background:var(--bg-input);border:1px solid var(--border-soft);border-radius:var(--radius-sm);color:white;">
+                                <option value="">+ Add</option>
+                                ${availableBadges.map(b => `<option value="${b}">${BADGES[b].icon} ${BADGES[b].label}</option>`).join('')}
+                            </select>
+                            <button class="action-btn small" style="padding:4px 10px;font-size:10px;" data-uid="${u.uid}">Assign</button>
+                        ` : '<span style="font-size:10px;color:var(--text-faint);">All assigned</span>'}
+                    </div>
+                `;
+                container.appendChild(div);
+
+                const select = div.querySelector('select');
+                const btn = div.querySelector('button');
+                if (select && btn) {
+                    btn.addEventListener('click', async () => {
+                        const badge = select.value;
+                        if (!badge) return;
+                        await updateDoc(doc(db, 'users', u.uid), { badges: arrayUnion(badge) });
+                        loadBadgeAdmin();
+                        loadDiscoverUsers();
+                    });
+                }
+            });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DISCOVER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        let allUsers = [];
+        let discoverUnsub = null;
+
+        async function loadDiscoverUsers() {
+            if (discoverUnsub) discoverUnsub();
+            const q = query(collection(db, 'users'));
+            discoverUnsub = onSnapshot(q, (snap) => {
+                allUsers = [];
+                snap.forEach(docSnap => {
+                    const u = docSnap.data();
+                    if (u.uid !== currentUser.uid) {
+                        allUsers.push(u);
+                    }
+                });
+                renderDiscoverList('');
+            });
+        }
+
+        function renderDiscoverList(filter) {
+            const container = $('discover-user-list');
+            container.innerHTML = '';
+            const filtered = allUsers.filter(u =>
+                u.username.toLowerCase().includes(filter.toLowerCase())
+            );
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="color:var(--text-faint);padding:10px;text-align:center;">No users found.</div>`;
+                return;
+            }
+            filtered.forEach(u => {
+                const item = document.createElement('div');
+                item.className = 'user-item';
+                const avatarHTML = u.avatarURL ?
+                    `<img src="${u.avatarURL}" alt="avatar" />` :
+                    (u.username?.[0] || '?').toUpperCase();
+                const isFollowing = (u.followers || []).includes(currentUser.uid);
+                const userBadges = u.badges || [];
+                const badgesHTML = userBadges.map(b => {
+                    const badge = BADGES[b];
+                    return badge ? `<span class="mini-badge">${badge.icon}</span>` : '';
+                }).join('');
+                item.innerHTML = `
+                    <div class="user-info" data-uid="${u.uid}">
+                        <div class="user-avatar-small">${avatarHTML}</div>
+                        <div style="min-width:0;">
+                            <div class="user-name">@${u.username}</div>
+                            <div class="user-badges-mini">${badgesHTML}</div>
+                        </div>
+                    </div>
+                    <button class="action-btn follow-btn ${isFollowing ? 'following' : ''}" data-uid="${u.uid}">
+                        ${isFollowing ? '✅ Following' : '➕ Follow'}
+                    </button>
+                `;
+                container.appendChild(item);
+
+                item.querySelector('.user-info').addEventListener('click', () => {
+                    viewUserProfile(u.uid);
+                });
+
+                const followBtn = item.querySelector('.action-btn');
+                followBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    await toggleFollow(u.uid);
+                });
+            });
+        }
+
+        $('discover-search').addEventListener('input', (e) => {
+            renderDiscoverList(e.target.value);
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  REAL-TIME FEEDS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        function startRealtimeFeeds() {
+            // Posts
+            if (feedUnsub) feedUnsub();
+            const feedQ = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+            feedUnsub = onSnapshot(feedQ, (snap) => {
+                const container = $('home-feed-stream');
+                container.innerHTML = '';
+                if (snap.empty) {
+                    container.innerHTML =
+                        `<div class="empty-state" style="text-align:center;padding:20px;color:var(--text-faint);">🌌 Feed empty</div>`;
+                    return;
+                }
+                snap.forEach((docSnap) => {
+                    const post = docSnap.data();
+                    const pid = docSnap.id;
+                    const isOwner = post.senderUid === currentUser?.uid;
+                    const likesObj = post.likes || {};
+                    const likeCount = Object.keys(likesObj).length;
+                    const isLiked = !!likesObj[currentUser?.uid];
+
+                    const mediaHTML = post.imageUrl ?
+                        `<div class="post-img-container"><img src="${post.imageUrl}" class="post-img" alt="post" loading="lazy" onerror="this.style.display='none'" /></div>` :
+                        '';
+
+                    const card = document.createElement('div');
+                    card.className = 'post-card';
+                    const avatarHTML = post.avatarURL ?
+                        `<img src="${post.avatarURL}" alt="avatar" />` :
+                        (post.username?.[0] || '?').toUpperCase();
+                    card.innerHTML = `
+                        <div class="post-header">
+                            <div class="post-user-info" data-uid="${post.senderUid}">
+                                <div class="post-user-img">${avatarHTML}</div>
+                                <span>@${post.username || 'anonymous'}</span>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="font-size:10px;color:var(--text-faint);">${post.createdAt?.toDate?.()?.toLocaleDateString?.() || ''}</span>
+                                ${isOwner ? `<button class="post-delete-btn" data-pid="${pid}">✕</button>` : ''}
+                            </div>
+                        </div>
+                        ${mediaHTML}
+                        <div class="post-actions">
+                            <button class="like-btn-heart ${isLiked ? 'liked' : ''}" data-pid="${pid}">
+                                🧬 <span class="like-count">${likeCount}</span>
+                            </button>
+                        </div>
+                        <div class="post-caption">
+                            <strong>@${post.username || 'anonymous'}</strong> ${post.caption || ''}
+                        </div>
+                    `;
+                    container.appendChild(card);
+
+                    card.querySelector('.post-user-info').addEventListener('click', () => {
+                        const uid = card.querySelector('.post-user-info').dataset.uid;
+                        if (uid && uid !== currentUser.uid) viewUserProfile(uid);
+                    });
+
+                    card.querySelector('.like-btn-heart').addEventListener('click', async () => {
+                        if (isProcessing) return;
+                        isProcessing = true;
+                        try {
+                            const ref = doc(db, 'posts', pid);
+                            await runTransaction(db, async (tx) => {
+                                const snap = await tx.get(ref);
+                                if (!snap.exists()) return;
+                                const data = snap.data();
+                                const likes = data.likes || {};
+                                if (likes[currentUser.uid]) delete likes[currentUser.uid];
+                                else likes[currentUser.uid] = true;
+                                tx.update(ref, { likes });
+                            });
+                        } catch (e) { console.warn('Like error:', e); }
+                        finally { isProcessing = false; }
+                    });
+
+                    const delBtn = card.querySelector('.post-delete-btn');
+                    if (delBtn) {
+                        delBtn.addEventListener('click', async () => {
+                            if (isProcessing) return;
+                            if (!confirm('Delete this post?')) return;
+                            isProcessing = true;
+                            try {
+                                await deleteDoc(doc(db, 'posts', pid));
+                            } catch (e) { console.warn('Delete error:', e); }
+                            finally { isProcessing = false; }
+                        });
+                    }
+                });
+            });
+
+            // Global Chat
+            if (chatUnsub) chatUnsub();
+            const chatQ = query(collection(db, 'global_chat'), orderBy('createdAt', 'asc'));
+            chatUnsub = onSnapshot(chatQ, (snap) => {
+                const stream = $('global-chat-stream');
+                stream.innerHTML = '';
+                snap.forEach((docSnap) => {
+                    const msg = docSnap.data();
+                    const isMe = msg.senderUid === currentUser?.uid;
+                    const div = document.createElement('div');
+                    div.className = `chat-msg ${isMe ? 'me' : ''}`;
+                    div.innerHTML = `
+                        <span class="chat-sender" data-uid="${msg.senderUid}">@${msg.senderName || 'anon'}</span>
+                        <div class="chat-bubble">${msg.message || ''}</div>
+                    `;
+                    div.querySelector('.chat-sender').addEventListener('click', () => {
+                        const uid = div.querySelector('.chat-sender').dataset.uid;
+                        if (uid && uid !== currentUser.uid) viewUserProfile(uid);
+                    });
+                    stream.appendChild(div);
+                });
+                stream.scrollTop = stream.scrollHeight;
+            });
+
+            // Notes Tray
+            if (usersUnsub) usersUnsub();
+            const usersQ = query(collection(db, 'users'));
+            usersUnsub = onSnapshot(usersQ, (snap) => {
+                const tray = $('dynamic-notes-tray');
+                tray.innerHTML = '';
+                let hasNotes = false;
+                snap.forEach((docSnap) => {
+                    const u = docSnap.data();
+                    if (u.statusNote && u.statusNote.trim().length > 0 && u.statusNote.trim() !== ' ') {
+                        hasNotes = true;
+                        const bubble = document.createElement('div');
+                        bubble.className = 'note-bubble';
+                        const avatarHTML = u.avatarURL ?
+                            `<img src="${u.avatarURL}" alt="avatar" />` :
+                            (u.username?.[0] || '?').toUpperCase();
+                        bubble.innerHTML = `
+                            <div class="note-text-popup">${u.statusNote}</div>
+                            <div class="note-avatar">${avatarHTML}</div>
+                            <div class="note-username">@${u.username || 'anon'}</div>
+                        `;
+                        bubble.addEventListener('click', () => {
+                            if (u.uid !== currentUser.uid) viewUserProfile(u.uid);
+                        });
+                        tray.appendChild(bubble);
+                    }
+                });
+                if (!hasNotes) {
+                    tray.innerHTML = `<div style="color:var(--text-faint);font-size:12px;padding:6px 0;">No status notes</div>`;
+                }
+            });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  POST CREATION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('btn-submit-post').addEventListener('click', withLoading('btn-submit-post', async () => {
+            const caption = $('new-post-caption').value.trim();
+            if (!caption) { alert('Write a caption.'); return; }
+
+            const urlInput = $('new-post-url').value.trim();
+            const fileInput = $('new-post-file');
+            let imageUrl = urlInput || null;
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const progress = $('post-upload-progress');
+                progress.textContent = 'Uploading…';
+                try {
+                    const storageRef = ref(storage, `post_images/${currentUser.uid}/${Date.now()}_${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    imageUrl = await getDownloadURL(storageRef);
+                    progress.textContent = '✅ Uploaded.';
+                } catch (e) {
+                    console.error(e);
+                    progress.textContent = '❌ Failed.';
+                    return;
+                }
+            } else {
+                $('post-upload-progress').textContent = '';
+            }
+
+            const profile = await getDoc(doc(db, 'users', currentUser.uid));
+            const data = profile.exists() ? profile.data() : {};
+            const username = data.username || 'anonymous';
+            const avatarURL = data.avatarURL || '';
+            await addDoc(collection(db, 'posts'), {
+                senderUid: currentUser.uid,
+                username,
+                avatarURL,
+                caption,
+                imageUrl,
+                likes: {},
+                createdAt: serverTimestamp()
+            });
+            await updateDoc(doc(db, 'users', currentUser.uid), { postCount: increment(1) });
+            $('new-post-caption').value = '';
+            $('new-post-url').value = '';
+            $('new-post-file').value = '';
+            $('post-upload-progress').textContent = '';
+        }));
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  CHAT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('btn-send-chat').addEventListener('click', withLoading('btn-send-chat', async () => {
+            const msg = $('chat-input-message').value.trim();
+            if (!msg) return;
+            const profile = await getDoc(doc(db, 'users', currentUser.uid));
+            const username = profile.exists() ? profile.data().username : 'anonymous';
+            await addDoc(collection(db, 'global_chat'), {
+                senderUid: currentUser.uid,
+                senderName: username,
+                message: msg,
+                createdAt: serverTimestamp()
+            });
+            $('chat-input-message').value = '';
+        }));
+        $('chat-input-message').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') $('btn-send-chat').click();
+        });
+
+        async function loadUserList() {
+            const list = $('private-chat-user-list');
+            const snapshot = await getDocs(collection(db, 'users'));
+            list.innerHTML = '';
+            snapshot.forEach((docSnap) => {
+                const u = docSnap.data();
+                if (u.uid === currentUser.uid) return;
+                const item = document.createElement('div');
+                item.className = 'user-item';
+                const avatarHTML = u.avatarURL ?
+                    `<img src="${u.avatarURL}" alt="avatar" />` :
+                    (u.username?.[0] || '?').toUpperCase();
+                item.innerHTML = `
+                    <div class="user-info" style="display:flex;align-items:center;gap:10px;cursor:pointer;min-width:0;">
+                        <div class="user-avatar-small">${avatarHTML}</div>
+                        <span class="user-name">@${u.username || 'anon'}</span>
+                    </div>
+                `;
+                item.querySelector('.user-info').addEventListener('click', () => openPrivateChat(u.uid, u.username));
+                list.appendChild(item);
+            });
+        }
+
+        function openPrivateChat(partnerUid, partnerUsername) {
+            if (privateChatUnsub) privateChatUnsub();
+            privateChatPartner = partnerUid;
+            $('private-chat-box').style.display = 'block';
+            $('private-chat-user-list').style.display = 'none';
+            $('private-chat-with').textContent = `Chat with @${partnerUsername}`;
+
+            const chatId = [currentUser.uid, partnerUid].sort().join('_');
+            const chatRef = collection(db, 'private_chats', chatId, 'messages');
+            const q = query(chatRef, orderBy('createdAt', 'asc'));
+            privateChatUnsub = onSnapshot(q, (snap) => {
+                const stream = $('private-chat-stream');
+                stream.innerHTML = '';
+                snap.forEach((docSnap) => {
+                    const msg = docSnap.data();
+                    const isMe = msg.senderUid === currentUser.uid;
+                    const div = document.createElement('div');
+                    div.className = `chat-msg ${isMe ? 'me' : ''}`;
+                    div.innerHTML = `
+                        <span class="chat-sender">${isMe ? 'You' : '@'+partnerUsername}</span>
+                        <div class="chat-bubble">${msg.message || ''}</div>
+                    `;
+                    stream.appendChild(div);
+                });
+                stream.scrollTop = stream.scrollHeight;
+            });
+        }
+
+        $('btn-send-private').addEventListener('click', withLoading('btn-send-private', async () => {
+            const msg = $('private-chat-input').value.trim();
+            if (!msg || !privateChatPartner) return;
+            const chatId = [currentUser.uid, privateChatPartner].sort().join('_');
+            await addDoc(collection(db, 'private_chats', chatId, 'messages'), {
+                senderUid: currentUser.uid,
+                message: msg,
+                createdAt: serverTimestamp()
+            });
+            $('private-chat-input').value = '';
+        }));
+        $('private-chat-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') $('btn-send-private').click();
+        });
+
+        $('private-chat-back').addEventListener('click', () => {
+            if (privateChatUnsub) privateChatUnsub();
+            privateChatPartner = null;
+            $('private-chat-box').style.display = 'none';
+            $('private-chat-user-list').style.display = 'flex';
+            $('private-chat-stream').innerHTML = '';
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STATUS NOTE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('btn-save-note').addEventListener('click', withLoading('btn-save-note', async () => {
+            const note = $('input-status-note').value.trim();
+            if (!note) { alert('Enter a note.'); return; }
+            await updateDoc(doc(db, 'users', currentUser.uid), { statusNote: note });
+            $('input-status-note').value = '';
+            $('note-status-msg').textContent = '✅ Broadcast!';
+            $('note-status-msg').style.color = '#58d68d';
+            setTimeout(() => { $('note-status-msg').textContent = ''; }, 3000);
+        }));
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  STORE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const storeItems = [
+            { id: 'vip_badge', name: '🌟 VIP Badge', desc: 'Purple badge on profile', price: 500 },
+            { id: 'gold_frame', name: '🖼️ Gold Frame', desc: 'Golden post border', price: 300 },
+            { id: 'neon_name', name: '💫 Neon Name', desc: 'Glowing name', price: 200 },
+            { id: 'avatar_crown', name: '👑 Crown Avatar', desc: 'Crown on avatar', price: 400 },
+            { id: 'rainbow_post', name: '🌈 Rainbow Post', desc: 'Rainbow post gradient', price: 250 },
+            { id: 'coin_multiplier', name: '⚡ Coin Multiplier', desc: '2× coins for 1 hour', price: 150 }
+        ];
+
+        async function loadStoreItems() {
+            const container = $('store-items-list');
+            container.innerHTML = '';
+            const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+            const inventory = userDoc.exists() ? userDoc.data().inventory || [] : [];
+
+            storeItems.forEach(item => {
+                const owned = inventory.includes(item.id);
+                const div = document.createElement('div');
+                div.className = 'store-item';
+                div.innerHTML = `
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-desc">${item.desc}</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+                        <div class="item-price">🪙 ${item.price}</div>
+                        <button class="action-btn small ${owned ? 'secondary' : ''}" data-item="${item.id}" ${owned ? 'disabled' : ''}>
+                            ${owned ? '✅ Owned' : 'Buy'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+
+                const buyBtn = div.querySelector('button');
+                if (!owned) {
+                    buyBtn.addEventListener('click', withLoading(buyBtn.id || 'buy-btn', async () => {
+                        const userRef = doc(db, 'users', currentUser.uid);
+                        await runTransaction(db, async (tx) => {
+                            const snap = await tx.get(userRef);
+                            if (!snap.exists()) return;
+                            const data = snap.data();
+                            const coins = data.coins || 0;
+                            if (coins < item.price) {
+                                throw new Error('Not enough coins!');
+                            }
+                            tx.update(userRef, {
+                                coins: coins - item.price,
+                                inventory: arrayUnion(item.id)
+                            });
+                        });
+                        loadStoreItems();
+                        alert(`✅ Purchased ${item.name}!`);
+                    }));
+                }
+            });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  REDEEM
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('btn-redeem-code').addEventListener('click', withLoading('btn-redeem-code', async () => {
+            const code = $('redeem-code-input').value.trim().toUpperCase();
+            const feedback = $('redeem-feedback-msg');
+            if (code !== 'CAMPUS100') {
+                feedback.className = 'text-error';
+                feedback.innerHTML = '❌ Invalid code.';
+                return;
+            }
+            await updateDoc(doc(db, 'users', currentUser.uid), { coins: increment(100) });
+            feedback.className = 'text-success';
+            feedback.innerHTML = '✅ +100 Coins!';
+            $('redeem-code-input').value = '';
+        }));
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  DAILY BONUS
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('btn-daily-bonus').addEventListener('click', withLoading('btn-daily-bonus', async () => {
+            if (dailyBonusClaimed) {
+                alert('Already claimed today!');
+                return;
+            }
+            const ref = doc(db, 'users', currentUser.uid);
+            await runTransaction(db, async (tx) => {
+                const snap = await tx.get(ref);
+                if (!snap.exists()) return;
+                const data = snap.data();
+                const last = data.dailyBonusLast?.toDate?.() || null;
+                if (last) {
+                    const now = new Date();
+                    if (now - last < 24 * 60 * 60 * 1000) {
+                        dailyBonusClaimed = true;
+                        throw new Error('Already claimed');
+                    }
+                }
+                tx.update(ref, {
+                    coins: increment(25),
+                    dailyBonusLast: serverTimestamp()
+                });
+            });
+            dailyBonusClaimed = true;
+            $('daily-bonus-status').textContent = '✅ Claimed! +25 coins';
+            alert('🎉 +25 Coins!');
+        }));
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  PROFILE UPDATE (AVATAR)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        $('btn-update-profile').addEventListener('click', withLoading('btn-update-profile', async () => {
+            const displayName = $('edit-display-name').value.trim() || '';
+            const bio = $('edit-bio').value.trim() || '';
+            const fileInput = $('edit-avatar-file');
+            let avatarURL = '';
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const status = $('profile-update-status');
+                status.textContent = 'Uploading…';
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                    const oldURL = userDoc.exists() ? userDoc.data().avatarURL : null;
+                    if (oldURL) {
+                        try { await deleteObject(ref(storage, oldURL)); } catch (e) { /* ignore */ }
+                    }
+                    const storageRef = ref(storage, `avatars/${currentUser.uid}/${Date.now()}_${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    avatarURL = await getDownloadURL(storageRef);
+                    status.textContent = '✅ Avatar uploaded.';
+                } catch (e) {
+                    console.error(e);
+                    status.textContent = '❌ Failed.';
+                    return;
+                }
+            }
+
+            const updates = {};
+            if (displayName) updates.displayName = displayName;
+            if (bio) updates.bio = bio;
+            if (avatarURL) updates.avatarURL = avatarURL;
+
+            if (Object.keys(updates).length === 0) {
+                alert('No changes.');
+                return;
+            }
+            await updateDoc(doc(db, 'users', currentUser.uid), updates);
+            $('profile-update-status').textContent = '✅ Updated!';
+            $('edit-avatar-file').value = '';
+        }));
+
+        // Avatar upload trigger
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#avatar-upload-trigger')) {
+                $('edit-avatar-file').click();
+            }
+        });
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  GAMES
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const gameHandlers = {
+            chess: () => renderChess(),
+            connect4: () => renderConnect4(),
+            battleship: () => renderBattleship(),
+            coinclicker: () => renderCoinClicker(),
+            hangman: () => renderHangman(),
+            snake: () => renderSnake(),
+            flipcoin: () => renderFlipCoin()
+        };
+
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const game = card.dataset.game;
+                if (gameHandlers[game]) {
+                    $('games-list').style.display = 'none';
+                    $('game-container').classList.add('active');
+                    gameHandlers[game]();
+                }
+            });
+        });
+
+        $('game-back-btn').addEventListener('click', () => {
+            $('games-list').style.display = 'grid';
+            $('game-container').classList.remove('active');
+            $('game-content').innerHTML = '';
+            if (currentGame && currentGame.cleanup) currentGame.cleanup();
+        });
+
+        // ── Flip Coin ──
+        function renderFlipCoin() {
+            const container = $('game-content');
+            container.innerHTML = `
+                <h4 style="margin-bottom:8px;">🪙 Flip Coin</h4>
+                <div class="game-box">
+                    <div class="game-result" id="flip-result-display">🪙</div>
+                    <div class="game-bet-row">
+                        <input type="number" id="flip-bet-amount" value="10" min="1" step="1" />
+                        <button id="btn-flip-coin">Flip</button>
+                    </div>
+                    <div style="margin-top:8px;font-size:11px;color:var(--text-faint);">Win = 2× bet</div>
+                </div>
+            `;
+            $('btn-flip-coin').addEventListener('click', withLoading('btn-flip-coin', async () => {
+                const bet = parseInt($('flip-bet-amount').value, 10);
+                if (isNaN(bet) || bet < 1) { alert('Enter a valid bet.'); return; }
+                const resultDisplay = $('flip-result-display');
+                resultDisplay.textContent = '⏳';
+                const ref = doc(db, 'users', currentUser.uid);
+                let newBalance = 0;
+                let win = false;
+                await runTransaction(db, async (tx) => {
+                    const snap = await tx.get(ref);
+                    if (!snap.exists()) throw new Error('Profile not found');
+                    const data = snap.data();
+                    const balance = data.coins || 0;
+                    if (bet > balance) throw new Error('Insufficient coins');
+                    win = Math.random() < 0.5;
+                    const delta = win ? bet : -bet;
+                    newBalance = balance + delta;
+                    tx.update(ref, { coins: newBalance });
+                });
+                resultDisplay.textContent = win ? '🎉 HEADS · WIN!' : '😔 TAILS · LOST';
+                setTimeout(() => {
+                    resultDisplay.textContent = win ? `+${bet} coins!` : `-${bet} coins`;
+                }, 800);
+                $('store-coin-display').textContent = newBalance;
+                $('games-coin-display').textContent = newBalance;
+            }));
+        }
+
+        // ── Chess ──
+        function renderChess() {
+            const container = $('game-content');
+            container.innerHTML =
+                `<h4 style="margin-bottom:8px;">♟️ Chess (2-player)</h4><div id="chess-board" style="display:grid;grid-template-columns:repeat(8,1fr);gap:1px;max-width:300px;margin:0 auto;"></div><div id="chess-status" style="margin-top:8px;font-size:13px;color:var(--text-dim);text-align:center;">White's turn</div>`;
+            const boardEl = document.getElementById('chess-board');
+            const pieces = {
+                '0,0': '♜',
+                '0,1': '♞',
+                '0,2': '♝',
+                '0,3': '♛',
+                '0,4': '♚',
+                '0,5': '♝',
+                '0,6': '♞',
+                '0,7': '♜',
+                '1,0': '♟',
+                '1,1': '♟',
+                '1,2': '♟',
+                '1,3': '♟',
+                '1,4': '♟',
+                '1,5': '♟',
+                '1,6': '♟',
+                '1,7': '♟',
+                '6,0': '♙',
+                '6,1': '♙',
+                '6,2': '♙',
+                '6,3': '♙',
+                '6,4': '♙',
+                '6,5': '♙',
+                '6,6': '♙',
+                '6,7': '♙',
+                '7,0': '♖',
+                '7,1': '♘',
+                '7,2': '♗',
+                '7,3': '♕',
+                '7,4': '♔',
+                '7,5': '♗',
+                '7,6': '♘',
+                '7,7': '♖'
+            };
+            let turn = 'white';
+            let selected = null;
+
+            function renderBoard() {
+                boardEl.innerHTML = '';
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.style.background = (r + c) % 2 === 0 ? '#2a2a3a' : '#1a1a2a';
+                        const key = `${r},${c}`;
+                        cell.textContent = pieces[key] || '';
+                        cell.dataset.row = r;
+                        cell.dataset.col = c;
+                        cell.addEventListener('click', () => onCellClick(r, c));
+                        boardEl.appendChild(cell);
+                    }
+                }
+            }
+
+            function onCellClick(r, c) {
+                const key = `${r},${c}`;
+                if (selected === null) {
+                    const piece = pieces[key];
+                    if (!piece) return;
+                    const isWhite = piece.charCodeAt(0) < 0x2640;
+                    if ((turn === 'white' && !isWhite) || (turn === 'black' && isWhite)) return;
+                    selected = { r, c };
+                    boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none');
+                    const cell = boardEl.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+                    if (cell) cell.style.outline = '2px solid var(--neon-cyan)';
+                } else {
+                    const fromKey = `${selected.r},${selected.c}`;
+                    const toKey = `${r},${c}`;
+                    if (fromKey === toKey) {
+                        selected = null;
+                        boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none');
+                        return;
+                    }
+                    pieces[toKey] = pieces[fromKey];
+                    delete pieces[fromKey];
+                    selected = null;
+                    turn = turn === 'white' ? 'black' : 'white';
+                    document.getElementById('chess-status').textContent = `${turn.charAt(0).toUpperCase() + turn.slice(1)}'s turn`;
+                    renderBoard();
+                }
+            }
+            renderBoard();
+        }
+
+        // ── Connect 4 ──
+        function renderConnect4() {
+            const container = $('game-content');
+            container.innerHTML =
+                `<h4 style="margin-bottom:8px;">🟡 Connect 4 (2-player)</h4><div id="connect-board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:280px;margin:0 auto;"></div><div id="connect-status" style="margin-top:8px;font-size:13px;color:var(--text-dim);text-align:center;">Red's turn</div>`;
+            const boardEl = document.getElementById('connect-board');
+            const rows = 6,
+                cols = 7;
+            let board = Array.from({ length: rows }, () => Array(cols).fill(null));
+            let turn = 'red';
+
+            function renderBoard() {
+                boardEl.innerHTML = '';
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'cell';
+                        cell.style.background = board[r][c] === 'red' ? '#ff2f8e' : board[r][c] === 'yellow' ? '#ffd700' :
+                            '#1a1a2a';
+                        cell.style.borderRadius = '50%';
+                        cell.dataset.col = c;
+                        cell.addEventListener('click', () => dropPiece(c));
+                        boardEl.appendChild(cell);
+                    }
+                }
+            }
+
+            function dropPiece(col) {
+                for (let r = rows - 1; r >= 0; r--) {
+                    if (!board[r][col]) {
+                        board[r][col] = turn;
+                        if (checkWin(r, col, turn)) {
+                            document.getElementById('connect-status').textContent = `🏆 ${turn} wins!`;
+                            boardEl.querySelectorAll('.cell').forEach(el => el.style.pointerEvents = 'none');
+                            renderBoard();
+                            return;
+                        }
+                        turn = turn === 'red' ? 'yellow' : 'red';
+                        document.getElementById('connect-status').textContent =
+                            `${turn.charAt(0).toUpperCase() + turn.slice(1)}'s turn`;
+                        renderBoard();
+                        return;
+                    }
+                }
+            }
+
+            function checkWin(row, col, color) {
+                const directions = [
+                    [0, 1],
+                    [1, 0],
+                    [1, 1],
+                    [1, -1]
+                ];
+                for (const [dr, dc] of directions) {
+                    let count = 1;
+                    for (let step = 1; step < 4; step++) {
+                        const nr = row + dr * step,
+                            nc = col + dc * step;
+                        if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || board[nr][nc] !== color) break;
+                        count++;
+                    }
+                    for (let step = 1; step < 4; step++) {
+                        const nr = row - dr * step,
+                            nc = col - dc * step;
+                        if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || board[nr][nc] !== color) break;
+                        count++;
+                    }
+                    if (count >= 4) return true;
+                }
+                return false;
+            }
+            renderBoard();
+        }
+
+        // ── Battleship ──
+        function renderBattleship() {
+            const container = $('game-content');
+            container.innerHTML =
+                `<h4 style="margin-bottom:8px;">⛴️ Battleship (vs AI)</h4><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;"><div><div style="font-size:10px;color:var(--text-dim);text-align:center;">Your Board</div><div id="battleship-player" class="battleship-grid"></div></div><div><div style="font-size:10px;color:var(--text-dim);text-align:center;">AI Board</div><div id="battleship-ai" class="battleship-grid"></div></div></div><div id="battleship-status" style="margin-top:8px;font-size:12px;color:var(--text-dim);text-align:center;">Place ships (click to rotate)</div>`;
+            const size = 10;
+            let playerBoard = Array.from({ length: size }, () => Array(size).fill(0));
+            let aiBoard = Array.from({ length: size }, () => Array(size).fill(0));
+            let playerHit = Array.from({ length: size }, () => Array(size).fill(false));
+            let aiHit = Array.from({ length: size }, () => Array(size).fill(false));
+            let placing = true;
+            let shipLengths = [5, 4, 3, 3, 2];
+            let shipIndex = 0;
+            let horizontal = true;
+
+            function canPlace(board, r, c, len, h) {
+                if (h) { if (c + len > size) return false; for (let i = 0; i < len; i++) { if (board[r][c + i] !== 0) return false; } } else { if (r + len > size) return false; for (let i = 0; i < len; i++) { if (board[r + i][c] !== 0) return false; } }
+                return true;
+            }
+
+            function placeAIShips() {
+                const lengths = [5, 4, 3, 3, 2];
+                for (const len of lengths) {
+                    let placed = false;
+                    while (!placed) {
+                        const r = Math.floor(Math.random() * size);
+                        const c = Math.floor(Math.random() * size);
+                        const h = Math.random() < 0.5;
+                        if (canPlace(aiBoard, r, c, len, h)) {
+                            for (let i = 0; i < len; i++) { if (h) aiBoard[r][c + i] = 1;
+                                else aiBoard[r + i][c] = 1; }
+                            placed = true;
+                        }
+                    }
+                }
+            }
+
+            function placePlayerShip(r, c, len, h) {
+                if (canPlace(playerBoard, r, c, len, h)) {
+                    for (let i = 0; i < len; i++) { if (h) playerBoard[r][c + i] = 1;
+                        else playerBoard[r + i][c] = 1; }
+                    return true;
+                }
+                return false;
+            }
+
+            function renderBoards() {
+                const playerEl = document.getElementById('battleship-player');
+                const aiEl = document.getElementById('battleship-ai');
+                playerEl.innerHTML = '';
+                aiEl.innerHTML = '';
+                for (let r = 0; r < size; r++) {
+                    for (let c = 0; c < size; c++) {
+                        const pCell = document.createElement('div');
+                        pCell.className = 'battleship-cell';
+                        if (playerBoard[r][c] === 1 && !placing) pCell.classList.add('ship');
+                        if (playerHit[r][c]) pCell.classList.add(playerBoard[r][c] === 1 ? 'hit' : 'miss');
+                        if (placing && playerBoard[r][c] === 0) {
+                            pCell.style.cursor = 'pointer';
+                            pCell.addEventListener('click', () => onPlayerPlace(r, c));
+                        }
+                        playerEl.appendChild(pCell);
+
+                        const aCell = document.createElement('div');
+                        aCell.className = 'battleship-cell';
+                        if (aiHit[r][c]) aCell.classList.add(aiBoard[r][c] === 1 ? 'hit' : 'miss');
+                        aCell.style.cursor = 'pointer';
+                        aCell.addEventListener('click', () => onPlayerAttack(r, c));
+                        aiEl.appendChild(aCell);
+                    }
+                }
+            }
+
+            function onPlayerPlace(r, c) {
+                if (!placing) return;
+                const len = shipLengths[shipIndex];
+                if (placePlayerShip(r, c, len, horizontal)) {
+                    shipIndex++;
+                    if (shipIndex >= shipLengths.length) {
+                        placing = false;
+                        document.getElementById('battleship-status').textContent = 'All placed! Attack AI.';
+                        placeAIShips();
+                        renderBoards();
+                        return;
+                    }
+                    document.getElementById('battleship-status').textContent =
+                        `Place ship length ${shipLengths[shipIndex]} (click to rotate)`;
+                    renderBoards();
+                }
+            }
+
+            document.getElementById('battleship-status').addEventListener('click', () => {
+                if (placing) {
+                    horizontal = !horizontal;
+                    document.getElementById('battleship-status').textContent =
+                        `Place ship length ${shipLengths[shipIndex]} (${horizontal ? 'horizontal' : 'vertical'})`;
+                }
+            });
+
+            function onPlayerAttack(r, c) {
+                if (placing || aiHit[r][c]) return;
+                aiHit[r][c] = true;
+                const hit = aiBoard[r][c] === 1;
+                if (hit) {
+                    let allSunk = true;
+                    for (let i = 0; i < size; i++) {
+                        for (let j = 0; j < size; j++) {
+                            if (aiBoard[i][j] === 1 && !aiHit[i][j]) allSunk = false;
+                        }
+                    }
+                    if (allSunk) {
+                        document.getElementById('battleship-status').textContent = '🎉 You win! +20 coins';
+                        updateCoins(20);
+                        return;
+                    }
+                } else {
+                    let aiR, aiC;
+                    do {
+                        aiR = Math.floor(Math.random() * size);
+                        aiC = Math.floor(Math.random() * size);
+                    } while (playerHit[aiR][aiC]);
+                    playerHit[aiR][aiC] = true;
+                    if (playerBoard[aiR][aiC] === 1) {
+                        let allSunk = true;
+                        for (let i = 0; i < size; i++) {
+                            for (let j = 0; j < size; j++) {
+                                if (playerBoard[i][j] === 1 && !playerHit[i][j]) allSunk = false;
+                            }
+                        }
+                        if (allSunk) {
+                            document.getElementById('battleship-status').textContent = '💀 AI wins!';
+                            return;
+                        }
+                    }
+                }
+                renderBoards();
+            }
+
+            async function updateCoins(amount) {
+                await updateDoc(doc(db, 'users', currentUser.uid), { coins: increment(amount) });
+            }
+            renderBoards();
+            document.getElementById('battleship-status').textContent =
+                `Place ship length ${shipLengths[0]} (click to rotate)`;
+        }
+
+        // ── Coin Clicker ──
+        function renderCoinClicker() {
+            const container = $('game-content');
+            container.innerHTML = `
+                <h4 style="margin-bottom:8px;">🪙 Coin Clicker</h4>
+                <div style="text-align:center;">
+                    <div style="font-size:48px;font-weight:700;color:#ffd479;" id="clicker-score">0</div>
+                    <div class="coin-clicker-area" id="clicker-coin">🪙</div>
+                    <div style="margin-top:8px;font-size:13px;color:var(--text-dim);">Click for 1 coin each!</div>
+                </div>
+            `;
+            let score = 0;
+            const coinEl = document.getElementById('clicker-coin');
+            const scoreEl = document.getElementById('clicker-score');
+            coinEl.addEventListener('click', async () => {
+                score++;
+                scoreEl.textContent = score;
+                if (score % 10 === 0) {
+                    await updateDoc(doc(db, 'users', currentUser.uid), { coins: increment(10) });
+                }
+            });
+        }
+
+        // ── Hangman ──
+        function renderHangman() {
+            const container = $('game-content');
+            container.innerHTML = `
+                <h4 style="margin-bottom:8px;">🔤 Hangman</h4>
+                <div style="text-align:center;">
+                    <div class="hangman-word" id="hangman-word">_ _ _ _ _</div>
+                    <div style="font-size:14px;color:var(--text-dim);">Attempts: <span id="hangman-attempts">6</span></div>
+                    <div class="hangman-letters" id="hangman-letters"></div>
+                    <div id="hangman-status" style="margin-top:8px;font-size:13px;color:var(--text-dim);"></div>
+                </div>
+            `;
+            const words = ['JAVASCRIPT', 'FIREBASE', 'SCHOOL', 'SOCIAL', 'CONNECT', 'BATTLESHIP', 'HANGMAN', 'COINS', 'LEADER'];
+            const word = words[Math.floor(Math.random() * words.length)];
+            let guessed = [];
+            let attempts = 6;
+            const wordDisplay = document.getElementById('hangman-word');
+            const attemptsDisplay = document.getElementById('hangman-attempts');
+            const lettersDiv = document.getElementById('hangman-letters');
+            const statusDiv = document.getElementById('hangman-status');
+
+            function render() {
+                let display = word.split('').map(ch => guessed.includes(ch) ? ch : '_').join(' ');
+                wordDisplay.textContent = display;
+                attemptsDisplay.textContent = attempts;
+                if (display.replace(/ /g, '') === word) {
+                    statusDiv.textContent = '🎉 You win! +15 coins';
+                    updateCoins(15);
+                    lettersDiv.innerHTML = '';
+                    return;
+                }
+                if (attempts === 0) {
+                    statusDiv.textContent = `💀 Game over! Word: ${word}`;
+                    lettersDiv.innerHTML = '';
+                    return;
+                }
+                lettersDiv.innerHTML = '';
+                for (let i = 65; i <= 90; i++) {
+                    const ch = String.fromCharCode(i);
+                    const btn = document.createElement('button');
+                    btn.textContent = ch;
+                    btn.disabled = guessed.includes(ch);
+                    btn.addEventListener('click', () => guess(ch));
+                    lettersDiv.appendChild(btn);
+                }
+            }
+
+            function guess(ch) {
+                if (guessed.includes(ch) || attempts === 0) return;
+                guessed.push(ch);
+                if (!word.includes(ch)) attempts--;
+                render();
+            }
+
+            async function updateCoins(amount) {
+                await updateDoc(doc(db, 'users', currentUser.uid), { coins: increment(amount) });
+            }
+            render();
+        }
+
+        // ── Snake ──
+        function renderSnake() {
+            const container = $('game-content');
+            container.innerHTML = `
+                <h4 style="margin-bottom:8px;">🐍 Snake</h4>
+                <div style="display:flex;flex-direction:column;align-items:center;">
+                    <div style="font-size:16px;color:var(--text-dim);">Score: <span id="snake-score">0</span></div>
+                    <canvas id="snake-canvas" width="300" height="300"></canvas>
+                    <div style="margin-top:8px;font-size:13px;color:var(--text-dim);">⬆⬇⬅➡</div>
+                </div>
+            `;
+            const canvas = document.getElementById('snake-canvas');
+            const ctx = canvas.getContext('2d');
+            const size = 20;
+            const cols = 15,
+                rows = 15;
+            let snake = [
+                [7, 7]
+            ];
+            let dir = [1, 0];
+            let food = [5, 5];
+            let score = 0;
+            let gameOver = false;
+            let gameLoop = null;
+
+            function randomFood() {
+                let pos;
+                do {
+                    pos = [Math.floor(Math.random() * cols), Math.floor(Math.random() * rows)];
+                } while (snake.some(seg => seg[0] === pos[0] && seg[1] === pos[1]));
+                return pos;
+            }
+
+            function draw() {
+                ctx.fillStyle = '#1a1a2a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                snake.forEach((seg, i) => {
+                    ctx.fillStyle = i === 0 ? '#22e5ff' : '#2a7a8a';
+                    ctx.fillRect(seg[0] * size, seg[1] * size, size - 1, size - 1);
+                });
+                ctx.fillStyle = '#ff2f8e';
+                ctx.beginPath();
+                ctx.arc(food[0] * size + size / 2, food[1] * size + size / 2, size / 2 - 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            function update() {
+                if (gameOver) return;
+                const head = snake[0];
+                const newHead = [head[0] + dir[0], head[1] + dir[1]];
+                if (newHead[0] < 0 || newHead[0] >= cols || newHead[1] < 0 || newHead[1] >= rows) {
+                    gameOver = true;
+                    clearInterval(gameLoop);
+                    document.querySelector('#snake-score').textContent = score + ' 💀';
+                    return;
+                }
+                if (snake.some(seg => seg[0] === newHead[0] && seg[1] === newHead[1])) {
+                    gameOver = true;
+                    clearInterval(gameLoop);
+                    document.querySelector('#snake-score').textContent = score + ' 💀';
+                    return;
+                }
+                snake.unshift(newHead);
+                if (newHead[0] === food[0] && newHead[1] === food[1]) {
+                    score++;
+                    document.getElementById('snake-score').textContent = score;
+                    food = randomFood();
+                    if (score % 5 === 0) {
+                        updateCoins(5);
+                    }
+                } else {
+                    snake.pop();
+                }
+                draw();
+            }
+
+            async function updateCoins(amount) {
+                await updateDoc(doc(db, 'users', currentUser.uid), { coins: increment(amount) });
+            }
+
+            function keyHandler(e) {
+                const key = e.key;
+                if (key === 'ArrowUp' && dir[1] !== 1) dir = [0, -1];
+                else if (key === 'ArrowDown' && dir[1] !== -1) dir = [0, 1];
+                else if (key === 'ArrowLeft' && dir[0] !== 1) dir = [-1, 0];
+                else if (key === 'ArrowRight' && dir[0] !== -1) dir = [1, 0];
+            }
+            window.addEventListener('keydown', keyHandler);
+            currentGame = { cleanup: () => { clearInterval(gameLoop);
+                    window.removeEventListener('keydown', keyHandler); } };
+            food = randomFood();
+            gameLoop = setInterval(update, 150);
+            draw();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  NAVIGATION
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        document.querySelectorAll('.nav-item').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                document.querySelectorAll('.tab-content').forEach((el) => el.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach((b) => b.classList.remove('active'));
+                const target = document.getElementById(tabId);
+                if (target) target.classList.add('active');
+                btn.classList.add('active');
+                if (tabId === 'tab-profile') {
+                    viewedProfileUid = null;
+                    setupProfileSync(currentUser.uid);
+                }
+                if (tabId === 'tab-messages') loadUserList();
+                if (tabId === 'tab-store') loadStoreItems();
+                if (tabId === 'tab-discover') {
+                    loadDiscoverUsers();
+                }
+            });
+        });
+
+        document.querySelector('[data-tab="tab-profile"]').addEventListener('click', () => {
+            viewedProfileUid = null;
+            setupProfileSync(currentUser.uid);
+        });
+
+        $('new-post-caption').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) $('btn-submit-post').click();
+        });
+
+        console.log('🚀 School Social v2.0 – Ultra-stable UI');
+    </script>
+</body>
+</html>
