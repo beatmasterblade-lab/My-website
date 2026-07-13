@@ -3150,6 +3150,45 @@
             font-size: 16px;
             margin-right: 6px;
         }
+        /* custom file input styling for profile avatar file picker */
+        .avatar-file-input-wrap {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .avatar-file-input-wrap label {
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 6px 14px;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 34px;
+            flex-shrink: 0;
+        }
+        .avatar-file-input-wrap label:hover {
+            border-color: var(--neon-cyan);
+            color: #fff;
+        }
+        .avatar-file-input-wrap input[type="file"] {
+            display: none;
+        }
+        .avatar-file-input-wrap .file-name {
+            font-size: 9px;
+            color: var(--text-faint);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 120px;
+        }
     </style>
 </head>
 <body>
@@ -3589,6 +3628,17 @@
                         <button id="btn-set-avatar-url" class="action-btn small secondary" style="min-height:38px;padding:6px 14px;">Set URL</button>
                     </div>
                     <div style="font-size:8px;color:var(--text-faint);margin-top:-4px;">Paste an image URL to use as your profile picture</div>
+
+                    <!-- ★ NEW: Avatar File Upload (Base64) -->
+                    <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:6px;">📸 Upload Avatar Image</div>
+                    <div class="avatar-file-input-wrap">
+                        <label for="edit-avatar-file-input">📁 Choose Image</label>
+                        <input type="file" id="edit-avatar-file-input" accept="image/*" />
+                        <span class="file-name" id="avatar-file-name">No file selected</span>
+                        <button id="btn-upload-avatar-base64" class="action-btn small secondary" style="min-height:34px;padding:4px 14px;font-size:9px;">Upload</button>
+                    </div>
+                    <div style="font-size:8px;color:var(--text-faint);margin-top:-2px;">Upload a JPG/PNG image (max 2MB) — converts to Base64</div>
+
                     <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;">Social Links</div>
                     <div class="profile-social-row"><span class="social-icon">📸</span><input type="text" id="edit-instagram" placeholder="Instagram username" /></div>
                     <div class="profile-social-row"><span class="social-icon">🐦</span><input type="text" id="edit-twitter" placeholder="Twitter / X username" /></div>
@@ -3839,7 +3889,7 @@
                                     <div id="announcement-history-list" style="max-height:100px;overflow-y:auto;font-size:8px;color:var(--text-dim);"></div>
                                 </div>
 
-                                <!-- ★ NEW OWNER FEATURE 5: User Activity Heatmap (simplified) -->
+                                <!-- ★ NEW OWNER FEATURE 5: Activity Heatmap (simplified) -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🔥 Activity Heatmap</div>
                                     <div id="heatmap-container" style="display:flex;flex-wrap:wrap;gap:2px;max-height:120px;overflow-y:auto;padding:4px 0;"></div>
@@ -4017,6 +4067,7 @@
         let multiplayerGameState = {};
         let xpBoostActive = false;
         let xpMultiplier = 1;
+        let selectedAvatarFile = null; // for base64 avatar upload
 
         // Casino stats
         let casinoWins = 0,
@@ -4072,7 +4123,6 @@
                 effect: 'badge_platinum', duration: 0 },
             { id: 'xp_boost', name: '📈 XP Boost', desc: 'Double XP for 1 hour', price: 200, effect: 'xp_boost_2x',
                 duration: 3600 },
-            // NEW ITEMS
             { id: 'mystery_box', name: '🎁 Mystery Box', desc: 'Random surprise reward!', price: 100,
             effect: 'mystery_box', duration: 0 },
             { id: 'name_color', name: '🎨 Name Color', desc: 'Custom colored username', price: 150,
@@ -4167,6 +4217,10 @@
             return b.some(badge => ['beta_tester', 'tsa_pro'].includes(badge));
         }
 
+        function getCurrentUserBadges() {
+            return currentUserProfile?.badges || [];
+        }
+
         let limitedAdminPromoLimitReached = false;
 
         // ─── Auth ───
@@ -4222,8 +4276,7 @@
             }
         });
 
-        // ─── AUTH BUTTONS FIX ───
-        // Use direct DOM references with getElementById for reliability
+        // ─── AUTH BUTTONS ───
         const boxLogin = document.getElementById('box-login');
         const boxSignup = document.getElementById('box-signup');
         const boxReset = document.getElementById('box-reset');
@@ -5157,7 +5210,7 @@
             setTimeout(() => { status.textContent = ''; }, 3000);
         }));
 
-        // ─── Post Creation ───
+        // ─── Post Creation (★ FIXED: Base64 FileReader) ───
         document.getElementById('btn-submit-post').addEventListener('click', withLoading('btn-submit-post', async () => {
             const caption = document.getElementById('new-post-caption').value.trim();
             const urlInput = document.getElementById('new-post-url').value.trim();
@@ -5167,23 +5220,33 @@
             if (!caption && !hasFile && !hasUrl) { showToast('Write a caption or add a photo.', 'error'); return; }
             if (globalMaintenance && !isCurrentUserAdmin()) { showToast('Posting is temporarily disabled.',
                 'error'); return; }
+
             let imageUrl = urlInput || null;
+            const progress = document.getElementById('post-upload-progress');
+
+            // ★ If a file is selected, convert to Base64 using FileReader
             if (hasFile) {
                 const file = fileInput.files[0];
                 if (!file.type.startsWith('image/')) { showToast('Please choose an image file.', 'error'); return; }
                 if (file.size > 8 * 1024 * 1024) { showToast('Image must be under 8MB.', 'error'); return; }
-                const progress = document.getElementById('post-upload-progress');
-                progress.textContent = 'Uploading image…';
+                progress.textContent = '📸 Converting image to Base64…';
                 try {
-                    const safeName = (file.name || 'photo').replace(/[^a-zA-Z0-9._-]/g, '_');
-                    const storageRef = ref(storage, `post_images/${currentUser.uid}/${Date.now()}_${safeName}`);
-                    const uploadResult = await uploadBytes(storageRef, file);
-                    imageUrl = await getDownloadURL(uploadResult.ref);
-                    progress.textContent = '✅ Image uploaded.';
-                } catch (e) { console.error('Upload error:', e);
-                    progress.textContent = '❌ Upload failed.';
-                    showToast('Image upload failed: ' + e.message, 'error'); return; }
+                    const base64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = () => reject(new Error('Failed to read file'));
+                        reader.readAsDataURL(file);
+                    });
+                    imageUrl = base64;
+                    progress.textContent = '✅ Image converted.';
+                } catch (e) {
+                    console.error('FileReader error:', e);
+                    progress.textContent = '❌ Image conversion failed.';
+                    showToast('Image conversion failed: ' + e.message, 'error');
+                    return;
+                }
             }
+
             const profileSnap = await getDoc(doc(db, 'users', currentUser.uid));
             let username = 'anonymous',
                 avatarURL = '',
@@ -5192,6 +5255,7 @@
                 username = data.username || 'anonymous';
                 avatarURL = data.avatarURL || '';
                 isVerified = !!data.verified; }
+
             try {
                 await addDoc(collection(db, 'posts'), {
                     senderUid: currentUser.uid,
@@ -5206,9 +5270,12 @@
                 });
                 await updateDoc(doc(db, 'users', currentUser.uid), { postCount: increment(1) });
                 resetPostComposer();
+                progress.textContent = '';
                 showToast('Post published! 🚀', 'success');
             } catch (e) { console.error('Post creation error:', e);
-                showToast('Failed to create post: ' + e.message, 'error'); }
+                showToast('Failed to create post: ' + e.message, 'error');
+                progress.textContent = '❌ Failed.';
+            }
         }));
 
         function resetPostComposer() {
@@ -5257,6 +5324,56 @@
             status.style.color = '#58d68d';
             showToast('Avatar URL set!', 'success');
             setTimeout(() => { status.textContent = ''; }, 3000);
+        }));
+
+        // ─── ★ NEW: Base64 Avatar File Upload ───
+        const avatarFileInput = document.getElementById('edit-avatar-file-input');
+        const avatarFileName = document.getElementById('avatar-file-name');
+        const btnUploadAvatarBase64 = document.getElementById('btn-upload-avatar-base64');
+
+        avatarFileInput.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (file) {
+                avatarFileName.textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+                selectedAvatarFile = file;
+            } else {
+                avatarFileName.textContent = 'No file selected';
+                selectedAvatarFile = null;
+            }
+        });
+
+        btnUploadAvatarBase64.addEventListener('click', withLoading('btn-upload-avatar-base64', async () => {
+            if (!selectedAvatarFile) { showToast('Please select an image file first.', 'error'); return; }
+            if (!selectedAvatarFile.type.startsWith('image/')) { showToast('Please choose an image file.',
+                'error'); return; }
+            if (selectedAvatarFile.size > 2 * 1024 * 1024) { showToast('Image must be under 2MB.', 'error'); return; }
+
+            const status = document.getElementById('profile-update-status');
+            status.textContent = '📸 Converting avatar…';
+            try {
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = () => reject(new Error('Failed to read file'));
+                    reader.readAsDataURL(selectedAvatarFile);
+                });
+                await updateDoc(doc(db, 'users', currentUser.uid), { avatarURL: base64 });
+                status.textContent = '✅ Avatar uploaded (Base64)!';
+                status.style.color = '#58d68d';
+                showToast('Profile picture uploaded! 📸', 'success');
+                // Clear the input
+                avatarFileInput.value = '';
+                avatarFileName.textContent = 'No file selected';
+                selectedAvatarFile = null;
+                // Refresh profile
+                setupProfileSync(currentUser.uid);
+            } catch (e) {
+                console.error('Avatar upload error:', e);
+                status.textContent = '❌ Avatar upload failed.';
+                showToast('Avatar upload failed: ' + e.message, 'error');
+            }
+            setTimeout(() => { if (status.textContent.includes('✅') || status.textContent.includes('❌'))
+                    setTimeout(() => { status.textContent = ''; }, 3000); }, 3000);
         }));
 
         // ─── Chat ───
@@ -5449,7 +5566,6 @@
                         }
                     }
                 }
-                // Unlimited purchase: always show "Buy" unless effect is active
                 const isActive = hasEffect && (item.duration === 0 || (Date.now() - effects.find(e => e.itemId === item
                     .id)?.startTime || 0) / 1000 < item.duration);
                 const btnText = isActive ? '✅ Active' : 'Buy';
@@ -5468,11 +5584,8 @@
                             const coins = data.coins || 0;
                             if (coins < item.price) throw new Error('Not enough coins!');
                             const updates = { coins: coins - item.price };
-                            // Always add to inventory (unlimited)
                             updates.inventory = arrayUnion(item.id);
-                            // Handle badge items
                             if (isBadge) updates.badges = arrayUnion(item.id);
-                            // Handle effect items
                             if (item.effect && item.duration > 0) {
                                 const effectsArr = data.shopEffects || [];
                                 const filtered = effectsArr.filter(e => e.itemId !== item.id);
@@ -5484,7 +5597,6 @@
                                 };
                                 updates.shopEffects = [...filtered, newEffect];
                             }
-                            // Handle instant coin shower
                             if (item.effect === 'coin_shower') {
                                 updates.coins = coins - item.price + 50;
                             }
@@ -5570,7 +5682,6 @@
                 const activeMultiplier = effects.find(e => e.effectType === 'coin_multiplier_2x' && (e.duration === 0 || (Date
                     .now() - e.startTime) / 1000 < e.duration));
                 if (activeMultiplier) multiplier = 2;
-                // Check global XP boost
                 if (xpBoostActive) multiplier *= xpMultiplier;
                 const bonus = 25 * multiplier;
                 tx.update(ref, { coins: increment(bonus), dailyBonusLast: serverTimestamp() });
@@ -5601,7 +5712,7 @@
             let avatarURL = '';
             const statusEl = document.getElementById('profile-update-status');
             if (fileInput.files.length > 0) {
-                try { avatarURL = await uploadAvatarFile(fileInput.files[0], statusEl); } catch (e) { console.error(e);
+                try { avatarURL = await uploadAvatarFileBase64(fileInput.files[0], statusEl); } catch (e) { console.error(e);
                     statusEl.textContent = '❌ Avatar failed.';
                     showToast('Avatar upload failed.', 'error'); return; }
             } else if (avatarUrlInput && avatarUrlInput.match(/^https?:\/\/.+/)) { avatarURL = avatarUrlInput; }
@@ -5625,6 +5736,23 @@
             showToast('Profile updated!', 'success');
         }));
 
+        // ─── Base64 avatar upload helper ───
+        async function uploadAvatarFileBase64(file, statusEl) {
+            if (!file || !file.type.startsWith('image/')) throw new Error('Please choose an image file.');
+            if (file.size > 2 * 1024 * 1024) throw new Error('Image must be under 2MB.');
+            if (statusEl) statusEl.textContent = '📸 Converting avatar…';
+            try {
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = () => reject(new Error('Failed to read file'));
+                    reader.readAsDataURL(file);
+                });
+                if (statusEl) statusEl.textContent = '✅ Avatar converted.';
+                return base64;
+            } catch (e) { throw new Error('Image conversion failed: ' + e.message); }
+        }
+
         document.getElementById('cover-upload-trigger').addEventListener('click', () => {
             const input = document.createElement('input');
             input.type = 'file';
@@ -5633,12 +5761,15 @@
                 const file = e.target.files[0];
                 if (!file) return;
                 const status = document.getElementById('profile-update-status');
-                status.textContent = 'Uploading cover…';
+                status.textContent = '📸 Converting cover…';
                 try {
-                    const storageRef = ref(storage, `covers/${currentUser.uid}/${Date.now()}_${file.name}`);
-                    await uploadBytes(storageRef, file);
-                    const coverURL = await getDownloadURL(storageRef);
-                    await updateDoc(doc(db, 'users', currentUser.uid), { coverURL });
+                    const base64 = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = () => reject(new Error('Failed to read file'));
+                        reader.readAsDataURL(file);
+                    });
+                    await updateDoc(doc(db, 'users', currentUser.uid), { coverURL: base64 });
                     status.textContent = '✅ Cover updated!';
                     showToast('Cover photo updated!', 'success');
                 } catch (err) { console.error(err);
@@ -5648,37 +5779,8 @@
             input.click();
         });
 
-        async function uploadAvatarFile(file, statusEl) {
-            if (!file || !file.type.startsWith('image/')) throw new Error('Please choose an image file.');
-            if (file.size > 5 * 1024 * 1024) throw new Error('Image must be under 5MB.');
-            if (statusEl) statusEl.textContent = 'Uploading avatar…';
-            else showToast('Uploading avatar…', 'info', 1600);
-            try {
-                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-                const oldURL = userDoc.exists() ? userDoc.data().avatarURL : null;
-                if (oldURL && oldURL.includes('firebasestorage')) { try { await deleteObject(ref(storage, oldURL)); } catch (
-                    e) { /* ignore */ } }
-            } catch (e) { /* ignore */ }
-            const safeName = (file.name || 'avatar').replace(/[^a-zA-Z0-9._-]/g, '_');
-            const storageRef = ref(storage, `avatars/${currentUser.uid}/${Date.now()}_${safeName}`);
-            await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(storageRef);
-            await updateDoc(doc(db, 'users', currentUser.uid), { avatarURL: url });
-            if (statusEl) statusEl.textContent = '✅ Avatar uploaded.';
-            else showToast('Profile picture updated! 📸', 'success');
-            return url;
-        }
-
-        document.getElementById('edit-avatar-file').addEventListener('change', async (e) => {
-            const file = e.target.files && e.target.files[0];
-            if (!file) return;
-            try { await uploadAvatarFile(file);
-                e.target.value = ''; } catch (err) { console.error(err);
-                showToast(err.message || 'Avatar upload failed.', 'error');
-                e.target.value = ''; }
-        });
         document.addEventListener('click', (e) => { if (e.target.closest('#avatar-upload-trigger')) { document.getElementById(
-                    'edit-avatar-file').click(); } });
+                    'edit-avatar-file-input').click(); } });
 
         // ─── Interests ───
         document.getElementById('btn-add-interest').addEventListener('click', () => {
@@ -7135,7 +7237,7 @@
                 `Ships left: ${ships.length} • Shots: 0 • Hits: 0/${ships.reduce((a, s) => a + s.length, 0)}`;
         }
 
-        // ─── COIN CLICKER (FIXED: gives coins!) ───
+        // ─── COIN CLICKER ───
         function renderCoinClicker() {
             const container = document.getElementById('game-content');
             let clickScore = 0;
@@ -7158,7 +7260,7 @@
 
             coin.addEventListener('click', async () => {
                 const now = Date.now();
-                if (now - lastClickTime < 80) return; // anti-spam
+                if (now - lastClickTime < 80) return;
                 lastClickTime = now;
                 clickCount++;
                 clickScore++;
@@ -7168,7 +7270,6 @@
                 coin.style.transform = 'scale(0.85)';
                 setTimeout(() => coin.style.transform = 'scale(1)', 120);
 
-                // Actually give coins to the user
                 try {
                     const userRef = doc(db, 'users', currentUser.uid);
                     await updateDoc(userRef, { coins: increment(1) });
@@ -7467,6 +7568,7 @@
             });
         }
 
+        // ─── Limited promo creation (beta/tsa) ───
         document.getElementById('btn-create-promo-limited').addEventListener('click', withLoading(
             'btn-create-promo-limited', async () => {
                 if (limitedAdminPromoLimitReached) { showToast('You have reached your daily limit (1 promo).',
@@ -7488,20 +7590,47 @@
                 checkLimitedAdminPromoLimit();
             }));
 
+        // ─── ★ FULL PROMO CREATION (Owner, Co-Owner, Big Ferni) with 5,000 cap for co-owner/big-ferni ───
         document.getElementById('btn-create-promo-full').addEventListener('click', withLoading('btn-create-promo-full',
             async () => {
-                if (!isCurrentUserAdmin()) { showToast('Only full admins can create unlimited promos.',
-                    'error'); return; }
+                const badges = getCurrentUserBadges();
+                const isOwner = badges.includes('owner');
+                const isCoOwner = badges.includes('co_owner');
+                const isBigFerni = badges.includes('big_ferni');
+
+                if (!isOwner && !isCoOwner && !isBigFerni) {
+                    showToast('Only Owner, Co-Owner, or Big Ferni can create unlimited promos.', 'error');
+                    return;
+                }
+
                 const codeRaw = document.getElementById('admin-promo-code-full').value.trim().toUpperCase();
-                const coins = parseInt(document.getElementById('admin-promo-coins-full').value, 10) || 100;
+                let coins = parseInt(document.getElementById('admin-promo-coins-full').value, 10) || 100;
+
                 if (!codeRaw) { showToast('Enter a promo code.', 'error'); return; }
                 if (coins < 1) { showToast('Coins must be at least 1.', 'error'); return; }
+
+                // ★ ENFORCE 5,000 CAP for co-owner and big-ferni
+                if (!isOwner) {
+                    if (coins > 5000) {
+                        showToast('Co-Owner and Big Ferni are limited to 5,000 coins per promo.', 'error');
+                        return;
+                    }
+                }
+
                 const existing = await getDocs(query(collection(db, 'promo_codes'), where('code', '==', codeRaw)));
                 if (!existing.empty) { showToast('Promo code already exists.', 'error'); return; }
-                await addDoc(collection(db, 'promo_codes'), { code: codeRaw, coins, usedBy: [],
-                    createdAt: serverTimestamp(), createdBy: currentUser.uid });
+
+                await addDoc(collection(db, 'promo_codes'), {
+                    code: codeRaw,
+                    coins,
+                    usedBy: [],
+                    createdAt: serverTimestamp(),
+                    createdBy: currentUser.uid
+                });
+
                 document.getElementById('admin-promo-code-full').value = '';
-                showToast(`Promo code "${codeRaw}" created!`, 'success');
+                document.getElementById('admin-promo-coins-full').value = '100';
+                showToast(`Promo code "${codeRaw}" created! (${coins} coins)`, 'success');
                 loadPromoCodesFull();
                 loadPromoCodes();
             }));
@@ -8414,9 +8543,9 @@
                 setTimeout(() => { msg.textContent = ''; }, 2500);
             }));
 
-        // ─── Bulk Coins ───
+        // ─── Bulk Coins (Owner-only) ───
         document.getElementById('btn-bulk-coins').addEventListener('click', withLoading('btn-bulk-coins', async () => {
-            if (!isCurrentUserAdmin()) { showToast('Only full admins can give coins to everyone.', 'error'); return; }
+            if (!isCurrentUserOwner()) { showToast('Only the Owner can give coins to everyone.', 'error'); return; }
             const amount = parseInt(document.getElementById('admin-bulk-coins-input').value, 10);
             if (!amount || amount < 1) { showToast('Enter a valid amount.', 'error'); return; }
             const validUsers = adminUsers.filter(u => u.uid && typeof u.uid === 'string');
@@ -8436,8 +8565,9 @@
             showToast(`Gave ${amount} coins to ${operationCount} users!`, 'success');
         }));
 
+        // ─── Wipe Posts (Owner-only) ───
         document.getElementById('btn-wipe-posts').addEventListener('click', withLoading('btn-wipe-posts', async () => {
-            if (!isCurrentUserAdmin()) { showToast('Only full admins can wipe posts.', 'error'); return; }
+            if (!isCurrentUserOwner()) { showToast('Only the Owner can wipe posts.', 'error'); return; }
             const confirmText = prompt(
                 `⚠️ This will permanently delete ALL posts (${adminPosts.length}).\nType WIPE to confirm:`
                 );
@@ -8453,9 +8583,10 @@
             loadAdminPanel();
         }));
 
+        // ─── Clear Global Chat (Owner-only) ───
         document.getElementById('btn-clear-global-chat').addEventListener('click', withLoading('btn-clear-global-chat',
             async () => {
-                if (!isCurrentUserAdmin()) { showToast('Only full admins can clear global chat.', 'error'); return; }
+                if (!isCurrentUserOwner()) { showToast('Only the Owner can clear global chat.', 'error'); return; }
                 const confirmText = prompt(
                     `⚠️ This will permanently delete ALL global chat messages.\nType CLEAR to confirm:`
                     );
@@ -8473,8 +8604,9 @@
                 showToast(`Cleared ${docs.length} chat message${docs.length === 1 ? '' : 's'}.`, 'info');
             }));
 
+        // ─── Broadcast (Owner-only) ───
         document.getElementById('btn-admin-broadcast').addEventListener('click', withLoading('btn-admin-broadcast', async () => {
-            if (!isCurrentUserAdmin()) { showToast('Only full admins can broadcast.', 'error'); return; }
+            if (!isCurrentUserOwner()) { showToast('Only the Owner can broadcast.', 'error'); return; }
             const msg = document.getElementById('admin-broadcast-input').value.trim();
             if (!msg) { showToast('Enter a message to broadcast.', 'error'); return; }
             await addDoc(collection(db, 'global_chat'), {
@@ -8527,7 +8659,6 @@
                         )) return;
                 if (!confirm('⚠️ WARNING: This will replace ALL current data. Are you sure?')) return;
                 const batch = writeBatch(db);
-                // Delete current data
                 const curUsers = await getDocs(collection(db, 'users'));
                 curUsers.forEach(d => batch.delete(d.ref));
                 const curPosts = await getDocs(collection(db, 'posts'));
@@ -8535,7 +8666,6 @@
                 const curPromos = await getDocs(collection(db, 'promo_codes'));
                 curPromos.forEach(d => batch.delete(d.ref));
                 await batch.commit();
-                // Restore
                 const restoreBatch = writeBatch(db);
                 backupData.users.forEach(u => {
                     const ref = doc(db, 'users', u.id);
@@ -8557,7 +8687,6 @@
                 showToast('✅ Restored from backup!', 'success');
                 document.getElementById('backup-status').textContent = '✅ Restore completed!';
                 setTimeout(() => { document.getElementById('backup-status').textContent = ''; }, 3000);
-                // Refresh
                 loadAdminPanel();
                 loadPromoCodes();
                 loadPromoCodesFull();
@@ -8575,7 +8704,7 @@
                     u.username || '',
                     u.displayName || '',
                     u.coins || 0,
-                    (u.badhes || []).join('; '),
+                    (u.badges || []).join('; '),
                     u.verified ? 'Yes' : 'No',
                     u.banned ? 'Yes' : 'No',
                     u.createdAt?.toDate?.()?.toISOString?.() || ''
@@ -8616,7 +8745,6 @@
                     `✅ Active! ${multiplier}× XP for ${duration} minutes.`;
                 showToast(`🚀 ${multiplier}× XP Boost activated for ${duration} minutes!`, 'success');
                 await logActivity(`Activated ${multiplier}× XP Boost for ${duration} min`);
-                // Auto-expire
                 setTimeout(() => {
                     xpBoostActive = false;
                     setDoc(doc(db, 'app_settings', 'xp_boost'), { active: false });
@@ -8652,7 +8780,6 @@
             if (!isCurrentUserOwner()) return;
             const container = document.getElementById('heatmap-container');
             if (!container) return;
-            // Simplified heatmap: show last 7 days of activity counts
             const days = 7;
             const colors = ['#1a1a2a', '#2a1a3a', '#3a1a4a', '#5a1a6a', '#8a2a8a', '#c03a8a', '#ff4a8a'];
             const heatData = [];
@@ -8660,8 +8787,8 @@
                 const d = new Date();
                 d.setDate(d.getDate() - i);
                 const dateStr = d.toISOString().slice(0, 10);
-                const postsSnap = await getDocs(query(collection(db, 'posts'), where('createdAt', '>=', new Date(d
-                    .setHours(0, 0, 0, 0)))));
+                const start = new Date(d.setHours(0, 0, 0, 0));
+                const postsSnap = await getDocs(query(collection(db, 'posts'), where('createdAt', '>=', start)));
                 const count = postsSnap.size;
                 heatData.push({ date: dateStr, count: Math.min(count, 50) });
             }
@@ -8676,7 +8803,6 @@
                 div.title = `${item.date}: ${item.count} posts`;
                 container.appendChild(div);
             });
-            // Add a small legend
             const legend = document.createElement('div');
             legend.style.cssText =
                 'width:100%;font-size:7px;color:var(--text-faint);text-align:center;padding-top:4px;';
@@ -8684,7 +8810,7 @@
             container.appendChild(legend);
         }
 
-        console.log('🚀 School Social – Fully upgraded with chess engine, shop effects, owner tools, and responsive design!');
+        console.log('🚀 School Social – Fully upgraded with Base64 image uploads, owner-only tools, and promo caps!');
         console.log('💬 Type /games in private chat to challenge a friend!');
         console.log('👑 Owner-only features: Backup, Export CSV, XP Boost, Announcement History, Activity Heatmap');
     </script>
