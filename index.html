@@ -647,7 +647,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ─── NOTES TRAY ─── */
+        /* ─── NOTES TRAY (GLASSMORPHISM UPGRADE) ─── */
         .notes-tray {
             display: flex;
             gap: clamp(14px, 3vw, 20px);
@@ -672,15 +672,16 @@
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
             padding-top: 26px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px) saturate(1.4);
+            -webkit-backdrop-filter: blur(16px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             padding: 26px 8px 10px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
         .note-bubble:hover {
             transform: scale(1.06) translateY(-4px);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 16px 56px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
             border-color: rgba(34, 229, 255, 0.15);
         }
         .note-bubble:active {
@@ -718,7 +719,9 @@
             top: -8px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #fff, #f0f4ff);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(240, 244, 255, 0.92));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: #080511;
             padding: 4px 14px;
             border-radius: 24px;
@@ -728,14 +731,13 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            border: 1px solid var(--neon-cyan);
+            border: 1px solid rgba(34, 229, 255, 0.25);
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             z-index: 3;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             pointer-events: none;
             line-height: 1.4;
-            backdrop-filter: blur(4px);
         }
         .note-music-icon {
             position: absolute;
@@ -779,35 +781,48 @@
             position: relative;
             z-index: 1;
         }
-        /* ─── NOTE DETAIL MODAL ─── */
+
+        /* ─── NOTE DETAIL MODAL (FROSTED GLASS UPGRADE) ─── */
         .note-detail-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(24px) saturate(1.6);
+            -webkit-backdrop-filter: blur(24px) saturate(1.6);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 400;
             padding: 24px;
+            animation: modalFadeIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .note-detail-modal.show {
             display: flex;
         }
+        @keyframes modalFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
         .note-detail-content {
-            background: var(--bg-card);
-            backdrop-filter: blur(32px);
+            background: rgba(18, 15, 34, 0.75);
+            backdrop-filter: blur(32px) saturate(1.8);
+            -webkit-backdrop-filter: blur(32px) saturate(1.8);
             border-radius: var(--radius-lg);
             padding: clamp(20px, 4vw, 28px);
             max-width: 400px;
             width: 100%;
-            border: 1px solid var(--border-soft);
-            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
             text-align: center;
-            animation: fadeSlide 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -824,6 +839,7 @@
             font-size: 30px;
             font-weight: 700;
             background: linear-gradient(135deg, #221741, #1a0e2e);
+            box-shadow: 0 0 40px rgba(34, 229, 255, 0.08);
         }
         .note-detail-content .note-detail-avatar img {
             width: 100%;
@@ -847,11 +863,12 @@
             margin: 8px 0 12px;
             border-radius: var(--radius-sm);
             overflow: hidden;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             min-height: 60px;
         }
         .note-detail-content .note-detail-embed iframe,
-        .note-detail-content .note-detail-embed audio {
+        .note-detail-content .note-detail-embed audio,
+        .note-detail-content .note-detail-embed video {
             width: 100%;
             border: none;
             display: block;
@@ -859,7 +876,12 @@
         }
         .note-detail-content .note-detail-embed audio {
             padding: 8px 0;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .note-detail-content .note-detail-embed video {
+            max-height: 360px;
+            object-fit: contain;
+            background: #000;
         }
         .note-detail-content .note-detail-close {
             background: rgba(255, 255, 255, 0.04);
@@ -946,6 +968,17 @@
             color: var(--text-faint);
             font-weight: 500;
             flex-shrink: 0;
+        }
+        .post-expiry-badge {
+            font-size: clamp(6px, 1.4vw, 8px);
+            color: #ffd479;
+            background: rgba(255, 215, 0, 0.08);
+            padding: 1px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            font-weight: 700;
+            margin-left: 4px;
+            white-space: nowrap;
         }
         .post-img-container {
             width: 100%;
@@ -1199,7 +1232,6 @@
             flex-direction: column;
             gap: 5px;
             padding: 2px 0 8px;
-            margin-bottom: 8px;
             border-bottom: 1px solid var(--border-soft);
         }
         .chat-msg {
@@ -1382,7 +1414,7 @@
             flex-shrink: 0;
         }
 
-        /* ─── ADMIN GRID ─── */
+        /* ─── ADMIN GRID (UPGRADED) ─── */
         .admin-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1417,6 +1449,171 @@
             border: none;
             border-top: 1px solid var(--border-soft);
             margin: 10px 0 8px;
+        }
+
+        /* ─── ADMIN PANEL UPGRADE ─── */
+        .admin-premium-card {
+            background: rgba(18, 15, 34, 0.85);
+            backdrop-filter: blur(16px) saturate(1.6);
+            -webkit-backdrop-filter: blur(16px) saturate(1.6);
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            border-radius: var(--radius-lg);
+            padding: clamp(12px, 3vw, 16px);
+            box-shadow: 0 8px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 215, 0, 0.03);
+            transition: var(--transition);
+        }
+        .admin-premium-card:hover {
+            border-color: rgba(255, 215, 0, 0.12);
+        }
+        .admin-premium-card .premium-title {
+            font-size: clamp(9px, 2.2vw, 11px);
+            font-weight: 800;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .admin-premium-card .premium-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), transparent);
+        }
+        .admin-premium-card .premium-badge {
+            display: inline-block;
+            font-size: 7px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 1px 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ffd700, #f7971e);
+            color: #000;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 7px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .admin-role-badge.owner {
+            background: linear-gradient(135deg, #ffd700, #f7971e);
+            color: #000;
+        }
+        .admin-role-badge.co_owner {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: #fff;
+        }
+        .admin-role-badge.big_ferni {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #000;
+        }
+        .admin-role-badge.beta_tester {
+            background: linear-gradient(135deg, #22e5ff, #0ea5e9);
+            color: #000;
+        }
+        .admin-role-badge.tsa_pro {
+            background: linear-gradient(135deg, #ff2f8e, #ec4899);
+            color: #fff;
+        }
+
+        /* Admin Coin Generator */
+        .coin-gen-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .coin-gen-row input {
+            flex: 1;
+            min-width: 80px;
+            padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 10px);
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: clamp(10px, 2.5vw, 12px);
+            outline: none;
+            min-height: clamp(32px, 7vh, 38px);
+        }
+        .coin-gen-row input:focus {
+            border-color: var(--neon-cyan);
+        }
+        .coin-gen-row .action-btn {
+            min-height: clamp(32px, 7vh, 38px);
+            padding: clamp(4px, 1vw, 6px) clamp(12px, 3vw, 16px);
+            width: auto;
+            font-size: clamp(8px, 2vw, 10px);
+        }
+
+        /* Admin User Lookup */
+        .admin-lookup-result {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            font-size: 10px;
+            color: var(--text-dim);
+            display: none;
+        }
+        .admin-lookup-result.show {
+            display: block;
+        }
+        .admin-lookup-result .lookup-field {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        .admin-lookup-result .lookup-field .label {
+            color: var(--text-faint);
+            font-weight: 600;
+        }
+        .admin-lookup-result .lookup-field .value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Global Chat Announcement Banner (Owner/Co-Owner pinned) */
+        .global-chat-announce-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.10), rgba(255, 47, 142, 0.06));
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: var(--radius-md);
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 14px);
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            font-size: clamp(10px, 2.5vw, 12px);
+            color: #ffd479;
+            font-weight: 600;
+        }
+        .global-chat-announce-banner.show {
+            display: flex;
+        }
+        .global-chat-announce-banner .announce-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0 4px;
+            transition: var(--transition);
+        }
+        .global-chat-announce-banner .announce-close:hover {
+            color: #fff;
+            transform: scale(1.1);
         }
 
         /* ─── PROFILE ─── */
@@ -1806,6 +2003,10 @@
         }
         .cell:hover {
             background: rgba(34, 229, 255, 0.04);
+        }
+        .cell.legal-move {
+            background: rgba(34, 229, 255, 0.12) !important;
+            box-shadow: 0 0 12px rgba(34, 229, 255, 0.08);
         }
 
         .battleship-grid {
@@ -4052,6 +4253,12 @@
 
             <!-- TAB: MESSAGES -->
             <section id="tab-messages" class="tab-content">
+                <!-- Global Chat Announcement Banner (Owner/Co-Owner pinned) -->
+                <div class="global-chat-announce-banner" id="global-chat-announce-banner">
+                    <span>📢</span>
+                    <span id="global-chat-announce-text" style="flex:1;">Announcement</span>
+                    <button class="announce-close" id="global-chat-announce-close">✕</button>
+                </div>
                 <div class="card">
                     <div class="section-title">💬 Campus Chat</div>
                     <div id="global-chat-stream" class="chat-stream"></div>
@@ -4211,11 +4418,11 @@
                 </div>
             </section>
 
-            <!-- TAB: ADMIN (full) -->
+            <!-- TAB: ADMIN (UPGRADED) -->
             <section id="tab-admin" class="tab-content">
                 <div id="admin-full-panel">
-                    <div class="card">
-                        <div class="section-title" style="color:#ffd700;">👑 Admin Dashboard</div>
+                    <div class="admin-premium-card">
+                        <div class="premium-title">👑 Admin Dashboard <span class="premium-badge">secure</span></div>
                         <div class="admin-tabs">
                             <button class="admin-tab-btn active" data-admin-tab="stats">📊 Stats</button>
                             <button class="admin-tab-btn" data-admin-tab="users">👥 Users</button>
@@ -4299,16 +4506,54 @@
                         <div class="admin-tab-panel" id="admin-tab-owner">
                             <div class="admin-owner-section" id="owner-only-section" style="border-color:rgba(255,215,0,0.3);">
                                 <div class="owner-title">👑 Owner-Only Tools <span class="owner-only-badge">Owner/Co‑Owner</span></div>
+
+                                <!-- Owner Stats -->
                                 <div class="admin-owner-grid" id="owner-stats-grid">
                                     <div class="owner-stat"><div class="num" id="ostats-users">0</div><div class="lbl">Total Users</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-posts">0</div><div class="lbl">Total Posts</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-coins">0</div><div class="lbl">Total Coins</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-online">0</div><div class="lbl">Online Now</div></div>
                                 </div>
+
+                                <!-- ★ COIN GENERATOR (Owner/Co-Owner) -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
-                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">Maintenance mode pauses posting for everyone except owners, co-owners, and Big Ferni.</div>
-                                    <button id="btn-toggle-maintenance" class="action-btn secondary" style="padding:6px;font-size:9px;width:auto;">🛠️ Enable Maintenance Mode</button>
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🪙 Coin Generator — give coins to any user</div>
+                                    <div class="coin-gen-row">
+                                        <input type="text" id="admin-coin-gen-username" placeholder="Username" style="flex:2;min-width:80px;" />
+                                        <input type="number" id="admin-coin-gen-amount" placeholder="Coins" value="50" min="1" style="flex:1;min-width:60px;" />
+                                        <button id="btn-admin-coin-gen" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Give</button>
+                                    </div>
+                                    <div id="admin-coin-gen-status" style="font-size:8px;color:var(--text-faint);margin-top:4px;"></div>
                                 </div>
+
+                                <!-- ★ ADVANCED USER LOOKUP (Owner/Co-Owner) -->
+                                <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🔍 Advanced User Lookup</div>
+                                    <div class="coin-gen-row">
+                                        <input type="text" id="admin-lookup-username" placeholder="Username" style="flex:2;min-width:80px;" />
+                                        <button id="btn-admin-lookup" class="action-btn small secondary" style="min-height:34px;padding:6px 12px;">Lookup</button>
+                                    </div>
+                                    <div id="admin-lookup-result" class="admin-lookup-result"></div>
+                                </div>
+
+                                <!-- ★ GLOBAL CHAT ANNOUNCEMENT MODE (Owner/Co-Owner) -->
+                                <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📢 Global Chat Announcement</div>
+                                    <div class="coin-gen-row">
+                                        <input type="text" id="admin-chat-announce-input" placeholder="Announcement text" style="flex:3;min-width:100px;" />
+                                        <button id="btn-admin-chat-announce" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Pin</button>
+                                        <button id="btn-admin-chat-announce-clear" class="action-btn small secondary" style="min-height:34px;padding:6px 12px;">Clear</button>
+                                    </div>
+                                    <div style="font-size:8px;color:var(--text-faint);margin-top:4px;">Pins a banner to the top of the chat for all users.</div>
+                                </div>
+
+                                <!-- Maintenance -->
+                                <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🛠️ Maintenance Mode</div>
+                                    <button id="btn-toggle-maintenance" class="action-btn secondary" style="padding:6px;font-size:9px;width:auto;">Enable Maintenance Mode</button>
+                                </div>
+
+                                <!-- Bulk Coins -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">Give coins to all users</div>
                                     <div class="flex-row">
@@ -4316,24 +4561,32 @@
                                         <button id="btn-bulk-coins" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Give All</button>
                                     </div>
                                 </div>
+
+                                <!-- Wipe / Clear -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div class="flex-row" style="gap:4px;">
                                         <button id="btn-wipe-posts" class="action-btn small danger" style="min-height:30px;padding:4px 12px;font-size:8px;">🗑️ Wipe Posts</button>
                                         <button id="btn-clear-global-chat" class="action-btn small danger" style="min-height:30px;padding:4px 12px;font-size:8px;">🧹 Clear Chat</button>
                                     </div>
                                 </div>
+
+                                <!-- Broadcast -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div class="flex-row" style="gap:4px;">
                                         <input type="text" id="admin-broadcast-input" class="input-box" placeholder="Broadcast message" style="flex:1;min-height:34px;padding:6px 10px;font-size:11px;" />
                                         <button id="btn-admin-broadcast" class="action-btn small secondary" style="min-height:34px;padding:6px 12px;font-size:8px;">📨 Send</button>
                                     </div>
                                 </div>
+
+                                <!-- Role Manager -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">👑 Role Manager</div>
                                     <div id="owner-role-list" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
                                 </div>
+
+                                <!-- Unlimited Promos -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
-                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🎟️ Unlimited Promo Codes (Owner/Co‑Owner)</div>
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🎟️ Unlimited Promo Codes</div>
                                     <div class="admin-badge-create" style="margin-bottom:4px;">
                                         <input type="text" id="admin-promo-code-unlimited" placeholder="Code" style="flex:1;min-width:60px;text-transform:uppercase;" />
                                         <input type="number" id="admin-promo-coins-unlimited" placeholder="Coins" style="flex:1;min-width:50px;" value="100" />
@@ -4341,23 +4594,31 @@
                                     </div>
                                     <div id="admin-promo-list-unlimited"></div>
                                 </div>
+
+                                <!-- Activity Log -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📋 Activity Log</div>
                                     <div id="admin-activity-log" class="admin-activity-log"><div style="color:var(--text-faint);font-size:9px;">Loading...</div></div>
                                     <button id="btn-clear-activity-log" class="action-btn small secondary" style="min-height:28px;padding:3px 10px;font-size:7px;margin-top:4px;">Clear Log</button>
                                 </div>
+
+                                <!-- Backup -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
-                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">💾 System Backup Snapshot</div>
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">💾 System Backup</div>
                                     <div class="flex-row" style="gap:4px;">
                                         <button id="btn-backup-snapshot" class="action-btn small cyan" style="min-height:30px;padding:4px 12px;font-size:8px;">📸 Create Backup</button>
                                         <button id="btn-restore-snapshot" class="action-btn small danger" style="min-height:30px;padding:4px 12px;font-size:8px;">🔄 Restore</button>
                                     </div>
                                     <div id="backup-status" style="font-size:8px;color:var(--text-faint);margin-top:4px;"></div>
                                 </div>
+
+                                <!-- Export CSV -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📤 Export Users (CSV)</div>
                                     <button id="btn-export-users-csv" class="action-btn small secondary" style="min-height:30px;padding:4px 12px;font-size:8px;">⬇️ Download CSV</button>
                                 </div>
+
+                                <!-- Global XP Boost -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">⚡ Global XP Boost</div>
                                     <div class="flex-row" style="gap:4px;">
@@ -4367,16 +4628,20 @@
                                     </div>
                                     <div id="xp-boost-status" style="font-size:8px;color:var(--text-faint);margin-top:4px;"></div>
                                 </div>
+
+                                <!-- Announcement History -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📜 Announcement History</div>
                                     <div id="announcement-history-list" style="max-height:100px;overflow-y:auto;font-size:8px;color:var(--text-dim);"></div>
                                 </div>
+
+                                <!-- Heatmap -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🔥 Activity Heatmap</div>
                                     <div id="heatmap-container" style="display:flex;flex-wrap:wrap;gap:2px;max-height:120px;overflow-y:auto;padding:4px 0;"></div>
                                 </div>
 
-                                <!-- ★ Custom Badge Matrix Form -->
+                                <!-- Custom Badge Matrix -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">👑 Custom Badge Matrix</div>
                                     <div class="admin-badge-create" style="margin-bottom:4px;">
@@ -4565,6 +4830,11 @@
         const MAX_PROMO_REDEEM_DAILY = 5;
         let promoRedemptionsToday = 0;
         let lastPromoRedemptionDate = '';
+        // Global chat announcement (Owner/Co-Owner pinned)
+        let globalChatAnnouncement = '';
+        let globalChatAnnounceUnsub = null;
+        // Post expiration: 12 hours
+        const POST_EXPIRY_MS = 12 * 60 * 60 * 1000;
 
         // ─── SWEAR FILTER DICTIONARY ───
         const SWEAR_WORDS = [
@@ -4577,7 +4847,6 @@
         ];
         const SWEAR_REGEX = new RegExp('\\b(' + SWEAR_WORDS.join('|') + ')\\b', 'gi');
 
-        // ─── Helper: filter swear words ───
         function filterSwearWords(text) {
             return text.replace(SWEAR_REGEX, (match) => {
                 return match.charAt(0) + '***';
@@ -4604,7 +4873,7 @@
             bjLosses = 0,
             bjProfit = 0;
 
-        // ─── BADGES (added 2nd Beta Tester) ───
+        // ─── BADGES ───
         const BADGES = {
             big_ferni: { label: 'Big Ferni', icon: '🌿', cls: 'big_ferni' },
             beta_tester: { label: 'Beta Tester', icon: '🧪', cls: 'beta_tester' },
@@ -4845,13 +5114,13 @@
                 startShopEffectsTimer();
                 loadOnlineUsers();
                 loadUserXpBoost();
+                loadGlobalChatAnnouncement();
                 loadingOverlay.style.display = 'none';
             } else {
                 currentUser = null;
-                // Clean up all listeners
                 [profileUnsub, feedUnsub, chatUnsub, usersUnsub, discoverUnsub, privateChatUnsub, promoUnsub,
                     promoUnsubUnlimited, announcementUnsub, adminUsersUnsub, gameInvitesUnsub, activeGamesUnsub,
-                    activityLogUnsub, systemSettingsUnsub
+                    activityLogUnsub, systemSettingsUnsub, globalChatAnnounceUnsub
                 ].forEach(fn => { if (fn) { fn();
                         fn = null; } });
                 Object.values(activeGameListeners).forEach(fn => { if (fn) fn(); });
@@ -5130,7 +5399,7 @@
             signOut(auth);
         }));
 
-        // ─── Check Admin Status with Promo routing ───
+        // ─── Check Admin Status ───
         function checkAdminStatus() {
             if (!currentUser) return;
             const userRef = doc(db, 'users', currentUser.uid);
@@ -5401,7 +5670,6 @@
                     renderInterests(interests);
                     renderEditInterests(interests);
 
-                    // ─── FIX: Ensure followers and following are always arrays ───
                     const followers = data.followers || [];
                     const following = data.following || [];
                     document.getElementById('profile-post-count').textContent = data.postCount || 0;
@@ -5478,7 +5746,6 @@
 
                     document.getElementById('input-music-url').value = data.musicUrl || '';
 
-                    // ─── FIX: Determine if this is the current user's own profile ───
                     const isOwnProfile = !viewedProfileUid || viewedProfileUid === uid;
                     const followContainer = document.getElementById('follow-btn-container');
                     const challengeContainer = document.getElementById('challenge-buttons');
@@ -5591,9 +5858,7 @@
                     tx.update(targetRef, { followers: arrayUnion(currentUser.uid) });
                 }
             });
-            // Refresh the profile view
             if (viewedProfileUid) {
-                // Re-fetch the target user's data to update the UI
                 const targetSnap = await getDoc(doc(db, 'users', targetUid));
                 if (targetSnap.exists()) {
                     const targetData = targetSnap.data();
@@ -5606,7 +5871,6 @@
                     }
                     document.getElementById('profile-follower-count').textContent = followers.length;
                 }
-                // Also update the current user's following count
                 const userSnap = await getDoc(doc(db, 'users', currentUser.uid));
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
@@ -5625,7 +5889,6 @@
 
         function viewUserProfile(uid) {
             viewedProfileUid = uid;
-            // Clean up any previous profile listener
             if (profileUnsub) profileUnsub();
             setupProfileSync(uid);
             switchTab('tab-profile');
@@ -5736,16 +5999,44 @@
 
         document.getElementById('discover-search').addEventListener('input', (e) => { renderDiscoverList(e.target.value); });
 
-        // ─── Real-time Feeds (with performance optimizations) ───
+        // ─── Helper: get expiry status for a post ───
+        function getPostExpiryInfo(createdAt) {
+            if (!createdAt) return null;
+            const ts = createdAt.toMillis ? createdAt.toMillis() : (createdAt.seconds ? createdAt.seconds * 1000 : 0);
+            if (!ts) return null;
+            const age = Date.now() - ts;
+            const remaining = POST_EXPIRY_MS - age;
+            if (remaining <= 0) return { expired: true };
+            const hours = Math.floor(remaining / (60 * 60 * 1000));
+            const mins = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+            return { expired: false, hours, mins, label: `⏳ ${hours}h ${mins}m` };
+        }
+
+        // ─── Real-time Feeds (with post expiration filtering) ───
         function startRealtimeFeeds() {
             if (feedUnsub) feedUnsub();
-            // Limit to 50 most recent posts for performance
             const feedQ = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(50));
             feedUnsub = onSnapshot(feedQ, (snap) => {
                 const container = document.getElementById('home-feed-stream');
-                // Use document fragment for batch rendering
                 const fragment = document.createDocumentFragment();
-                if (snap.empty) {
+                const docs = [];
+                snap.forEach(d => docs.push(d));
+                // Filter out expired posts (>12 hours old)
+                const validDocs = docs.filter(d => {
+                    const data = d.data();
+                    const expiry = getPostExpiryInfo(data.createdAt);
+                    if (expiry && expiry.expired) {
+                        // Optionally auto-delete expired posts in background (Owner/Admin)
+                        const badges = getCurrentUserBadges();
+                        if (badges.includes('owner') || badges.includes('co_owner')) {
+                            // Auto-delete from Firestore
+                            deleteDoc(doc(db, 'posts', d.id)).catch(() => {});
+                        }
+                        return false;
+                    }
+                    return true;
+                });
+                if (validDocs.length === 0) {
                     const empty = document.createElement('div');
                     empty.className = 'empty-state';
                     empty.innerHTML = '<span class="empty-icon">🌌</span>Feed empty — be the first to post!';
@@ -5754,9 +6045,7 @@
                     container.appendChild(fragment);
                     return;
                 }
-                const docs = [];
-                snap.forEach(d => docs.push(d));
-                docs.sort((a, b) => {
+                validDocs.sort((a, b) => {
                     const ap = a.data().pinned ? 1 : 0;
                     const bp = b.data().pinned ? 1 : 0;
                     if (ap !== bp) return bp - ap;
@@ -5764,7 +6053,7 @@
                     const bt = b.data().createdAt?.toMillis?.() || 0;
                     return bt - at;
                 });
-                docs.forEach((docSnap) => {
+                validDocs.forEach((docSnap) => {
                     const post = docSnap.data();
                     const pid = docSnap.id;
                     const isOwner = post.senderUid === currentUser?.uid;
@@ -5775,6 +6064,8 @@
                     const mediaHTML = post.imageUrl ?
                         `<div class="post-img-container"><img src="${post.imageUrl}" class="post-img" alt="post" loading="lazy" onerror="this.style.display='none'" /></div>` :
                         '';
+                    const expiryInfo = getPostExpiryInfo(post.createdAt);
+                    const expiryLabel = expiryInfo && !expiryInfo.expired ? expiryInfo.label : '';
                     const card = document.createElement('div');
                     card.className = 'post-card' + (post.pinned ? ' pinned-post' : '');
                     const avatarHTML = post.avatarURL ? `<img src="${post.avatarURL}" alt="avatar" />` : (post
@@ -5795,6 +6086,7 @@
                                 <div class="post-user-img">${avatarHTML}</div>
                                 <span class="post-username">@${post.username || 'anonymous'} ${verifiedBadgeHTML(post.verified)}</span>
                                 ${post.pinned ? '<span style="font-size:8px;color:var(--neon-cyan);font-weight:700;margin-left:4px;">📌 PINNED</span>' : ''}
+                                ${expiryLabel ? `<span class="post-expiry-badge">${expiryLabel}</span>` : ''}
                             </div>
                             <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
                                 <span class="post-time">${timeStr}</span>
@@ -5982,7 +6274,7 @@
                 stream.scrollTop = stream.scrollHeight;
             });
 
-            // ─── Notes Tray (UPGRADED with auto-detect YouTube/Spotify + embedded player) ───
+            // ─── Notes Tray (UPGRADED with glassmorphism and media detection) ───
             if (usersUnsub) usersUnsub();
             const usersQ = query(collection(db, 'users'));
             usersUnsub = onSnapshot(usersQ, (snap) => {
@@ -6006,6 +6298,10 @@
                         const noteText = note;
                         const youtubeMatch = noteText.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
                         const spotifyMatch = noteText.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+                        // Video file detection
+                        const videoMatch = noteText.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
+                        const audioMatch = noteText.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
+
                         if (youtubeMatch) {
                             const videoId = youtubeMatch[1];
                             mediaPlayHTML =
@@ -6014,6 +6310,12 @@
                             const trackId = spotifyMatch[1];
                             mediaPlayHTML =
                                 `<div class="note-media-play" data-media-url="https://open.spotify.com/track/${trackId}" data-media-title="Spotify Track"><span class="play-icon">▶️</span> Play</div>`;
+                        } else if (videoMatch) {
+                            mediaPlayHTML =
+                                `<div class="note-media-play" data-media-url="${videoMatch[0]}" data-media-title="Video"><span class="play-icon">▶️</span> Play</div>`;
+                        } else if (audioMatch) {
+                            mediaPlayHTML =
+                                `<div class="note-media-play" data-media-url="${audioMatch[0]}" data-media-title="Audio"><span class="play-icon">▶️</span> Play</div>`;
                         }
 
                         let musicHTML = '';
@@ -6024,7 +6326,6 @@
                             musicHTML = mediaPlayHTML;
                         }
 
-                        // ─── Build bubble with optional embed player in the text popup ───
                         bubble.innerHTML = `
                             <div class="note-text-popup" style="white-space:normal;max-width:clamp(80px,20vw,100px);padding:6px 12px;line-height:1.3;">${note}</div>
                             ${musicHTML}
@@ -6039,12 +6340,15 @@
                             document.getElementById('note-detail-avatar').innerHTML = avatarHTML;
                             document.getElementById('note-detail-name').textContent = `@${u.username || 'anon'}`;
                             document.getElementById('note-detail-text').textContent = note;
-                            // ─── Auto-embed in detail modal ───
+                            // ─── Auto-embed in detail modal with proper media handling ───
                             const embedContainer = document.getElementById('note-detail-embed');
                             embedContainer.innerHTML = '';
                             const noteTextForEmbed = note;
                             const ytMatch = noteTextForEmbed.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
                             const spMatch = noteTextForEmbed.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+                            const vidMatch = noteTextForEmbed.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
+                            const audMatch = noteTextForEmbed.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
+
                             if (ytMatch) {
                                 const vid = ytMatch[1];
                                 embedContainer.innerHTML =
@@ -6053,6 +6357,18 @@
                                 const tid = spMatch[1];
                                 embedContainer.innerHTML =
                                     `<iframe src="https://open.spotify.com/embed/track/${tid}" allow="autoplay; encrypted-media" style="min-height:80px;border-radius:var(--radius-sm);"></iframe>`;
+                            } else if (vidMatch) {
+                                embedContainer.innerHTML =
+                                    `<video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);"><source src="${vidMatch[0]}" type="video/mp4">Your browser doesn't support video.</video>`;
+                                const videoEl = embedContainer.querySelector('video');
+                                if (videoEl) { const playPromise = videoEl.play(); if (playPromise && typeof playPromise
+                                        .catch === 'function') { playPromise.catch(() => {}); } }
+                            } else if (audMatch) {
+                                embedContainer.innerHTML =
+                                    `<audio controls autoplay style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${audMatch[0]}" type="audio/mpeg">Your browser doesn't support audio.</audio>`;
+                                const audioEl = embedContainer.querySelector('audio');
+                                if (audioEl) { const playPromise = audioEl.play(); if (playPromise && typeof playPromise
+                                        .catch === 'function') { playPromise.catch(() => {}); } }
                             } else {
                                 embedContainer.innerHTML = '';
                             }
@@ -6132,6 +6448,12 @@
                         playPromise.catch(() => { showToast('Tap ▶ on the player to start playback.', 'info'); });
                     }
                 }
+            } else if (url.match(/\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i)) {
+                embed.innerHTML =
+                    `<video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);"><source src="${url}" type="video/mp4">Your browser doesn't support video.</video>`;
+                const videoEl = embed.querySelector('video');
+                if (videoEl) { const playPromise = videoEl.play(); if (playPromise && typeof playPromise.catch ===
+                        'function') { playPromise.catch(() => {}); } }
             } else if (url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/)) {
                 const trackId = url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/)[1];
                 embed.innerHTML =
@@ -6672,7 +6994,6 @@
                 document.getElementById('private-chat-input').value = '';
                 return;
             }
-            // No swear filter in private chat
             const chatId = [currentUser.uid, privateChatPartner].sort().join('_');
             await addDoc(collection(db, 'private_chats', chatId, 'messages'), {
                 senderUid: currentUser.uid,
@@ -7930,7 +8251,7 @@
             renderMultiplayerGame(gameId);
         }
 
-        // ─── Chess Multiplayer ───
+        // ─── Chess Multiplayer (FIXED: legal move validation) ───
         function renderChessMultiplayer(gameId, boardData, currentTurn, players, opponentName, isMyTurn, statusText,
             container) {
             const chess = new Chess();
@@ -7945,6 +8266,8 @@
             try { chess.load(fen); } catch (e) { /* fallback */ }
 
             const myColor = players[0] === currentUser.uid ? 'w' : 'b';
+            let selectedSquare = null;
+            let legalMovesForSelected = [];
 
             container.innerHTML = `
                 <div class="multiplayer-game-container">
@@ -7955,7 +8278,6 @@
                 </div>
             `;
             const boardEl = document.getElementById('chess-board-mp');
-            let selected = null;
 
             function renderChessBoard() {
                 boardEl.innerHTML = '';
@@ -7966,7 +8288,7 @@
                         cell.className = 'cell';
                         const piece = board[r][c];
                         const isLight = (r + c) % 2 === 0;
-                        cell.style.background = isLight ? '#2a2a3a' : '#1a1a2a';
+                        cell.style.background = isLight ? '#2a2a3a' : '#1a1a2e';
                         if (piece) {
                             const unicodeMap = { 'w': { 'K': '♔', 'Q': '♕', 'R': '♖', 'B': '♗', 'N': '♘', 'P': '♙' },
                                 'b': { 'K': '♚', 'Q': '♛', 'R': '♜', 'B': '♝', 'N': '♞', 'P': '♟' } };
@@ -7974,47 +8296,44 @@
                         } else {
                             cell.textContent = '';
                         }
+                        const square = String.fromCharCode(97 + c) + (8 - r);
+                        cell.dataset.square = square;
                         cell.dataset.row = r;
                         cell.dataset.col = c;
+                        // Highlight legal moves if this square is a legal target
+                        if (legalMovesForSelected.includes(square)) {
+                            cell.classList.add('legal-move');
+                        }
                         if (isMyTurn) {
                             cell.style.cursor = 'pointer';
-                            cell.addEventListener('click', () => onChessCellClick(r, c));
+                            cell.addEventListener('click', () => onChessCellClick(square, r, c));
                         } else { cell.style.cursor = 'default'; }
                         boardEl.appendChild(cell);
                     }
                 }
             }
 
-            function onChessCellClick(r, c) {
-                if (!isMyTurn) return;
-                const square = String.fromCharCode(97 + c) + (8 - r);
-                if (selected === null) {
-                    const piece = chess.get(square);
-                    if (!piece) return;
-                    if ((myColor === 'w' && piece.color !== 'w') || (myColor === 'b' && piece.color !== 'b')) return;
-                    selected = square;
-                    boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none');
-                    const cell = boardEl.querySelector(`[data-row="${r}"][data-col="${c}"]`);
-                    if (cell) cell.style.outline = '2px solid #22e5ff';
-                } else {
-                    const from = selected;
-                    const to = square;
-                    if (from === to) { selected = null;
-                        boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none'); return; }
-                    const move = chess.move({ from, to, promotion: 'q' });
+            function onChessCellClick(square, r, c) {
+                if (!isMyTurn) { showToast('Not your turn!', 'info'); return; }
+
+                // If a piece is already selected and this is a legal move, execute it
+                if (selectedSquare && legalMovesForSelected.includes(square)) {
+                    const move = chess.move({ from: selectedSquare, to: square, promotion: 'q' });
                     if (move === null) {
-                        showToast('Invalid move.', 'error');
-                        selected = null;
-                        boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none');
+                        showToast('Invalid move. Try again.', 'error');
+                        selectedSquare = null;
+                        legalMovesForSelected = [];
+                        renderChessBoard();
                         return;
                     }
-                    selected = null;
+                    selectedSquare = null;
+                    legalMovesForSelected = [];
                     const newFen = chess.fen();
                     const gameOver = chess.game_over();
                     const winner = gameOver ? (chess.in_checkmate() ? (chess.turn() === 'w' ? 'b' : 'w') : null) : null;
                     const nextTurn = chess.turn() === 'w' ? players[0] : players[1];
-                    const updates = { board: newFen, currentTurn: nextTurn, moves: arrayUnion({ from, to, fen: newFen,
-                            timestamp: Date.now() }) };
+                    const updates = { board: newFen, currentTurn: nextTurn, moves: arrayUnion({ from: move.from, to: move
+                                .to, fen: newFen, timestamp: Date.now() }) };
                     if (gameOver) {
                         updates.status = 'finished';
                         if (winner) {
@@ -8029,7 +8348,39 @@
                     }
                     updateDoc(doc(db, 'active_games', gameId), updates);
                     renderChessBoard();
+                    return;
                 }
+
+                // Otherwise, try to select a piece
+                const piece = chess.get(square);
+                if (!piece) {
+                    // Clicked on empty square with no selection — deselect
+                    if (selectedSquare) {
+                        selectedSquare = null;
+                        legalMovesForSelected = [];
+                        renderChessBoard();
+                    }
+                    return;
+                }
+                // Check if the piece belongs to the current player
+                if ((myColor === 'w' && piece.color !== 'w') || (myColor === 'b' && piece.color !== 'b')) {
+                    showToast('Not your piece!', 'info');
+                    return;
+                }
+                // Compute legal moves for this piece
+                const moves = chess.moves({ square, verbose: true });
+                if (moves.length === 0) {
+                    showToast('No legal moves for this piece.', 'info');
+                    if (selectedSquare) {
+                        selectedSquare = null;
+                        legalMovesForSelected = [];
+                        renderChessBoard();
+                    }
+                    return;
+                }
+                selectedSquare = square;
+                legalMovesForSelected = moves.map(m => m.to);
+                renderChessBoard();
             }
 
             renderChessBoard();
@@ -8239,7 +8590,7 @@
             gameIntervals = [];
         });
 
-        // ─── CHESS (vs CPU) ───
+        // ─── CHESS (vs CPU) with legal move validation ───
         function renderChess() {
             const container = document.getElementById('game-content');
             let board = {};
@@ -8254,6 +8605,7 @@
                 }
             let selected = null,
                 turn = 'white';
+            let legalMoves = [];
             container.innerHTML =
                 `<h4 style="margin-bottom:6px;font-size:15px;">♟️ Chess (vs CPU)</h4><div id="chess-board" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-width:280px;margin:0 auto;"></div><div id="chess-status" style="margin-top:6px;font-size:12px;color:var(--text-dim);text-align:center;">Your turn (white)</div>`;
             const boardEl = document.getElementById('chess-board');
@@ -8266,10 +8618,15 @@
                         cell.className = 'cell';
                         const key = `${r},${c}`;
                         const isLight = (r + c) % 2 === 0;
-                        cell.style.background = isLight ? '#2a2a3a' : '#1a1a2a';
+                        cell.style.background = isLight ? '#2a2a3a' : '#1a1a2e';
                         cell.textContent = board[key] || '';
                         cell.dataset.row = r;
                         cell.dataset.col = c;
+                        // Highlight legal moves
+                        const square = String.fromCharCode(97 + c) + (8 - r);
+                        if (legalMoves.includes(square)) {
+                            cell.classList.add('legal-move');
+                        }
                         if (turn === 'white') { cell.style.cursor = 'pointer';
                             cell.addEventListener('click', () => onCellClick(r, c)); } else { cell.style.cursor =
                             'default'; }
@@ -8280,59 +8637,105 @@
 
             function isWhitePiece(p) { return p && '♔♕♖♗♘♙'.includes(p); }
 
+            // Convert board representation to FEN-like for move validation
+            function boardToFen() {
+                let fen = '';
+                for (let r = 0; r < 8; r++) {
+                    let empty = 0;
+                    for (let c = 0; c < 8; c++) {
+                        const key = `${r},${c}`;
+                        const p = board[key];
+                        if (!p) { empty++; continue; }
+                        if (empty > 0) { fen += empty;
+                            empty = 0; }
+                        const pieceMap = { '♔': 'K', '♕': 'Q', '♖': 'R', '♗': 'B', '♘': 'N', '♙': 'P',
+                            '♚': 'k', '♛': 'q', '♜': 'r', '♝': 'b', '♞': 'n', '♟': 'p' };
+                        fen += pieceMap[p] || '';
+                    }
+                    if (empty > 0) fen += empty;
+                    if (r < 7) fen += '/';
+                }
+                return fen + (turn === 'white' ? ' w' : ' b') + ' KQkq - 0 1';
+            }
+
+            function getLegalMovesForSquare(sq) {
+                try {
+                    const fen = boardToFen();
+                    const chess = new Chess(fen);
+                    const moves = chess.moves({ square: sq, verbose: true });
+                    return moves.map(m => m.to);
+                } catch (e) { return []; }
+            }
+
             function onCellClick(r, c) {
                 if (turn !== 'white') return;
                 const key = `${r},${c}`;
-                if (selected === null) {
-                    const piece = board[key];
-                    if (!piece || !isWhitePiece(piece)) return;
-                    selected = { r, c };
-                    boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none');
-                    const cell = boardEl.querySelector(`[data-row="${r}"][data-col="${c}"]`);
-                    if (cell) cell.style.outline = '2px solid #22e5ff';
-                } else {
+                const square = String.fromCharCode(97 + c) + (8 - r);
+                const piece = board[key];
+
+                // If a square is selected and this is a legal move
+                if (selected && legalMoves.includes(square)) {
                     const fromKey = `${selected.r},${selected.c}`;
-                    const toKey = `${r},${c}`;
-                    if (fromKey === toKey) { selected = null;
-                        boardEl.querySelectorAll('.cell').forEach(el => el.style.outline = 'none'); return; }
-                    const piece = board[fromKey];
-                    board[toKey] = piece;
+                    const fromPiece = board[fromKey];
+                    board[square] = fromPiece;
                     delete board[fromKey];
                     selected = null;
+                    legalMoves = [];
                     turn = 'black';
                     document.getElementById('chess-status').textContent = 'CPU thinking...';
                     renderBoard();
                     setTimeout(cpuMove, 600);
+                    return;
                 }
+
+                // Select a piece
+                if (!piece || !isWhitePiece(piece)) {
+                    if (selected) { selected = null;
+                        legalMoves = [];
+                        renderBoard(); }
+                    return;
+                }
+                const moves = getLegalMovesForSquare(square);
+                if (moves.length === 0) {
+                    if (selected) { selected = null;
+                        legalMoves = [];
+                        renderBoard(); }
+                    return;
+                }
+                selected = { r, c };
+                legalMoves = moves;
+                renderBoard();
             }
 
             function cpuMove() {
+                if (turn !== 'black') return;
                 const pieces = [];
                 for (let r = 0; r < 8; r++)
                     for (let c = 0; c < 8; c++) { const key = `${r},${c}`; if (board[key] && !isWhitePiece(board[key]))
                         pieces.push({ r, c, key }); }
                 if (pieces.length === 0) { turn = 'white';
-                    document.getElementById('chess-status').textContent = 'You win!'; return; }
-                const from = pieces[Math.floor(Math.random() * pieces.length)];
-                const moves = [];
-                for (let dr = -1; dr <= 1; dr++)
-                    for (let dc = -1; dc <= 1; dc++) {
-                        if (dr === 0 && dc === 0) continue;
-                        const nr = from.r + dr,
-                            nc = from.c + dc;
-                        if (nr < 0 || nr > 7 || nc < 0 || nc > 7) continue;
-                        const toKey = `${nr},${nc}`;
-                        if (board[toKey] && isWhitePiece(board[toKey])) continue;
-                        moves.push({ r: nr, c: nc });
+                    document.getElementById('chess-status').textContent = 'You win!';
+                    renderBoard(); return; }
+                // Try to find a legal move
+                for (const from of pieces) {
+                    const sq = String.fromCharCode(97 + from.c) + (8 - from.r);
+                    const moves = getLegalMovesForSquare(sq);
+                    if (moves.length > 0) {
+                        const to = moves[Math.floor(Math.random() * moves.length)];
+                        const toR = 8 - parseInt(to[1]);
+                        const toC = to.charCodeAt(0) - 97;
+                        const toKey = `${toR},${toC}`;
+                        board[toKey] = board[from.key];
+                        delete board[from.key];
+                        turn = 'white';
+                        document.getElementById('chess-status').textContent = 'Your turn (white)';
+                        renderBoard();
+                        return;
                     }
-                if (moves.length === 0) { turn = 'white';
-                    document.getElementById('chess-status').textContent = 'You win!'; return; }
-                const to = moves[Math.floor(Math.random() * moves.length)];
-                const toKey = `${to.r},${to.c}`;
-                board[toKey] = board[from.key];
-                delete board[from.key];
+                }
+                // No legal moves found
                 turn = 'white';
-                document.getElementById('chess-status').textContent = 'Your turn (white)';
+                document.getElementById('chess-status').textContent = 'You win!';
                 renderBoard();
             }
             renderBoard();
@@ -10220,12 +10623,152 @@
                 loadAdminPanel();
             }));
 
-        console.log('🚀 School Social – Fully updated with all features!');
-        console.log('💬 /games in private chat launches Tic-Tac-Toe!');
-        console.log('👑 Custom Badge Matrix added to Owner panel');
-        console.log('🌸 Beta Tester badge added (#FBEAEC)');
+        // ─── Global Chat Announcement (Owner/Co-Owner pinned) ───
+        async function loadGlobalChatAnnouncement() {
+            if (globalChatAnnounceUnsub) globalChatAnnounceUnsub();
+            const docRef = doc(db, 'app_settings', 'global_chat_announce');
+            globalChatAnnounceUnsub = onSnapshot(docRef, (snap) => {
+                globalChatAnnouncement = snap.exists() ? snap.data().message || '' : '';
+                const banner = document.getElementById('global-chat-announce-banner');
+                const textEl = document.getElementById('global-chat-announce-text');
+                if (globalChatAnnouncement) {
+                    banner.classList.add('show');
+                    textEl.textContent = globalChatAnnouncement;
+                } else {
+                    banner.classList.remove('show');
+                }
+            });
+        }
+
+        document.getElementById('btn-admin-chat-announce').addEventListener('click', withLoading(
+            'btn-admin-chat-announce', async () => {
+                if (!isCurrentUserOwnerOrCoOwner()) {
+                    showToast('Only Owner and Co-Owner can pin chat announcements.', 'error');
+                    return;
+                }
+                const msg = document.getElementById('admin-chat-announce-input').value.trim();
+                if (!msg) { showToast('Enter an announcement message.', 'error'); return; }
+                await setDoc(doc(db, 'app_settings', 'global_chat_announce'), {
+                    message: msg,
+                    setBy: currentUser.uid,
+                    setAt: serverTimestamp()
+                });
+                document.getElementById('admin-chat-announce-input').value = '';
+                showToast('Chat announcement pinned! 📢', 'success');
+                await logActivity(`Pinned global chat announcement: "${msg}"`);
+            }));
+
+        document.getElementById('btn-admin-chat-announce-clear').addEventListener('click', withLoading(
+            'btn-admin-chat-announce-clear', async () => {
+                if (!isCurrentUserOwnerOrCoOwner()) {
+                    showToast('Only Owner and Co-Owner can clear chat announcements.', 'error');
+                    return;
+                }
+                await setDoc(doc(db, 'app_settings', 'global_chat_announce'), { message: '' });
+                showToast('Chat announcement cleared.', 'info');
+                await logActivity('Cleared global chat announcement');
+            }));
+
+        document.getElementById('global-chat-announce-close').addEventListener('click', async () => {
+            if (!isCurrentUserOwnerOrCoOwner()) {
+                showToast('Only Owner and Co-Owner can dismiss the announcement.', 'error');
+                return;
+            }
+            await setDoc(doc(db, 'app_settings', 'global_chat_announce'), { message: '' });
+            showToast('Announcement dismissed.', 'info');
+        });
+
+        // ─── Coin Generator (Owner/Co-Owner) ───
+        document.getElementById('btn-admin-coin-gen').addEventListener('click', withLoading('btn-admin-coin-gen', async () => {
+            if (!isCurrentUserOwnerOrCoOwner()) {
+                showToast('Only Owner and Co-Owner can use the coin generator.', 'error');
+                return;
+            }
+            const username = document.getElementById('admin-coin-gen-username').value.trim().toLowerCase();
+            const amount = parseInt(document.getElementById('admin-coin-gen-amount').value, 10);
+            const statusEl = document.getElementById('admin-coin-gen-status');
+
+            if (!username) { showToast('Enter a username.', 'error'); return; }
+            if (!amount || amount < 1) { showToast('Enter a valid coin amount.', 'error'); return; }
+
+            const usernameDoc = await getDoc(doc(db, 'usernames', username));
+            if (!usernameDoc.exists()) { statusEl.textContent = '❌ Username not found.';
+                statusEl.style.color = '#ff2f8e'; return; }
+            const targetUid = usernameDoc.data().uid;
+            const userRef = doc(db, 'users', targetUid);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists()) { statusEl.textContent = '❌ User profile not found.';
+                statusEl.style.color = '#ff2f8e'; return; }
+
+            const current = userSnap.data().coins || 0;
+            const newBalance = Math.min(current + amount, MAX_COINS);
+            const actualDelta = newBalance - current;
+            await updateDoc(userRef, { coins: newBalance });
+
+            statusEl.textContent = `✅ Gave ${actualDelta} coins to @${username}${actualDelta < amount ? ' (capped)' : ''}`;
+            statusEl.style.color = '#58d68d';
+            showToast(`Gave ${actualDelta} coins to @${username}`, 'success');
+            await logActivity(`Coin generator: gave ${actualDelta} coins to @${username}`);
+            document.getElementById('admin-coin-gen-username').value = '';
+            document.getElementById('admin-coin-gen-amount').value = '50';
+            setTimeout(() => { statusEl.textContent = ''; }, 4000);
+        }));
+
+        // ─── Advanced User Lookup (Owner/Co-Owner) ───
+        document.getElementById('btn-admin-lookup').addEventListener('click', withLoading('btn-admin-lookup', async () => {
+            if (!isCurrentUserOwnerOrCoOwner()) {
+                showToast('Only Owner and Co-Owner can use advanced lookup.', 'error');
+                return;
+            }
+            const username = document.getElementById('admin-lookup-username').value.trim().toLowerCase();
+            const resultEl = document.getElementById('admin-lookup-result');
+
+            if (!username) { showToast('Enter a username.', 'error'); return; }
+
+            const usernameDoc = await getDoc(doc(db, 'usernames', username));
+            if (!usernameDoc.exists()) {
+                resultEl.classList.add('show');
+                resultEl.innerHTML = '<div style="color:#ff2f8e;">❌ Username not found.</div>';
+                return;
+            }
+            const targetUid = usernameDoc.data().uid;
+            const userSnap = await getDoc(doc(db, 'users', targetUid));
+            if (!userSnap.exists()) {
+                resultEl.classList.add('show');
+                resultEl.innerHTML = '<div style="color:#ff2f8e;">❌ User profile not found.</div>';
+                return;
+            }
+            const data = userSnap.data();
+            const created = data.createdAt?.toDate?.()?.toLocaleString?.() || 'Unknown';
+            const badges = (data.badges || []).join(', ') || 'None';
+            const inventory = (data.inventory || []).join(', ') || 'None';
+            const secQ = data.securityQuestion || 'Not set';
+            const secA = data.securityAnswer || 'Not set';
+
+            resultEl.classList.add('show');
+            resultEl.innerHTML = `
+                <div style="font-weight:700;color:var(--neon-cyan);margin-bottom:4px;">👤 @${data.username}</div>
+                <div class="lookup-field"><span class="label">UID</span><span class="value">${data.uid}</span></div>
+                <div class="lookup-field"><span class="label">Display Name</span><span class="value">${data.displayName || '—'}</span></div>
+                <div class="lookup-field"><span class="label">Coins</span><span class="value">${Math.min(data.coins || 0, MAX_COINS)}</span></div>
+                <div class="lookup-field"><span class="label">Badges</span><span class="value">${badges}</span></div>
+                <div class="lookup-field"><span class="label">Inventory</span><span class="value">${inventory}</span></div>
+                <div class="lookup-field"><span class="label">Verified</span><span class="value">${data.verified ? '✅ Yes' : '❌ No'}</span></div>
+                <div class="lookup-field"><span class="label">Banned</span><span class="value">${data.banned ? '⛔ Yes' : '✅ No'}</span></div>
+                <div class="lookup-field"><span class="label">Created</span><span class="value">${created}</span></div>
+                <div class="lookup-field"><span class="label">Security Q</span><span class="value">${secQ}</span></div>
+                <div class="lookup-field"><span class="label">Security A</span><span class="value">${secA}</span></div>
+            `;
+            document.getElementById('admin-lookup-username').value = '';
+        }));
+
+        console.log('🚀 School Social – Fully upgraded with all features!');
+        console.log('♟️ Chess legal move validation fixed!');
+        console.log('🎵 Notes media playback improved (video/audio/YouTube/Spotify)');
+        console.log('👑 Admin panel upgraded with Coin Generator, User Lookup, Chat Announcements');
+        console.log('🌸 Glassmorphism notes tray with frosted glass detail modal');
+        console.log('⏳ Posts auto-expire after 12 hours with countdown badges');
         console.log('🔇 Swear filter active in global chat only');
-        console.log('🎵 Auto-detect YouTube/Spotify in notes');
         console.log('🎮 Tic-Tac-Toe with glassmorphism and coin/XP rewards');
     </script>
 </body>
