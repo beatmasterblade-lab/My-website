@@ -645,16 +645,16 @@
             letter-spacing: 0.5px;
         }
 
-        /* ─── NOTES TRAY ─── */
+        /* ─── NOTES TRAY ─── (UPGRADED) */
         .notes-tray {
             display: flex;
-            gap: clamp(10px, 2.5vw, 14px);
+            gap: clamp(14px, 3vw, 20px);
             overflow-x: auto;
-            padding: 16px 2px 6px;
+            padding: 18px 4px 12px;
             scrollbar-width: none;
             flex-wrap: nowrap;
             align-items: flex-start;
-            min-height: clamp(88px, 18vh, 108px);
+            min-height: clamp(100px, 20vh, 130px);
         }
         .notes-tray::-webkit-scrollbar {
             display: none;
@@ -663,37 +663,48 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-width: clamp(52px, 14vw, 68px);
+            min-width: clamp(58px, 15vw, 74px);
             position: relative;
             cursor: pointer;
             flex-shrink: 0;
-            transition: var(--transition);
-            padding-top: 22px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+            padding-top: 26px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 26px 8px 10px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
         }
         .note-bubble:hover {
-            transform: scale(1.04);
+            transform: scale(1.06) translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+            border-color: rgba(34, 229, 255, 0.15);
+        }
+        .note-bubble:active {
+            transform: scale(0.94);
         }
         .note-avatar {
-            width: clamp(42px, 11vw, 54px);
-            height: clamp(42px, 11vw, 54px);
+            width: clamp(44px, 12vw, 58px);
+            height: clamp(44px, 12vw, 58px);
             border-radius: 50%;
-            border: 2px solid var(--neon-cyan);
+            border: 2.5px solid var(--neon-cyan);
             background: linear-gradient(135deg, #221741, #1a0e2e);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: clamp(16px, 4vw, 20px);
+            font-size: clamp(18px, 4.5vw, 22px);
             font-weight: 700;
             overflow: hidden;
             flex-shrink: 0;
-            box-shadow: 0 0 24px rgba(34, 229, 255, 0.04);
+            box-shadow: 0 0 30px rgba(34, 229, 255, 0.06);
             transition: var(--transition);
             position: relative;
             z-index: 1;
         }
         .note-bubble:hover .note-avatar {
             border-color: var(--neon-pink);
-            box-shadow: 0 0 32px rgba(255, 47, 142, 0.08);
+            box-shadow: 0 0 40px rgba(255, 47, 142, 0.12);
         }
         .note-avatar img {
             width: 100%;
@@ -702,48 +713,49 @@
         }
         .note-text-popup {
             position: absolute;
-            top: 0;
+            top: -8px;
             left: 50%;
             transform: translateX(-50%);
             background: linear-gradient(135deg, #fff, #f0f4ff);
             color: #080511;
-            padding: 3px 12px;
-            border-radius: 20px;
+            padding: 4px 14px;
+            border-radius: 24px;
             font-size: clamp(7px, 1.6vw, 9px);
             font-weight: 800;
-            max-width: clamp(60px, 16vw, 76px);
+            max-width: clamp(70px, 18vw, 86px);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             border: 1px solid var(--neon-cyan);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             z-index: 3;
             text-transform: uppercase;
             letter-spacing: 0.3px;
             pointer-events: none;
-            line-height: 1.3;
+            line-height: 1.4;
+            backdrop-filter: blur(4px);
         }
         .note-music-icon {
             position: absolute;
-            top: 22px;
-            right: -4px;
-            font-size: clamp(12px, 3vw, 16px);
+            top: 26px;
+            right: -2px;
+            font-size: clamp(14px, 3.2vw, 18px);
             z-index: 4;
-            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+            filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
             pointer-events: auto;
             cursor: pointer;
             transition: var(--transition);
             line-height: 1;
         }
         .note-music-icon:hover {
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 16px rgba(34, 229, 255, 0.4));
+            transform: scale(1.25);
+            filter: drop-shadow(0 0 24px rgba(34, 229, 255, 0.5));
         }
         .note-username {
             font-size: clamp(7px, 1.8vw, 9px);
             color: var(--text-dim);
-            margin-top: 4px;
-            max-width: clamp(48px, 14vw, 60px);
+            margin-top: 5px;
+            max-width: clamp(54px, 15vw, 66px);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -755,7 +767,7 @@
             font-size: clamp(6px, 1.2vw, 7px);
             color: var(--neon-cyan);
             opacity: 0.6;
-            max-width: clamp(48px, 14vw, 60px);
+            max-width: clamp(54px, 15vw, 66px);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -764,6 +776,84 @@
             letter-spacing: 0.2px;
             position: relative;
             z-index: 1;
+        }
+        /* ─── NOTE DETAIL MODAL ─── */
+        .note-detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 400;
+            padding: 24px;
+        }
+        .note-detail-modal.show {
+            display: flex;
+        }
+        .note-detail-content {
+            background: var(--bg-card);
+            backdrop-filter: blur(32px);
+            border-radius: var(--radius-lg);
+            padding: clamp(20px, 4vw, 28px);
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid var(--border-soft);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+            animation: fadeSlide 0.3s ease;
+        }
+        .note-detail-content .note-detail-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 3px solid var(--neon-cyan);
+            margin: 0 auto 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #221741, #1a0e2e);
+        }
+        .note-detail-content .note-detail-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .note-detail-content .note-detail-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: #fff;
+        }
+        .note-detail-content .note-detail-text {
+            font-size: 15px;
+            color: var(--text-dim);
+            padding: 12px 0;
+            word-break: break-word;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+        .note-detail-content .note-detail-close {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-soft);
+            color: var(--text-dim);
+            padding: 6px 24px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 4px;
+        }
+        .note-detail-content .note-detail-close:hover {
+            border-color: var(--neon-cyan);
+            color: #fff;
         }
 
         /* ─── POSTS ─── */
@@ -904,7 +994,7 @@
             background: rgba(255, 47, 142, 0.10);
         }
         .post-caption {
-            padding: 2px 14px clamp(10px, 2.5vw, 12px);
+            padding: 2px 14px clamp(6px, 1.5vw, 8px);
             font-size: clamp(11px, 2.8vw, 13px);
             color: #d0d8e8;
             word-break: break-word;
@@ -966,6 +1056,119 @@
             background: rgba(255, 60, 60, 0.08);
         }
 
+        /* ─── COMMENTS ─── */
+        .comments-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            font-size: clamp(10px, 2.5vw, 12px);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 4px 6px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .comments-toggle-btn:hover {
+            color: var(--neon-cyan);
+            background: rgba(34, 229, 255, 0.04);
+        }
+        .comments-container {
+            padding: 6px 14px 12px;
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            border-top: 1px solid var(--border-soft);
+            margin-top: 4px;
+        }
+        .comments-container.open {
+            display: flex;
+        }
+        .comment-item {
+            display: flex;
+            gap: 8px;
+            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-soft);
+            align-items: flex-start;
+        }
+        .comment-item .comment-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--bg-input);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .comment-item .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .comment-item .comment-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .comment-item .comment-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+        }
+        .comment-item .comment-text {
+            font-size: 11px;
+            color: #d0d8e8;
+            word-break: break-word;
+        }
+        .comment-item .comment-time {
+            font-size: 8px;
+            color: var(--text-faint);
+            margin-top: 1px;
+        }
+        .comment-input-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .comment-input-row input {
+            flex: 1;
+            padding: 6px 10px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 11px;
+            outline: none;
+            min-height: 34px;
+        }
+        .comment-input-row input:focus {
+            border-color: var(--neon-cyan);
+        }
+        .comment-input-row button {
+            padding: 6px 14px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 700;
+            font-size: 9px;
+            cursor: pointer;
+            transition: var(--transition);
+            min-height: 34px;
+            flex-shrink: 0;
+        }
+        .comment-input-row button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 16px rgba(255, 47, 142, 0.15);
+        }
+
         /* ─── CHAT ─── */
         .chat-stream {
             height: clamp(140px, 32vh, 180px);
@@ -1016,6 +1219,54 @@
             background: linear-gradient(135deg, var(--neon-purple), #7b2cbf);
             border: none;
             color: #fff;
+        }
+        /* Emote picker in chat */
+        .emote-picker-btn {
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0 4px;
+            line-height: 1;
+        }
+        .emote-picker-btn:hover {
+            color: var(--neon-cyan);
+            transform: scale(1.1);
+        }
+        .emote-picker-dropdown {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            max-width: 200px;
+            max-height: 150px;
+            overflow-y: auto;
+            flex-wrap: wrap;
+            gap: 4px;
+            z-index: 60;
+            box-shadow: var(--shadow-card);
+        }
+        .emote-picker-dropdown.open {
+            display: flex;
+        }
+        .emote-picker-dropdown .emote-option {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 4px;
+            transition: var(--transition);
+            flex: 0 0 auto;
+        }
+        .emote-picker-dropdown .emote-option:hover {
+            background: rgba(34, 229, 255, 0.10);
+            transform: scale(1.15);
         }
 
         /* ─── USER LISTS ─── */
@@ -1289,6 +1540,13 @@
             background: linear-gradient(135deg, #22e5ff, #0ea5e9);
             border-color: #22e5ff;
             box-shadow: 0 0 20px rgba(34, 229, 255, 0.3);
+        }
+        .badge-item.second_beta_tester {
+            background: #FBEAEC;
+            color: #1a0e2e;
+            border-color: #FBEAEC;
+            box-shadow: 0 0 20px rgba(251, 234, 236, 0.35);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
         }
         .badge-item.tsa_pro {
             background: linear-gradient(135deg, #ff2f8e, #ec4899);
@@ -2586,6 +2844,34 @@
             font-size: 10px;
         }
 
+        /* ─── XP BOOST INDICATOR ─── */
+        .xp-boost-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #000;
+            padding: 2px 12px;
+            border-radius: 999px;
+            font-size: 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 0 0 24px rgba(255, 215, 0, 0.25);
+            animation: boostPulse 1.5s ease-in-out infinite;
+            letter-spacing: 0.5px;
+        }
+        @keyframes boostPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 480px) {
             .app-container {
@@ -3150,7 +3436,6 @@
             font-size: 16px;
             margin-right: 6px;
         }
-        /* custom file input styling for profile avatar file picker */
         .avatar-file-input-wrap {
             display: flex;
             gap: 6px;
@@ -3189,6 +3474,196 @@
             text-overflow: ellipsis;
             max-width: 120px;
         }
+
+        /* ─── AVATAR DEVICE UPLOAD ─── */
+        .avatar-device-upload-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .avatar-device-upload-row input[type="file"] {
+            flex: 1;
+            min-width: 120px;
+            padding: 6px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: var(--text-dim);
+            font-size: 10px;
+            cursor: pointer;
+            min-height: 34px;
+        }
+        .avatar-device-upload-row input[type="file"]::file-selector-button {
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 9px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .avatar-device-upload-row input[type="file"]::file-selector-button:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(34, 229, 255, 0.06);
+        }
+        .avatar-device-upload-row .action-btn {
+            min-height: 34px;
+            padding: 6px 14px;
+            width: auto;
+            font-size: 9px;
+        }
+
+        /* ─── PROMO MANAGER TAB ─── */
+        .promo-manager-tab .promo-stats-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        .promo-manager-tab .promo-stats-row .stat-pill {
+            background: var(--bg-input);
+            padding: 4px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-dim);
+        }
+        .promo-manager-tab .promo-stats-row .stat-pill span {
+            color: #ffd479;
+        }
+
+        /* ─── TIC-TAC-TOE GLASSMORPHISM ─── */
+        .ttt-container {
+            background: rgba(18, 15, 34, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            max-width: 320px;
+            margin: 0 auto;
+            box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
+        }
+        .ttt-container .ttt-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            color: var(--neon-cyan);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 30px rgba(34, 229, 255, 0.06);
+        }
+        .ttt-container .ttt-status {
+            font-size: 12px;
+            text-align: center;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            min-height: 20px;
+            font-weight: 600;
+        }
+        .ttt-container .ttt-status .highlight {
+            color: var(--neon-cyan);
+            font-weight: 800;
+        }
+        .ttt-container .ttt-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            max-width: 240px;
+            margin: 0 auto;
+        }
+        .ttt-container .ttt-board .ttt-cell {
+            aspect-ratio: 1;
+            background: rgba(30, 24, 53, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #fff;
+            text-shadow: 0 0 20px rgba(34, 229, 255, 0.06);
+        }
+        .ttt-container .ttt-board .ttt-cell:hover:not(.disabled) {
+            background: rgba(34, 229, 255, 0.06);
+            border-color: rgba(34, 229, 255, 0.15);
+            transform: scale(1.02);
+        }
+        .ttt-container .ttt-board .ttt-cell.disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .ttt-container .ttt-board .ttt-cell.x {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 30px rgba(34, 229, 255, 0.3);
+        }
+        .ttt-container .ttt-board .ttt-cell.o {
+            color: var(--neon-pink);
+            text-shadow: 0 0 30px rgba(255, 47, 142, 0.3);
+        }
+        .ttt-container .ttt-board .ttt-cell.win-cell {
+            background: rgba(88, 214, 141, 0.12) !important;
+            border-color: #58d68d !important;
+            animation: winPulse 0.6s ease-in-out 2;
+        }
+        .ttt-container .ttt-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        .ttt-container .ttt-actions .action-btn {
+            min-height: 34px;
+            padding: 6px 18px;
+            font-size: 9px;
+            width: auto;
+        }
+
+        /* ─── SWEAR FILTER BADGE (visual cue) ─── */
+        .swear-filter-badge {
+            display: inline-block;
+            font-size: 7px;
+            color: var(--text-faint);
+            background: rgba(255, 47, 142, 0.08);
+            padding: 0 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+            border: 1px solid rgba(255, 47, 142, 0.1);
+        }
+
+        /* ─── NOTE MEDIA PLAY BUTTON ─── */
+        .note-media-play {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(34, 229, 255, 0.08);
+            border: 1px solid rgba(34, 229, 255, 0.12);
+            border-radius: 12px;
+            padding: 1px 8px 1px 4px;
+            font-size: 8px;
+            color: var(--neon-cyan);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 2px;
+            pointer-events: auto;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .note-media-play:hover {
+            background: rgba(34, 229, 255, 0.15);
+            transform: scale(1.04);
+        }
+        .note-media-play .play-icon {
+            font-size: 10px;
+        }
     </style>
 </head>
 <body>
@@ -3213,6 +3688,16 @@
                 <button id="music-popup-play">Play</button>
             </div>
             <div style="font-size:9px;color:var(--text-faint);margin-top:6px;">Paste a YouTube link, Spotify track, or direct audio URL.</div>
+        </div>
+    </div>
+
+    <!-- NOTE DETAIL MODAL -->
+    <div class="note-detail-modal" id="note-detail-modal">
+        <div class="note-detail-content">
+            <div class="note-detail-avatar" id="note-detail-avatar">👤</div>
+            <div class="note-detail-name" id="note-detail-name">@username</div>
+            <div class="note-detail-text" id="note-detail-text">Note content</div>
+            <button class="note-detail-close" id="note-detail-close">Close</button>
         </div>
     </div>
 
@@ -3547,8 +4032,10 @@
                 <div class="card">
                     <div class="section-title">💬 Campus Chat</div>
                     <div id="global-chat-stream" class="chat-stream"></div>
-                    <div class="flex-row">
+                    <div class="flex-row" style="position:relative;">
                         <input type="text" id="chat-input-message" class="input-box" placeholder="Type…" />
+                        <button class="emote-picker-btn" id="emote-picker-toggle" title="Emotes">😊</button>
+                        <div class="emote-picker-dropdown" id="emote-picker-dropdown"></div>
                         <button id="btn-send-chat" class="action-btn" style="padding:10px 18px;width:auto;">Send</button>
                     </div>
                 </div>
@@ -3561,8 +4048,10 @@
                             <button id="private-chat-back" style="background:none;border:none;color:var(--text-faint);cursor:pointer;font-size:11px;font-weight:600;transition:var(--transition);">⬅ Back</button>
                         </div>
                         <div id="private-chat-stream" class="chat-stream" style="height:140px;"></div>
-                        <div class="flex-row">
+                        <div class="flex-row" style="position:relative;">
                             <input type="text" id="private-chat-input" class="input-box" placeholder="Type…" />
+                            <button class="emote-picker-btn" id="private-emote-picker-toggle" title="Emotes">😊</button>
+                            <div class="emote-picker-dropdown" id="private-emote-picker-dropdown"></div>
                             <button id="btn-send-private" class="action-btn" style="padding:10px 18px;width:auto;">Send</button>
                         </div>
                         <div style="font-size:8px;color:var(--text-faint);margin-top:4px;text-align:center;">Type <code style="background:var(--bg-input);padding:1px 6px;border-radius:4px;">/games</code> to challenge your friend</div>
@@ -3604,6 +4093,7 @@
                         <button id="btn-challenge-connect4" class="action-btn small secondary" style="width:auto;">🟡 Connect4</button>
                     </div>
                     <div style="font-size:9px;color:var(--text-faint);margin-top:2px;font-weight:600;" id="profile-online-status">🟢 Online</div>
+                    <div id="xp-boost-indicator-container" style="margin-top:2px;"></div>
                     <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:4px;font-size:11px;color:var(--text-dim);">
                         <span id="profile-location">📍 Not set</span>
                         <span id="profile-website">🔗 Not set</span>
@@ -3629,15 +4119,12 @@
                     </div>
                     <div style="font-size:8px;color:var(--text-faint);margin-top:-4px;">Paste an image URL to use as your profile picture</div>
 
-                    <!-- ★ NEW: Avatar File Upload (Base64) -->
-                    <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:6px;">📸 Upload Avatar Image</div>
-                    <div class="avatar-file-input-wrap">
-                        <label for="edit-avatar-file-input">📁 Choose Image</label>
-                        <input type="file" id="edit-avatar-file-input" accept="image/*" />
-                        <span class="file-name" id="avatar-file-name">No file selected</span>
-                        <button id="btn-upload-avatar-base64" class="action-btn small secondary" style="min-height:34px;padding:4px 14px;font-size:9px;">Upload</button>
+                    <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:6px;">📸 Upload from Device</div>
+                    <div class="avatar-device-upload-row">
+                        <input type="file" id="avatar-device-file" accept="image/*" />
+                        <button id="btn-upload-avatar-device" class="action-btn small secondary" style="min-height:34px;padding:6px 14px;font-size:9px;">Upload</button>
+                        <span id="avatar-device-status" style="font-size:8px;color:var(--text-faint);"></span>
                     </div>
-                    <div style="font-size:8px;color:var(--text-faint);margin-top:-2px;">Upload a JPG/PNG image (max 2MB) — converts to Base64</div>
 
                     <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-top:4px;">Social Links</div>
                     <div class="profile-social-row"><span class="social-icon">📸</span><input type="text" id="edit-instagram" placeholder="Instagram username" /></div>
@@ -3701,12 +4188,11 @@
                 </div>
             </section>
 
-            <!-- TAB: ADMIN -->
+            <!-- TAB: ADMIN (full) -->
             <section id="tab-admin" class="tab-content">
                 <div id="admin-full-panel">
                     <div class="card">
                         <div class="section-title" style="color:#ffd700;">👑 Admin Dashboard</div>
-                        <!-- Admin Tabs -->
                         <div class="admin-tabs">
                             <button class="admin-tab-btn active" data-admin-tab="stats">📊 Stats</button>
                             <button class="admin-tab-btn" data-admin-tab="users">👥 Users</button>
@@ -3717,7 +4203,6 @@
                             <button class="admin-tab-btn owner-tab" data-admin-tab="owner" style="display:none;">👑 Owner</button>
                         </div>
 
-                        <!-- Tab: Stats -->
                         <div class="admin-tab-panel active" id="admin-tab-stats">
                             <div class="admin-grid" id="admin-stats-grid">
                                 <div class="admin-stat-card-v2"><div class="stat-number" id="admin-total-users">0</div><div class="stat-label">Total Users</div></div>
@@ -3727,12 +4212,10 @@
                                 <div class="admin-stat-card-v2"><div class="stat-number" id="admin-active-users">0</div><div class="stat-label">Active</div></div>
                                 <div class="admin-stat-card-v2"><div class="stat-number" id="admin-banned-users">0</div><div class="stat-label">Banned</div></div>
                             </div>
-                            <!-- Online Users -->
                             <div style="margin-top:8px;">
                                 <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;">🟢 Online Now</div>
                                 <div id="admin-online-users" class="admin-online-users"></div>
                             </div>
-                            <!-- Global Announcement -->
                             <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                 <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;">📢 Global Announcement</div>
                                 <div class="flex-row" style="margin-top:4px;">
@@ -3743,18 +4226,15 @@
                             </div>
                         </div>
 
-                        <!-- Tab: Users -->
                         <div class="admin-tab-panel" id="admin-tab-users">
                             <input type="text" id="admin-user-search" class="input-box" placeholder="🔎 Search users…" style="min-height:34px;padding:6px 10px;font-size:11px;margin-bottom:6px;" />
                             <div id="admin-user-list" class="user-list admin-list"></div>
                         </div>
 
-                        <!-- Tab: Posts -->
                         <div class="admin-tab-panel" id="admin-tab-posts">
                             <div id="admin-posts-list" style="display:flex;flex-direction:column;gap:6px;max-height:400px;overflow-y:auto;"></div>
                         </div>
 
-                        <!-- Tab: Badges -->
                         <div class="admin-tab-panel" id="admin-tab-badges">
                             <div id="admin-badge-list"></div>
                             <div style="margin-top:6px;font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;">Create Custom Badge</div>
@@ -3767,12 +4247,19 @@
                             <div id="custom-badge-list" class="custom-badge-list"></div>
                         </div>
 
-                        <!-- Tab: Promos -->
                         <div class="admin-tab-panel" id="admin-tab-promos">
                             <div id="admin-promo-list" style="max-height:200px;overflow-y:auto;"></div>
+                            <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
+                                <div style="font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;">Create Promo Code</div>
+                                <div class="admin-badge-create" style="margin-bottom:4px;">
+                                    <input type="text" id="admin-promo-code-limited" placeholder="Code" style="flex:1;min-width:60px;text-transform:uppercase;" />
+                                    <input type="number" id="admin-promo-coins-limited" placeholder="Coins" style="flex:1;min-width:50px;" value="100" />
+                                    <button id="btn-create-promo-limited" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Create</button>
+                                </div>
+                                <div id="promo-limit-status" style="font-size:8px;color:var(--text-faint);margin-top:2px;"></div>
+                            </div>
                         </div>
 
-                        <!-- Tab: Settings -->
                         <div class="admin-tab-panel" id="admin-tab-settings">
                             <div style="display:flex;flex-direction:column;gap:6px;">
                                 <label style="font-size:9px;color:var(--text-dim);display:flex;align-items:center;gap:6px;">
@@ -3786,26 +4273,19 @@
                             </div>
                         </div>
 
-                        <!-- Tab: Owner (only visible to owner) -->
                         <div class="admin-tab-panel" id="admin-tab-owner">
                             <div class="admin-owner-section" id="owner-only-section" style="border-color:rgba(255,215,0,0.3);">
-                                <div class="owner-title">👑 Owner-Only Tools <span class="owner-only-badge">Owner</span></div>
-
-                                <!-- Quick Stats -->
+                                <div class="owner-title">👑 Owner-Only Tools <span class="owner-only-badge">Owner/Co‑Owner</span></div>
                                 <div class="admin-owner-grid" id="owner-stats-grid">
                                     <div class="owner-stat"><div class="num" id="ostats-users">0</div><div class="lbl">Total Users</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-posts">0</div><div class="lbl">Total Posts</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-coins">0</div><div class="lbl">Total Coins</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-online">0</div><div class="lbl">Online Now</div></div>
                                 </div>
-
-                                <!-- Maintenance -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">Maintenance mode pauses posting for everyone except owners, co-owners, and Big Ferni.</div>
                                     <button id="btn-toggle-maintenance" class="action-btn secondary" style="padding:6px;font-size:9px;width:auto;">🛠️ Enable Maintenance Mode</button>
                                 </div>
-
-                                <!-- Bulk Coins -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">Give coins to all users</div>
                                     <div class="flex-row">
@@ -3813,50 +4293,36 @@
                                         <button id="btn-bulk-coins" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Give All</button>
                                     </div>
                                 </div>
-
-                                <!-- Wipe Tools -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div class="flex-row" style="gap:4px;">
                                         <button id="btn-wipe-posts" class="action-btn small danger" style="min-height:30px;padding:4px 12px;font-size:8px;">🗑️ Wipe Posts</button>
                                         <button id="btn-clear-global-chat" class="action-btn small danger" style="min-height:30px;padding:4px 12px;font-size:8px;">🧹 Clear Chat</button>
                                     </div>
                                 </div>
-
-                                <!-- Broadcast -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div class="flex-row" style="gap:4px;">
                                         <input type="text" id="admin-broadcast-input" class="input-box" placeholder="Broadcast message" style="flex:1;min-height:34px;padding:6px 10px;font-size:11px;" />
                                         <button id="btn-admin-broadcast" class="action-btn small secondary" style="min-height:34px;padding:6px 12px;font-size:8px;">📨 Send</button>
                                     </div>
                                 </div>
-
-                                <!-- Role Manager -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
-                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">👑 Role Manager — Promote or demote users</div>
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">👑 Role Manager</div>
                                     <div id="owner-role-list" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>
                                 </div>
-
-                                <!-- Promo Codes (Unlimited) -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
-                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🎟️ Promo Code Manager (Unlimited)</div>
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🎟️ Unlimited Promo Codes (Owner/Co‑Owner)</div>
                                     <div class="admin-badge-create" style="margin-bottom:4px;">
-                                        <input type="text" id="admin-promo-code-full" placeholder="Code" style="flex:1;min-width:60px;text-transform:uppercase;" />
-                                        <input type="number" id="admin-promo-coins-full" placeholder="Coins" style="flex:1;min-width:50px;" value="100" />
-                                        <button id="btn-create-promo-full" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Create</button>
+                                        <input type="text" id="admin-promo-code-unlimited" placeholder="Code" style="flex:1;min-width:60px;text-transform:uppercase;" />
+                                        <input type="number" id="admin-promo-coins-unlimited" placeholder="Coins" style="flex:1;min-width:50px;" value="100" />
+                                        <button id="btn-create-promo-unlimited" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Create</button>
                                     </div>
-                                    <div id="admin-promo-list-full"></div>
+                                    <div id="admin-promo-list-unlimited"></div>
                                 </div>
-
-                                <!-- Activity Log -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📋 Activity Log</div>
-                                    <div id="admin-activity-log" class="admin-activity-log">
-                                        <div style="color:var(--text-faint);font-size:9px;">Loading...</div>
-                                    </div>
+                                    <div id="admin-activity-log" class="admin-activity-log"><div style="color:var(--text-faint);font-size:9px;">Loading...</div></div>
                                     <button id="btn-clear-activity-log" class="action-btn small secondary" style="min-height:28px;padding:3px 10px;font-size:7px;margin-top:4px;">Clear Log</button>
                                 </div>
-
-                                <!-- ★ NEW OWNER FEATURE 1: System Backup Snapshot -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">💾 System Backup Snapshot</div>
                                     <div class="flex-row" style="gap:4px;">
@@ -3865,52 +4331,48 @@
                                     </div>
                                     <div id="backup-status" style="font-size:8px;color:var(--text-faint);margin-top:4px;"></div>
                                 </div>
-
-                                <!-- ★ NEW OWNER FEATURE 2: User Export (CSV) -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📤 Export Users (CSV)</div>
                                     <button id="btn-export-users-csv" class="action-btn small secondary" style="min-height:30px;padding:4px 12px;font-size:8px;">⬇️ Download CSV</button>
                                 </div>
-
-                                <!-- ★ NEW OWNER FEATURE 3: Global XP Boost -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">⚡ Global XP Boost</div>
                                     <div class="flex-row" style="gap:4px;">
-                                        <input type="number" id="admin-xp-multiplier" placeholder="Multiplier (e.g. 2)" value="2" min="1" step="1" style="flex:1;min-height:30px;padding:4px 8px;font-size:11px;background:var(--bg-input);border:1px solid var(--border-soft);border-radius:var(--radius-sm);color:#fff;width:60px;" />
+                                        <input type="number" id="admin-xp-multiplier" placeholder="Multiplier" value="2" min="1" step="1" style="flex:1;min-height:30px;padding:4px 8px;font-size:11px;background:var(--bg-input);border:1px solid var(--border-soft);border-radius:var(--radius-sm);color:#fff;width:60px;" />
                                         <input type="number" id="admin-xp-duration" placeholder="Minutes" value="30" min="1" step="1" style="flex:1;min-height:30px;padding:4px 8px;font-size:11px;background:var(--bg-input);border:1px solid var(--border-soft);border-radius:var(--radius-sm);color:#fff;width:60px;" />
                                         <button id="btn-global-xp-boost" class="action-btn small gold" style="min-height:30px;padding:4px 12px;font-size:8px;">🚀 Activate Boost</button>
                                     </div>
                                     <div id="xp-boost-status" style="font-size:8px;color:var(--text-faint);margin-top:4px;"></div>
                                 </div>
-
-                                <!-- ★ NEW OWNER FEATURE 4: Announcement History -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">📜 Announcement History</div>
                                     <div id="announcement-history-list" style="max-height:100px;overflow-y:auto;font-size:8px;color:var(--text-dim);"></div>
                                 </div>
-
-                                <!-- ★ NEW OWNER FEATURE 5: Activity Heatmap (simplified) -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">🔥 Activity Heatmap</div>
                                     <div id="heatmap-container" style="display:flex;flex-wrap:wrap;gap:2px;max-height:120px;overflow-y:auto;padding:4px 0;"></div>
+                                </div>
+
+                                <!-- ★ NEW: Custom Badge Matrix Form -->
+                                <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
+                                    <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">👑 Custom Badge Matrix</div>
+                                    <div class="admin-badge-create" style="margin-bottom:4px;">
+                                        <input type="text" id="custom-badge-matrix-username" placeholder="Target Username" style="flex:1;min-width:60px;" />
+                                        <input type="text" id="custom-badge-matrix-label" placeholder="Badge Label" style="flex:1;min-width:60px;" />
+                                        <input type="color" id="custom-badge-matrix-color" value="#6366f1" style="width:36px;padding:2px;" />
+                                        <button id="btn-grant-custom-badge-matrix" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Grant Custom Badge</button>
+                                    </div>
+                                    <div id="custom-badge-matrix-status" style="font-size:8px;color:var(--text-faint);margin-top:2px;"></div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Limited Admin Panel -->
                 <div id="admin-limited-panel" style="display:none;">
                     <div class="card">
-                        <div class="section-title" style="color:#ffd700;">🎟️ Promo Codes (Limited)</div>
-                        <div id="admin-promo-limit" style="font-size:10px;color:var(--text-dim);margin-bottom:4px;">1 per day · max 500 coins</div>
-                        <div class="admin-badge-create" style="margin-bottom:6px;">
-                            <input type="text" id="admin-promo-code" placeholder="Code" style="flex:1;min-width:60px;text-transform:uppercase;" />
-                            <input type="number" id="admin-promo-coins" placeholder="Coins" style="flex:1;min-width:50px;" value="50" max="500" />
-                            <button id="btn-create-promo-limited" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Create</button>
-                        </div>
-                        <div id="admin-promo-list"></div>
+                        <div class="section-title" style="color:#ffd700;">🎟️ Promo Manager</div>
+                        <div id="promo-manager-content" class="promo-manager-tab"></div>
                     </div>
                 </div>
             </section>
@@ -3948,7 +4410,7 @@
         </div>
     </div>
 
-    <!-- GAME CHALLENGE MODAL (from chat) -->
+    <!-- GAME CHALLENGE MODAL -->
     <div class="modal-overlay" id="game-challenge-modal">
         <div class="modal-box game-challenge-modal">
             <button class="modal-close" id="game-challenge-close">✕</button>
@@ -3996,7 +4458,8 @@
             arrayRemove,
             writeBatch,
             where,
-            getDocs
+            getDocs,
+            limit
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
         import {
             getStorage,
@@ -4039,7 +4502,7 @@
         let discoverUnsub = null;
         let privateChatUnsub = null;
         let promoUnsub = null;
-        let promoUnsubFull = null;
+        let promoUnsubUnlimited = null;
         let announcementUnsub = null;
         let adminUsersUnsub = null;
         let dailyBonusClaimed = false;
@@ -4067,9 +4530,38 @@
         let multiplayerGameState = {};
         let xpBoostActive = false;
         let xpMultiplier = 1;
-        let selectedAvatarFile = null; // for base64 avatar upload
+        let selectedAvatarFile = null;
+        // Emotes
+        let unlockedEmotes = [];
+        const DEFAULT_EMOTES = ['😊', '😂', '❤️', '🔥', '✨', '💀', '🎉', '👀', '🤔', '😭', '🥺', '😎', '🤩', '💪', '🫶', '🙏'];
+        const EMOTE_STORE_ITEM_ID = 'chat_emote';
+        // XP Boost tracking
+        let userXpBoostActive = false;
+        let userXpBoostExpiry = 0;
+        const MAX_COINS = 20000;
+        const MAX_PROMO_REDEEM_DAILY = 5;
+        let promoRedemptionsToday = 0;
+        let lastPromoRedemptionDate = '';
 
-        // Casino stats
+        // ─── SWEAR FILTER DICTIONARY ───
+        const SWEAR_WORDS = [
+            'fuck', 'shit', 'ass', 'bitch', 'cunt', 'dick', 'pussy', 'cock', 'suck', 'whore', 'slut', 'bastard',
+            'damn', 'hell', 'crap', 'piss', 'twat', 'wanker', 'bollocks', 'arse', 'bugger', 'bloody', 'fucker',
+            'motherfucker', 'asshole', 'dumbass', 'douche', 'douchebag', 'jackass', 'moron', 'retard', 'scumbag',
+            'shithead', 'sonofabitch', 'faggot', 'dyke', 'tranny', 'nigger', 'nigga', 'chink', 'gook', 'spic',
+            'wetback', 'kike', 'heeb', 'raghead', 'towelhead', 'sandnigger', 'cracker', 'honky', 'peckerwood',
+            'redneck', 'hillbilly', 'trailer trash', 'white trash', 'ghetto', 'hoodrat', 'thug'
+        ];
+        const SWEAR_REGEX = new RegExp('\\b(' + SWEAR_WORDS.join('|') + ')\\b', 'gi');
+
+        // ─── Helper: filter swear words ───
+        function filterSwearWords(text) {
+            return text.replace(SWEAR_REGEX, (match) => {
+                return match.charAt(0) + '***';
+            });
+        }
+
+        // ─── Casino stats ───
         let casinoWins = 0,
             casinoLosses = 0,
             casinoProfit = 0,
@@ -4089,9 +4581,11 @@
             bjLosses = 0,
             bjProfit = 0;
 
+        // ─── BADGES (added 2nd Beta Tester) ───
         const BADGES = {
             big_ferni: { label: 'Big Ferni', icon: '🌿', cls: 'big_ferni' },
             beta_tester: { label: 'Beta Tester', icon: '🧪', cls: 'beta_tester' },
+            second_beta_tester: { label: '2nd Beta Tester', icon: '🧪', cls: 'second_beta_tester' },
             tsa_pro: { label: 'TSA Pro', icon: '✈️', cls: 'tsa_pro' },
             owner: { label: 'Owner', icon: '👑', cls: 'owner' },
             co_owner: { label: 'Co-Owner', icon: '⚜️', cls: 'co_owner' },
@@ -4101,7 +4595,7 @@
         };
         const BADGE_KEYS = Object.keys(BADGES);
 
-        // ─── EXPANDED STORE ITEMS (unlimited purchases) ───
+        // ─── EXPANDED STORE ITEMS ───
         const STORE_ITEMS = [
             { id: 'vip_badge', name: '🌟 VIP Badge', desc: 'Purple badge on profile', price: 500, effect: 'badge_vip',
                 duration: 0 },
@@ -4135,7 +4629,7 @@
                 effect: 'badge_rainbow', duration: 0 },
             { id: 'ghost_mode', name: '👻 Ghost Mode', desc: 'Invisible for 10 min', price: 120, effect: 'ghost_mode',
                 duration: 600 },
-            { id: 'chat_emote', name: '😎 Chat Emote', desc: 'Unlock special emote in chat', price: 40,
+            { id: 'chat_emote', name: '😎 Chat Emote', desc: 'Unlock special emote pack', price: 40,
             effect: 'chat_emote', duration: 0 },
             { id: 'profile_theme', name: '🎨 Profile Theme', desc: 'Dark galaxy theme', price: 200,
             effect: 'profile_theme', duration: 0 },
@@ -4196,15 +4690,83 @@
         }
 
         function updateCoinDisplay(coins) {
-            const val = coins ?? 0;
+            const val = Math.min(coins ?? 0, MAX_COINS);
             const displays = ['store-coin-display', 'games-coin-display', 'casino-coin-display'];
             displays.forEach(id => { const el = $(id); if (el) el.textContent = val; });
         }
 
-        // ─── Admin Permission Checks ───
+        async function applyWalletCap(uid, delta) {
+            const ref = doc(db, 'users', uid);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return { success: false, message: 'User not found' };
+            const current = snap.data().coins || 0;
+            let newBalance = current + delta;
+            let actualDelta = delta;
+            if (newBalance > MAX_COINS) {
+                actualDelta = MAX_COINS - current;
+                newBalance = MAX_COINS;
+                showToast(`💰 Wallet capped at ${MAX_COINS} coins.`, 'info');
+            } else if (newBalance < 0) {
+                actualDelta = -current;
+                newBalance = 0;
+                showToast('💰 Not enough coins.', 'error');
+                return { success: false, message: 'Insufficient funds' };
+            }
+            if (actualDelta !== 0) {
+                await updateDoc(ref, { coins: increment(actualDelta) });
+            }
+            return { success: true, newBalance, actualDelta };
+        }
+
+        async function checkPromoRedeemLimit(uid) {
+            const ref = doc(db, 'users', uid);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return { allowed: false, message: 'User not found' };
+            const data = snap.data();
+            const today = new Date().toDateString();
+            const lastDate = data.lastPromoRedeemDate || '';
+            const count = data.promoRedeemCountToday || 0;
+            if (lastDate !== today) {
+                await updateDoc(ref, { lastPromoRedeemDate: today, promoRedeemCountToday: 0 });
+                return { allowed: true, remaining: MAX_PROMO_REDEEM_DAILY };
+            }
+            if (count >= MAX_PROMO_REDEEM_DAILY) {
+                return { allowed: false, message: `Daily promo limit reached (${MAX_PROMO_REDEEM_DAILY}/day)`, remaining: 0 };
+            }
+            return { allowed: true, remaining: MAX_PROMO_REDEEM_DAILY - count };
+        }
+
+        async function incrementPromoRedeemCount(uid) {
+            const ref = doc(db, 'users', uid);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return;
+            const data = snap.data();
+            const today = new Date().toDateString();
+            const lastDate = data.lastPromoRedeemDate || '';
+            let count = data.promoRedeemCountToday || 0;
+            if (lastDate !== today) count = 0;
+            await updateDoc(ref, { lastPromoRedeemDate: today, promoRedeemCountToday: count + 1 });
+        }
+
+        function hasPromoBadge(badges) {
+            return badges.some(b => ['big_ferni', 'beta_tester', 'tsa_pro'].includes(b));
+        }
+
+        function isFullAdmin(badges) {
+            return badges.includes('owner') || badges.includes('co_owner') || badges.includes('big_ferni');
+        }
+
+        function isOwnerOrCoOwner(badges) {
+            return badges.includes('owner') || badges.includes('co_owner');
+        }
+
+        function canDeletePromo(badges) {
+            return isOwnerOrCoOwner(badges);
+        }
+
         function isCurrentUserAdmin() {
             const b = currentUserProfile?.badges || [];
-            return b.includes('owner') || b.includes('co_owner') || b.includes('big_ferni');
+            return isFullAdmin(b);
         }
 
         function isCurrentUserOwner() {
@@ -4212,16 +4774,23 @@
             return b.includes('owner');
         }
 
+        function isCurrentUserCoOwner() {
+            const b = currentUserProfile?.badges || [];
+            return b.includes('co_owner');
+        }
+
+        function isCurrentUserOwnerOrCoOwner() {
+            return isCurrentUserOwner() || isCurrentUserCoOwner();
+        }
+
         function isCurrentUserLimitedAdmin() {
             const b = currentUserProfile?.badges || [];
-            return b.some(badge => ['beta_tester', 'tsa_pro'].includes(badge));
+            return hasPromoBadge(b) && !isFullAdmin(b);
         }
 
         function getCurrentUserBadges() {
             return currentUserProfile?.badges || [];
         }
-
-        let limitedAdminPromoLimitReached = false;
 
         // ─── Auth ───
         onAuthStateChanged(auth, async (user) => {
@@ -4242,6 +4811,7 @@
                 loadRouletteStats();
                 loadBJStats();
                 loadPromoCodes();
+                loadPromoCodesUnlimited();
                 loadCustomBadges();
                 loadGlobalAnnouncement();
                 loadMaintenanceMode();
@@ -4251,11 +4821,12 @@
                 initGameCenter();
                 startShopEffectsTimer();
                 loadOnlineUsers();
+                loadUserXpBoost();
                 loadingOverlay.style.display = 'none';
             } else {
                 currentUser = null;
                 [profileUnsub, feedUnsub, chatUnsub, usersUnsub, discoverUnsub, privateChatUnsub, promoUnsub,
-                    promoUnsubFull, announcementUnsub, adminUsersUnsub, gameInvitesUnsub, activeGamesUnsub,
+                    promoUnsubUnlimited, announcementUnsub, adminUsersUnsub, gameInvitesUnsub, activeGamesUnsub,
                     activityLogUnsub, systemSettingsUnsub
                 ].forEach(fn => { if (fn) { fn();
                         fn = null; } });
@@ -4368,9 +4939,15 @@
                 interests: [],
                 activeBadge: '',
                 lastPromoDate: null,
+                promoCountToday: 0,
                 banned: false,
                 verified: false,
-                shopEffects: []
+                shopEffects: [],
+                unlockedEmotes: [],
+                xpBoostActive: false,
+                xpBoostExpiry: 0,
+                lastPromoRedeemDate: '',
+                promoRedeemCountToday: 0
             });
             await setDoc(doc(db, 'usernames', username), { uid });
             showToast('Account created! Welcome 🎉', 'success');
@@ -4529,7 +5106,7 @@
             signOut(auth);
         }));
 
-        // ─── Check Admin Status ───
+        // ─── Check Admin Status with Promo routing ───
         function checkAdminStatus() {
             if (!currentUser) return;
             const userRef = doc(db, 'users', currentUser.uid);
@@ -4538,31 +5115,26 @@
                 const data = snap.data();
                 currentUserProfile = data;
                 const badges = data.badges || [];
-                const isFullAdmin = badges.includes('owner') || badges.includes('co_owner') || badges.includes(
-                'big_ferni');
-                const isLimited = badges.some(b => ['beta_tester', 'tsa_pro'].includes(b));
-                const showAdmin = isFullAdmin || isLimited;
+                const isFull = isFullAdmin(badges);
+                const isLimited = hasPromoBadge(badges) && !isFull;
 
                 const adminNav = document.querySelector('.nav-item.admin-nav');
                 const adminTab = document.getElementById('tab-admin');
                 const ownerSection = document.getElementById('owner-only-section');
                 const ownerTabBtn = document.querySelector('.admin-tab-btn.owner-tab');
 
-                if (showAdmin) {
+                if (isFull || isLimited) {
                     adminNav.style.display = 'flex';
                     adminTab.style.display = '';
                     if (ownerTabBtn) {
-                        ownerTabBtn.style.display = isFullAdmin ? 'inline-block' : 'none';
+                        ownerTabBtn.style.display = isOwnerOrCoOwner(badges) ? 'inline-block' : 'none';
                     }
-                    renderAdminPanels(isFullAdmin, isLimited);
+                    renderAdminPanels(isFull, isLimited);
                     if (!prevIsAdmin && mainApp.style.display !== 'none') { startRealtimeFeeds(); }
-                    if (isLimited && !isFullAdmin) {
-                        loadPromoCodes();
-                        checkLimitedAdminPromoLimit();
-                    }
-                    if (isFullAdmin) {
-                        loadPromoCodesFull();
-                        if (ownerSection) ownerSection.style.display = 'block';
+                    loadPromoCodes();
+                    if (isFull) {
+                        loadPromoCodesUnlimited();
+                        if (ownerSection) ownerSection.style.display = isOwnerOrCoOwner(badges) ? 'block' : 'none';
                         loadOwnerRoleList();
                         loadOwnerServerStats();
                         loadActivityLog();
@@ -4571,7 +5143,9 @@
                         loadHeatmap();
                     } else {
                         if (ownerSection) ownerSection.style.display = 'none';
+                        renderPromoManager();
                     }
+                    updatePromoLimitStatus();
                 } else {
                     adminNav.style.display = 'none';
                     adminTab.style.display = 'none';
@@ -4581,7 +5155,7 @@
                         document.querySelector('[data-tab="tab-feed"]').click();
                     }
                 }
-                prevIsAdmin = showAdmin;
+                prevIsAdmin = isFull || isLimited;
             });
         }
 
@@ -4592,33 +5166,158 @@
                 fullPanel.style.display = 'block';
                 limitedPanel.style.display = 'none';
                 loadAdminPanel();
-                loadPromoCodesFull();
             } else if (isLimited) {
-                fullPanel.style.display = 'block';
-                limitedPanel.style.display = 'none';
-                loadAdminPanel();
-                loadPromoCodes();
-                checkLimitedAdminPromoLimit();
+                fullPanel.style.display = 'none';
+                limitedPanel.style.display = 'block';
+                renderPromoManager();
             } else {
                 fullPanel.style.display = 'none';
                 limitedPanel.style.display = 'none';
             }
         }
 
-        async function checkLimitedAdminPromoLimit() {
-            if (!currentUserProfile) return;
-            const last = currentUserProfile.lastPromoDate?.toDate?.() || null;
-            if (last) { const now = new Date();
-                limitedAdminPromoLimitReached = (now - last) < 24 * 60 * 60 * 1000; } else { limitedAdminPromoLimitReached =
-                    false; }
-            const btn = document.getElementById('btn-create-promo-limited');
-            if (btn) { btn.disabled = limitedAdminPromoLimitReached;
-                btn.textContent = limitedAdminPromoLimitReached ? '⏳ Limit reached' : 'Create'; }
-            const statusDiv = document.getElementById('admin-promo-limit');
-            if (statusDiv) {
-                statusDiv.textContent = limitedAdminPromoLimitReached ?
-                    'You have already created a promo today. Come back tomorrow.' :
-                    'You can create 1 promo per day, max 500 coins.';
+        // ─── Promo Manager for limited admins ───
+        function renderPromoManager() {
+            const container = document.getElementById('promo-manager-content');
+            if (!container) return;
+            const badges = getCurrentUserBadges();
+            const isUnlimited = isOwnerOrCoOwner(badges);
+            const today = new Date().toDateString();
+            const lastDate = currentUserProfile?.lastPromoDate?.toDate?.()?.toDateString?.() || '';
+            let count = 0;
+            if (lastDate === today) count = currentUserProfile?.promoCountToday || 0;
+
+            container.innerHTML = `
+                <div class="promo-stats-row">
+                    <div class="stat-pill">📊 Used today: <span>${count}/5</span></div>
+                    <div class="stat-pill">💰 Max per code: <span>${isUnlimited ? '∞' : '10,000'}</span></div>
+                    <div class="stat-pill">⏳ ${isUnlimited ? 'Unlimited' : 'Daily limit'}</div>
+                </div>
+                <div style="font-size:9px;color:var(--text-faint);margin-bottom:6px;">
+                    ${isUnlimited ? '✅ Unlimited promo creation (Owner/Co-Owner)' : '🔒 You can create up to 5 promos per day, max 10,000 coins each.'}
+                </div>
+                <div class="admin-badge-create" style="margin-bottom:6px;">
+                    <input type="text" id="promo-manager-code" placeholder="Code" style="flex:1;min-width:60px;text-transform:uppercase;" />
+                    <input type="number" id="promo-manager-coins" placeholder="Coins" style="flex:1;min-width:50px;" value="100" />
+                    <button id="promo-manager-create" class="action-btn small gold" style="min-height:34px;padding:6px 12px;">Create</button>
+                </div>
+                <div id="promo-manager-list" style="max-height:200px;overflow-y:auto;"></div>
+                <div id="promo-manager-status" style="font-size:8px;color:var(--text-faint);margin-top:4px;"></div>
+            `;
+
+            const listEl = document.getElementById('promo-manager-list');
+            if (listEl) {
+                const q = query(collection(db, 'promo_codes'), orderBy('createdAt', 'desc'));
+                onSnapshot(q, (snap) => {
+                    listEl.innerHTML = '';
+                    if (snap.empty) {
+                        listEl.innerHTML =
+                            '<span style="font-size:9px;color:var(--text-faint);">No promo codes.</span>';
+                        return;
+                    }
+                    const canDelete = canDeletePromo(badges);
+                    snap.forEach((docSnap) => {
+                        const code = docSnap.data();
+                        const id = docSnap.id;
+                        const usedBy = code.usedBy || [];
+                        const div = document.createElement('div');
+                        div.className = 'promo-code-item';
+                        div.innerHTML =
+                            `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="code-badge">${code.code}</span><span style="font-size:10px;color:var(--text-faint);">+${code.coins} coins</span><span style="font-size:8px;color:var(--text-faint);">${usedBy.length} used</span></div>
+                            ${canDelete ? `<div class="code-actions"><button class="delete-promo-manager" data-id="${id}">✕</button></div>` : ''}`;
+                        listEl.appendChild(div);
+                        const delBtn = div.querySelector('.delete-promo-manager');
+                        if (delBtn) {
+                            delBtn.addEventListener('click', async () => {
+                                if (!confirm(`Delete promo code "${code.code}"?`)) return;
+                                await deleteDoc(doc(db, 'promo_codes', id));
+                                showToast(`Promo code "${code.code}" deleted.`, 'info');
+                            });
+                        }
+                    });
+                });
+            }
+
+            const createBtn = document.getElementById('promo-manager-create');
+            if (createBtn) {
+                createBtn.addEventListener('click', withLoading('promo-manager-create', async () => {
+                    const codeRaw = document.getElementById('promo-manager-code').value.trim().toUpperCase();
+                    let coins = parseInt(document.getElementById('promo-manager-coins').value, 10) || 100;
+                    if (!codeRaw) { showToast('Enter a promo code.', 'error'); return; }
+                    if (coins < 1) { showToast('Coins must be at least 1.', 'error'); return; }
+
+                    const userBadges = getCurrentUserBadges();
+                    const isUnlimitedUser = isOwnerOrCoOwner(userBadges);
+
+                    if (!isUnlimitedUser) {
+                        if (coins > 10000) { showToast('Maximum 10,000 coins per promo.', 'error'); return; }
+                        const today2 = new Date().toDateString();
+                        const lastDate2 = currentUserProfile?.lastPromoDate?.toDate?.()?.toDateString?.() || '';
+                        let count2 = 0;
+                        if (lastDate2 === today2) count2 = currentUserProfile?.promoCountToday || 0;
+                        if (count2 >= 5) { showToast('Daily limit of 5 promos reached.', 'error'); return; }
+                    }
+
+                    const existing = await getDocs(query(collection(db, 'promo_codes'), where('code', '==',
+                    codeRaw)));
+                    if (!existing.empty) { showToast('Promo code already exists.', 'error'); return; }
+
+                    await addDoc(collection(db, 'promo_codes'), {
+                        code: codeRaw,
+                        coins,
+                        usedBy: [],
+                        createdAt: serverTimestamp(),
+                        createdBy: currentUser.uid
+                    });
+
+                    if (!isUnlimitedUser) {
+                        const today2 = new Date().toDateString();
+                        const lastDate2 = currentUserProfile?.lastPromoDate?.toDate?.()?.toDateString?.() || '';
+                        let newCount = 1;
+                        if (lastDate2 === today2) newCount = (currentUserProfile?.promoCountToday || 0) + 1;
+                        await updateDoc(doc(db, 'users', currentUser.uid), {
+                            lastPromoDate: serverTimestamp(),
+                            promoCountToday: newCount
+                        });
+                    }
+
+                    document.getElementById('promo-manager-code').value = '';
+                    document.getElementById('promo-manager-coins').value = '100';
+                    showToast(`Promo code "${codeRaw}" created! (${coins} coins)`, 'success');
+                    const statusEl = document.getElementById('promo-manager-status');
+                    if (statusEl) {
+                        statusEl.textContent = '✅ Created!';
+                        setTimeout(() => { statusEl.textContent = ''; }, 3000);
+                    }
+                    renderPromoManager();
+                }));
+            }
+        }
+
+        function updatePromoLimitStatus() {
+            const statusDiv = document.getElementById('promo-limit-status');
+            if (!statusDiv) return;
+            const badges = getCurrentUserBadges();
+            const isOwner = badges.includes('owner');
+            const isCoOwner = badges.includes('co_owner');
+            const isBigFerni = badges.includes('big_ferni');
+            const isBeta = badges.includes('beta_tester');
+            const isTsa = badges.includes('tsa_pro');
+
+            if (isOwner || isCoOwner) {
+                statusDiv.textContent = '✅ Unlimited (no daily limit, no coin cap)';
+                statusDiv.style.color = '#58d68d';
+            } else if (isBigFerni || isBeta || isTsa) {
+                const today = new Date().toDateString();
+                const lastDate = currentUserProfile?.lastPromoDate?.toDate?.()?.toDateString?.() || '';
+                const count = (lastDate === today) ? (currentUserProfile?.promoCountToday || 0) : 0;
+                const remaining = 5 - count;
+                statusDiv.textContent =
+                    `📊 ${remaining} promo(s) left today (max 5/day, max 10,000 coins)`;
+                statusDiv.style.color = remaining > 0 ? '#ffd479' : '#ff2f8e';
+            } else {
+                statusDiv.textContent = 'You do not have permission to create promo codes.';
+                statusDiv.style.color = '#ff2f8e';
             }
         }
 
@@ -4629,7 +5328,7 @@
                 if (snap.exists()) {
                     const data = snap.data();
                     currentUserProfile = data;
-                    const coins = data.coins ?? 0;
+                    const coins = Math.min(data.coins ?? 0, MAX_COINS);
                     updateCoinDisplay(coins);
                     document.getElementById('profile-username-node').innerHTML =
                         `@${data.username || 'user'} ${verifiedBadgeHTML(data.verified)}`;
@@ -4779,7 +5478,15 @@
                         renderActiveShopEffects();
                     }
 
+                    unlockedEmotes = data.unlockedEmotes || [];
+                    renderEmotePicker();
+
+                    userXpBoostActive = data.xpBoostActive || false;
+                    userXpBoostExpiry = data.xpBoostExpiry || 0;
+                    renderXpBoostIndicator();
+
                     applyCustomizations(data);
+                    updatePromoLimitStatus();
                 }
             });
         }
@@ -5004,11 +5711,15 @@
                     const avatarHTML = post.avatarURL ? `<img src="${post.avatarURL}" alt="avatar" />` : (post
                         .username?.[0] || '?').toUpperCase();
                     const timeStr = post.createdAt?.toDate?.()?.toLocaleDateString?.() || '';
+                    const userBadges = currentUserProfile?.badges || [];
+                    const canDelete = isOwner || userBadges.includes('owner') || userBadges.includes('co_owner');
                     const adminControls = canModerate ? `
                         ${post.pinned ? '' : `<button class="post-pin-btn" data-pid="${pid}" title="Pin to top">📌</button>`}
                         ${post.pinned ? `<button class="post-pin-btn" data-pid="${pid}" title="Unpin" style="color:var(--neon-cyan);">📌</button>` : ''}
-                        <button class="post-delete-btn" data-pid="${pid}" title="Delete">✕</button>`
-                        : (isOwner ? `<button class="post-delete-btn" data-pid="${pid}" title="Delete">✕</button>` : '');
+                        ${canDelete ? `<button class="post-delete-btn" data-pid="${pid}" title="Delete">✕</button>` : ''}
+                        ` :
+                        (isOwner ? `<button class="post-delete-btn" data-pid="${pid}" title="Delete">✕</button>` :
+                            '');
                     card.innerHTML = `
                         <div class="post-header">
                             <div class="post-user-info" data-uid="${post.senderUid}">
@@ -5024,10 +5735,18 @@
                         ${mediaHTML}
                         <div class="post-actions">
                             <button class="like-btn-heart ${isLiked ? 'liked' : ''}" data-pid="${pid}">
-                                🧬 <span class="like-count">${likeCount}</span>
+                                ❤️<span class="like-count">${likeCount}</span>
                             </button>
+                            <button class="comments-toggle-btn" data-pid="${pid}">💬 <span class="comment-count">0</span></button>
                         </div>
                         <div class="post-caption"><strong>@${post.username || 'anonymous'}</strong> ${post.caption || ''}</div>
+                        <div class="comments-container" data-pid="${pid}">
+                            <div class="comments-list" data-pid="${pid}"></div>
+                            <div class="comment-input-row">
+                                <input type="text" placeholder="Write a reply…" class="comment-input" data-pid="${pid}" />
+                                <button class="comment-send-btn" data-pid="${pid}">Send</button>
+                            </div>
+                        </div>
                     `;
                     container.appendChild(card);
                     card.querySelector('.post-user-info').addEventListener('click', () => {
@@ -5054,11 +5773,22 @@
                     if (delBtn) {
                         delBtn.addEventListener('click', async () => {
                             if (isProcessing) return;
+                            const userBadges2 = currentUserProfile?.badges || [];
+                            const isAuthor = post.senderUid === currentUser?.uid;
+                            const canDelete2 = isAuthor || userBadges2.includes('owner') || userBadges2
+                                .includes('co_owner');
+                            if (!canDelete2) { showToast('You do not have permission to delete this post.',
+                                    'error'); return; }
                             if (!confirm('Delete this post?')) return;
                             isProcessing = true;
-                            try { await deleteDoc(doc(db, 'posts', pid));
-                                showToast('Post deleted.', 'info'); } catch (e) { console.warn('Delete error:',
-                                e); } finally { isProcessing = false; }
+                            try {
+                                const commentsSnap = await getDocs(collection(db, 'posts', pid, 'comments'));
+                                const batch = writeBatch(db);
+                                commentsSnap.forEach(d => batch.delete(d.ref));
+                                await batch.commit();
+                                await deleteDoc(doc(db, 'posts', pid));
+                                showToast('Post deleted.', 'info');
+                            } catch (e) { console.warn('Delete error:', e); } finally { isProcessing = false; }
                         });
                     }
                     const pinBtns = card.querySelectorAll('.post-pin-btn');
@@ -5071,9 +5801,93 @@
                         } catch (e) { console.warn('Pin error:', e);
                             showToast('Could not change pin status.', 'error'); } finally { isProcessing = false; }
                     }));
+
+                    // ─── COMMENTS ───
+                    const toggleBtn = card.querySelector('.comments-toggle-btn');
+                    const commentsContainer = card.querySelector('.comments-container');
+                    const commentsList = card.querySelector('.comments-list');
+                    const commentInput = card.querySelector('.comment-input');
+                    const sendBtn = card.querySelector('.comment-send-btn');
+
+                    let commentsOpen = false;
+                    let commentUnsub = null;
+
+                    function loadComments() {
+                        if (commentUnsub) commentUnsub();
+                        const commentsQuery = query(collection(db, 'posts', pid, 'comments'), orderBy('createdAt',
+                        'asc'));
+                        commentUnsub = onSnapshot(commentsQuery, (snap) => {
+                            commentsList.innerHTML = '';
+                            const count = snap.size;
+                            const countEl = toggleBtn.querySelector('.comment-count');
+                            if (countEl) countEl.textContent = count;
+                            if (count === 0) {
+                                commentsList.innerHTML =
+                                    '<span style="font-size:9px;color:var(--text-faint);padding:4px 0;">No comments yet.</span>';
+                                return;
+                            }
+                            snap.forEach((docSnap) => {
+                                const c = docSnap.data();
+                                const div = document.createElement('div');
+                                div.className = 'comment-item';
+                                const avatarHTML = c.avatarURL ? `<img src="${c.avatarURL}" />` : (c
+                                    .username?.[0] || '?').toUpperCase();
+                                const timeStr = c.createdAt?.toDate?.()?.toLocaleString?.() || '';
+                                div.innerHTML = `
+                                    <div class="comment-avatar">${avatarHTML}</div>
+                                    <div class="comment-body">
+                                        <div class="comment-name">@${c.username || 'anon'}</div>
+                                        <div class="comment-text">${c.message || ''}</div>
+                                        <div class="comment-time">${timeStr}</div>
+                                    </div>
+                                `;
+                                commentsList.appendChild(div);
+                            });
+                            commentsList.scrollTop = commentsList.scrollHeight;
+                        });
+                    }
+
+                    toggleBtn.addEventListener('click', () => {
+                        commentsOpen = !commentsOpen;
+                        commentsContainer.classList.toggle('open');
+                        if (commentsOpen) {
+                            loadComments();
+                        } else {
+                            if (commentUnsub) { commentUnsub();
+                                commentUnsub = null; }
+                        }
+                    });
+
+                    sendBtn.addEventListener('click', async () => {
+                        const text = commentInput.value.trim();
+                        if (!text) return;
+                        if (isProcessing) return;
+                        isProcessing = true;
+                        try {
+                            const profileSnap = await getDoc(doc(db, 'users', currentUser.uid));
+                            const username = profileSnap.exists() ? profileSnap.data().username : 'anonymous';
+                            const avatarURL = profileSnap.exists() ? profileSnap.data().avatarURL || '' : '';
+                            await addDoc(collection(db, 'posts', pid, 'comments'), {
+                                senderUid: currentUser.uid,
+                                username,
+                                avatarURL,
+                                message: text,
+                                createdAt: serverTimestamp()
+                            });
+                            commentInput.value = '';
+                            showToast('Reply posted!', 'success');
+                        } catch (e) { console.warn('Comment error:', e);
+                            showToast('Failed to post reply.', 'error'); } finally { isProcessing = false; }
+                    });
+
+                    commentInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendBtn.click(); });
+
+                    card._commentCleanup = () => { if (commentUnsub) { commentUnsub();
+                            commentUnsub = null; } };
                 });
             });
 
+            // ─── Chat ───
             if (chatUnsub) chatUnsub();
             const chatQ = query(collection(db, 'global_chat'), orderBy('createdAt', 'asc'));
             chatUnsub = onSnapshot(chatQ, (snap) => {
@@ -5095,6 +5909,7 @@
                 stream.scrollTop = stream.scrollHeight;
             });
 
+            // ─── Notes Tray (UPGRADED with auto-detect YouTube/Spotify) ───
             if (usersUnsub) usersUnsub();
             const usersQ = query(collection(db, 'users'));
             usersUnsub = onSnapshot(usersQ, (snap) => {
@@ -5112,29 +5927,70 @@
                         bubble.className = 'note-bubble';
                         const avatarHTML = u.avatarURL ? `<img src="${u.avatarURL}" alt="avatar" />` : (u
                             .username?.[0] || '?').toUpperCase();
+
+                        // ─── Auto-detect media URLs in note text ───
+                        let mediaPlayHTML = '';
+                        const noteText = note;
+                        const youtubeMatch = noteText.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+                        const spotifyMatch = noteText.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+                        if (youtubeMatch) {
+                            const videoId = youtubeMatch[1];
+                            mediaPlayHTML =
+                                `<div class="note-media-play" data-media-url="https://www.youtube.com/watch?v=${videoId}" data-media-title="YouTube Track"><span class="play-icon">▶️</span> Play</div>`;
+                        } else if (spotifyMatch) {
+                            const trackId = spotifyMatch[1];
+                            mediaPlayHTML =
+                                `<div class="note-media-play" data-media-url="https://open.spotify.com/track/${trackId}" data-media-title="Spotify Track"><span class="play-icon">▶️</span> Play</div>`;
+                        }
+
                         let musicHTML = '';
                         if (musicUrl) {
                             musicHTML =
                                 `<span class="note-music-icon" data-music="${encodeURIComponent(musicUrl)}" title="🎵 Play music">🎵</span>`;
+                        } else if (mediaPlayHTML) {
+                            // If no musicUrl but we detected media in note, add a play button
+                            musicHTML = mediaPlayHTML;
                         }
+
                         bubble.innerHTML = `
                             <div class="note-text-popup">${note}</div>
                             ${musicHTML}
                             <div class="note-avatar">${avatarHTML}</div>
                             <div class="note-username">@${u.username || 'anon'}</div>
-                            ${musicUrl ? `<div class="note-music-tag">🎵</div>` : ''}
+                            ${musicUrl ? `<div class="note-music-tag">🎵</div>` : (mediaPlayHTML ? `<div class="note-music-tag">▶️</div>` : '')}
                         `;
                         bubble.addEventListener('click', (e) => {
-                            if (e.target.closest('.note-music-icon')) return;
-                            if (u.uid !== currentUser.uid) viewUserProfile(u.uid);
+                            if (e.target.closest('.note-music-icon') || e.target.closest(
+                                '.note-media-play')) return;
+                            const modal = document.getElementById('note-detail-modal');
+                            document.getElementById('note-detail-avatar').innerHTML = avatarHTML;
+                            document.getElementById('note-detail-name').textContent = `@${u.username || 'anon'}`;
+                            document.getElementById('note-detail-text').textContent = note;
+                            modal.classList.add('show');
+                            if (u.uid !== currentUser.uid) {
+                                viewUserProfile(u.uid);
+                            }
                         });
                         tray.appendChild(bubble);
+
+                        // Music icon handler (existing)
                         const musicIcon = bubble.querySelector('.note-music-icon');
                         if (musicIcon) {
                             musicIcon.addEventListener('click', (e) => {
                                 e.stopPropagation();
                                 const url = decodeURIComponent(musicIcon.dataset.music);
                                 openMusicPopup(url, `@${u.username}'s Track`);
+                            });
+                        }
+
+                        // Media play button handler (new auto-detect)
+                        const mediaPlayBtn = bubble.querySelector('.note-media-play');
+                        if (mediaPlayBtn) {
+                            mediaPlayBtn.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                const url = mediaPlayBtn.dataset.mediaUrl;
+                                const title = mediaPlayBtn.dataset.mediaTitle || 'Media Track';
+                                openMusicPopup(url, title);
                             });
                         }
                     }
@@ -5145,6 +6001,14 @@
                 }
             });
         }
+
+        // ─── Note Detail Modal ───
+        document.getElementById('note-detail-close').addEventListener('click', () => {
+            document.getElementById('note-detail-modal').classList.remove('show');
+        });
+        document.getElementById('note-detail-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) document.getElementById('note-detail-modal').classList.remove('show');
+        });
 
         // ─── Music Popup ───
         function openMusicPopup(url, title) {
@@ -5210,7 +6074,7 @@
             setTimeout(() => { status.textContent = ''; }, 3000);
         }));
 
-        // ─── Post Creation (★ FIXED: Base64 FileReader) ───
+        // ─── Post Creation ───
         document.getElementById('btn-submit-post').addEventListener('click', withLoading('btn-submit-post', async () => {
             const caption = document.getElementById('new-post-caption').value.trim();
             const urlInput = document.getElementById('new-post-url').value.trim();
@@ -5224,25 +6088,19 @@
             let imageUrl = urlInput || null;
             const progress = document.getElementById('post-upload-progress');
 
-            // ★ If a file is selected, convert to Base64 using FileReader
             if (hasFile) {
                 const file = fileInput.files[0];
                 if (!file.type.startsWith('image/')) { showToast('Please choose an image file.', 'error'); return; }
-                if (file.size > 8 * 1024 * 1024) { showToast('Image must be under 8MB.', 'error'); return; }
-                progress.textContent = '📸 Converting image to Base64…';
+                if (file.size > 5 * 1024 * 1024) { showToast('Image must be under 5MB.', 'error'); return; }
+                progress.textContent = '📸 Processing image…';
                 try {
-                    const base64 = await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result);
-                        reader.onerror = () => reject(new Error('Failed to read file'));
-                        reader.readAsDataURL(file);
-                    });
-                    imageUrl = base64;
-                    progress.textContent = '✅ Image converted.';
+                    const compressed = await compressImage(file, 1200, 0.85);
+                    imageUrl = compressed;
+                    progress.textContent = '✅ Image ready.';
                 } catch (e) {
-                    console.error('FileReader error:', e);
-                    progress.textContent = '❌ Image conversion failed.';
-                    showToast('Image conversion failed: ' + e.message, 'error');
+                    console.error('Image processing error:', e);
+                    progress.textContent = '❌ Image processing failed.';
+                    showToast('Image processing failed: ' + e.message, 'error');
                     return;
                 }
             }
@@ -5269,6 +6127,7 @@
                     createdAt: serverTimestamp()
                 });
                 await updateDoc(doc(db, 'users', currentUser.uid), { postCount: increment(1) });
+                await applyXpBoost(currentUser.uid, 5);
                 resetPostComposer();
                 progress.textContent = '';
                 showToast('Post published! 🚀', 'success');
@@ -5277,6 +6136,37 @@
                 progress.textContent = '❌ Failed.';
             }
         }));
+
+        function compressImage(file, maxSize = 1200, quality = 0.85) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.width,
+                            h = img.height;
+                        if (w > maxSize || h > maxSize) {
+                            const ratio = Math.min(maxSize / w, maxSize / h);
+                            w = Math.round(w * ratio);
+                            h = Math.round(h * ratio);
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = 'high';
+                        ctx.drawImage(img, 0, 0, w, h);
+                        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        resolve(dataUrl);
+                    };
+                    img.onerror = () => reject(new Error('Failed to load image'));
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => reject(new Error('Failed to read file'));
+                reader.readAsDataURL(file);
+            });
+        }
 
         function resetPostComposer() {
             document.getElementById('new-post-caption').value = '';
@@ -5326,60 +6216,83 @@
             setTimeout(() => { status.textContent = ''; }, 3000);
         }));
 
-        // ─── ★ NEW: Base64 Avatar File Upload ───
-        const avatarFileInput = document.getElementById('edit-avatar-file-input');
-        const avatarFileName = document.getElementById('avatar-file-name');
-        const btnUploadAvatarBase64 = document.getElementById('btn-upload-avatar-base64');
+        // ─── Device Avatar Upload ───
+        document.getElementById('btn-upload-avatar-device').addEventListener('click', withLoading(
+            'btn-upload-avatar-device', async () => {
+                const fileInput = document.getElementById('avatar-device-file');
+                const statusEl = document.getElementById('avatar-device-status');
+                const file = fileInput.files[0];
+                if (!file) { showToast('Please select an image from your device.', 'error'); return; }
+                if (!file.type.startsWith('image/')) { showToast('Please choose an image file.', 'error'); return; }
+                if (file.size > 5 * 1024 * 1024) { showToast('Image must be under 5MB.', 'error'); return; }
 
-        avatarFileInput.addEventListener('change', (e) => {
-            const file = e.target.files && e.target.files[0];
-            if (file) {
-                avatarFileName.textContent = file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
-                selectedAvatarFile = file;
-            } else {
-                avatarFileName.textContent = 'No file selected';
-                selectedAvatarFile = null;
-            }
+                statusEl.textContent = '📸 Processing…';
+                try {
+                    const compressed = await compressImage(file, 600, 0.8);
+                    await updateDoc(doc(db, 'users', currentUser.uid), { avatarURL: compressed });
+                    statusEl.textContent = '✅ Avatar updated!';
+                    showToast('Profile picture updated! 📸', 'success');
+                    fileInput.value = '';
+                    setupProfileSync(currentUser.uid);
+                } catch (e) {
+                    console.error('Avatar upload error:', e);
+                    statusEl.textContent = '❌ Failed.';
+                    showToast('Avatar upload failed: ' + e.message, 'error');
+                }
+                setTimeout(() => { statusEl.textContent = ''; }, 3000);
+            }));
+
+        // ─── Emotes ───
+        function renderEmotePicker() {
+            const dropdowns = ['emote-picker-dropdown', 'private-emote-picker-dropdown'];
+            dropdowns.forEach(id => {
+                const container = document.getElementById(id);
+                if (!container) return;
+                container.innerHTML = '';
+                const allEmotes = [...DEFAULT_EMOTES, ...unlockedEmotes];
+                const unique = [...new Set(allEmotes)];
+                unique.forEach(emote => {
+                    const span = document.createElement('span');
+                    span.className = 'emote-option';
+                    span.textContent = emote;
+                    span.addEventListener('click', () => {
+                        const input = container.closest('.flex-row')?.querySelector(
+                        'input.input-box');
+                        if (input) {
+                            input.value += emote;
+                            input.focus();
+                            container.classList.remove('open');
+                        }
+                    });
+                    container.appendChild(span);
+                });
+                if (unique.length === 0) {
+                    container.innerHTML =
+                        '<span style="font-size:9px;color:var(--text-faint);padding:4px;">No emotes unlocked. Buy in Store!</span>';
+                }
+            });
+        }
+
+        document.getElementById('emote-picker-toggle').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = document.getElementById('emote-picker-dropdown');
+            dropdown.classList.toggle('open');
+        });
+        document.getElementById('private-emote-picker-toggle').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = document.getElementById('private-emote-picker-dropdown');
+            dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.emote-picker-dropdown').forEach(el => el.classList.remove('open'));
         });
 
-        btnUploadAvatarBase64.addEventListener('click', withLoading('btn-upload-avatar-base64', async () => {
-            if (!selectedAvatarFile) { showToast('Please select an image file first.', 'error'); return; }
-            if (!selectedAvatarFile.type.startsWith('image/')) { showToast('Please choose an image file.',
-                'error'); return; }
-            if (selectedAvatarFile.size > 2 * 1024 * 1024) { showToast('Image must be under 2MB.', 'error'); return; }
-
-            const status = document.getElementById('profile-update-status');
-            status.textContent = '📸 Converting avatar…';
-            try {
-                const base64 = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = () => reject(new Error('Failed to read file'));
-                    reader.readAsDataURL(selectedAvatarFile);
-                });
-                await updateDoc(doc(db, 'users', currentUser.uid), { avatarURL: base64 });
-                status.textContent = '✅ Avatar uploaded (Base64)!';
-                status.style.color = '#58d68d';
-                showToast('Profile picture uploaded! 📸', 'success');
-                // Clear the input
-                avatarFileInput.value = '';
-                avatarFileName.textContent = 'No file selected';
-                selectedAvatarFile = null;
-                // Refresh profile
-                setupProfileSync(currentUser.uid);
-            } catch (e) {
-                console.error('Avatar upload error:', e);
-                status.textContent = '❌ Avatar upload failed.';
-                showToast('Avatar upload failed: ' + e.message, 'error');
-            }
-            setTimeout(() => { if (status.textContent.includes('✅') || status.textContent.includes('❌'))
-                    setTimeout(() => { status.textContent = ''; }, 3000); }, 3000);
-        }));
-
-        // ─── Chat ───
+        // ─── Global Chat Send with Swear Filter ───
         document.getElementById('btn-send-chat').addEventListener('click', withLoading('btn-send-chat', async () => {
-            const msg = document.getElementById('chat-input-message').value.trim();
+            let msg = document.getElementById('chat-input-message').value.trim();
             if (!msg) return;
+            // ─── APPLY SWEAR FILTER ONLY TO GLOBAL CHAT ───
+            msg = filterSwearWords(msg);
             const profile = await getDoc(doc(db, 'users', currentUser.uid));
             const username = profile.exists() ? profile.data().username : 'anonymous';
             const isVerified = profile.exists() ? !!profile.data().verified : false;
@@ -5395,6 +6308,7 @@
         document.getElementById('chat-input-message').addEventListener('keydown', (e) => { if (e.key === 'Enter') document
                 .getElementById('btn-send-chat').click(); });
 
+        // ─── Private Chat ───
         async function loadUserList() {
             const list = document.getElementById('private-chat-user-list');
             const snapshot = await getDocs(collection(db, 'users'));
@@ -5413,7 +6327,7 @@
             });
         }
 
-        // ─── Game Challenge from Chat ───
+        // ─── Game Challenge Modal ───
         function openGameChallengeModal(partnerUid, partnerUsername) {
             const modal = document.getElementById('game-challenge-modal');
             const content = document.getElementById('game-challenge-content');
@@ -5436,13 +6350,27 @@
                     </div>
                     <span style="font-size:12px;color:var(--text-faint);">→</span>
                 </div>
+                <div class="game-option" data-game="tictactoe" style="border-color:rgba(168,85,247,0.2);">
+                    <span class="game-icon">❌</span>
+                    <div class="game-info">
+                        <div class="game-name">Tic-Tac-Toe</div>
+                        <div class="game-desc">Quick 3x3 duel</div>
+                    </div>
+                    <span style="font-size:12px;color:var(--text-faint);">→</span>
+                </div>
             `;
             modal.classList.add('show');
             content.querySelectorAll('.game-option').forEach(el => {
                 el.addEventListener('click', () => {
                     const game = el.dataset.game;
-                    sendGameInvite(partnerUid, game);
-                    modal.classList.remove('show');
+                    if (game === 'tictactoe') {
+                        // Launch local Tic-Tac-Toe in private chat
+                        modal.classList.remove('show');
+                        launchTicTacToe(partnerUid, partnerUsername);
+                    } else {
+                        sendGameInvite(partnerUid, game);
+                        modal.classList.remove('show');
+                    }
                 });
             });
         }
@@ -5452,6 +6380,171 @@
         document.getElementById('game-challenge-modal').addEventListener('click', (e) => { if (e.target === e.currentTarget)
                 document.getElementById('game-challenge-modal').classList.remove('show'); });
 
+        // ─── Tic-Tac-Toe in Private Chat ───
+        let tttGameState = null;
+        let tttGameActive = false;
+
+        function launchTicTacToe(partnerUid, partnerUsername) {
+            const stream = document.getElementById('private-chat-stream');
+            if (!stream) return;
+            // Clean up any existing game
+            if (tttGameActive) {
+                tttGameState = null;
+                tttGameActive = false;
+            }
+
+            tttGameState = {
+                board: Array(9).fill(null),
+                currentPlayer: 'X',
+                gameOver: false,
+                winner: null,
+                moves: 0,
+                partnerUid,
+                partnerUsername,
+                playerSymbol: 'X',
+                opponentSymbol: 'O'
+            };
+            tttGameActive = true;
+
+            // Render the game board inside the chat stream with glassmorphism
+            renderTicTacToeBoard(stream, partnerUsername);
+
+            // Add a special message to indicate game start
+            const startMsg = document.createElement('div');
+            startMsg.className = 'chat-msg';
+            startMsg.innerHTML =
+                `<span class="chat-sender" style="color:var(--neon-cyan);">🎮 Tic-Tac-Toe started vs @${partnerUsername}</span><div class="chat-bubble" style="font-size:10px;color:var(--text-dim);background:rgba(34,229,255,0.05);">Your turn! (You are <strong style="color:var(--neon-cyan);">X</strong>)</div>`;
+            stream.appendChild(startMsg);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function renderTicTacToeBoard(stream, partnerUsername) {
+            // Remove any existing game board
+            const existing = stream.querySelector('.ttt-container');
+            if (existing) existing.remove();
+
+            const container = document.createElement('div');
+            container.className = 'ttt-container';
+            const board = tttGameState.board;
+            const currentPlayer = tttGameState.currentPlayer;
+            const gameOver = tttGameState.gameOver;
+            const winner = tttGameState.winner;
+            const isMyTurn = (currentPlayer === tttGameState.playerSymbol) && !gameOver;
+            const statusText = gameOver ?
+                (winner ? (winner === tttGameState.playerSymbol ? '🎉 You win!' : `😔 ${partnerUsername} wins!`) : '🤝 Draw!') :
+                (isMyTurn ? 'Your turn (X)' : `Waiting for ${partnerUsername} (O)...`);
+
+            container.innerHTML = `
+                <div class="ttt-title">❌⭕ Tic-Tac-Toe</div>
+                <div class="ttt-status">${statusText}</div>
+                <div class="ttt-board" id="ttt-board">
+                    ${board.map((cell, idx) => `
+                        <div class="ttt-cell ${cell ? (cell === 'X' ? 'x' : 'o') : ''} ${gameOver ? 'disabled' : ''} ${cell && (winner ? (tttGameState.winCells && tttGameState.winCells.includes(idx) ? 'win-cell' : '') : '')}" data-index="${idx}">
+                            ${cell || ''}
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="ttt-actions">
+                    <button class="action-btn small secondary" id="ttt-reset" style="min-height:30px;padding:4px 14px;font-size:8px;">🔄 New Game</button>
+                    <button class="action-btn small secondary" id="ttt-close" style="min-height:30px;padding:4px 14px;font-size:8px;">✕ Close</button>
+                </div>
+            `;
+            stream.appendChild(container);
+            stream.scrollTop = stream.scrollHeight;
+
+            // ─── Cell click handler ───
+            const cells = container.querySelectorAll('.ttt-cell');
+            cells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    if (tttGameState.gameOver) return;
+                    const idx = parseInt(cell.dataset.index);
+                    if (tttGameState.board[idx] !== null) return;
+                    if (tttGameState.currentPlayer !== tttGameState.playerSymbol) {
+                        showToast('Wait for your turn!', 'info');
+                        return;
+                    }
+                    // Make move
+                    tttGameState.board[idx] = tttGameState.currentPlayer;
+                    tttGameState.moves++;
+                    // Check win
+                    const win = checkTicTacToeWin(tttGameState.board);
+                    if (win) {
+                        tttGameState.gameOver = true;
+                        tttGameState.winner = tttGameState.currentPlayer;
+                        tttGameState.winCells = win;
+                        // Award coins/XP
+                        const reward = 10;
+                        applyWalletCap(currentUser.uid, reward);
+                        applyXpBoost(currentUser.uid, 5);
+                        showToast(`🎉 You won! +${reward} coins +5 XP`, 'success');
+                        renderTicTacToeBoard(stream, partnerUsername);
+                        return;
+                    } else if (tttGameState.moves === 9) {
+                        tttGameState.gameOver = true;
+                        tttGameState.winner = null;
+                        showToast('🤝 Draw!', 'info');
+                        renderTicTacToeBoard(stream, partnerUsername);
+                        return;
+                    }
+                    // Switch turn
+                    tttGameState.currentPlayer = tttGameState.currentPlayer === 'X' ? 'O' : 'X';
+                    renderTicTacToeBoard(stream, partnerUsername);
+                });
+            });
+
+            // ─── Reset button ───
+            const resetBtn = container.querySelector('#ttt-reset');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    tttGameState.board = Array(9).fill(null);
+                    tttGameState.currentPlayer = 'X';
+                    tttGameState.gameOver = false;
+                    tttGameState.winner = null;
+                    tttGameState.moves = 0;
+                    tttGameState.winCells = null;
+                    showToast('Game reset!', 'info');
+                    renderTicTacToeBoard(stream, partnerUsername);
+                });
+            }
+
+            // ─── Close button ───
+            const closeBtn = container.querySelector('#ttt-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    tttGameActive = false;
+                    tttGameState = null;
+                    const existing2 = stream.querySelector('.ttt-container');
+                    if (existing2) existing2.remove();
+                    // Reload chat messages
+                    const chatId = [currentUser.uid, tttGameState ? tttGameState.partnerUid : privateChatPartner]
+                        .sort().join('_');
+                    // Just remove the game container, chat stream will still show messages
+                    showToast('Game closed.', 'info');
+                });
+            }
+        }
+
+        function checkTicTacToeWin(board) {
+            const lines = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+            for (const line of lines) {
+                const [a, b, c] = line;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    return line;
+                }
+            }
+            return null;
+        }
+
+        // ─── Private Chat ───
         function openPrivateChat(partnerUid, partnerUsername) {
             if (privateChatUnsub) privateChatUnsub();
             privateChatPartner = partnerUid;
@@ -5489,13 +6582,14 @@
         }
 
         document.getElementById('btn-send-private').addEventListener('click', withLoading('btn-send-private', async () => {
-            const msg = document.getElementById('private-chat-input').value.trim();
+            let msg = document.getElementById('private-chat-input').value.trim();
             if (!msg || !privateChatPartner) return;
             if (msg === '/games') {
                 openGameChallengeModal(privateChatPartner, 'friend');
                 document.getElementById('private-chat-input').value = '';
                 return;
             }
+            // ─── NO SWEAR FILTER IN PRIVATE CHAT ───
             const chatId = [currentUser.uid, privateChatPartner].sort().join('_');
             await addDoc(collection(db, 'private_chats', chatId, 'messages'), {
                 senderUid: currentUser.uid,
@@ -5523,6 +6617,8 @@
             document.getElementById('private-chat-box').style.display = 'none';
             document.getElementById('private-chat-user-list').style.display = 'flex';
             document.getElementById('private-chat-stream').innerHTML = '';
+            tttGameActive = false;
+            tttGameState = null;
         });
 
         // ─── Status Note ───
@@ -5538,13 +6634,14 @@
             setTimeout(() => { status.textContent = ''; }, 3000);
         }));
 
-        // ─── Store (Unlimited Purchases + More Items) ───
+        // ─── Store ───
         async function loadStoreItems() {
             const container = document.getElementById('store-items-list');
             container.innerHTML = '';
             const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
             const inventory = userDoc.exists() ? userDoc.data().inventory || [] : [];
             const effects = userDoc.exists() ? userDoc.data().shopEffects || [] : [];
+            const unlockedEmotesData = userDoc.exists() ? userDoc.data().unlockedEmotes || [] : [];
 
             STORE_ITEMS.forEach(item => {
                 const owned = inventory.includes(item.id);
@@ -5553,6 +6650,8 @@
                 const div = document.createElement('div');
                 div.className = 'store-item';
                 const isBadge = BADGE_KEYS.includes(item.id) || ['vip_badge', 'rainbow_badge'].includes(item.id);
+                const isEmote = item.id === 'chat_emote';
+                const isXpBoost = item.id === 'xp_boost';
                 let timerHTML = '';
                 if (item.duration > 0) {
                     const activeEffect = effects.find(e => e.itemId === item.id);
@@ -5568,13 +6667,24 @@
                 }
                 const isActive = hasEffect && (item.duration === 0 || (Date.now() - effects.find(e => e.itemId === item
                     .id)?.startTime || 0) / 1000 < item.duration);
-                const btnText = isActive ? '✅ Active' : 'Buy';
-                const btnDisabled = isActive;
+                const emoteUnlocked = isEmote && unlockedEmotesData.length > 0;
+                const isPurchased = isEmote ? emoteUnlocked : isActive;
+
+                let btnText = isPurchased ? '✅ Active' : 'Buy';
+                let btnDisabled = isPurchased;
+                if (isEmote && emoteUnlocked) { btnText = '✅ Unlocked';
+                    btnDisabled = true; }
+                if (isXpBoost) {
+                    const boostActive = userXpBoostActive && Date.now() < userXpBoostExpiry;
+                    if (boostActive) { btnText = '⚡ Active';
+                        btnDisabled = true; }
+                }
+
                 div.innerHTML =
-                    `<div class="item-info"><div class="item-name">${item.name}</div><div class="item-desc">${item.desc} ${timerHTML}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="item-price">🪙 ${item.price}</div><button class="action-btn small ${isActive ? 'secondary' : ''}" data-item="${item.id}" ${isActive ? 'disabled' : ''}>${btnText}</button></div>`;
+                    `<div class="item-info"><div class="item-name">${item.name}</div><div class="item-desc">${item.desc} ${timerHTML}</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0;"><div class="item-price">🪙 ${item.price}</div><button class="action-btn small ${isPurchased ? 'secondary' : ''}" data-item="${item.id}" ${isPurchased ? 'disabled' : ''}>${btnText}</button></div>`;
                 container.appendChild(div);
                 const buyBtn = div.querySelector('button');
-                if (!isActive) {
+                if (!isPurchased) {
                     buyBtn.addEventListener('click', withLoading('buy-btn', async () => {
                         const userRef = doc(db, 'users', currentUser.uid);
                         await runTransaction(db, async (tx) => {
@@ -5583,10 +6693,24 @@
                             const data = snap.data();
                             const coins = data.coins || 0;
                             if (coins < item.price) throw new Error('Not enough coins!');
+                            if (coins - item.price > MAX_COINS) throw new Error(
+                                'Would exceed maximum wallet cap.');
                             const updates = { coins: coins - item.price };
                             updates.inventory = arrayUnion(item.id);
                             if (isBadge) updates.badges = arrayUnion(item.id);
-                            if (item.effect && item.duration > 0) {
+                            if (isEmote) {
+                                const currentEmotes = data.unlockedEmotes || [];
+                                const newEmotes = [...currentEmotes, '😎', '🔥', '✨', '💀', '🎉', '👀', '🤔',
+                                    '🥺', '🫶'
+                                ];
+                                updates.unlockedEmotes = [...new Set(newEmotes)];
+                            }
+                            if (isXpBoost) {
+                                const boostDuration = item.duration || 3600;
+                                updates.xpBoostActive = true;
+                                updates.xpBoostExpiry = Date.now() + boostDuration * 1000;
+                            }
+                            if (item.effect && item.duration > 0 && !isXpBoost) {
                                 const effectsArr = data.shopEffects || [];
                                 const filtered = effectsArr.filter(e => e.itemId !== item.id);
                                 const newEffect = {
@@ -5598,12 +6722,19 @@
                                 updates.shopEffects = [...filtered, newEffect];
                             }
                             if (item.effect === 'coin_shower') {
-                                updates.coins = coins - item.price + 50;
+                                const newCoins = coins - item.price + 50;
+                                updates.coins = Math.min(newCoins, MAX_COINS);
                             }
                             tx.update(userRef, updates);
                         });
                         loadStoreItems();
                         showToast(`Purchased ${item.name}!`, 'success');
+                        const updated = await getDoc(doc(db, 'users', currentUser.uid));
+                        if (updated.exists()) {
+                            unlockedEmotes = updated.data().unlockedEmotes || [];
+                            renderEmotePicker();
+                            loadUserXpBoost();
+                        }
                     }));
                 }
             });
@@ -5622,13 +6753,21 @@
                 return (now - e.startTime) / 1000 < e.duration;
             });
 
-            if (active.length === 0) {
+            let xpBoostStr = '';
+            if (userXpBoostActive && Date.now() < userXpBoostExpiry) {
+                const remaining = Math.max(0, (userXpBoostExpiry - Date.now()) / 1000);
+                const mins = Math.floor(remaining / 60);
+                const secs = Math.floor(remaining % 60);
+                xpBoostStr = `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border-soft);font-size:10px;"><span>⚡ XP Boost</span><span style="color:#ffd479;font-weight:700;">${mins}m ${secs}s</span></div>`;
+            }
+
+            if (active.length === 0 && !xpBoostStr) {
                 card.style.display = 'none';
                 return;
             }
 
             card.style.display = 'block';
-            container.innerHTML = '';
+            container.innerHTML = xpBoostStr;
             active.forEach(e => {
                 const item = STORE_ITEMS.find(i => i.id === e.itemId);
                 const name = item ? item.name : e.itemId;
@@ -5663,7 +6802,64 @@
                         updateDoc(doc(db, 'users', currentUser.uid), { shopEffects: active }).catch(() => {});
                     }
                 }
+                if (userXpBoostActive && Date.now() > userXpBoostExpiry) {
+                    userXpBoostActive = false;
+                    updateDoc(doc(db, 'users', currentUser.uid), { xpBoostActive: false }).catch(() => {});
+                    renderXpBoostIndicator();
+                }
             }, 1000);
+        }
+
+        // ─── XP Boost ───
+        async function loadUserXpBoost() {
+            if (!currentUser) return;
+            const snap = await getDoc(doc(db, 'users', currentUser.uid));
+            if (!snap.exists()) return;
+            const data = snap.data();
+            userXpBoostActive = data.xpBoostActive || false;
+            userXpBoostExpiry = data.xpBoostExpiry || 0;
+            if (userXpBoostActive && Date.now() > userXpBoostExpiry) {
+                userXpBoostActive = false;
+                await updateDoc(doc(db, 'users', currentUser.uid), { xpBoostActive: false });
+            }
+            renderXpBoostIndicator();
+        }
+
+        function renderXpBoostIndicator() {
+            const container = document.getElementById('xp-boost-indicator-container');
+            if (!container) return;
+            if (userXpBoostActive && Date.now() < userXpBoostExpiry) {
+                const remaining = Math.max(0, (userXpBoostExpiry - Date.now()) / 1000);
+                const mins = Math.floor(remaining / 60);
+                const secs = Math.floor(remaining % 60);
+                container.innerHTML =
+                    `<span class="xp-boost-indicator">⚡ XP BOOST ACTIVE (${mins}m ${secs}s)</span>`;
+            } else {
+                container.innerHTML = '';
+            }
+        }
+
+        async function applyXpBoost(uid, baseXp) {
+            const snap = await getDoc(doc(db, 'users', uid));
+            if (!snap.exists()) return baseXp;
+            const data = snap.data();
+            const boostActive = data.xpBoostActive || false;
+            const expiry = data.xpBoostExpiry || 0;
+            let multiplier = 1;
+            if (boostActive && Date.now() < expiry) {
+                const effects = data.shopEffects || [];
+                const storeBoost = effects.find(e => e.effectType === 'xp_boost_2x' && (e.duration === 0 || (Date.now() - e
+                    .startTime) / 1000 < e.duration));
+                if (storeBoost) multiplier = 2;
+                else if (boostActive) multiplier = 2;
+            }
+            const gained = baseXp * multiplier;
+            const currentXp = data.xp || 0;
+            await updateDoc(doc(db, 'users', uid), { xp: currentXp + gained });
+            if (multiplier > 1) {
+                showToast(`⚡ ${multiplier}× XP! +${gained} XP`, 'success', 2000);
+            }
+            return gained;
         }
 
         // ─── Daily Bonus ───
@@ -5682,11 +6878,18 @@
                 const activeMultiplier = effects.find(e => e.effectType === 'coin_multiplier_2x' && (e.duration === 0 || (Date
                     .now() - e.startTime) / 1000 < e.duration));
                 if (activeMultiplier) multiplier = 2;
-                if (xpBoostActive) multiplier *= xpMultiplier;
+                if (userXpBoostActive && Date.now() < userXpBoostExpiry) multiplier *= 2;
                 const bonus = 25 * multiplier;
-                tx.update(ref, { coins: increment(bonus), dailyBonusLast: serverTimestamp() });
-                if (multiplier > 1) showToast(`🎉 +${bonus} coins (${multiplier}× multiplier active!)`, 'success');
-                else showToast(`🎉 +${bonus} Coins!`, 'success');
+                let newCoins = (data.coins || 0) + bonus;
+                if (newCoins > MAX_COINS) newCoins = MAX_COINS;
+                const actualBonus = newCoins - (data.coins || 0);
+                tx.update(ref, { coins: newCoins, dailyBonusLast: serverTimestamp() });
+                if (actualBonus > 0) {
+                    if (multiplier > 1) showToast(`🎉 +${actualBonus} coins (${multiplier}× multiplier active!)`,
+                        'success');
+                    else showToast(`🎉 +${actualBonus} Coins!`, 'success');
+                }
+                await applyXpBoost(currentUser.uid, 10);
             });
             dailyBonusClaimed = true;
             document.getElementById('daily-bonus-status').textContent = '✅ Claimed!';
@@ -5712,7 +6915,12 @@
             let avatarURL = '';
             const statusEl = document.getElementById('profile-update-status');
             if (fileInput.files.length > 0) {
-                try { avatarURL = await uploadAvatarFileBase64(fileInput.files[0], statusEl); } catch (e) { console.error(e);
+                try {
+                    const file = fileInput.files[0];
+                    if (file.size > 5 * 1024 * 1024) throw new Error('Image must be under 5MB.');
+                    avatarURL = await compressImage(file, 600, 0.8);
+                    statusEl.textContent = '✅ Avatar processed.';
+                } catch (e) { console.error(e);
                     statusEl.textContent = '❌ Avatar failed.';
                     showToast('Avatar upload failed.', 'error'); return; }
             } else if (avatarUrlInput && avatarUrlInput.match(/^https?:\/\/.+/)) { avatarURL = avatarUrlInput; }
@@ -5736,23 +6944,6 @@
             showToast('Profile updated!', 'success');
         }));
 
-        // ─── Base64 avatar upload helper ───
-        async function uploadAvatarFileBase64(file, statusEl) {
-            if (!file || !file.type.startsWith('image/')) throw new Error('Please choose an image file.');
-            if (file.size > 2 * 1024 * 1024) throw new Error('Image must be under 2MB.');
-            if (statusEl) statusEl.textContent = '📸 Converting avatar…';
-            try {
-                const base64 = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = () => reject(new Error('Failed to read file'));
-                    reader.readAsDataURL(file);
-                });
-                if (statusEl) statusEl.textContent = '✅ Avatar converted.';
-                return base64;
-            } catch (e) { throw new Error('Image conversion failed: ' + e.message); }
-        }
-
         document.getElementById('cover-upload-trigger').addEventListener('click', () => {
             const input = document.createElement('input');
             input.type = 'file';
@@ -5761,15 +6952,10 @@
                 const file = e.target.files[0];
                 if (!file) return;
                 const status = document.getElementById('profile-update-status');
-                status.textContent = '📸 Converting cover…';
+                status.textContent = '📸 Processing cover…';
                 try {
-                    const base64 = await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result);
-                        reader.onerror = () => reject(new Error('Failed to read file'));
-                        reader.readAsDataURL(file);
-                    });
-                    await updateDoc(doc(db, 'users', currentUser.uid), { coverURL: base64 });
+                    const compressed = await compressImage(file, 1200, 0.8);
+                    await updateDoc(doc(db, 'users', currentUser.uid), { coverURL: compressed });
                     status.textContent = '✅ Cover updated!';
                     showToast('Cover photo updated!', 'success');
                 } catch (err) { console.error(err);
@@ -5780,7 +6966,7 @@
         });
 
         document.addEventListener('click', (e) => { if (e.target.closest('#avatar-upload-trigger')) { document.getElementById(
-                    'edit-avatar-file-input').click(); } });
+                    'avatar-device-file').click(); } });
 
         // ─── Interests ───
         document.getElementById('btn-add-interest').addEventListener('click', () => {
@@ -5848,6 +7034,7 @@
             if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
             const balance = userSnap.data().coins || 0;
             if (bet > balance) { showToast('Insufficient coins!', 'error'); return; }
+            if (balance - bet > MAX_COINS) { showToast('Would exceed maximum wallet cap.', 'error'); return; }
             casinoFlipping = true;
             resultDisplay.className = 'coin-animation flipping';
             resultDisplay.textContent = '🪙';
@@ -5876,7 +7063,12 @@
                 msgDisplay.style.color = '#ff2f8e';
                 showToast(`😔 Lost ${bet} coins.`, 'error');
             }
-            await updateDoc(userRef, { coins: increment(delta) });
+            const newBalance = balance + delta;
+            const cappedDelta = newBalance > MAX_COINS ? MAX_COINS - balance : delta;
+            if (cappedDelta !== delta) {
+                showToast(`💰 Wallet capped at ${MAX_COINS} coins.`, 'info');
+            }
+            await updateDoc(userRef, { coins: increment(cappedDelta) });
             await updateDoc(userRef, { casinoWins, casinoLosses, casinoProfit });
             const newSnap = await getDoc(userRef);
             if (newSnap.exists()) updateCoinDisplay(newSnap.data().coins || 0);
@@ -5926,7 +7118,7 @@
                 if (amt === 'max') {
                     const balanceText = document.getElementById('casino-coin-display')?.textContent || '0';
                     const balance = parseInt(balanceText.replace(/[^0-9]/g, ''), 10) || 0;
-                    betInput.value = Math.max(balance, 1);
+                    betInput.value = Math.min(Math.max(balance, 1), MAX_COINS);
                 } else { betInput.value = amt; }
             });
             customToggle.addEventListener('click', () => {
@@ -5946,6 +7138,7 @@
             if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
             const balance = userSnap.data().coins || 0;
             if (bet > balance) { showToast('Insufficient coins!', 'error'); return; }
+            if (balance - bet > MAX_COINS) { showToast('Would exceed maximum wallet cap.', 'error'); return; }
             slotsSpinning = true;
             const resultEl = document.getElementById('slots-result');
             const reels = [document.getElementById('slot-0'), document.getElementById('slot-1'), document.getElementById(
@@ -5983,7 +7176,9 @@
                 showToast(`😔 Lost ${bet} coins.`, 'error');
             }
             const delta = allMatch ? winAmount : -bet;
-            await updateDoc(userRef, { coins: increment(delta) });
+            const newBalance = balance + delta;
+            const cappedDelta = newBalance > MAX_COINS ? MAX_COINS - balance : delta;
+            await updateDoc(userRef, { coins: increment(cappedDelta) });
             await saveSlotsStats();
             const newSnap = await getDoc(userRef);
             if (newSnap.exists()) updateCoinDisplay(newSnap.data().coins || 0);
@@ -6031,6 +7226,7 @@
             if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
             const balance = userSnap.data().coins || 0;
             if (bet > balance) { showToast('Insufficient coins!', 'error'); return; }
+            if (balance - bet > MAX_COINS) { showToast('Would exceed maximum wallet cap.', 'error'); return; }
 
             const d1 = document.getElementById('dice-1');
             const d2 = document.getElementById('dice-2');
@@ -6083,23 +7279,26 @@
             }
 
             const delta = won ? Math.floor(bet * multiplier) : -bet;
+            const newBalance = balance + delta;
+            const cappedDelta = newBalance > MAX_COINS ? MAX_COINS - balance : delta;
+
             const resultEl = document.getElementById('dice-result');
 
             if (won) {
                 diceWins++;
-                diceProfit += delta;
-                resultEl.textContent = `🎉 ${resultMsg} — Won ${delta} coins! (${multiplier}×)`;
+                diceProfit += cappedDelta;
+                resultEl.textContent = `🎉 ${resultMsg} — Won ${cappedDelta} coins! (${multiplier}×)`;
                 resultEl.style.color = '#58d68d';
-                showToast(`🎲 Won ${delta} coins!`, 'success');
+                showToast(`🎲 Won ${cappedDelta} coins!`, 'success');
             } else {
                 diceLosses++;
-                diceProfit += delta;
+                diceProfit += cappedDelta;
                 resultEl.textContent = `😔 ${resultMsg} — Lost ${bet} coins.`;
                 resultEl.style.color = '#ff2f8e';
                 showToast(`😔 Lost ${bet} coins.`, 'error');
             }
 
-            await updateDoc(userRef, { coins: increment(delta) });
+            await updateDoc(userRef, { coins: increment(cappedDelta) });
             await saveDiceStats();
             const newSnap = await getDoc(userRef);
             if (newSnap.exists()) updateCoinDisplay(newSnap.data().coins || 0);
@@ -6174,6 +7373,7 @@
             if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
             const balance = userSnap.data().coins || 0;
             if (bet > balance) { showToast('Insufficient coins!', 'error'); return; }
+            if (balance - bet > MAX_COINS) { showToast('Would exceed maximum wallet cap.', 'error'); return; }
 
             const wheel = document.getElementById('roulette-wheel');
             const resultDisplay = document.getElementById('roulette-result');
@@ -6232,25 +7432,27 @@
             }
 
             const delta = won ? Math.floor(bet * multiplier) : -bet;
+            const newBalance = balance + delta;
+            const cappedDelta = newBalance > MAX_COINS ? MAX_COINS - balance : delta;
 
             resultDisplay.textContent = `${resultNum}`;
             resultDisplay.className = `roulette-result-number ${resultColor}`;
 
             if (won) {
                 rouletteWins++;
-                rouletteProfit += delta;
-                statusDisplay.textContent = `🎉 ${resultNum} (${resultColor}) — Won ${delta} coins! (${betLabel} ×${multiplier})`;
+                rouletteProfit += cappedDelta;
+                statusDisplay.textContent = `🎉 ${resultNum} (${resultColor}) — Won ${cappedDelta} coins! (${betLabel} ×${multiplier})`;
                 statusDisplay.style.color = '#58d68d';
-                showToast(`🎡 Won ${delta} coins!`, 'success');
+                showToast(`🎡 Won ${cappedDelta} coins!`, 'success');
             } else {
                 rouletteLosses++;
-                rouletteProfit += delta;
+                rouletteProfit += cappedDelta;
                 statusDisplay.textContent = `😔 ${resultNum} (${resultColor}) — Lost ${bet} coins. (${betLabel})`;
                 statusDisplay.style.color = '#ff2f8e';
                 showToast(`😔 Lost ${bet} coins.`, 'error');
             }
 
-            await updateDoc(userRef, { coins: increment(delta) });
+            await updateDoc(userRef, { coins: increment(cappedDelta) });
             await saveRouletteStats();
             const newSnap = await getDoc(userRef);
             if (newSnap.exists()) updateCoinDisplay(newSnap.data().coins || 0);
@@ -6430,6 +7632,7 @@
             if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
             const balance = userSnap.data().coins || 0;
             if (bet * 2 > balance) { showToast('Not enough coins to double!', 'error'); return; }
+            if (balance - bet * 2 > MAX_COINS) { showToast('Would exceed maximum wallet cap.', 'error'); return; }
             bjDoubled = true;
             bjPlayerHand.push(drawCard());
             const pv = handValue(bjPlayerHand);
@@ -6451,6 +7654,7 @@
             const userRef = doc(db, 'users', currentUser.uid);
             const userSnap = await getDoc(userRef);
             if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
+            const balance = userSnap.data().coins || 0;
 
             let delta = 0;
             const resultEl = document.getElementById('bj-result');
@@ -6492,10 +7696,13 @@
                 showToast(`😔 Lost ${actualBet} coins.`, 'error');
             }
 
+            const newBalance = balance + delta;
+            const cappedDelta = newBalance > MAX_COINS ? MAX_COINS - balance : delta;
+
             resultEl.style.display = 'block';
             renderBJ();
 
-            await updateDoc(userRef, { coins: increment(delta) });
+            await updateDoc(userRef, { coins: increment(cappedDelta) });
             await saveBJStats();
             const newSnap = await getDoc(userRef);
             if (newSnap.exists()) updateCoinDisplay(newSnap.data().coins || 0);
@@ -6511,6 +7718,7 @@
                 if (!snap.exists()) { showToast('User not found.', 'error'); return; }
                 const balance = snap.data().coins || 0;
                 if (bet > balance) { showToast('Not enough coins!', 'error'); return; }
+                if (balance - bet > MAX_COINS) { showToast('Would exceed maximum wallet cap.', 'error'); return; }
                 bjBetAmount = bet;
                 bjDeal();
             });
@@ -6639,7 +7847,7 @@
             renderMultiplayerGame(gameId);
         }
 
-        // ─── Chess Multiplayer with chess.js ───
+        // ─── Chess Multiplayer ───
         function renderChessMultiplayer(gameId, boardData, currentTurn, players, opponentName, isMyTurn, statusText,
             container) {
             const chess = new Chess();
@@ -6948,9 +8156,7 @@
             gameIntervals = [];
         });
 
-        // ─── Local Games Implementations ───
-
-        // CHESS (vs CPU)
+        // ─── CHESS (vs CPU) ───
         function renderChess() {
             const container = document.getElementById('game-content');
             let board = {};
@@ -7049,7 +8255,7 @@
             renderBoard();
         }
 
-        // CONNECT4 (vs CPU)
+        // ─── CONNECT4 (vs CPU) ───
         function renderConnect4() {
             const container = document.getElementById('game-content');
             const rows = 6,
@@ -7146,7 +8352,7 @@
             renderBoard();
         }
 
-        // BATTLESHIP
+        // ─── BATTLESHIP ───
         function renderBattleship() {
             const container = document.getElementById('game-content');
             const size = 10;
@@ -7272,16 +8478,24 @@
 
                 try {
                     const userRef = doc(db, 'users', currentUser.uid);
-                    await updateDoc(userRef, { coins: increment(1) });
                     const snap = await getDoc(userRef);
-                    if (snap.exists()) updateCoinDisplay(snap.data().coins || 0);
+                    if (snap.exists()) {
+                        const current = snap.data().coins || 0;
+                        if (current >= MAX_COINS) {
+                            showToast('💰 Wallet is full!', 'info');
+                            return;
+                        }
+                        const newBalance = Math.min(current + 1, MAX_COINS);
+                        await updateDoc(userRef, { coins: newBalance });
+                        updateCoinDisplay(newBalance);
+                    }
                 } catch (e) {
                     console.warn('Coin clicker save error:', e);
                 }
             });
         }
 
-        // HANGMAN
+        // ─── HANGMAN ───
         function renderHangman() {
             const container = document.getElementById('game-content');
             const words = ['SCHOOL', 'SOCIAL', 'CAMPUS', 'FRIEND', 'LEARN', 'GAMING', 'STUDENT', 'TEACHER', 'PROJECT',
@@ -7332,7 +8546,7 @@
             updateDisplay();
         }
 
-        // SNAKE
+        // ─── SNAKE ───
         function renderSnake() {
             const container = document.getElementById('game-content');
             container.innerHTML =
@@ -7456,6 +8670,9 @@
                     textEl.textContent = globalAnnouncement; } else { container.style.display = 'none'; }
                 const input = document.getElementById('admin-announcement-input');
                 if (input) input.value = globalAnnouncement;
+            }, (error) => {
+                console.warn('Announcement listener error:', error);
+                setDoc(doc(db, 'app_settings', 'global_announcement'), { message: '' }).catch(() => {});
             });
         }
 
@@ -7465,11 +8682,13 @@
                 if (!msg) { showToast('Enter a message.', 'error'); return; }
                 await setDoc(doc(db, 'app_settings', 'global_announcement'), { message: msg });
                 showToast('Announcement set!', 'success');
+                loadGlobalAnnouncement();
             }));
         document.getElementById('btn-clear-announcement').addEventListener('click', withLoading('btn-clear-announcement',
             async () => {
                 await setDoc(doc(db, 'app_settings', 'global_announcement'), { message: '' });
                 showToast('Announcement cleared.', 'info');
+                loadGlobalAnnouncement();
             }));
 
         // ─── Maintenance Mode ───
@@ -7518,6 +8737,8 @@
                         '<span style="font-size:10px;color:var(--text-faint);">No promo codes yet.</span>';
                     return;
                 }
+                const badges = getCurrentUserBadges();
+                const canDelete = canDeletePromo(badges);
                 snap.forEach((docSnap) => {
                     const code = docSnap.data();
                     const id = docSnap.id;
@@ -7525,23 +8746,27 @@
                     const div = document.createElement('div');
                     div.className = 'promo-code-item';
                     div.innerHTML =
-                        `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="code-badge">${code.code}</span><span style="font-size:10px;color:var(--text-faint);">+${code.coins} coins</span><span style="font-size:8px;color:var(--text-faint);">${usedBy.length} used</span></div><div class="code-actions"><button data-id="${id}" class="delete-promo">✕</button></div>`;
+                        `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="code-badge">${code.code}</span><span style="font-size:10px;color:var(--text-faint);">+${code.coins} coins</span><span style="font-size:8px;color:var(--text-faint);">${usedBy.length} used</span></div>
+                        ${canDelete ? `<div class="code-actions"><button data-id="${id}" class="delete-promo">✕</button></div>` : ''}`;
                     container.appendChild(div);
-                    div.querySelector('.delete-promo').addEventListener('click', async () => {
-                        if (!confirm(`Delete promo code "${code.code}"?`)) return;
-                        await deleteDoc(doc(db, 'promo_codes', id));
-                        showToast(`Promo code "${code.code}" deleted.`, 'info');
-                        loadPromoCodes();
-                    });
+                    const delBtn = div.querySelector('.delete-promo');
+                    if (delBtn) {
+                        delBtn.addEventListener('click', async () => {
+                            if (!confirm(`Delete promo code "${code.code}"?`)) return;
+                            await deleteDoc(doc(db, 'promo_codes', id));
+                            showToast(`Promo code "${code.code}" deleted.`, 'info');
+                            loadPromoCodes();
+                        });
+                    }
                 });
             });
         }
 
-        async function loadPromoCodesFull() {
-            if (promoUnsubFull) promoUnsubFull();
+        async function loadPromoCodesUnlimited() {
+            if (promoUnsubUnlimited) promoUnsubUnlimited();
             const q = query(collection(db, 'promo_codes'), orderBy('createdAt', 'desc'));
-            promoUnsubFull = onSnapshot(q, (snap) => {
-                const container = document.getElementById('admin-promo-list-full');
+            promoUnsubUnlimited = onSnapshot(q, (snap) => {
+                const container = document.getElementById('admin-promo-list-unlimited');
                 if (!container) return;
                 container.innerHTML = '';
                 if (snap.empty) {
@@ -7549,6 +8774,8 @@
                         '<span style="font-size:10px;color:var(--text-faint);">No promo codes yet.</span>';
                     return;
                 }
+                const badges = getCurrentUserBadges();
+                const canDelete = canDeletePromo(badges);
                 snap.forEach((docSnap) => {
                     const code = docSnap.data();
                     const id = docSnap.id;
@@ -7556,82 +8783,87 @@
                     const div = document.createElement('div');
                     div.className = 'promo-code-item';
                     div.innerHTML =
-                        `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="code-badge">${code.code}</span><span style="font-size:10px;color:var(--text-faint);">+${code.coins} coins</span><span style="font-size:8px;color:var(--text-faint);">${usedBy.length} used</span></div><div class="code-actions"><button data-id="${id}" class="delete-promo">✕</button></div>`;
+                        `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><span class="code-badge">${code.code}</span><span style="font-size:10px;color:var(--text-faint);">+${code.coins} coins</span><span style="font-size:8px;color:var(--text-faint);">${usedBy.length} used</span></div>
+                        ${canDelete ? `<div class="code-actions"><button data-id="${id}" class="delete-promo">✕</button></div>` : ''}`;
                     container.appendChild(div);
-                    div.querySelector('.delete-promo').addEventListener('click', async () => {
-                        if (!confirm(`Delete promo code "${code.code}"?`)) return;
-                        await deleteDoc(doc(db, 'promo_codes', id));
-                        showToast(`Promo code "${code.code}" deleted.`, 'info');
-                        loadPromoCodesFull();
-                    });
+                    const delBtn = div.querySelector('.delete-promo');
+                    if (delBtn) {
+                        delBtn.addEventListener('click', async () => {
+                            if (!confirm(`Delete promo code "${code.code}"?`)) return;
+                            await deleteDoc(doc(db, 'promo_codes', id));
+                            showToast(`Promo code "${code.code}" deleted.`, 'info');
+                            loadPromoCodesUnlimited();
+                        });
+                    }
                 });
             });
         }
 
-        // ─── Limited promo creation (beta/tsa) ───
+        // ─── Limited promo creation ───
         document.getElementById('btn-create-promo-limited').addEventListener('click', withLoading(
             'btn-create-promo-limited', async () => {
-                if (limitedAdminPromoLimitReached) { showToast('You have reached your daily limit (1 promo).',
-                        'error'); return; }
-                const codeRaw = document.getElementById('admin-promo-code').value.trim().toUpperCase();
-                const coins = parseInt(document.getElementById('admin-promo-coins').value, 10) || 50;
+                const badges = getCurrentUserBadges();
+                const isUnrestricted = isOwnerOrCoOwner(badges);
+
+                const codeRaw = document.getElementById('admin-promo-code-limited').value.trim().toUpperCase();
+                let coins = parseInt(document.getElementById('admin-promo-coins-limited').value, 10) || 100;
+
                 if (!codeRaw) { showToast('Enter a promo code.', 'error'); return; }
                 if (coins < 1) { showToast('Coins must be at least 1.', 'error'); return; }
-                if (coins > 500) { showToast('Limited admins can only create promos up to 500 coins.',
-                    'error'); return; }
+
+                if (!isUnrestricted) {
+                    if (coins > 10000) { showToast('Maximum 10,000 coins per promo.', 'error'); return; }
+                    const today = new Date().toDateString();
+                    const lastDate = currentUserProfile?.lastPromoDate?.toDate?.()?.toDateString?.() || '';
+                    let count = 0;
+                    if (lastDate === today) count = currentUserProfile?.promoCountToday || 0;
+                    if (count >= 5) { showToast('Daily limit of 5 promos reached.', 'error'); return; }
+                }
+
+                const existing = await getDocs(query(collection(db, 'promo_codes'), where('code', '==', codeRaw)));
+                if (!existing.empty) { showToast('Promo code already exists.', 'error'); return; }
+
+                await addDoc(collection(db, 'promo_codes'), { code: codeRaw, coins, usedBy: [],
+                    createdAt: serverTimestamp(), createdBy: currentUser.uid });
+
+                if (!isUnrestricted) {
+                    const today = new Date().toDateString();
+                    const lastDate = currentUserProfile?.lastPromoDate?.toDate?.()?.toDateString?.() || '';
+                    let newCount = 1;
+                    if (lastDate === today) newCount = (currentUserProfile?.promoCountToday || 0) + 1;
+                    await updateDoc(doc(db, 'users', currentUser.uid), {
+                        lastPromoDate: serverTimestamp(),
+                        promoCountToday: newCount
+                    });
+                }
+
+                document.getElementById('admin-promo-code-limited').value = '';
+                document.getElementById('admin-promo-coins-limited').value = '100';
+                showToast(`Promo code "${codeRaw}" created! (${coins} coins)`, 'success');
+                loadPromoCodes();
+                loadPromoCodesUnlimited();
+                updatePromoLimitStatus();
+            }));
+
+        // ─── Unlimited promo creation ───
+        document.getElementById('btn-create-promo-unlimited').addEventListener('click', withLoading(
+            'btn-create-promo-unlimited', async () => {
+                if (!isCurrentUserOwnerOrCoOwner()) {
+                    showToast('Only Owner and Co-Owner can create unlimited promos.', 'error');
+                    return;
+                }
+                const codeRaw = document.getElementById('admin-promo-code-unlimited').value.trim().toUpperCase();
+                const coins = parseInt(document.getElementById('admin-promo-coins-unlimited').value, 10) || 100;
+                if (!codeRaw) { showToast('Enter a promo code.', 'error'); return; }
+                if (coins < 1) { showToast('Coins must be at least 1.', 'error'); return; }
                 const existing = await getDocs(query(collection(db, 'promo_codes'), where('code', '==', codeRaw)));
                 if (!existing.empty) { showToast('Promo code already exists.', 'error'); return; }
                 await addDoc(collection(db, 'promo_codes'), { code: codeRaw, coins, usedBy: [],
                     createdAt: serverTimestamp(), createdBy: currentUser.uid });
-                await updateDoc(doc(db, 'users', currentUser.uid), { lastPromoDate: serverTimestamp() });
-                document.getElementById('admin-promo-code').value = '';
-                showToast(`Promo code "${codeRaw}" created!`, 'success');
-                loadPromoCodes();
-                checkLimitedAdminPromoLimit();
-            }));
-
-        // ─── ★ FULL PROMO CREATION (Owner, Co-Owner, Big Ferni) with 5,000 cap for co-owner/big-ferni ───
-        document.getElementById('btn-create-promo-full').addEventListener('click', withLoading('btn-create-promo-full',
-            async () => {
-                const badges = getCurrentUserBadges();
-                const isOwner = badges.includes('owner');
-                const isCoOwner = badges.includes('co_owner');
-                const isBigFerni = badges.includes('big_ferni');
-
-                if (!isOwner && !isCoOwner && !isBigFerni) {
-                    showToast('Only Owner, Co-Owner, or Big Ferni can create unlimited promos.', 'error');
-                    return;
-                }
-
-                const codeRaw = document.getElementById('admin-promo-code-full').value.trim().toUpperCase();
-                let coins = parseInt(document.getElementById('admin-promo-coins-full').value, 10) || 100;
-
-                if (!codeRaw) { showToast('Enter a promo code.', 'error'); return; }
-                if (coins < 1) { showToast('Coins must be at least 1.', 'error'); return; }
-
-                // ★ ENFORCE 5,000 CAP for co-owner and big-ferni
-                if (!isOwner) {
-                    if (coins > 5000) {
-                        showToast('Co-Owner and Big Ferni are limited to 5,000 coins per promo.', 'error');
-                        return;
-                    }
-                }
-
-                const existing = await getDocs(query(collection(db, 'promo_codes'), where('code', '==', codeRaw)));
-                if (!existing.empty) { showToast('Promo code already exists.', 'error'); return; }
-
-                await addDoc(collection(db, 'promo_codes'), {
-                    code: codeRaw,
-                    coins,
-                    usedBy: [],
-                    createdAt: serverTimestamp(),
-                    createdBy: currentUser.uid
-                });
-
-                document.getElementById('admin-promo-code-full').value = '';
-                document.getElementById('admin-promo-coins-full').value = '100';
+                document.getElementById('admin-promo-code-unlimited').value = '';
+                document.getElementById('admin-promo-coins-unlimited').value = '100';
                 showToast(`Promo code "${codeRaw}" created! (${coins} coins)`, 'success');
-                loadPromoCodesFull();
+                loadPromoCodesUnlimited();
                 loadPromoCodes();
             }));
 
@@ -7640,6 +8872,12 @@
             const code = document.getElementById('redeem-code-input').value.trim().toUpperCase();
             const feedback = document.getElementById('redeem-feedback-msg');
             if (!code) { showToast('Enter a code.', 'error'); return; }
+
+            const limitCheck = await checkPromoRedeemLimit(currentUser.uid);
+            if (!limitCheck.allowed) { feedback.className = 'text-error';
+                feedback.innerHTML = `❌ ${limitCheck.message}`;
+                showToast(limitCheck.message, 'error'); return; }
+
             const q = query(collection(db, 'promo_codes'), where('code', '==', code));
             const snap = await getDocs(q);
             if (snap.empty) { feedback.className = 'text-error';
@@ -7651,16 +8889,30 @@
             if (usedBy.includes(currentUser.uid)) { feedback.className = 'text-error';
                 feedback.innerHTML = '❌ Already redeemed.';
                 showToast('You already redeemed this code.', 'error'); return; }
+
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists()) { showToast('User not found.', 'error'); return; }
+            const currentCoins = userSnap.data().coins || 0;
+            const newCoins = Math.min(currentCoins + data.coins, MAX_COINS);
+            const actualGain = newCoins - currentCoins;
+
             await updateDoc(docSnap.ref, { usedBy: arrayUnion(currentUser.uid) });
-            await updateDoc(doc(db, 'users', currentUser.uid), { coins: increment(data.coins) });
+            await updateDoc(userRef, { coins: newCoins });
+            await incrementPromoRedeemCount(currentUser.uid);
+
             feedback.className = 'text-success';
-            feedback.innerHTML = `✅ +${data.coins} Coins!`;
+            if (actualGain < data.coins) {
+                feedback.innerHTML = `✅ +${actualGain} Coins (capped at ${MAX_COINS})`;
+                showToast(`💰 Wallet capped! +${actualGain} coins.`, 'info');
+            } else {
+                feedback.innerHTML = `✅ +${data.coins} Coins!`;
+                showToast(`🎉 +${data.coins} coins redeemed!`, 'success');
+            }
             document.getElementById('redeem-code-input').value = '';
-            showToast(`🎉 +${data.coins} coins redeemed!`, 'success');
-            const userSnap = await getDoc(doc(db, 'users', currentUser.uid));
-            if (userSnap.exists()) updateCoinDisplay(userSnap.data().coins || 0);
+            updateCoinDisplay(newCoins);
             loadPromoCodes();
-            loadPromoCodesFull();
+            loadPromoCodesUnlimited();
         }));
 
         // ─── Custom Badges ───
@@ -7797,7 +9049,7 @@
                 setTimeout(() => { document.getElementById('system-settings-status').textContent = ''; }, 3000);
             }));
 
-        // ─── Online Users (Admin) ───
+        // ─── Online Users ───
         async function loadOnlineUsers() {
             if (!isCurrentUserAdmin()) return;
             const usersSnapshot = await getDocs(collection(db, 'users'));
@@ -7834,7 +9086,7 @@
                             .id, ...data }); });
                 renderAdminUserList();
                 updateAdminStats();
-                if (isCurrentUserOwner()) { loadOwnerRoleList();
+                if (isCurrentUserOwnerOrCoOwner()) { loadOwnerRoleList();
                     loadOwnerServerStats(); }
             });
             const postsSnap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc')));
@@ -7853,13 +9105,13 @@
             let totalCoins = 0,
                 activeCount = 0,
                 bannedCount = 0;
-            adminUsers.forEach(u => { totalCoins += (u.coins || 0); if (u.banned) bannedCount++;
+            adminUsers.forEach(u => { totalCoins += Math.min(u.coins || 0, MAX_COINS); if (u.banned) bannedCount++;
                 else activeCount++; });
             const setActive = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
             setActive('admin-banned-users', bannedCount);
             getDoc(doc(db, 'users', currentUser.uid)).then(snap => {
                 if (snap.exists()) { const d = snap.data();
-                    totalCoins += (d.coins || 0); if (d.banned) bannedCount++;
+                    totalCoins += Math.min(d.coins || 0, MAX_COINS); if (d.banned) bannedCount++;
                     else activeCount++;
                     setActive('admin-total-coins', totalCoins);
                     setActive('admin-active-users', activeCount);
@@ -7908,7 +9160,7 @@
                         <div class="user-avatar-small">${avatarHTML}</div>
                         <div style="min-width:0;">
                             <div class="user-name">@${u.username} ${verifiedHTML} ${bannedHTML}</div>
-                            <div style="font-size:8px;color:var(--text-faint);">${u.coins || 0} coins • ${badges.length} badges</div>
+                            <div style="font-size:8px;color:var(--text-faint);">${Math.min(u.coins || 0, MAX_COINS)} coins • ${badges.length} badges</div>
                             <div class="user-badges-mini">${badgesHTML}</div>
                         </div>
                     </div>
@@ -7936,7 +9188,7 @@
                 <div style="display:flex;flex-direction:column;gap:8px;">
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
                         <div style="flex:1;min-width:100px;background:var(--bg-input);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:8px 12px;text-align:center;">
-                            <div style="font-size:20px;font-weight:900;color:#ffd479;">${user.coins || 0}</div>
+                            <div style="font-size:20px;font-weight:900;color:#ffd479;">${Math.min(user.coins || 0, MAX_COINS)}</div>
                             <div style="font-size:8px;color:var(--text-faint);text-transform:uppercase;">Coins</div>
                         </div>
                         <div style="flex:1;min-width:100px;background:var(--bg-input);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:8px 12px;text-align:center;">
@@ -8018,7 +9270,6 @@
 
             modal.classList.add('show');
 
-            // Profile edit
             const saveProfileBtn = content.querySelector('#admin-save-profile-edit');
             if (saveProfileBtn) {
                 saveProfileBtn.addEventListener('click', async () => {
@@ -8036,50 +9287,54 @@
                 });
             }
 
-            // Give coins
             const giveCoinsBtn = content.querySelector('#admin-give-coins-btn');
             if (giveCoinsBtn) {
                 giveCoinsBtn.addEventListener('click', withLoading('admin-give-coins-btn', async () => {
                     const amount = parseInt(document.getElementById('admin-give-coins-input').value, 10);
                     if (!amount || amount < 1) { showToast('Enter a valid amount.', 'error'); return; }
-                    await updateDoc(doc(db, 'users', user.uid), { coins: increment(amount) });
-                    showToast(`Gave ${amount} coins to @${user.username}`, 'success');
+                    const userRef = doc(db, 'users', user.uid);
+                    const snap = await getDoc(userRef);
+                    const current = snap.exists() ? snap.data().coins || 0 : 0;
+                    const newBalance = Math.min(current + amount, MAX_COINS);
+                    const actualDelta = newBalance - current;
+                    await updateDoc(userRef, { coins: newBalance });
+                    showToast(`Gave ${actualDelta} coins to @${user.username}${actualDelta < amount ? ' (capped)' : ''}`,
+                        'success');
                     loadAdminPanel();
                     const updated = await getDoc(doc(db, 'users', user.uid));
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 }));
             }
-            // Remove coins
             const removeCoinsBtn = content.querySelector('#admin-remove-coins-btn');
             if (removeCoinsBtn) {
                 removeCoinsBtn.addEventListener('click', withLoading('admin-remove-coins-btn', async () => {
                     const amount = parseInt(document.getElementById('admin-give-coins-input').value, 10);
                     if (!amount || amount < 1) { showToast('Enter a valid amount.', 'error'); return; }
-                    await updateDoc(doc(db, 'users', user.uid), { coins: increment(-amount) });
-                    showToast(`Removed ${amount} coins from @${user.username}`, 'info');
+                    const userRef = doc(db, 'users', user.uid);
+                    const snap = await getDoc(userRef);
+                    const current = snap.exists() ? snap.data().coins || 0 : 0;
+                    const newBalance = Math.max(0, current - amount);
+                    await updateDoc(userRef, { coins: newBalance });
+                    showToast(`Removed ${current - newBalance} coins from @${user.username}`, 'info');
                     loadAdminPanel();
                     const updated = await getDoc(doc(db, 'users', user.uid));
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 }));
             }
-            // Set coins
             const setCoinsBtn = content.querySelector('#admin-set-coins-btn');
             if (setCoinsBtn) {
                 setCoinsBtn.addEventListener('click', withLoading('admin-set-coins-btn', async () => {
-                    const amount = parseInt(document.getElementById('admin-give-coins-input').value, 10);
+                    let amount = parseInt(document.getElementById('admin-give-coins-input').value, 10);
                     if (amount < 0) { showToast('Amount must be 0 or more.', 'error'); return; }
+                    amount = Math.min(amount, MAX_COINS);
                     const userRef = doc(db, 'users', user.uid);
-                    const snap = await getDoc(userRef);
-                    const currentCoins = snap.exists() ? snap.data().coins || 0 : 0;
-                    const delta = amount - currentCoins;
-                    await updateDoc(userRef, { coins: increment(delta) });
+                    await updateDoc(userRef, { coins: amount });
                     showToast(`Set coins to ${amount} for @${user.username}`, 'success');
                     loadAdminPanel();
                     const updated = await getDoc(doc(db, 'users', user.uid));
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 }));
             }
-            // Add badge
             const addBadgeBtn = content.querySelector('#admin-add-badge-btn');
             if (addBadgeBtn) {
                 addBadgeBtn.addEventListener('click', async () => {
@@ -8093,7 +9348,6 @@
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 });
             }
-            // Remove badge
             content.querySelectorAll('[data-badge]').forEach(el => {
                 el.addEventListener('click', async () => {
                     const badge = el.dataset.badge;
@@ -8105,7 +9359,6 @@
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 });
             });
-            // Ban
             const banBtn = content.querySelector('#admin-toggle-ban-btn');
             if (banBtn) {
                 banBtn.addEventListener('click', async () => {
@@ -8116,7 +9369,6 @@
                     modal.classList.remove('show');
                 });
             }
-            // Delete
             const deleteBtn = content.querySelector('#admin-delete-user-btn');
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', async () => {
@@ -8129,7 +9381,6 @@
                     modal.classList.remove('show');
                 });
             }
-            // Verified
             const verifiedBtn = content.querySelector('#admin-toggle-verified-btn');
             if (verifiedBtn) {
                 verifiedBtn.addEventListener('click', async () => {
@@ -8140,7 +9391,6 @@
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 });
             }
-            // Reset coins
             const resetCoinsBtn = content.querySelector('#admin-reset-coins-btn');
             if (resetCoinsBtn) {
                 resetCoinsBtn.addEventListener('click', async () => {
@@ -8152,7 +9402,6 @@
                     if (updated.exists()) openAdminUserModal({ id: user.id, ...updated.data() });
                 });
             }
-            // Co-owner
             const makeCoownerBtn = content.querySelector('#admin-make-coowner-btn');
             if (makeCoownerBtn) {
                 makeCoownerBtn.addEventListener('click', async () => {
@@ -8175,7 +9424,6 @@
                     modal.classList.remove('show');
                 });
             }
-            // Transfer Owner
             const makeOwnerBtn = content.querySelector('#admin-make-owner-btn');
             if (makeOwnerBtn) {
                 makeOwnerBtn.addEventListener('click', async () => {
@@ -8187,7 +9435,6 @@
                     modal.classList.remove('show');
                 });
             }
-            // Change username
             const changeUsernameBtn = content.querySelector('#admin-change-username-btn');
             if (changeUsernameBtn) {
                 changeUsernameBtn.addEventListener('click', async () => {
@@ -8205,7 +9452,6 @@
                     modal.classList.remove('show');
                 });
             }
-            // Reset password
             const resetPassBtn = content.querySelector('#admin-reset-password-btn');
             if (resetPassBtn) {
                 resetPassBtn.addEventListener('click', async () => {
@@ -8217,7 +9463,6 @@
                     await updateDoc(doc(db, 'users', user.uid), { forcePasswordReset: true });
                 });
             }
-            // View user posts
             const viewPostsBtn = content.querySelector('#admin-view-user-posts');
             if (viewPostsBtn) {
                 viewPostsBtn.addEventListener('click', async () => {
@@ -8257,6 +9502,8 @@
                     `<div style="color:var(--text-faint);padding:12px;text-align:center;font-size:11px;">No posts yet.</div>`;
                 return;
             }
+            const userBadges = getCurrentUserBadges();
+            const canDelete = userBadges.includes('owner') || userBadges.includes('co_owner');
             adminPosts.forEach(post => {
                 const div = document.createElement('div');
                 div.style.cssText =
@@ -8271,23 +9518,34 @@
                     </div>
                     <div style="display:flex;gap:4px;">
                         <button class="admin-pin-btn" data-pid="${post.id}" title="Pin to top" style="background:none;border:none;color:var(--neon-cyan);font-size:11px;cursor:pointer;padding:4px;">${pinLabel}</button>
-                        <button class="admin-delete-btn" data-pid="${post.id}">✕</button>
+                        ${canDelete ? `<button class="admin-delete-btn" data-pid="${post.id}">✕</button>` : ''}
                     </div>
                 `;
                 container.appendChild(div);
                 const delBtn = div.querySelector('.admin-delete-btn');
-                delBtn.addEventListener('click', async () => {
-                    if (!confirm('Delete this post?')) return;
-                    await deleteDoc(doc(db, 'posts', post.id));
-                    showToast('Post deleted by admin.', 'info');
-                    loadAdminPanel();
-                });
+                if (delBtn) {
+                    delBtn.addEventListener('click', async () => {
+                        if (!confirm('Delete this post?')) return;
+                        const userBadges2 = getCurrentUserBadges();
+                        const canDelete2 = userBadges2.includes('owner') || userBadges2.includes('co_owner');
+                        if (!canDelete2) { showToast('Only Owner or Co-Owner can delete posts.', 'error'); return; }
+                        const commentsSnap = await getDocs(collection(db, 'posts', post.id, 'comments'));
+                        const batch = writeBatch(db);
+                        commentsSnap.forEach(d => batch.delete(d.ref));
+                        await batch.commit();
+                        await deleteDoc(doc(db, 'posts', post.id));
+                        showToast('Post deleted by admin.', 'info');
+                        loadAdminPanel();
+                    });
+                }
                 const pinBtn = div.querySelector('.admin-pin-btn');
-                pinBtn.addEventListener('click', async () => {
-                    await updateDoc(doc(db, 'posts', post.id), { pinned: !post.pinned });
-                    showToast(post.pinned ? 'Post unpinned.' : 'Post pinned to top.', 'success');
-                    loadAdminPanel();
-                });
+                if (pinBtn) {
+                    pinBtn.addEventListener('click', async () => {
+                        await updateDoc(doc(db, 'posts', post.id), { pinned: !post.pinned });
+                        showToast(post.pinned ? 'Post unpinned.' : 'Post pinned to top.', 'success');
+                        loadAdminPanel();
+                    });
+                }
             });
         }
 
@@ -8376,12 +9634,13 @@
                     loadAnnouncementHistory();
                     loadHeatmap(); }
                 if (tab === 'stats') { loadOnlineUsers(); }
+                if (tab === 'promos') { updatePromoLimitStatus(); }
             });
         });
 
         // ─── Owner-Only: Role List ───
         async function loadOwnerRoleList() {
-            if (!isCurrentUserOwner()) return;
+            if (!isCurrentUserOwnerOrCoOwner()) return;
             const container = document.getElementById('owner-role-list');
             if (!container) return;
             const snap = await getDocs(collection(db, 'users'));
@@ -8455,7 +9714,7 @@
 
         // ─── Owner-Only: Server Stats ───
         async function loadOwnerServerStats() {
-            if (!isCurrentUserOwner()) return;
+            if (!isCurrentUserOwnerOrCoOwner()) return;
             const snap = await getDocs(collection(db, 'users'));
             let totalUsers = 0,
                 totalCoins = 0,
@@ -8464,7 +9723,7 @@
                 const u = d.data();
                 if (u.banned) return;
                 totalUsers++;
-                totalCoins += (u.coins || 0);
+                totalCoins += Math.min(u.coins || 0, MAX_COINS);
                 if (u.onlineStatus === 'online') onlineCount++;
             });
             const postsSnap = await getDocs(collection(db, 'posts'));
@@ -8489,16 +9748,17 @@
             if (tabId === 'tab-store') loadStoreItems();
             if (tabId === 'tab-discover') loadDiscoverUsers();
             if (tabId === 'tab-admin') {
-                if (isCurrentUserAdmin()) { loadAdminPanel(); if (isCurrentUserOwner()) { loadOwnerRoleList();
+                if (isCurrentUserAdmin()) { loadAdminPanel(); if (isCurrentUserOwnerOrCoOwner()) { loadOwnerRoleList();
                         loadOwnerServerStats();
                         loadActivityLog(); } } else if (isCurrentUserLimitedAdmin()) { loadPromoCodes();
-                    checkLimitedAdminPromoLimit(); }
+                    renderPromoManager(); }
                 document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
                 const statsBtn = document.querySelector('.admin-tab-btn[data-admin-tab="stats"]');
                 if (statsBtn) statsBtn.classList.add('active');
                 document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
                 const statsPanel = document.getElementById('admin-tab-stats');
                 if (statsPanel) statsPanel.classList.add('active');
+                updatePromoLimitStatus();
             }
             if (tabId === 'tab-casino') {
                 if (currentUser) {
@@ -8543,7 +9803,7 @@
                 setTimeout(() => { msg.textContent = ''; }, 2500);
             }));
 
-        // ─── Bulk Coins (Owner-only) ───
+        // ─── Bulk Coins ───
         document.getElementById('btn-bulk-coins').addEventListener('click', withLoading('btn-bulk-coins', async () => {
             if (!isCurrentUserOwner()) { showToast('Only the Owner can give coins to everyone.', 'error'); return; }
             const amount = parseInt(document.getElementById('admin-bulk-coins-input').value, 10);
@@ -8553,19 +9813,37 @@
             if (!confirm(`Give ${amount} coins to ALL users (${totalUsers} users)?`)) return;
             const batch = writeBatch(db);
             let operationCount = 0;
-            for (const u of validUsers) { const ref = doc(db, 'users', u.uid);
-                batch.update(ref, { coins: increment(amount) });
-                operationCount++; }
-            if (currentUser?.uid) { const ref = doc(db, 'users', currentUser.uid);
-                batch.update(ref, { coins: increment(amount) });
-                operationCount++; }
-            if (operationCount === 0) { showToast('No users to give coins to.', 'error'); return; }
+            for (const u of validUsers) {
+                const ref = doc(db, 'users', u.uid);
+                const snap = await getDoc(ref);
+                if (snap.exists()) {
+                    const current = snap.data().coins || 0;
+                    const newBalance = Math.min(current + amount, MAX_COINS);
+                    if (newBalance !== current) {
+                        batch.update(ref, { coins: newBalance });
+                        operationCount++;
+                    }
+                }
+            }
+            if (currentUser?.uid) {
+                const ref = doc(db, 'users', currentUser.uid);
+                const snap = await getDoc(ref);
+                if (snap.exists()) {
+                    const current = snap.data().coins || 0;
+                    const newBalance = Math.min(current + amount, MAX_COINS);
+                    if (newBalance !== current) {
+                        batch.update(ref, { coins: newBalance });
+                        operationCount++;
+                    }
+                }
+            }
+            if (operationCount === 0) { showToast('No users to give coins to (all at cap).', 'info'); return; }
             await batch.commit();
-            await logActivity(`Gave ${amount} coins to ${operationCount} users`);
-            showToast(`Gave ${amount} coins to ${operationCount} users!`, 'success');
+            await logActivity(`Gave ${amount} coins to ${operationCount} users (capped at ${MAX_COINS})`);
+            showToast(`Gave coins to ${operationCount} users!`, 'success');
         }));
 
-        // ─── Wipe Posts (Owner-only) ───
+        // ─── Wipe Posts ───
         document.getElementById('btn-wipe-posts').addEventListener('click', withLoading('btn-wipe-posts', async () => {
             if (!isCurrentUserOwner()) { showToast('Only the Owner can wipe posts.', 'error'); return; }
             const confirmText = prompt(
@@ -8574,8 +9852,12 @@
             if (confirmText !== 'WIPE') { showToast('Wipe cancelled.', 'info'); return; }
             const batch = writeBatch(db);
             let count = 0;
-            adminPosts.forEach(p => { batch.delete(doc(db, 'posts', p.id));
-                count++; });
+            for (const p of adminPosts) {
+                const commentsSnap = await getDocs(collection(db, 'posts', p.id, 'comments'));
+                commentsSnap.forEach(d => batch.delete(d.ref));
+                batch.delete(doc(db, 'posts', p.id));
+                count++;
+            }
             if (count === 0) { showToast('No posts to delete.', 'info'); return; }
             await batch.commit();
             await logActivity(`Wiped ${count} posts`);
@@ -8583,7 +9865,7 @@
             loadAdminPanel();
         }));
 
-        // ─── Clear Global Chat (Owner-only) ───
+        // ─── Clear Global Chat ───
         document.getElementById('btn-clear-global-chat').addEventListener('click', withLoading('btn-clear-global-chat',
             async () => {
                 if (!isCurrentUserOwner()) { showToast('Only the Owner can clear global chat.', 'error'); return; }
@@ -8604,7 +9886,7 @@
                 showToast(`Cleared ${docs.length} chat message${docs.length === 1 ? '' : 's'}.`, 'info');
             }));
 
-        // ─── Broadcast (Owner-only) ───
+        // ─── Broadcast ───
         document.getElementById('btn-admin-broadcast').addEventListener('click', withLoading('btn-admin-broadcast', async () => {
             if (!isCurrentUserOwner()) { showToast('Only the Owner can broadcast.', 'error'); return; }
             const msg = document.getElementById('admin-broadcast-input').value.trim();
@@ -8620,7 +9902,7 @@
             showToast('Broadcast sent to all users!', 'success');
         }));
 
-        // ─── ★ NEW OWNER FEATURE 1: System Backup Snapshot ───
+        // ─── Backup Snapshot ───
         document.getElementById('btn-backup-snapshot').addEventListener('click', withLoading('btn-backup-snapshot',
             async () => {
                 if (!isCurrentUserOwner()) { showToast('Only the Owner can create backups.', 'error'); return; }
@@ -8689,10 +9971,10 @@
                 setTimeout(() => { document.getElementById('backup-status').textContent = ''; }, 3000);
                 loadAdminPanel();
                 loadPromoCodes();
-                loadPromoCodesFull();
+                loadPromoCodesUnlimited();
             }));
 
-        // ─── ★ NEW OWNER FEATURE 2: User Export (CSV) ───
+        // ─── Export Users CSV ───
         document.getElementById('btn-export-users-csv').addEventListener('click', async () => {
             if (!isCurrentUserOwner()) { showToast('Only the Owner can export users.', 'error'); return; }
             const snap = await getDocs(collection(db, 'users'));
@@ -8703,7 +9985,7 @@
                 rows.push([
                     u.username || '',
                     u.displayName || '',
-                    u.coins || 0,
+                    Math.min(u.coins || 0, MAX_COINS),
                     (u.badges || []).join('; '),
                     u.verified ? 'Yes' : 'No',
                     u.banned ? 'Yes' : 'No',
@@ -8723,7 +10005,7 @@
             await logActivity('Exported users CSV');
         });
 
-        // ─── ★ NEW OWNER FEATURE 3: Global XP Boost ───
+        // ─── Global XP Boost ───
         document.getElementById('btn-global-xp-boost').addEventListener('click', withLoading('btn-global-xp-boost',
             async () => {
                 if (!isCurrentUserOwner()) { showToast('Only the Owner can activate XP boost.', 'error'); return; }
@@ -8753,7 +10035,7 @@
                 }, duration * 60 * 1000);
             }));
 
-        // ─── ★ NEW OWNER FEATURE 4: Announcement History ───
+        // ─── Announcement History ───
         async function loadAnnouncementHistory() {
             if (!isCurrentUserOwner()) return;
             const container = document.getElementById('announcement-history-list');
@@ -8775,7 +10057,7 @@
             });
         }
 
-        // ─── ★ NEW OWNER FEATURE 5: Activity Heatmap ───
+        // ─── Heatmap ───
         async function loadHeatmap() {
             if (!isCurrentUserOwner()) return;
             const container = document.getElementById('heatmap-container');
@@ -8810,9 +10092,63 @@
             container.appendChild(legend);
         }
 
-        console.log('🚀 School Social – Fully upgraded with Base64 image uploads, owner-only tools, and promo caps!');
-        console.log('💬 Type /games in private chat to challenge a friend!');
-        console.log('👑 Owner-only features: Backup, Export CSV, XP Boost, Announcement History, Activity Heatmap');
+        // ─── CUSTOM BADGE MATRIX (Owner/Co-Owner) ───
+        document.getElementById('btn-grant-custom-badge-matrix').addEventListener('click', withLoading(
+            'btn-grant-custom-badge-matrix', async () => {
+                if (!isCurrentUserOwnerOrCoOwner()) {
+                    showToast('Only Owner and Co-Owner can grant custom badges.', 'error');
+                    return;
+                }
+                const targetUsername = document.getElementById('custom-badge-matrix-username').value.trim()
+                .toLowerCase();
+                const badgeLabel = document.getElementById('custom-badge-matrix-label').value.trim();
+                const badgeColor = document.getElementById('custom-badge-matrix-color').value || '#6366f1';
+
+                if (!targetUsername) { showToast('Enter a target username.', 'error'); return; }
+                if (!badgeLabel) { showToast('Enter a badge label.', 'error'); return; }
+
+                // Find user by username
+                const usernameDoc = await getDoc(doc(db, 'usernames', targetUsername));
+                if (!usernameDoc.exists()) { showToast('Username not found.', 'error'); return; }
+                const targetUid = usernameDoc.data().uid;
+                const userRef = doc(db, 'users', targetUid);
+                const userSnap = await getDoc(userRef);
+                if (!userSnap.exists()) { showToast('User profile not found.', 'error'); return; }
+
+                // Create custom badge in custom_badges collection
+                const badgeRef = doc(collection(db, 'custom_badges'));
+                const badgeId = badgeRef.id;
+                await setDoc(badgeRef, {
+                    label: badgeLabel,
+                    icon: '⭐',
+                    color: badgeColor,
+                    createdAt: serverTimestamp(),
+                    createdBy: currentUser.uid
+                });
+
+                // Add badge to user's badges array
+                await updateDoc(userRef, { badges: arrayUnion(badgeId) });
+
+                // Reload caches
+                await loadCustomBadges();
+
+                document.getElementById('custom-badge-matrix-username').value = '';
+                document.getElementById('custom-badge-matrix-label').value = '';
+                const statusEl = document.getElementById('custom-badge-matrix-status');
+                statusEl.textContent = `✅ Granted "${badgeLabel}" to @${targetUsername}`;
+                statusEl.style.color = '#58d68d';
+                showToast(`Custom badge "${badgeLabel}" granted to @${targetUsername}!`, 'success');
+                setTimeout(() => { statusEl.textContent = ''; }, 4000);
+                loadAdminPanel();
+            }));
+
+        console.log('🚀 School Social – Fully updated with all features!');
+        console.log('💬 /games in private chat launches Tic-Tac-Toe!');
+        console.log('👑 Custom Badge Matrix added to Owner panel');
+        console.log('🧪 2nd Beta Tester badge added (#FBEAEC)');
+        console.log('🔇 Swear filter active in global chat only');
+        console.log('🎵 Auto-detect YouTube/Spotify in notes');
+        console.log('🎮 Tic-Tac-Toe with glassmorphism and coin/XP rewards');
     </script>
 </body>
 </html>
