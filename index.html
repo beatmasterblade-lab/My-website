@@ -15,6 +15,7 @@
         body {
             height: 100%;
             overflow-x: hidden;
+            touch-action: manipulation;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -345,6 +346,7 @@
             padding: 0 2px;
             gap: 0;
             padding-bottom: var(--safe-bottom);
+            touch-action: manipulation;
         }
         .nav-item {
             display: flex;
@@ -645,7 +647,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ─── NOTES TRAY ─── (UPGRADED) */
+        /* ─── NOTES TRAY ─── */
         .notes-tray {
             display: flex;
             gap: clamp(14px, 3vw, 20px);
@@ -806,6 +808,8 @@
             box-shadow: var(--shadow-card);
             text-align: center;
             animation: fadeSlide 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .note-detail-content .note-detail-avatar {
             width: 72px;
@@ -838,6 +842,24 @@
             word-break: break-word;
             font-weight: 500;
             line-height: 1.6;
+        }
+        .note-detail-content .note-detail-embed {
+            margin: 8px 0 12px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: rgba(0,0,0,0.3);
+            min-height: 60px;
+        }
+        .note-detail-content .note-detail-embed iframe,
+        .note-detail-content .note-detail-embed audio {
+            width: 100%;
+            border: none;
+            display: block;
+            border-radius: var(--radius-sm);
+        }
+        .note-detail-content .note-detail-embed audio {
+            padding: 8px 0;
+            background: rgba(0,0,0,0.2);
         }
         .note-detail-content .note-detail-close {
             background: rgba(255, 255, 255, 0.04);
@@ -3697,6 +3719,7 @@
             <div class="note-detail-avatar" id="note-detail-avatar">👤</div>
             <div class="note-detail-name" id="note-detail-name">@username</div>
             <div class="note-detail-text" id="note-detail-text">Note content</div>
+            <div class="note-detail-embed" id="note-detail-embed"></div>
             <button class="note-detail-close" id="note-detail-close">Close</button>
         </div>
     </div>
@@ -4353,7 +4376,7 @@
                                     <div id="heatmap-container" style="display:flex;flex-wrap:wrap;gap:2px;max-height:120px;overflow-y:auto;padding:4px 0;"></div>
                                 </div>
 
-                                <!-- ★ NEW: Custom Badge Matrix Form -->
+                                <!-- ★ Custom Badge Matrix Form -->
                                 <div style="margin-top:8px;border-top:1px solid var(--border-soft);padding-top:8px;">
                                     <div style="font-size:9px;color:var(--text-dim);margin-bottom:4px;">👑 Custom Badge Matrix</div>
                                     <div class="admin-badge-create" style="margin-bottom:4px;">
@@ -4585,7 +4608,7 @@
         const BADGES = {
             big_ferni: { label: 'Big Ferni', icon: '🌿', cls: 'big_ferni' },
             beta_tester: { label: 'Beta Tester', icon: '🧪', cls: 'beta_tester' },
-            second_beta_tester: { label: '2nd Beta Tester', icon: '🧪', cls: 'second_beta_tester' },
+            second_beta_tester: { label: 'Beta Tester', icon: '🌸', cls: 'second_beta_tester' },
             tsa_pro: { label: 'TSA Pro', icon: '✈️', cls: 'tsa_pro' },
             owner: { label: 'Owner', icon: '👑', cls: 'owner' },
             co_owner: { label: 'Co-Owner', icon: '⚜️', cls: 'co_owner' },
@@ -4825,6 +4848,7 @@
                 loadingOverlay.style.display = 'none';
             } else {
                 currentUser = null;
+                // Clean up all listeners
                 [profileUnsub, feedUnsub, chatUnsub, usersUnsub, discoverUnsub, privateChatUnsub, promoUnsub,
                     promoUnsubUnlimited, announcementUnsub, adminUsersUnsub, gameInvitesUnsub, activeGamesUnsub,
                     activityLogUnsub, systemSettingsUnsub
@@ -5377,6 +5401,7 @@
                     renderInterests(interests);
                     renderEditInterests(interests);
 
+                    // ─── FIX: Ensure followers and following are always arrays ───
                     const followers = data.followers || [];
                     const following = data.following || [];
                     document.getElementById('profile-post-count').textContent = data.postCount || 0;
@@ -5453,18 +5478,28 @@
 
                     document.getElementById('input-music-url').value = data.musicUrl || '';
 
-                    const isOwnProfile = viewedProfileUid === null || viewedProfileUid === uid;
+                    // ─── FIX: Determine if this is the current user's own profile ───
+                    const isOwnProfile = !viewedProfileUid || viewedProfileUid === uid;
+                    const followContainer = document.getElementById('follow-btn-container');
+                    const challengeContainer = document.getElementById('challenge-buttons');
+
                     if (isOwnProfile) {
-                        document.getElementById('follow-btn-container').style.display = 'none';
-                        document.getElementById('challenge-buttons').style.display = 'none';
+                        if (followContainer) followContainer.style.display = 'none';
+                        if (challengeContainer) challengeContainer.style.display = 'none';
                     } else {
-                        document.getElementById('follow-btn-container').style.display = 'block';
-                        const isFollowing = (followers || []).includes(currentUser.uid);
-                        const btn = document.getElementById('btn-follow-user');
-                        btn.textContent = isFollowing ? '✅ Following' : '➕ Follow';
-                        btn.className = isFollowing ? 'action-btn follow-btn following' : 'action-btn follow-btn';
-                        document.getElementById('challenge-buttons').style.display = 'flex';
-                        document.getElementById('challenge-buttons').dataset.targetUid = uid;
+                        if (followContainer) {
+                            followContainer.style.display = 'block';
+                            const isFollowing = (followers || []).includes(currentUser.uid);
+                            const btn = document.getElementById('btn-follow-user');
+                            if (btn) {
+                                btn.textContent = isFollowing ? '✅ Following' : '➕ Follow';
+                                btn.className = isFollowing ? 'action-btn follow-btn following' : 'action-btn follow-btn';
+                            }
+                        }
+                        if (challengeContainer) {
+                            challengeContainer.style.display = 'flex';
+                            challengeContainer.dataset.targetUid = uid;
+                        }
                     }
 
                     if (data.shopEffects) {
@@ -5556,7 +5591,31 @@
                     tx.update(targetRef, { followers: arrayUnion(currentUser.uid) });
                 }
             });
-            if (viewedProfileUid) setupProfileSync(viewedProfileUid);
+            // Refresh the profile view
+            if (viewedProfileUid) {
+                // Re-fetch the target user's data to update the UI
+                const targetSnap = await getDoc(doc(db, 'users', targetUid));
+                if (targetSnap.exists()) {
+                    const targetData = targetSnap.data();
+                    const followers = targetData.followers || [];
+                    const btn = document.getElementById('btn-follow-user');
+                    if (btn) {
+                        const isFollowing = followers.includes(currentUser.uid);
+                        btn.textContent = isFollowing ? '✅ Following' : '➕ Follow';
+                        btn.className = isFollowing ? 'action-btn follow-btn following' : 'action-btn follow-btn';
+                    }
+                    document.getElementById('profile-follower-count').textContent = followers.length;
+                }
+                // Also update the current user's following count
+                const userSnap = await getDoc(doc(db, 'users', currentUser.uid));
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    const following = userData.following || [];
+                    if (!viewedProfileUid || viewedProfileUid === currentUser.uid) {
+                        document.getElementById('profile-following-count').textContent = following.length;
+                    }
+                }
+            }
             loadDiscoverUsers();
             showToast('Follow status updated!', 'success');
         }
@@ -5564,9 +5623,13 @@
         document.getElementById('btn-follow-user').addEventListener('click', async () => { if (viewedProfileUid) await toggleFollow(
                 viewedProfileUid); });
 
-        function viewUserProfile(uid) { viewedProfileUid = uid;
+        function viewUserProfile(uid) {
+            viewedProfileUid = uid;
+            // Clean up any previous profile listener
+            if (profileUnsub) profileUnsub();
             setupProfileSync(uid);
-            switchTab('tab-profile'); }
+            switchTab('tab-profile');
+        }
 
         // ─── Followers Modal ───
         function showFollowersModal(mode, uids) {
@@ -5673,16 +5736,22 @@
 
         document.getElementById('discover-search').addEventListener('input', (e) => { renderDiscoverList(e.target.value); });
 
-        // ─── Real-time Feeds ───
+        // ─── Real-time Feeds (with performance optimizations) ───
         function startRealtimeFeeds() {
             if (feedUnsub) feedUnsub();
-            const feedQ = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+            // Limit to 50 most recent posts for performance
+            const feedQ = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(50));
             feedUnsub = onSnapshot(feedQ, (snap) => {
                 const container = document.getElementById('home-feed-stream');
-                container.innerHTML = '';
+                // Use document fragment for batch rendering
+                const fragment = document.createDocumentFragment();
                 if (snap.empty) {
-                    container.innerHTML =
-                        `<div class="empty-state"><span class="empty-icon">🌌</span>Feed empty — be the first to post!</div>`;
+                    const empty = document.createElement('div');
+                    empty.className = 'empty-state';
+                    empty.innerHTML = '<span class="empty-icon">🌌</span>Feed empty — be the first to post!';
+                    fragment.appendChild(empty);
+                    container.innerHTML = '';
+                    container.appendChild(fragment);
                     return;
                 }
                 const docs = [];
@@ -5748,7 +5817,7 @@
                             </div>
                         </div>
                     `;
-                    container.appendChild(card);
+                    fragment.appendChild(card);
                     card.querySelector('.post-user-info').addEventListener('click', () => {
                         const uid = card.querySelector('.post-user-info').dataset.uid;
                         if (uid && uid !== currentUser.uid) viewUserProfile(uid);
@@ -5885,6 +5954,8 @@
                     card._commentCleanup = () => { if (commentUnsub) { commentUnsub();
                             commentUnsub = null; } };
                 });
+                container.innerHTML = '';
+                container.appendChild(fragment);
             });
 
             // ─── Chat ───
@@ -5892,7 +5963,7 @@
             const chatQ = query(collection(db, 'global_chat'), orderBy('createdAt', 'asc'));
             chatUnsub = onSnapshot(chatQ, (snap) => {
                 const stream = document.getElementById('global-chat-stream');
-                stream.innerHTML = '';
+                const fragment = document.createDocumentFragment();
                 snap.forEach((docSnap) => {
                     const msg = docSnap.data();
                     const isMe = msg.senderUid === currentUser?.uid;
@@ -5904,17 +5975,19 @@
                         const uid = div.querySelector('.chat-sender').dataset.uid;
                         if (uid && uid !== currentUser.uid) viewUserProfile(uid);
                     });
-                    stream.appendChild(div);
+                    fragment.appendChild(div);
                 });
+                stream.innerHTML = '';
+                stream.appendChild(fragment);
                 stream.scrollTop = stream.scrollHeight;
             });
 
-            // ─── Notes Tray (UPGRADED with auto-detect YouTube/Spotify) ───
+            // ─── Notes Tray (UPGRADED with auto-detect YouTube/Spotify + embedded player) ───
             if (usersUnsub) usersUnsub();
             const usersQ = query(collection(db, 'users'));
             usersUnsub = onSnapshot(usersQ, (snap) => {
                 const tray = document.getElementById('dynamic-notes-tray');
-                tray.innerHTML = '';
+                const fragment = document.createDocumentFragment();
                 let hasNotes = false;
                 snap.forEach((docSnap) => {
                     const u = docSnap.data();
@@ -5948,12 +6021,12 @@
                             musicHTML =
                                 `<span class="note-music-icon" data-music="${encodeURIComponent(musicUrl)}" title="🎵 Play music">🎵</span>`;
                         } else if (mediaPlayHTML) {
-                            // If no musicUrl but we detected media in note, add a play button
                             musicHTML = mediaPlayHTML;
                         }
 
+                        // ─── Build bubble with optional embed player in the text popup ───
                         bubble.innerHTML = `
-                            <div class="note-text-popup">${note}</div>
+                            <div class="note-text-popup" style="white-space:normal;max-width:clamp(80px,20vw,100px);padding:6px 12px;line-height:1.3;">${note}</div>
                             ${musicHTML}
                             <div class="note-avatar">${avatarHTML}</div>
                             <div class="note-username">@${u.username || 'anon'}</div>
@@ -5966,14 +6039,31 @@
                             document.getElementById('note-detail-avatar').innerHTML = avatarHTML;
                             document.getElementById('note-detail-name').textContent = `@${u.username || 'anon'}`;
                             document.getElementById('note-detail-text').textContent = note;
+                            // ─── Auto-embed in detail modal ───
+                            const embedContainer = document.getElementById('note-detail-embed');
+                            embedContainer.innerHTML = '';
+                            const noteTextForEmbed = note;
+                            const ytMatch = noteTextForEmbed.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+                            const spMatch = noteTextForEmbed.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+                            if (ytMatch) {
+                                const vid = ytMatch[1];
+                                embedContainer.innerHTML =
+                                    `<iframe src="https://www.youtube.com/embed/${vid}?playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="min-height:180px;border-radius:var(--radius-sm);"></iframe>`;
+                            } else if (spMatch) {
+                                const tid = spMatch[1];
+                                embedContainer.innerHTML =
+                                    `<iframe src="https://open.spotify.com/embed/track/${tid}" allow="autoplay; encrypted-media" style="min-height:80px;border-radius:var(--radius-sm);"></iframe>`;
+                            } else {
+                                embedContainer.innerHTML = '';
+                            }
                             modal.classList.add('show');
                             if (u.uid !== currentUser.uid) {
                                 viewUserProfile(u.uid);
                             }
                         });
-                        tray.appendChild(bubble);
+                        fragment.appendChild(bubble);
 
-                        // Music icon handler (existing)
+                        // Music icon handler
                         const musicIcon = bubble.querySelector('.note-music-icon');
                         if (musicIcon) {
                             musicIcon.addEventListener('click', (e) => {
@@ -5983,7 +6073,7 @@
                             });
                         }
 
-                        // Media play button handler (new auto-detect)
+                        // Media play button handler
                         const mediaPlayBtn = bubble.querySelector('.note-media-play');
                         if (mediaPlayBtn) {
                             mediaPlayBtn.addEventListener('click', (e) => {
@@ -5995,19 +6085,27 @@
                         }
                     }
                 });
+                tray.innerHTML = '';
                 if (!hasNotes) {
-                    tray.innerHTML =
-                        `<div style="color:var(--text-faint);font-size:11px;padding:6px 0;">No status notes</div>`;
+                    const empty = document.createElement('div');
+                    empty.style.cssText = 'color:var(--text-faint);font-size:11px;padding:6px 0;';
+                    empty.textContent = 'No status notes';
+                    fragment.appendChild(empty);
                 }
+                tray.appendChild(fragment);
             });
         }
 
         // ─── Note Detail Modal ───
         document.getElementById('note-detail-close').addEventListener('click', () => {
             document.getElementById('note-detail-modal').classList.remove('show');
+            document.getElementById('note-detail-embed').innerHTML = '';
         });
         document.getElementById('note-detail-modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) document.getElementById('note-detail-modal').classList.remove('show');
+            if (e.target === e.currentTarget) {
+                document.getElementById('note-detail-modal').classList.remove('show');
+                document.getElementById('note-detail-embed').innerHTML = '';
+            }
         });
 
         // ─── Music Popup ───
@@ -6291,7 +6389,6 @@
         document.getElementById('btn-send-chat').addEventListener('click', withLoading('btn-send-chat', async () => {
             let msg = document.getElementById('chat-input-message').value.trim();
             if (!msg) return;
-            // ─── APPLY SWEAR FILTER ONLY TO GLOBAL CHAT ───
             msg = filterSwearWords(msg);
             const profile = await getDoc(doc(db, 'users', currentUser.uid));
             const username = profile.exists() ? profile.data().username : 'anonymous';
@@ -6364,7 +6461,6 @@
                 el.addEventListener('click', () => {
                     const game = el.dataset.game;
                     if (game === 'tictactoe') {
-                        // Launch local Tic-Tac-Toe in private chat
                         modal.classList.remove('show');
                         launchTicTacToe(partnerUid, partnerUsername);
                     } else {
@@ -6387,7 +6483,6 @@
         function launchTicTacToe(partnerUid, partnerUsername) {
             const stream = document.getElementById('private-chat-stream');
             if (!stream) return;
-            // Clean up any existing game
             if (tttGameActive) {
                 tttGameState = null;
                 tttGameActive = false;
@@ -6406,10 +6501,8 @@
             };
             tttGameActive = true;
 
-            // Render the game board inside the chat stream with glassmorphism
             renderTicTacToeBoard(stream, partnerUsername);
 
-            // Add a special message to indicate game start
             const startMsg = document.createElement('div');
             startMsg.className = 'chat-msg';
             startMsg.innerHTML =
@@ -6419,7 +6512,6 @@
         }
 
         function renderTicTacToeBoard(stream, partnerUsername) {
-            // Remove any existing game board
             const existing = stream.querySelector('.ttt-container');
             if (existing) existing.remove();
 
@@ -6452,7 +6544,6 @@
             stream.appendChild(container);
             stream.scrollTop = stream.scrollHeight;
 
-            // ─── Cell click handler ───
             const cells = container.querySelectorAll('.ttt-cell');
             cells.forEach(cell => {
                 cell.addEventListener('click', () => {
@@ -6463,16 +6554,13 @@
                         showToast('Wait for your turn!', 'info');
                         return;
                     }
-                    // Make move
                     tttGameState.board[idx] = tttGameState.currentPlayer;
                     tttGameState.moves++;
-                    // Check win
                     const win = checkTicTacToeWin(tttGameState.board);
                     if (win) {
                         tttGameState.gameOver = true;
                         tttGameState.winner = tttGameState.currentPlayer;
                         tttGameState.winCells = win;
-                        // Award coins/XP
                         const reward = 10;
                         applyWalletCap(currentUser.uid, reward);
                         applyXpBoost(currentUser.uid, 5);
@@ -6486,13 +6574,11 @@
                         renderTicTacToeBoard(stream, partnerUsername);
                         return;
                     }
-                    // Switch turn
                     tttGameState.currentPlayer = tttGameState.currentPlayer === 'X' ? 'O' : 'X';
                     renderTicTacToeBoard(stream, partnerUsername);
                 });
             });
 
-            // ─── Reset button ───
             const resetBtn = container.querySelector('#ttt-reset');
             if (resetBtn) {
                 resetBtn.addEventListener('click', () => {
@@ -6507,7 +6593,6 @@
                 });
             }
 
-            // ─── Close button ───
             const closeBtn = container.querySelector('#ttt-close');
             if (closeBtn) {
                 closeBtn.addEventListener('click', () => {
@@ -6515,10 +6600,6 @@
                     tttGameState = null;
                     const existing2 = stream.querySelector('.ttt-container');
                     if (existing2) existing2.remove();
-                    // Reload chat messages
-                    const chatId = [currentUser.uid, tttGameState ? tttGameState.partnerUid : privateChatPartner]
-                        .sort().join('_');
-                    // Just remove the game container, chat stream will still show messages
                     showToast('Game closed.', 'info');
                 });
             }
@@ -6556,7 +6637,7 @@
             const q = query(chatRef, orderBy('createdAt', 'asc'));
             privateChatUnsub = onSnapshot(q, (snap) => {
                 const stream = document.getElementById('private-chat-stream');
-                stream.innerHTML = '';
+                const fragment = document.createDocumentFragment();
                 snap.forEach((docSnap) => {
                     const msg = docSnap.data();
                     const isMe = msg.senderUid === currentUser.uid;
@@ -6564,8 +6645,10 @@
                     div.className = `chat-msg ${isMe ? 'me' : ''}`;
                     div.innerHTML =
                         `<span class="chat-sender">${isMe ? 'You' : '@'+partnerUsername}</span><div class="chat-bubble">${msg.message || ''}</div>`;
-                    stream.appendChild(div);
+                    fragment.appendChild(div);
                 });
+                stream.innerHTML = '';
+                stream.appendChild(fragment);
                 stream.scrollTop = stream.scrollHeight;
             });
             const input = document.getElementById('private-chat-input');
@@ -6589,7 +6672,7 @@
                 document.getElementById('private-chat-input').value = '';
                 return;
             }
-            // ─── NO SWEAR FILTER IN PRIVATE CHAT ───
+            // No swear filter in private chat
             const chatId = [currentUser.uid, privateChatPartner].sort().join('_');
             await addDoc(collection(db, 'private_chats', chatId, 'messages'), {
                 senderUid: currentUser.uid,
@@ -10107,7 +10190,6 @@
                 if (!targetUsername) { showToast('Enter a target username.', 'error'); return; }
                 if (!badgeLabel) { showToast('Enter a badge label.', 'error'); return; }
 
-                // Find user by username
                 const usernameDoc = await getDoc(doc(db, 'usernames', targetUsername));
                 if (!usernameDoc.exists()) { showToast('Username not found.', 'error'); return; }
                 const targetUid = usernameDoc.data().uid;
@@ -10115,7 +10197,6 @@
                 const userSnap = await getDoc(userRef);
                 if (!userSnap.exists()) { showToast('User profile not found.', 'error'); return; }
 
-                // Create custom badge in custom_badges collection
                 const badgeRef = doc(collection(db, 'custom_badges'));
                 const badgeId = badgeRef.id;
                 await setDoc(badgeRef, {
@@ -10126,10 +10207,7 @@
                     createdBy: currentUser.uid
                 });
 
-                // Add badge to user's badges array
                 await updateDoc(userRef, { badges: arrayUnion(badgeId) });
-
-                // Reload caches
                 await loadCustomBadges();
 
                 document.getElementById('custom-badge-matrix-username').value = '';
@@ -10145,7 +10223,7 @@
         console.log('🚀 School Social – Fully updated with all features!');
         console.log('💬 /games in private chat launches Tic-Tac-Toe!');
         console.log('👑 Custom Badge Matrix added to Owner panel');
-        console.log('🧪 2nd Beta Tester badge added (#FBEAEC)');
+        console.log('🌸 Beta Tester badge added (#FBEAEC)');
         console.log('🔇 Swear filter active in global chat only');
         console.log('🎵 Auto-detect YouTube/Spotify in notes');
         console.log('🎮 Tic-Tac-Toe with glassmorphism and coin/XP rewards');
