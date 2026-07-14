@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>School Social · Cyberpunk</title>
+    <title>School Social</title>
     <style>
         /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                RESET & BASE
@@ -968,14 +968,15 @@
             transform: scale(1.25);
             filter: drop-shadow(0 0 24px rgba(34, 229, 255, 0.4));
         }
+        /* --- FIXED: media play button in note bubble --- */
         .note-bubble .note-media-play {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            background: rgba(34, 229, 255, 0.06);
-            border: 1px solid rgba(34, 229, 255, 0.08);
+            background: rgba(34, 229, 255, 0.08);
+            border: 1px solid rgba(34, 229, 255, 0.12);
             border-radius: 12px;
-            padding: 1px 8px 1px 4px;
+            padding: 2px 10px 2px 6px;
             font-size: 8px;
             color: var(--neon-cyan);
             cursor: pointer;
@@ -984,10 +985,14 @@
             pointer-events: auto;
             font-weight: 700;
             letter-spacing: 0.3px;
+            position: relative;
+            z-index: 5;
+            text-decoration: none;
         }
         .note-bubble .note-media-play:hover {
-            background: rgba(34, 229, 255, 0.10);
+            background: rgba(34, 229, 255, 0.15);
             transform: scale(1.04);
+            border-color: rgba(34, 229, 255, 0.3);
         }
         .note-bubble .note-media-play .play-icon {
             font-size: 10px;
@@ -999,6 +1004,8 @@
             margin-top: 2px;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
+            z-index: 5;
         }
         .note-bubble .note-audio-indicator:hover {
             opacity: 1;
@@ -1015,7 +1022,7 @@
         }
 
         /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-               GLASS AUDIO PLAYER
+               GLASS AUDIO PLAYER (embedded in modal)
                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
         .glass-audio-player {
             background: linear-gradient(145deg, rgba(18, 15, 34, 0.60) 0%, rgba(7, 4, 15, 0.80) 100%) !important;
@@ -1810,11 +1817,126 @@
             line-height: 1.5;
             word-break: break-word;
             font-weight: 500;
+            position: relative;
         }
         .chat-msg.me .chat-bubble {
             background: linear-gradient(135deg, var(--neon-purple), #7b2cbf);
             border: none;
             color: #fff;
+        }
+
+        /* Chat timestamp */
+        .chat-timestamp {
+            font-size: 7px;
+            color: var(--text-muted);
+            margin: 1px 8px 0;
+            opacity: 0.6;
+            font-weight: 500;
+        }
+        .chat-msg.me .chat-timestamp {
+            text-align: right;
+        }
+
+        /* Chat reply/quote */
+        .chat-reply-indicator {
+            font-size: 8px;
+            color: var(--neon-cyan);
+            background: rgba(34, 229, 255, 0.04);
+            border-left: 2px solid var(--neon-cyan);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 0 6px 2px 6px;
+            max-width: 85%;
+            font-weight: 600;
+            opacity: 0.7;
+            cursor: pointer;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+        .chat-msg.me .chat-reply-indicator {
+            border-left-color: var(--neon-pink);
+            background: rgba(255, 47, 142, 0.04);
+        }
+
+        /* Chat delete */
+        .chat-delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 8px;
+            cursor: pointer;
+            opacity: 0.2;
+            transition: var(--transition);
+            padding: 0 4px;
+            font-family: inherit;
+            line-height: 1;
+        }
+        .chat-delete-btn:hover {
+            opacity: 0.8;
+            color: var(--neon-pink);
+        }
+
+        /* Chat search */
+        .chat-search-bar {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 4px;
+            padding: 2px 0;
+        }
+        .chat-search-bar input {
+            flex: 1;
+            padding: 4px 10px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 10px;
+            outline: none;
+            min-height: 30px;
+            font-family: inherit;
+        }
+        .chat-search-bar input:focus {
+            border-color: var(--neon-cyan);
+        }
+        .chat-search-bar .search-clear {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+            padding: 0 4px;
+            font-family: inherit;
+        }
+        .chat-search-bar .search-clear:hover {
+            color: #fff;
+        }
+
+        /* Online status dot */
+        .online-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+        .online-dot.online {
+            background: #58d68d;
+            box-shadow: 0 0 8px rgba(88, 214, 141, 0.4);
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+        .online-dot.offline {
+            background: var(--text-muted);
+            opacity: 0.4;
+        }
+        .online-dot.away {
+            background: #f59e0b;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+        }
+        .online-dot.dnd {
+            background: var(--neon-pink);
+            box-shadow: 0 0 8px rgba(255, 47, 142, 0.3);
         }
 
         .emote-picker-btn {
@@ -4402,6 +4524,132 @@
         .global-announcement .announce-close:hover {
             color: #fff;
         }
+
+        /* ── Chess board cell sizing fix ── */
+        #chess-board-mp,
+        #chess-board {
+            display: grid !important;
+            grid-template-columns: repeat(8, 1fr) !important;
+            gap: 2px !important;
+            max-width: 280px !important;
+            margin: 0 auto !important;
+            width: 100% !important;
+        }
+        #chess-board-mp .cell,
+        #chess-board .cell {
+            aspect-ratio: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: clamp(18px, 4.5vw, 26px) !important;
+            border-radius: 4px !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+            user-select: none !important;
+            position: relative !important;
+        }
+        #chess-board-mp .cell.legal-move::after,
+        #chess-board .cell.legal-move::after {
+            content: '•';
+            position: absolute;
+            font-size: 20px;
+            color: rgba(34, 229, 255, 0.35);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #chess-board-mp .cell:hover,
+        #chess-board .cell:hover {
+            filter: brightness(1.2);
+        }
+
+        /* ── Bet selector wrapper ── */
+        .bet-selector-wrap {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-soft);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        .bet-selector-wrap label {
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .bet-selector-wrap input {
+            width: clamp(70px, 18vw, 90px);
+            padding: 4px 8px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            text-align: center;
+            font-weight: 700;
+            font-size: 12px;
+            min-height: 30px;
+            font-family: inherit;
+        }
+        .bet-selector-wrap input:focus {
+            border-color: var(--neon-cyan);
+        }
+        .bet-selector-wrap .bet-balance {
+            font-size: 8px;
+            color: var(--text-muted);
+        }
+        .bet-selector-wrap .bet-balance span {
+            color: var(--neon-gold);
+            font-weight: 700;
+        }
+
+        /* ── Connect4 board fix ── */
+        #connect-board-mp,
+        #connect-board {
+            display: grid !important;
+            grid-template-columns: repeat(7, 1fr) !important;
+            gap: 4px !important;
+            max-width: 260px !important;
+            margin: 0 auto !important;
+            width: 100% !important;
+        }
+        #connect-board-mp .cell,
+        #connect-board .cell {
+            aspect-ratio: 1 !important;
+            border-radius: 50% !important;
+            transition: all 0.15s ease !important;
+            cursor: pointer !important;
+        }
+        #connect-board-mp .cell:hover,
+        #connect-board .cell:hover {
+            filter: brightness(1.15);
+        }
+
+        /* ── Private chat online dot ── */
+        .user-item .online-dot {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        /* ── Chat reply highlight ── */
+        .chat-reply-highlight {
+            background: rgba(34, 229, 255, 0.04);
+            border-left: 2px solid var(--neon-cyan);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin: 0 6px 2px 6px;
+            max-width: 85%;
+            cursor: pointer;
+            word-break: break-word;
+            line-height: 1.3;
+        }
     </style>
 </head>
 <body>
@@ -4782,6 +5030,10 @@
                 </div>
                 <div class="glass-card">
                     <div class="section-title">💬 Campus Chat</div>
+                    <div class="chat-search-bar">
+                        <input type="text" id="global-chat-search" placeholder="🔎 Search messages…" />
+                        <button class="search-clear" id="global-chat-search-clear">✕</button>
+                    </div>
                     <div id="global-chat-stream" class="chat-stream"></div>
                     <div class="flex-row" style="position:relative;">
                         <input type="text" id="chat-input-message" class="input" placeholder="Type…" />
@@ -5390,6 +5642,9 @@
         let globalChatAnnouncement = '';
         let globalChatAnnounceUnsub = null;
         const POST_EXPIRY_MS = 12 * 60 * 60 * 1000;
+        let globalChatSearchQuery = '';
+        let globalChatMessages = [];
+        let repliedToMsgId = null;
 
         // ─── SWEAR FILTER ───
         const SWEAR_WORDS = [
@@ -6965,24 +7220,9 @@
             if (chatUnsub) chatUnsub();
             const chatQ = query(collection(db, 'global_chat'), orderBy('createdAt', 'asc'));
             chatUnsub = onSnapshot(chatQ, (snap) => {
-                const stream = document.getElementById('global-chat-stream');
-                const fragment = document.createDocumentFragment();
-                snap.forEach((docSnap) => {
-                    const msg = docSnap.data();
-                    const isMe = msg.senderUid === currentUser?.uid;
-                    const div = document.createElement('div');
-                    div.className = `chat-msg ${isMe ? 'me' : ''}`;
-                    div.innerHTML =
-                        `<span class="chat-sender" data-uid="${msg.senderUid}">@${msg.senderName || 'anon'} ${verifiedBadgeHTML(msg.senderVerified)}</span><div class="chat-bubble">${msg.message || ''}</div>`;
-                    div.querySelector('.chat-sender').addEventListener('click', () => {
-                        const uid = div.querySelector('.chat-sender').dataset.uid;
-                        if (uid && uid !== currentUser.uid) viewUserProfile(uid);
-                    });
-                    fragment.appendChild(div);
-                });
-                stream.innerHTML = '';
-                stream.appendChild(fragment);
-                stream.scrollTop = stream.scrollHeight;
+                globalChatMessages = [];
+                snap.forEach(d => globalChatMessages.push({ id: d.id, ...d.data() }));
+                renderGlobalChat();
             });
 
             // ─── NOTES TRAY ───
@@ -7007,33 +7247,42 @@
 
                         let mediaPlayHTML = '';
                         const noteText = note;
-                        const youtubeMatch = noteText.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-                        const spotifyMatch = noteText.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
-                        const videoMatch = noteText.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
-                        const audioMatch = noteText.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
 
-                        if (youtubeMatch) {
-                            const videoId = youtubeMatch[1];
-                            mediaPlayHTML =
-                                `<div class="note-media-play" data-media-url="https://www.youtube.com/watch?v=${videoId}" data-media-title="YouTube Track"><span class="play-icon">▶️</span> Play</div>`;
-                        } else if (spotifyMatch) {
-                            const trackId = spotifyMatch[1];
-                            mediaPlayHTML =
-                                `<div class="note-media-play" data-media-url="https://open.spotify.com/track/${trackId}" data-media-title="Spotify Track"><span class="play-icon">▶️</span> Play</div>`;
-                        } else if (videoMatch) {
-                            mediaPlayHTML =
-                                `<div class="note-media-play" data-media-url="${videoMatch[0]}" data-media-title="Video"><span class="play-icon">▶️</span> Play</div>`;
-                        } else if (audioMatch) {
-                            mediaPlayHTML =
-                                `<div class="note-media-play" data-media-url="${audioMatch[0]}" data-media-title="Audio"><span class="play-icon">▶️</span> Play</div>`;
+                        // --- FIXED: Audio URL extraction with proper type detection ---
+                        const ytMatch = noteText.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+                        const spMatch = noteText.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+                        const vidMatch = noteText.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
+                        const audMatch = noteText.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
+                        const scMatch = noteText.match(/soundcloud\.com\/[^\s]+/);
+
+                        // Build the media play button based on detected type
+                        let mediaBtnHTML = '';
+                        if (ytMatch) {
+                            const videoId = ytMatch[1];
+                            mediaBtnHTML =
+                                `<div class="note-media-play" data-media-url="https://www.youtube.com/watch?v=${videoId}" data-media-title="YouTube Track" data-type="youtube"><span class="play-icon">▶️</span> YouTube</div>`;
+                        } else if (spMatch) {
+                            const trackId = spMatch[1];
+                            mediaBtnHTML =
+                                `<div class="note-media-play" data-media-url="https://open.spotify.com/track/${trackId}" data-media-title="Spotify Track" data-type="spotify"><span class="play-icon">▶️</span> Spotify</div>`;
+                        } else if (scMatch) {
+                            mediaBtnHTML =
+                                `<div class="note-media-play" data-media-url="${scMatch[0]}" data-media-title="SoundCloud Track" data-type="soundcloud"><span class="play-icon">▶️</span> SoundCloud</div>`;
+                        } else if (vidMatch) {
+                            mediaBtnHTML =
+                                `<div class="note-media-play" data-media-url="${vidMatch[0]}" data-media-title="Video" data-type="video"><span class="play-icon">▶️</span> Video</div>`;
+                        } else if (audMatch) {
+                            mediaBtnHTML =
+                                `<div class="note-media-play" data-media-url="${audMatch[0]}" data-media-title="Audio" data-type="audio"><span class="play-icon">▶️</span> Audio</div>`;
                         }
 
                         let musicHTML = '';
                         if (musicUrl) {
+                            // For musicUrl we use the dedicated music icon
                             musicHTML =
                                 `<span class="note-music-icon" data-music="${encodeURIComponent(musicUrl)}" title="🎵 Play music">🎵</span>`;
-                        } else if (mediaPlayHTML) {
-                            musicHTML = mediaPlayHTML;
+                        } else if (mediaBtnHTML) {
+                            musicHTML = mediaBtnHTML;
                         }
 
                         let audioNoteHTML = '';
@@ -7047,48 +7296,55 @@
                             ${musicHTML}
                             <div class="note-avatar">${avatarHTML}</div>
                             <div class="note-username">@${u.username || 'anon'}</div>
-                            ${musicUrl ? `<div class="note-music-tag">🎵</div>` : (mediaPlayHTML ? `<div class="note-music-tag">▶️</div>` : '')}
+                            ${musicUrl ? `<div class="note-music-tag">🎵</div>` : (mediaBtnHTML ? `<div class="note-music-tag">▶️</div>` : '')}
                             ${audioNoteHTML}
                         `;
                         bubble.addEventListener('click', (e) => {
+                            // Don't open modal if clicking on interactive elements
                             if (e.target.closest('.note-music-icon') || e.target.closest(
                                 '.note-media-play') || e.target.closest('[data-audio-note]')) return;
                             const modal = document.getElementById('note-detail-modal');
                             document.getElementById('note-detail-avatar').innerHTML = avatarHTML;
-                            document.getElementById('note-detail-name').textContent = `@${u.username || 'anon'}`;
+                            document.getElementById('note-detail-name').textContent =
+                                `@${u.username || 'anon'}`;
                             document.getElementById('note-detail-text').textContent = note;
                             const embedContainer = document.getElementById('note-detail-embed');
                             embedContainer.innerHTML = '';
                             const audioContainer = document.getElementById('note-audio-section-container');
                             audioContainer.innerHTML = '';
 
+                            // --- FIXED: Build the appropriate player in modal ---
                             if (u.noteAudioUrl) {
                                 buildAudioNotePlayer(audioContainer, u.noteAudioUrl, u.username);
                             }
 
                             const noteTextForEmbed = note;
-                            const ytMatch = noteTextForEmbed.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-                            const spMatch = noteTextForEmbed.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
-                            const vidMatch = noteTextForEmbed.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
-                            const audMatch = noteTextForEmbed.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
+                            const ytMatch2 = noteTextForEmbed.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+                            const spMatch2 = noteTextForEmbed.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+                            const scMatch2 = noteTextForEmbed.match(/soundcloud\.com\/[^\s]+/);
+                            const vidMatch2 = noteTextForEmbed.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
+                            const audMatch2 = noteTextForEmbed.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
 
-                            if (ytMatch) {
-                                const vid = ytMatch[1];
+                            if (ytMatch2) {
+                                const vid = ytMatch2[1];
                                 embedContainer.innerHTML =
-                                    `<iframe src="https://www.youtube.com/embed/${vid}?playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="min-height:180px;border-radius:var(--radius-sm);"></iframe>`;
-                            } else if (spMatch) {
-                                const tid = spMatch[1];
+                                    `<iframe src="https://www.youtube.com/embed/${vid}?playsinline=1&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen style="min-height:180px;border-radius:var(--radius-sm);width:100%;"></iframe>`;
+                            } else if (spMatch2) {
+                                const tid = spMatch2[1];
                                 embedContainer.innerHTML =
-                                    `<iframe src="https://open.spotify.com/embed/track/${tid}" allow="autoplay; encrypted-media" style="min-height:80px;border-radius:var(--radius-sm);"></iframe>`;
-                            } else if (vidMatch) {
+                                    `<iframe src="https://open.spotify.com/embed/track/${tid}?autoplay=1" allow="autoplay; encrypted-media" style="min-height:80px;border-radius:var(--radius-sm);width:100%;"></iframe>`;
+                            } else if (scMatch2) {
                                 embedContainer.innerHTML =
-                                    `<video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);"><source src="${vidMatch[0]}" type="video/mp4">Your browser doesn't support video.</video>`;
+                                    `<iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(scMatch2[0])}&auto_play=true" allow="autoplay" style="width:100%;height:100px;border-radius:var(--radius-sm);"></iframe>`;
+                            } else if (vidMatch2) {
+                                embedContainer.innerHTML =
+                                    `<video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);"><source src="${vidMatch2[0]}" type="video/mp4">Your browser doesn't support video.</video>`;
                                 const videoEl = embedContainer.querySelector('video');
                                 if (videoEl) { const playPromise = videoEl.play(); if (playPromise && typeof playPromise
                                         .catch === 'function') { playPromise.catch(() => {}); } }
-                            } else if (audMatch) {
+                            } else if (audMatch2) {
                                 embedContainer.innerHTML =
-                                    `<audio controls autoplay style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${audMatch[0]}" type="audio/mpeg">Your browser doesn't support audio.</audio>`;
+                                    `<audio controls autoplay style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${audMatch2[0]}" type="audio/mpeg">Your browser doesn't support audio.</audio>`;
                                 const audioEl = embedContainer.querySelector('audio');
                                 if (audioEl) { const playPromise = audioEl.play(); if (playPromise && typeof playPromise
                                         .catch === 'function') { playPromise.catch(() => {}); } }
@@ -7101,6 +7357,7 @@
                             }
                         });
 
+                        // --- FIXED: Audio note indicator click ---
                         const audioNoteEl = bubble.querySelector('[data-audio-note]');
                         if (audioNoteEl) {
                             audioNoteEl.addEventListener('click', (e) => {
@@ -7121,6 +7378,7 @@
 
                         fragment.appendChild(bubble);
 
+                        // --- FIXED: Music icon click (opens music popup) ---
                         const musicIcon = bubble.querySelector('.note-music-icon');
                         if (musicIcon) {
                             musicIcon.addEventListener('click', (e) => {
@@ -7130,13 +7388,15 @@
                             });
                         }
 
+                        // --- FIXED: Media play button click (opens glass audio player) ---
                         const mediaPlayBtn = bubble.querySelector('.note-media-play');
                         if (mediaPlayBtn) {
                             mediaPlayBtn.addEventListener('click', (e) => {
                                 e.stopPropagation();
                                 const url = mediaPlayBtn.dataset.mediaUrl;
                                 const title = mediaPlayBtn.dataset.mediaTitle || 'Media Track';
-                                showGlassAudioPlayer(url, title, u.username);
+                                const type = mediaPlayBtn.dataset.type || 'audio';
+                                showGlassAudioPlayer(url, title, u.username, type);
                             });
                         }
                     }
@@ -7152,152 +7412,265 @@
             });
         }
 
-        // ─── Build Audio Note Player ───
+        // ─── Build Audio Note Player (for note detail modal) ───
+        // FIXED: Now properly handles YouTube/Spotify/SoundCloud via iframes, not audio elements
         function buildAudioNotePlayer(container, url, username) {
+            // Detect URL type
+            const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+            const spMatch = url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+            const scMatch = url.match(/soundcloud\.com\/[^\s]+/);
+            const audMatch = url.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
+            const vidMatch = url.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
+
+            // For YouTube, Spotify, SoundCloud: use iframe embeds with autoplay
+            if (ytMatch) {
+                const vid = ytMatch[1];
+                container.innerHTML = `
+                    <div class="note-audio-section">
+                        <div class="audio-label">
+                            <span>🎵 YouTube Audio</span>
+                            <span style="font-size:8px;color:var(--text-muted);margin-left:auto;">@${username}</span>
+                        </div>
+                        <div style="border-radius:var(--radius-sm);overflow:hidden;background:#000;">
+                            <iframe src="https://www.youtube.com/embed/${vid}?playsinline=1&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;min-height:180px;border:none;display:block;"></iframe>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (spMatch) {
+                const tid = spMatch[1];
+                container.innerHTML = `
+                    <div class="note-audio-section">
+                        <div class="audio-label">
+                            <span>🎵 Spotify Track</span>
+                            <span style="font-size:8px;color:var(--text-muted);margin-left:auto;">@${username}</span>
+                        </div>
+                        <div style="border-radius:var(--radius-sm);overflow:hidden;">
+                            <iframe src="https://open.spotify.com/embed/track/${tid}?autoplay=1" allow="autoplay; encrypted-media" style="width:100%;min-height:80px;border:none;display:block;"></iframe>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (scMatch) {
+                container.innerHTML = `
+                    <div class="note-audio-section">
+                        <div class="audio-label">
+                            <span>🎵 SoundCloud</span>
+                            <span style="font-size:8px;color:var(--text-muted);margin-left:auto;">@${username}</span>
+                        </div>
+                        <div style="border-radius:var(--radius-sm);overflow:hidden;">
+                            <iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(scMatch[0])}&auto_play=true" allow="autoplay" style="width:100%;height:100px;border:none;display:block;"></iframe>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // For video URLs: use video element
+            if (vidMatch) {
+                container.innerHTML = `
+                    <div class="note-audio-section">
+                        <div class="audio-label">
+                            <span>🎬 Video</span>
+                            <span style="font-size:8px;color:var(--text-muted);margin-left:auto;">@${username}</span>
+                        </div>
+                        <video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);">
+                            <source src="${vidMatch[0]}" type="video/mp4">
+                            Your browser doesn't support video.
+                        </video>
+                    </div>
+                `;
+                const videoEl = container.querySelector('video');
+                if (videoEl) {
+                    const playPromise = videoEl.play();
+                    if (playPromise && typeof playPromise.catch === 'function') {
+                        playPromise.catch(() => {});
+                    }
+                }
+                return;
+            }
+
+            // For direct audio URLs: use HTML5 audio with visualizer
+            if (audMatch) {
+                const audioUrl = audMatch[0];
+                container.innerHTML = `
+                    <div class="note-audio-section">
+                        <div class="audio-label">
+                            <span>🎵 Audio Note</span>
+                            <span class="status-dot" id="audio-status-dot"></span>
+                            <span style="font-size:8px;color:var(--text-muted);margin-left:auto;" id="audio-timer-display">0:00</span>
+                        </div>
+                        <div class="audio-controls-row">
+                            <button class="ctrl-btn" id="audio-play-btn">▶</button>
+                            <button class="ctrl-btn" id="audio-pause-btn">⏸</button>
+                            <button class="ctrl-btn" id="audio-mute-btn">🔊</button>
+                            <div class="glass-audio-visualizer" id="audio-visualizer">
+                                ${Array.from({length: 20}).map(() => '<div class="vbar"></div>').join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                const audio = new Audio(audioUrl);
+                audio.preload = 'metadata';
+                let isPlaying = false;
+                let isMuted = false;
+                let animId = null;
+                let audioContext = null;
+                let analyser = null;
+                let dataArray = null;
+                let timerInterval = null;
+
+                const playBtn = container.querySelector('#audio-play-btn');
+                const pauseBtn = container.querySelector('#audio-pause-btn');
+                const muteBtn = container.querySelector('#audio-mute-btn');
+                const bars = container.querySelectorAll('.vbar');
+                const statusDot = container.querySelector('#audio-status-dot');
+                const timerDisplay = container.querySelector('#audio-timer-display');
+
+                function setupAudioContext() {
+                    if (!audioContext) {
+                        audioContext = new(window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (analyser) return;
+                    try {
+                        const source = audioContext.createMediaElementSource(audio);
+                        analyser = audioContext.createAnalyser();
+                        analyser.fftSize = 64;
+                        source.connect(analyser);
+                        analyser.connect(audioContext.destination);
+                        dataArray = new Uint8Array(analyser.frequencyBinCount);
+                    } catch (e) {
+                        console.warn('Audio visualizer setup failed:', e);
+                    }
+                }
+
+                function animateVisualizer() {
+                    if (!analyser || !isPlaying) {
+                        bars.forEach(b => { b.classList.remove('active');
+                            b.style.height = '4px'; });
+                        return;
+                    }
+                    try {
+                        analyser.getByteFrequencyData(dataArray);
+                        const len = dataArray.length;
+                        bars.forEach((bar, i) => {
+                            const idx = Math.floor(i * len / bars.length);
+                            const val = dataArray[idx] || 0;
+                            const height = Math.max(2, (val / 255) * 30);
+                            bar.style.height = `${height}px`;
+                            bar.style.opacity = Math.min(1, val / 255 + 0.2);
+                            bar.classList.add('active');
+                        });
+                        animId = requestAnimationFrame(animateVisualizer);
+                    } catch (e) {
+                        bars.forEach(b => { b.classList.remove('active');
+                            b.style.height = '4px'; });
+                    }
+                }
+
+                function updateTimer() {
+                    if (audio.duration) {
+                        const current = audio.currentTime;
+                        const mins = Math.floor(current / 60);
+                        const secs = Math.floor(current % 60);
+                        timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                    }
+                }
+
+                function startPlayback() {
+                    if (isPlaying) return;
+                    try {
+                        if (!audioContext) setupAudioContext();
+                        if (audioContext && audioContext.state === 'suspended') {
+                            audioContext.resume().catch(() => {});
+                        }
+                        audio.play().then(() => {
+                            isPlaying = true;
+                            playBtn.textContent = '⏸';
+                            pauseBtn.textContent = '⏸';
+                            statusDot.className = 'status-dot';
+                            if (!analyser) setupAudioContext();
+                            animateVisualizer();
+                            if (timerInterval) clearInterval(timerInterval);
+                            timerInterval = setInterval(updateTimer, 500);
+                        }).catch(err => {
+                            showToast('Tap play to start audio.', 'info');
+                            isPlaying = false;
+                            playBtn.textContent = '▶';
+                            statusDot.className = 'status-dot paused';
+                        });
+                    } catch (err) {
+                        showToast('Could not play audio: ' + err.message, 'error');
+                    }
+                }
+
+                function pausePlayback() {
+                    if (!isPlaying) return;
+                    audio.pause();
+                    isPlaying = false;
+                    playBtn.textContent = '▶';
+                    pauseBtn.textContent = '⏸';
+                    statusDot.className = 'status-dot paused';
+                    if (animId) { cancelAnimationFrame(animId);
+                        animId = null; }
+                    bars.forEach(b => { b.classList.remove('active');
+                        b.style.height = '4px'; });
+                    if (timerInterval) { clearInterval(timerInterval);
+                        timerInterval = null; }
+                }
+
+                function toggleMute() {
+                    isMuted = !isMuted;
+                    audio.muted = isMuted;
+                    muteBtn.textContent = isMuted ? '🔇' : '🔊';
+                    muteBtn.classList.toggle('mute-active', isMuted);
+                }
+
+                playBtn.addEventListener('click', () => {
+                    if (isPlaying) {
+                        pausePlayback();
+                    } else {
+                        startPlayback();
+                    }
+                });
+
+                pauseBtn.addEventListener('click', pausePlayback);
+                muteBtn.addEventListener('click', toggleMute);
+
+                container._audioCleanup = () => {
+                    if (isPlaying) { audio.pause();
+                        isPlaying = false; }
+                    if (animId) { cancelAnimationFrame(animId);
+                        animId = null; }
+                    if (timerInterval) { clearInterval(timerInterval);
+                        timerInterval = null; }
+                    audioContext = null;
+                    analyser = null;
+                };
+                return;
+            }
+
+            // Fallback: show as a link
             container.innerHTML = `
                 <div class="note-audio-section">
                     <div class="audio-label">
-                        <span>🎵 Audio Note</span>
-                        <span class="status-dot" id="audio-status-dot"></span>
-                        <span style="font-size:8px;color:var(--text-muted);margin-left:auto;" id="audio-timer-display">0:00</span>
+                        <span>🔗 Media Link</span>
+                        <span style="font-size:8px;color:var(--text-muted);margin-left:auto;">@${username}</span>
                     </div>
-                    <div class="audio-controls-row">
-                        <button class="ctrl-btn" id="audio-play-btn">▶</button>
-                        <button class="ctrl-btn" id="audio-pause-btn">⏸</button>
-                        <button class="ctrl-btn" id="audio-mute-btn">🔊</button>
-                        <div class="glass-audio-visualizer" id="audio-visualizer">
-                            ${Array.from({length: 20}).map(() => '<div class="vbar"></div>').join('')}
-                        </div>
+                    <div style="padding:8px;background:rgba(0,0,0,0.2);border-radius:var(--radius-sm);word-break:break-all;font-size:10px;color:var(--text-secondary);">
+                        <a href="${url}" target="_blank" style="color:var(--neon-cyan);">${url}</a>
                     </div>
-                    <div style="font-size:8px;color:var(--text-muted);text-align:center;margin-top:4px;">${url}</div>
                 </div>
             `;
-
-            const audio = new Audio(url);
-            let isPlaying = false;
-            let isMuted = false;
-            let animId = null;
-            let audioContext = null;
-            let analyser = null;
-            let dataArray = null;
-            let timerInterval = null;
-
-            const playBtn = container.querySelector('#audio-play-btn');
-            const pauseBtn = container.querySelector('#audio-pause-btn');
-            const muteBtn = container.querySelector('#audio-mute-btn');
-            const bars = container.querySelectorAll('.vbar');
-            const statusDot = container.querySelector('#audio-status-dot');
-            const timerDisplay = container.querySelector('#audio-timer-display');
-
-            function setupAudioContext() {
-                if (!audioContext) {
-                    audioContext = new(window.AudioContext || window.webkitAudioContext)();
-                }
-                if (analyser) return;
-                const source = audioContext.createMediaElementSource(audio);
-                analyser = audioContext.createAnalyser();
-                analyser.fftSize = 64;
-                source.connect(analyser);
-                analyser.connect(audioContext.destination);
-                dataArray = new Uint8Array(analyser.frequencyBinCount);
-            }
-
-            function animateVisualizer() {
-                if (!analyser || !isPlaying) {
-                    bars.forEach(b => { b.classList.remove('active');
-                        b.style.height = '4px'; });
-                    return;
-                }
-                analyser.getByteFrequencyData(dataArray);
-                const len = dataArray.length;
-                bars.forEach((bar, i) => {
-                    const idx = Math.floor(i * len / bars.length);
-                    const val = dataArray[idx] || 0;
-                    const height = Math.max(2, (val / 255) * 30);
-                    bar.style.height = `${height}px`;
-                    bar.style.opacity = Math.min(1, val / 255 + 0.2);
-                    bar.classList.add('active');
-                });
-                animId = requestAnimationFrame(animateVisualizer);
-            }
-
-            function updateTimer() {
-                if (audio.duration) {
-                    const current = audio.currentTime;
-                    const mins = Math.floor(current / 60);
-                    const secs = Math.floor(current % 60);
-                    timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-                }
-            }
-
-            function startPlayback() {
-                if (isPlaying) return;
-                try {
-                    if (!audioContext) setupAudioContext();
-                    audio.play();
-                    isPlaying = true;
-                    playBtn.textContent = '▶';
-                    pauseBtn.textContent = '⏸';
-                    statusDot.className = 'status-dot';
-                    if (!analyser) setupAudioContext();
-                    animateVisualizer();
-                    if (timerInterval) clearInterval(timerInterval);
-                    timerInterval = setInterval(updateTimer, 500);
-                } catch (err) {
-                    showToast('Could not play audio: ' + err.message, 'error');
-                }
-            }
-
-            function pausePlayback() {
-                if (!isPlaying) return;
-                audio.pause();
-                isPlaying = false;
-                pauseBtn.textContent = '⏸';
-                statusDot.className = 'status-dot paused';
-                if (animId) { cancelAnimationFrame(animId);
-                    animId = null; }
-                bars.forEach(b => { b.classList.remove('active');
-                    b.style.height = '4px'; });
-                if (timerInterval) { clearInterval(timerInterval);
-                    timerInterval = null; }
-            }
-
-            function toggleMute() {
-                isMuted = !isMuted;
-                audio.muted = isMuted;
-                muteBtn.textContent = isMuted ? '🔇' : '🔊';
-                muteBtn.classList.toggle('mute-active', isMuted);
-            }
-
-            playBtn.addEventListener('click', () => {
-                if (isPlaying) {
-                    pausePlayback();
-                } else {
-                    startPlayback();
-                }
-            });
-
-            pauseBtn.addEventListener('click', pausePlayback);
-
-            muteBtn.addEventListener('click', toggleMute);
-
-            setTimeout(() => {
-                startPlayback();
-            }, 300);
-
-            container._audioCleanup = () => {
-                if (isPlaying) { audio.pause();
-                    isPlaying = false; }
-                if (animId) { cancelAnimationFrame(animId);
-                    animId = null; }
-                if (timerInterval) { clearInterval(timerInterval);
-                    timerInterval = null; }
-                audioContext = null;
-                analyser = null;
-            };
         }
 
-        // ─── Glass Audio Player ───
+        // ─── Glass Audio Player (for note bubbles) ───
+        // FIXED: Now handles YouTube, Spotify, SoundCloud via iframes, and direct audio via HTML5
         let glassAudioContext = null;
         let glassAudioAnalyser = null;
         let glassAudioDataArray = null;
@@ -7305,125 +7678,229 @@
         let glassAudioIsPlaying = false;
         let glassAudioElement = null;
 
-        function showGlassAudioPlayer(url, title, username) {
+        function showGlassAudioPlayer(url, title, username, type = 'audio') {
             const modal = document.getElementById('note-detail-modal');
             const embedContainer = document.getElementById('note-detail-embed');
             document.getElementById('note-detail-avatar').innerHTML = '🎵';
             document.getElementById('note-detail-name').textContent = `@${username || 'user'}`;
             document.getElementById('note-detail-text').textContent = `🎧 Playing: ${title}`;
 
-            embedContainer.innerHTML = `
-                <div class="glass-audio-player" id="glass-audio-player">
-                    <button class="play-btn" id="glass-play-btn">▶</button>
-                    <div class="audio-visualizer" id="glass-visualizer">
-                        ${Array.from({length: 16}).map(() => '<div class="bar"></div>').join('')}
+            // Detect URL type if not explicitly provided
+            const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+            const spMatch = url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+            const scMatch = url.match(/soundcloud\.com\/[^\s]+/);
+            const audMatch = url.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
+            const vidMatch = url.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
+
+            // For YouTube, Spotify, SoundCloud: use iframe embeds
+            if (ytMatch) {
+                const vid = ytMatch[1];
+                embedContainer.innerHTML = `
+                    <div style="border-radius:var(--radius-sm);overflow:hidden;background:#000;">
+                        <iframe src="https://www.youtube.com/embed/${vid}?playsinline=1&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;min-height:200px;border:none;display:block;"></iframe>
                     </div>
-                    <span class="audio-label" id="glass-audio-label">${title}</span>
-                    <span class="audio-timer" id="glass-audio-timer">0:00</span>
-                </div>
-            `;
-            modal.classList.add('show');
-
-            const audio = new Audio(url);
-            glassAudioElement = audio;
-            const playBtn = document.getElementById('glass-play-btn');
-            const bars = document.querySelectorAll('#glass-visualizer .bar');
-            const timerDisplay = document.getElementById('glass-audio-timer');
-
-            let isPlaying = false;
-            let animId = null;
-            let timerInterval = null;
-
-            function setupAudioContext() {
-                if (!glassAudioContext) {
-                    glassAudioContext = new(window.AudioContext || window.webkitAudioContext)();
-                }
-                if (glassAudioAnalyser) return;
-                const source = glassAudioContext.createMediaElementSource(audio);
-                const analyser = glassAudioContext.createAnalyser();
-                analyser.fftSize = 64;
-                source.connect(analyser);
-                analyser.connect(glassAudioContext.destination);
-                glassAudioAnalyser = analyser;
-                glassAudioDataArray = new Uint8Array(analyser.frequencyBinCount);
+                    <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">🎵 YouTube — ${title}</div>
+                `;
+                modal.classList.add('show');
+                return;
             }
 
-            function animateVisualizer() {
-                if (!glassAudioAnalyser || !isPlaying) return;
-                glassAudioAnalyser.getByteFrequencyData(glassAudioDataArray);
-                const len = glassAudioDataArray.length;
-                bars.forEach((bar, i) => {
-                    const idx = Math.floor(i * len / bars.length);
-                    const val = glassAudioDataArray[idx] || 0;
-                    const height = Math.max(4, (val / 255) * 28);
-                    bar.style.height = `${height}px`;
-                    bar.style.opacity = Math.min(1, val / 255 + 0.3);
-                    bar.classList.add('active');
+            if (spMatch) {
+                const tid = spMatch[1];
+                embedContainer.innerHTML = `
+                    <div style="border-radius:var(--radius-sm);overflow:hidden;">
+                        <iframe src="https://open.spotify.com/embed/track/${tid}?autoplay=1" allow="autoplay; encrypted-media" style="width:100%;min-height:80px;border:none;display:block;"></iframe>
+                    </div>
+                    <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">🎵 Spotify — ${title}</div>
+                `;
+                modal.classList.add('show');
+                return;
+            }
+
+            if (scMatch) {
+                embedContainer.innerHTML = `
+                    <div style="border-radius:var(--radius-sm);overflow:hidden;">
+                        <iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(scMatch[0])}&auto_play=true" allow="autoplay" style="width:100%;height:100px;border:none;display:block;"></iframe>
+                    </div>
+                    <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">🎵 SoundCloud — ${title}</div>
+                `;
+                modal.classList.add('show');
+                return;
+            }
+
+            // For video: use video element
+            if (vidMatch) {
+                embedContainer.innerHTML = `
+                    <video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);">
+                        <source src="${vidMatch[0]}" type="video/mp4">
+                        Your browser doesn't support video.
+                    </video>
+                    <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">🎬 ${title}</div>
+                `;
+                const videoEl = embedContainer.querySelector('video');
+                if (videoEl) {
+                    const playPromise = videoEl.play();
+                    if (playPromise && typeof playPromise.catch === 'function') {
+                        playPromise.catch(() => {});
+                    }
+                }
+                modal.classList.add('show');
+                return;
+            }
+
+            // For direct audio: use glass audio player with visualizer
+            if (audMatch || type === 'audio') {
+                const audioUrl = audMatch ? audMatch[0] : url;
+                embedContainer.innerHTML = `
+                    <div class="glass-audio-player" id="glass-audio-player">
+                        <button class="play-btn" id="glass-play-btn">▶</button>
+                        <div class="audio-visualizer" id="glass-visualizer">
+                            ${Array.from({length: 16}).map(() => '<div class="bar"></div>').join('')}
+                        </div>
+                        <span class="audio-label" id="glass-audio-label">${title}</span>
+                        <span class="audio-timer" id="glass-audio-timer">0:00</span>
+                    </div>
+                `;
+                modal.classList.add('show');
+
+                const audio = new Audio(audioUrl);
+                audio.preload = 'metadata';
+                glassAudioElement = audio;
+                const playBtn = document.getElementById('glass-play-btn');
+                const bars = document.querySelectorAll('#glass-visualizer .bar');
+                const timerDisplay = document.getElementById('glass-audio-timer');
+
+                let isPlaying = false;
+                let animId = null;
+                let timerInterval = null;
+
+                function setupAudioContext() {
+                    if (!glassAudioContext) {
+                        glassAudioContext = new(window.AudioContext || window.webkitAudioContext)();
+                    }
+                    if (glassAudioAnalyser) return;
+                    try {
+                        const source = glassAudioContext.createMediaElementSource(audio);
+                        const analyser = glassAudioContext.createAnalyser();
+                        analyser.fftSize = 64;
+                        source.connect(analyser);
+                        analyser.connect(glassAudioContext.destination);
+                        glassAudioAnalyser = analyser;
+                        glassAudioDataArray = new Uint8Array(analyser.frequencyBinCount);
+                    } catch (e) {
+                        console.warn('Audio visualizer setup failed:', e);
+                    }
+                }
+
+                function animateVisualizer() {
+                    if (!glassAudioAnalyser || !isPlaying) {
+                        bars.forEach(b => { b.classList.remove('active');
+                            b.style.height = '6px';
+                            b.style.opacity = '0.4'; });
+                        return;
+                    }
+                    try {
+                        glassAudioAnalyser.getByteFrequencyData(glassAudioDataArray);
+                        const len = glassAudioDataArray.length;
+                        bars.forEach((bar, i) => {
+                            const idx = Math.floor(i * len / bars.length);
+                            const val = glassAudioDataArray[idx] || 0;
+                            const height = Math.max(4, (val / 255) * 28);
+                            bar.style.height = `${height}px`;
+                            bar.style.opacity = Math.min(1, val / 255 + 0.3);
+                            bar.classList.add('active');
+                        });
+                        animId = requestAnimationFrame(animateVisualizer);
+                    } catch (e) {
+                        bars.forEach(b => { b.classList.remove('active');
+                            b.style.height = '6px';
+                            b.style.opacity = '0.4'; });
+                    }
+                }
+
+                function updateTimer() {
+                    if (audio.duration) {
+                        const current = audio.currentTime;
+                        const mins = Math.floor(current / 60);
+                        const secs = Math.floor(current % 60);
+                        timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                    }
+                }
+
+                playBtn.addEventListener('click', async () => {
+                    if (isPlaying) {
+                        audio.pause();
+                        isPlaying = false;
+                        playBtn.textContent = '▶';
+                        bars.forEach(b => { b.classList.remove('active');
+                            b.style.height = '6px';
+                            b.style.opacity = '0.4'; });
+                        if (animId) { cancelAnimationFrame(animId);
+                            animId = null; }
+                        if (timerInterval) { clearInterval(timerInterval);
+                            timerInterval = null; }
+                        return;
+                    }
+                    try {
+                        if (!glassAudioContext) {
+                            setupAudioContext();
+                        }
+                        if (glassAudioContext && glassAudioContext.state === 'suspended') {
+                            await glassAudioContext.resume();
+                        }
+                        await audio.play();
+                        isPlaying = true;
+                        playBtn.textContent = '⏸';
+                        if (!glassAudioAnalyser) setupAudioContext();
+                        animateVisualizer();
+                        if (timerInterval) clearInterval(timerInterval);
+                        timerInterval = setInterval(updateTimer, 500);
+                    } catch (err) {
+                        showToast('Tap play to start audio.', 'info');
+                        audio.play().then(() => {
+                            isPlaying = true;
+                            playBtn.textContent = '⏸';
+                            if (!glassAudioAnalyser) setupAudioContext();
+                            animateVisualizer();
+                            if (timerInterval) clearInterval(timerInterval);
+                            timerInterval = setInterval(updateTimer, 500);
+                        }).catch(() => {});
+                    }
                 });
-                animId = requestAnimationFrame(animateVisualizer);
-            }
 
-            function updateTimer() {
-                if (audio.duration) {
-                    const current = audio.currentTime;
-                    const mins = Math.floor(current / 60);
-                    const secs = Math.floor(current % 60);
-                    timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-                }
-            }
-
-            playBtn.addEventListener('click', async () => {
-                if (isPlaying) {
-                    audio.pause();
-                    isPlaying = false;
-                    playBtn.textContent = '▶';
-                    bars.forEach(b => { b.classList.remove('active');
-                        b.style.height = '6px';
-                        b.style.opacity = '0.4'; });
+                const closeHandler = () => {
+                    if (isPlaying) {
+                        audio.pause();
+                        isPlaying = false;
+                    }
                     if (animId) { cancelAnimationFrame(animId);
                         animId = null; }
                     if (timerInterval) { clearInterval(timerInterval);
                         timerInterval = null; }
-                    return;
-                }
-                try {
-                    if (!glassAudioContext) {
-                        setupAudioContext();
-                    }
-                    await audio.play();
-                    isPlaying = true;
-                    playBtn.textContent = '⏸';
-                    if (!glassAudioAnalyser) setupAudioContext();
-                    animateVisualizer();
-                    if (timerInterval) clearInterval(timerInterval);
-                    timerInterval = setInterval(updateTimer, 500);
-                } catch (err) {
-                    showToast('Could not play audio: ' + err.message, 'error');
-                }
-            });
+                    glassAudioElement = null;
+                    glassAudioAnalyser = null;
+                    glassAudioContext = null;
+                    embedContainer.innerHTML = '';
+                    document.getElementById('note-detail-embed').innerHTML = '';
+                };
 
-            const closeHandler = () => {
-                if (isPlaying) {
-                    audio.pause();
-                    isPlaying = false;
-                }
-                if (animId) { cancelAnimationFrame(animId);
-                    animId = null; }
-                if (timerInterval) { clearInterval(timerInterval);
-                    timerInterval = null; }
-                glassAudioElement = null;
-                glassAudioAnalyser = null;
-                glassAudioContext = null;
-                embedContainer.innerHTML = '';
-                document.getElementById('note-detail-embed').innerHTML = '';
-            };
+                const closeBtn = document.getElementById('note-detail-close');
+                closeBtn.addEventListener('click', closeHandler);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeHandler();
+                });
+                modal._glassCleanup = closeHandler;
+                return;
+            }
 
-            const closeBtn = document.getElementById('note-detail-close');
-            closeBtn.addEventListener('click', closeHandler);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeHandler();
-            });
-            modal._glassCleanup = closeHandler;
+            // Fallback: show as a link
+            embedContainer.innerHTML = `
+                <div style="padding:12px;background:rgba(0,0,0,0.2);border-radius:var(--radius-sm);word-break:break-all;font-size:10px;color:var(--text-secondary);">
+                    <a href="${url}" target="_blank" style="color:var(--neon-cyan);">${url}</a>
+                </div>
+                <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">🔗 ${title}</div>
+            `;
+            modal.classList.add('show');
         }
 
         // ─── Note Detail Modal ───
@@ -7460,12 +7937,14 @@
 
             const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
             const spotifyMatch = url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
+            const soundcloudMatch = url.match(/soundcloud\.com\/[^\s]+/);
 
             if (youtubeMatch) {
                 const videoId = youtubeMatch[1];
                 embed.innerHTML =
                     `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;min-height:200px;border-radius:var(--radius-sm);"></iframe>`;
                 statusEl.textContent = '✅ YouTube track loaded';
+                popup.classList.add('show');
                 return;
             }
 
@@ -7474,6 +7953,15 @@
                 embed.innerHTML =
                     `<iframe src="https://open.spotify.com/embed/track/${trackId}?autoplay=1" allow="autoplay; encrypted-media" style="width:100%;height:80px;border-radius:var(--radius-sm);"></iframe>`;
                 statusEl.textContent = '✅ Spotify track loaded';
+                popup.classList.add('show');
+                return;
+            }
+
+            if (soundcloudMatch) {
+                embed.innerHTML =
+                    `<iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(soundcloudMatch[0])}&auto_play=true" allow="autoplay" style="width:100%;height:100px;border-radius:var(--radius-sm);"></iframe>`;
+                statusEl.textContent = '✅ SoundCloud track loaded';
+                popup.classList.add('show');
                 return;
             }
 
@@ -7488,6 +7976,7 @@
                     }
                 }
                 statusEl.textContent = '✅ Audio loaded';
+                popup.classList.add('show');
                 return;
             }
 
@@ -7498,13 +7987,7 @@
                 if (videoEl) { const playPromise = videoEl.play(); if (playPromise && typeof playPromise.catch ===
                         'function') { playPromise.catch(() => {}); } }
                 statusEl.textContent = '✅ Video loaded';
-                return;
-            }
-
-            if (url.match(/soundcloud\.com/)) {
-                embed.innerHTML =
-                    `<iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=true" allow="autoplay" style="width:100%;height:100px;border-radius:var(--radius-sm);"></iframe>`;
-                statusEl.textContent = '✅ SoundCloud track loaded';
+                popup.classList.add('show');
                 return;
             }
 
@@ -7767,6 +8250,107 @@
             document.querySelectorAll('.emote-picker-dropdown').forEach(el => el.classList.remove('open'));
         });
 
+        // ─── Global Chat ───
+        function renderGlobalChat() {
+            const stream = document.getElementById('global-chat-stream');
+            const searchQuery = document.getElementById('global-chat-search')?.value?.toLowerCase() || '';
+            const fragment = document.createDocumentFragment();
+
+            let filtered = globalChatMessages;
+            if (searchQuery) {
+                filtered = filtered.filter(msg =>
+                    (msg.message || '').toLowerCase().includes(searchQuery) ||
+                    (msg.senderName || '').toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (filtered.length === 0) {
+                const empty = document.createElement('div');
+                empty.style.cssText = 'color:var(--text-muted);font-size:10px;padding:12px;text-align:center;';
+                empty.textContent = searchQuery ? '🔎 No messages match your search.' : '💬 No messages yet.';
+                fragment.appendChild(empty);
+                stream.innerHTML = '';
+                stream.appendChild(fragment);
+                return;
+            }
+
+            filtered.forEach((msg) => {
+                const isMe = msg.senderUid === currentUser?.uid;
+                const div = document.createElement('div');
+                div.className = `chat-msg ${isMe ? 'me' : ''}`;
+
+                const timeStr = msg.createdAt?.toDate?.()?.toLocaleTimeString?.() || '';
+                const canDelete = isMe || isCurrentUserAdmin();
+
+                div.innerHTML = `
+                    <span class="chat-sender" data-uid="${msg.senderUid}">@${msg.senderName || 'anon'} ${verifiedBadgeHTML(msg.senderVerified)}</span>
+                    ${msg.replyTo ? `<div class="chat-reply-indicator" data-reply="${msg.replyTo}">↩️ Replying to ${msg.replyToName || 'a message'}</div>` : ''}
+                    <div class="chat-bubble">${msg.message || ''}</div>
+                    <div style="display:flex;align-items:center;gap:6px;margin:0 6px;">
+                        <span class="chat-timestamp">${timeStr}</span>
+                        ${canDelete ? `<button class="chat-delete-btn" data-msg-id="${msg.id}" data-sender="${msg.senderUid}">✕</button>` : ''}
+                        <button class="chat-reply-btn" data-msg-id="${msg.id}" data-sender="${msg.senderName || 'anon'}" style="background:none;border:none;color:var(--text-muted);font-size:8px;cursor:pointer;opacity:0.3;font-family:inherit;padding:0 4px;">↩️</button>
+                    </div>
+                `;
+                const sender = div.querySelector('.chat-sender');
+                if (sender) sender.addEventListener('click', () => {
+                    const uid = sender.dataset.uid;
+                    if (uid && uid !== currentUser.uid) viewUserProfile(uid);
+                });
+
+                const deleteBtn = div.querySelector('.chat-delete-btn');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const msgId = deleteBtn.dataset.msgId;
+                        const senderUid = deleteBtn.dataset.sender;
+                        if (!msgId) return;
+                        if (senderUid !== currentUser?.uid && !isCurrentUserAdmin()) {
+                            showToast('You can only delete your own messages.', 'error');
+                            return;
+                        }
+                        if (!confirm('Delete this message?')) return;
+                        try {
+                            await deleteDoc(doc(db, 'global_chat', msgId));
+                            showToast('Message deleted.', 'info');
+                        } catch (err) {
+                            showToast('Failed to delete message.', 'error');
+                        }
+                    });
+                }
+
+                const replyBtn = div.querySelector('.chat-reply-btn');
+                if (replyBtn) {
+                    replyBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const msgId = replyBtn.dataset.msgId;
+                        const senderName = replyBtn.dataset.sender || 'user';
+                        const input = document.getElementById('chat-input-message');
+                        if (input) {
+                            input.value = `@${senderName} `;
+                            input.focus();
+                            repliedToMsgId = msgId;
+                            showToast(`Replying to @${senderName}`, 'info');
+                        }
+                    });
+                }
+
+                fragment.appendChild(div);
+            });
+
+            stream.innerHTML = '';
+            stream.appendChild(fragment);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        document.getElementById('global-chat-search').addEventListener('input', (e) => {
+            renderGlobalChat();
+        });
+        document.getElementById('global-chat-search-clear').addEventListener('click', () => {
+            document.getElementById('global-chat-search').value = '';
+            renderGlobalChat();
+        });
+
         // ─── Global Chat Send ───
         document.getElementById('btn-send-chat').addEventListener('click', withLoading('btn-send-chat', async () => {
             let msg = document.getElementById('chat-input-message').value.trim();
@@ -7775,11 +8359,22 @@
             const profile = await getDoc(doc(db, 'users', currentUser.uid));
             const username = profile.exists() ? profile.data().username : 'anonymous';
             const isVerified = profile.exists() ? !!profile.data().verified : false;
+            const replyTo = repliedToMsgId;
+            let replyToName = null;
+            if (replyTo) {
+                const replySnap = await getDoc(doc(db, 'global_chat', replyTo));
+                if (replySnap.exists()) {
+                    replyToName = replySnap.data().senderName || 'user';
+                }
+                repliedToMsgId = null;
+            }
             await addDoc(collection(db, 'global_chat'), {
                 senderUid: currentUser.uid,
                 senderName: username,
                 senderVerified: isVerified,
                 message: msg,
+                replyTo,
+                replyToName,
                 createdAt: serverTimestamp()
             });
             document.getElementById('chat-input-message').value = '';
@@ -7792,18 +8387,27 @@
             const list = document.getElementById('private-chat-user-list');
             const snapshot = await getDocs(collection(db, 'users'));
             list.innerHTML = '';
-            snapshot.forEach((docSnap) => {
+            const userStatuses = {};
+            for (const docSnap of snapshot.docs) {
                 const u = docSnap.data();
-                if (u.uid === currentUser.uid || u.banned) return;
+                if (u.uid === currentUser.uid || u.banned) continue;
+                userStatuses[u.uid] = u.onlineStatus || 'offline';
                 const item = document.createElement('div');
                 item.className = 'user-item';
                 const avatarHTML = u.avatarURL ? `<img src="${u.avatarURL}" alt="avatar" />` : (u.username?.[0] ||
                     '?').toUpperCase();
-                item.innerHTML =
-                    `<div class="user-info" style="display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;"><div class="user-avatar-small">${avatarHTML}</div><span class="user-name">@${u.username || 'anon'}</span></div>`;
+                const statusMap = { online: 'online', away: 'away', dnd: 'dnd', offline: 'offline' };
+                const statusClass = statusMap[u.onlineStatus] || 'offline';
+                item.innerHTML = `
+                    <div class="user-info" style="display:flex;align-items:center;gap:8px;cursor:pointer;min-width:0;flex:1;">
+                        <div class="user-avatar-small">${avatarHTML}</div>
+                        <span class="user-name">@${u.username || 'anon'} ${verifiedBadgeHTML(u.verified)}</span>
+                        <span class="online-dot ${statusClass}" title="${u.onlineStatus || 'offline'}"></span>
+                    </div>
+                `;
                 item.querySelector('.user-info').addEventListener('click', () => openPrivateChat(u.uid, u.username));
                 list.appendChild(item);
-            });
+            }
         }
 
         // ─── Game Challenge Modal ───
@@ -8025,8 +8629,36 @@
                     const isMe = msg.senderUid === currentUser.uid;
                     const div = document.createElement('div');
                     div.className = `chat-msg ${isMe ? 'me' : ''}`;
-                    div.innerHTML =
-                        `<span class="chat-sender">${isMe ? 'You' : '@'+partnerUsername}</span><div class="chat-bubble">${msg.message || ''}</div>`;
+                    const timeStr = msg.createdAt?.toDate?.()?.toLocaleTimeString?.() || '';
+                    const canDelete = isMe || isCurrentUserAdmin();
+                    div.innerHTML = `
+                        <span class="chat-sender">${isMe ? 'You' : '@'+partnerUsername}</span>
+                        <div class="chat-bubble">${msg.message || ''}</div>
+                        <div style="display:flex;align-items:center;gap:6px;margin:0 6px;">
+                            <span class="chat-timestamp">${timeStr}</span>
+                            ${canDelete ? `<button class="chat-delete-btn" data-msg-id="${docSnap.id}" data-sender="${msg.senderUid}">✕</button>` : ''}
+                        </div>
+                    `;
+                    const deleteBtn = div.querySelector('.chat-delete-btn');
+                    if (deleteBtn) {
+                        deleteBtn.addEventListener('click', async (e) => {
+                            e.stopPropagation();
+                            const msgId = deleteBtn.dataset.msgId;
+                            const senderUid = deleteBtn.dataset.sender;
+                            if (!msgId) return;
+                            if (senderUid !== currentUser?.uid && !isCurrentUserAdmin()) {
+                                showToast('You can only delete your own messages.', 'error');
+                                return;
+                            }
+                            if (!confirm('Delete this message?')) return;
+                            try {
+                                await deleteDoc(doc(db, 'private_chats', chatId, 'messages', msgId));
+                                showToast('Message deleted.', 'info');
+                            } catch (err) {
+                                showToast('Failed to delete message.', 'error');
+                            }
+                        });
+                    }
                     fragment.appendChild(div);
                 });
                 stream.innerHTML = '';
@@ -9284,8 +9916,13 @@
             loadGame(gameId);
         }
 
+        // ===== FIXED FUNCTION: renderActiveGames (improved event listener) =====
         function renderActiveGames(snap) {
             const container = document.getElementById('active-games-list');
+            if (!container) {
+                console.warn('Active games container not found.');
+                return;
+            }
             container.innerHTML = '';
             if (snap.empty) {
                 container.innerHTML =
@@ -9298,284 +9935,100 @@
                 const div = document.createElement('div');
                 div.style.cssText =
                     'display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--bg-input);border-radius:var(--radius-sm);margin-bottom:4px;';
-                const opponent = game.players.find(p => p !== currentUser.uid);
-                const turnIndicator = game.currentTurn === currentUser.uid ? ' (Your turn)' : '';
+                const opponent = game.players.find(p => p !== currentUser?.uid);
+                const turnIndicator = game.currentTurn === currentUser?.uid ? ' (Your turn)' : '';
                 div.innerHTML =
                     `<span style="font-size:11px;">${game.gameType} vs ${opponent || 'player'}${turnIndicator}</span><button class="btn btn-primary btn-sm" data-game="${id}" style="min-height:24px;padding:0 10px;font-size:8px;">Play</button>`;
                 container.appendChild(div);
-                div.querySelector('button').addEventListener('click', () => loadGame(id));
+                const playBtn = div.querySelector('button');
+                if (playBtn) {
+                    playBtn.addEventListener('click', () => {
+                        console.log('Play button clicked for game:', id);
+                        loadGame(id);
+                    });
+                } else {
+                    console.warn('Play button not found for game:', id);
+                }
             });
         }
 
+        // ===== FIXED FUNCTION: loadGame (added safety and error handling) =====
         function loadGame(gameId) {
+            if (!currentUser) {
+                showToast('You must be logged in to play.', 'error');
+                return;
+            }
+            // Ensure the Games tab is active and the container is visible
             switchTab('tab-games');
-            document.getElementById('games-list').style.display = 'none';
-            document.getElementById('game-container').classList.add('active');
-            renderMultiplayerGame(gameId);
+            const gamesList = document.getElementById('games-list');
+            const gameContainer = document.getElementById('game-container');
+            if (gamesList) gamesList.style.display = 'none';
+            if (gameContainer) {
+                gameContainer.classList.add('active');
+            } else {
+                showToast('Game container not found.', 'error');
+                return;
+            }
+            // Clear previous content and show loading
+            const content = document.getElementById('game-content');
+            if (content) {
+                content.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Loading game...</div>';
+            }
+            renderMultiplayerGame(gameId).catch(err => {
+                console.error('Error loading multiplayer game:', err);
+                showToast('Failed to load game: ' + err.message, 'error');
+                if (content) {
+                    content.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:20px;">⚠️ Could not load game. Please try again.</div>';
+                }
+            });
         }
 
-        // ─── Chess Multiplayer ───
-        function renderChessMultiplayer(gameId, boardData, currentTurn, players, opponentName, isMyTurn, statusText,
-            container) {
-            const chess = new Chess();
-            let fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-            if (boardData && typeof boardData === 'string') {
-                fen = boardData;
-            } else if (boardData && typeof boardData === 'object' && !Array.isArray(boardData)) {
-                fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-            } else if (!boardData) {
-                fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-            }
-            try { chess.load(fen); } catch (e) { /* fallback */ }
-
-            const myColor = players[0] === currentUser.uid ? 'w' : 'b';
-            let selectedSquare = null;
-            let legalMovesForSelected = [];
-
-            container.innerHTML = `
-                <div class="multiplayer-game-container">
-                    <div style="font-weight:700;font-size:14px;text-align:center;margin-bottom:4px;">♟️ Chess vs ${opponentName}</div>
-                    <div class="game-status">${isMyTurn ? '<span class="your-turn">Your turn</span>' : 'Waiting for opponent...'}</div>
-                    <div id="chess-board-mp" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-width:280px;margin:0 auto;"></div>
-                    <div id="chess-status-mp" style="margin-top:6px;font-size:11px;color:var(--text-secondary);text-align:center;"></div>
-                </div>
-            `;
-            const boardEl = document.getElementById('chess-board-mp');
-
-            function renderChessBoard() {
-                boardEl.innerHTML = '';
-                const board = chess.board();
-                for (let r = 0; r < 8; r++) {
-                    for (let c = 0; c < 8; c++) {
-                        const cell = document.createElement('div');
-                        cell.className = 'cell';
-                        const piece = board[r][c];
-                        const isLight = (r + c) % 2 === 0;
-                        cell.style.background = isLight ? '#2a2a3a' : '#1a1a2e';
-                        if (piece) {
-                            const unicodeMap = { 'w': { 'K': '♔', 'Q': '♕', 'R': '♖', 'B': '♗', 'N': '♘', 'P': '♙' },
-                                'b': { 'K': '♚', 'Q': '♛', 'R': '♜', 'B': '♝', 'N': '♞', 'P': '♟' } };
-                            cell.textContent = unicodeMap[piece.color][piece.type] || '';
-                        } else {
-                            cell.textContent = '';
-                        }
-                        const square = String.fromCharCode(97 + c) + (8 - r);
-                        cell.dataset.square = square;
-                        cell.dataset.row = r;
-                        cell.dataset.col = c;
-                        if (legalMovesForSelected.includes(square)) {
-                            cell.classList.add('legal-move');
-                        }
-                        if (isMyTurn) {
-                            cell.style.cursor = 'pointer';
-                            cell.addEventListener('click', () => onChessCellClick(square, r, c));
-                        } else { cell.style.cursor = 'default'; }
-                        boardEl.appendChild(cell);
-                    }
-                }
-            }
-
-            function onChessCellClick(square, r, c) {
-                if (!isMyTurn) { showToast('Not your turn!', 'info'); return; }
-
-                if (selectedSquare && legalMovesForSelected.includes(square)) {
-                    const move = chess.move({ from: selectedSquare, to: square, promotion: 'q' });
-                    if (move === null) {
-                        showToast('Invalid move. Try again.', 'error');
-                        selectedSquare = null;
-                        legalMovesForSelected = [];
-                        renderChessBoard();
-                        return;
-                    }
-                    selectedSquare = null;
-                    legalMovesForSelected = [];
-                    const newFen = chess.fen();
-                    const gameOver = chess.game_over();
-                    const winner = gameOver ? (chess.in_checkmate() ? (chess.turn() === 'w' ? 'b' : 'w') : null) : null;
-                    const nextTurn = chess.turn() === 'w' ? players[0] : players[1];
-                    const updates = { board: newFen, currentTurn: nextTurn, moves: arrayUnion({ from: move.from, to: move
-                                .to, fen: newFen, timestamp: Date.now() }) };
-                    if (gameOver) {
-                        updates.status = 'finished';
-                        if (winner) {
-                            const winnerUid = winner === 'w' ? players[0] : players[1];
-                            updates.winner = winnerUid;
-                            showToast(`Checkmate! ${winnerUid === currentUser.uid ? 'You' : opponentName} wins!`,
-                                'success');
-                        } else {
-                            updates.winner = 'draw';
-                            showToast('Draw! Stalemate or insufficient material.', 'info');
-                        }
-                    }
-                    updateDoc(doc(db, 'active_games', gameId), updates);
-                    renderChessBoard();
-                    return;
-                }
-
-                const piece = chess.get(square);
-                if (!piece) {
-                    if (selectedSquare) {
-                        selectedSquare = null;
-                        legalMovesForSelected = [];
-                        renderChessBoard();
-                    }
-                    return;
-                }
-                if ((myColor === 'w' && piece.color !== 'w') || (myColor === 'b' && piece.color !== 'b')) {
-                    showToast('Not your piece!', 'info');
-                    return;
-                }
-                const moves = chess.moves({ square, verbose: true });
-                if (moves.length === 0) {
-                    showToast('No legal moves for this piece.', 'info');
-                    if (selectedSquare) {
-                        selectedSquare = null;
-                        legalMovesForSelected = [];
-                        renderChessBoard();
-                    }
-                    return;
-                }
-                selectedSquare = square;
-                legalMovesForSelected = moves.map(m => m.to);
-                renderChessBoard();
-            }
-
-            renderChessBoard();
-            document.getElementById('chess-status-mp').textContent = statusText;
-        }
-
-        // ─── Connect4 Multiplayer ───
-        function renderConnect4Multiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText,
-            container) {
-            if (!board) {
-                board = Array.from({ length: 6 }, () => Array(7).fill(null));
-                updateDoc(doc(db, 'active_games', gameId), { board, currentTurn: players[0] });
-                currentTurn = players[0];
-                isMyTurn = currentTurn === currentUser.uid;
-                statusText = isMyTurn ? 'Your turn' : "Waiting for opponent...";
-            }
-            const rows = 6,
-                cols = 7;
-            const myColor = players[0] === currentUser.uid ? 'red' : 'yellow';
-
-            container.innerHTML = `
-                <div class="multiplayer-game-container">
-                    <div style="font-weight:700;font-size:14px;text-align:center;margin-bottom:4px;">🟡 Connect4 vs ${opponentName}</div>
-                    <div class="game-status">${isMyTurn ? '<span class="your-turn">Your turn</span>' : 'Waiting for opponent...'}</div>
-                    <div id="connect-board-mp" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:260px;margin:0 auto;"></div>
-                    <div id="connect-status-mp" style="margin-top:6px;font-size:11px;color:var(--text-secondary);text-align:center;"></div>
-                </div>
-            `;
-            const boardEl = document.getElementById('connect-board-mp');
-
-            function renderConnectBoard() {
-                boardEl.innerHTML = '';
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        const cell = document.createElement('div');
-                        cell.className = 'cell';
-                        cell.style.background = board[r][c] === 'red' ? '#ff2f8e' : board[r][c] === 'yellow' ? '#ffd700' :
-                            '#1a1a2a';
-                        cell.style.borderRadius = '50%';
-                        cell.style.aspectRatio = '1';
-                        cell.dataset.col = c;
-                        if (isMyTurn && !board[r][c]) {
-                            cell.style.cursor = 'pointer';
-                            cell.addEventListener('click', () => dropConnectPiece(c));
-                        } else { cell.style.cursor = 'default'; }
-                        boardEl.appendChild(cell);
-                    }
-                }
-            }
-
-            function dropConnectPiece(col) {
-                if (!isMyTurn) return;
-                for (let r = rows - 1; r >= 0; r--) {
-                    if (!board[r][col]) {
-                        board[r][col] = myColor;
-                        if (checkConnectWin(r, col, myColor)) {
-                            updateDoc(doc(db, 'active_games', gameId), { board, status: 'finished', winner: currentUser
-                                    .uid });
-                            showToast('🎉 You won!', 'success');
-                            renderConnectBoard();
-                            return;
-                        }
-                        if (board.every(row => row.every(cell => cell !== null))) {
-                            updateDoc(doc(db, 'active_games', gameId), { board, status: 'finished', winner: 'draw' });
-                            showToast('🤝 Draw!', 'info');
-                            renderConnectBoard();
-                            return;
-                        }
-                        const nextTurn = players.find(p => p !== currentUser.uid) || players[0];
-                        updateDoc(doc(db, 'active_games', gameId), { board, currentTurn: nextTurn });
-                        renderConnectBoard();
-                        return;
-                    }
-                }
-            }
-
-            function checkConnectWin(row, col, color) {
-                const dirs = [
-                    [0, 1],
-                    [1, 0],
-                    [1, 1],
-                    [1, -1]
-                ];
-                for (const [dr, dc] of dirs) {
-                    let count = 1;
-                    for (let s = 1; s < 4; s++) { const nr = row + dr * s,
-                            nc = col + dc * s; if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || board[nr][nc] !==
-                            color) break;
-                        count++; }
-                    for (let s = 1; s < 4; s++) { const nr = row - dr * s,
-                            nc = col - dc * s; if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || board[nr][nc] !==
-                            color) break;
-                        count++; }
-                    if (count >= 4) return true;
-                }
-                return false;
-            }
-
-            renderConnectBoard();
-            document.getElementById('connect-status-mp').textContent = statusText;
-        }
-
-        function renderMultiplayerGame(gameId) {
+        // ===== FIXED FUNCTION: renderMultiplayerGame (async + error handling) =====
+        async function renderMultiplayerGame(gameId) {
             const container = document.getElementById('game-content');
-            container.innerHTML =
-                `<div style="text-align:center;padding:20px;color:var(--text-secondary);">Loading game...</div>`;
-            const gameDoc = getDoc(doc(db, 'active_games', gameId));
-            gameDoc.then(async (snap) => {
-                if (!snap.exists()) { container.innerHTML =
-                    `<div style="color:var(--text-secondary);">Game not found.</div>`; return; }
+            if (!container) return;
+
+            try {
+                const snap = await getDoc(doc(db, 'active_games', gameId));
+                if (!snap.exists()) {
+                    container.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:20px;">Game not found.</div>';
+                    return;
+                }
                 const game = snap.data();
                 const gameType = game.gameType;
                 const players = game.players;
                 const currentTurn = game.currentTurn;
                 const board = game.board || null;
+
                 if (!players.includes(currentUser.uid)) {
-                    container.innerHTML = `<div style="color:var(--text-secondary);">You are not in this game.</div>`;
+                    container.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:20px;">You are not in this game.</div>';
                     return;
                 }
+
                 const opponentUid = players.find(p => p !== currentUser.uid);
                 let opponentName = 'Opponent';
-                if (opponentUid) { const oppSnap = await getDoc(doc(db, 'users', opponentUid)); if (oppSnap.exists())
-                        opponentName = oppSnap.data().username || 'Opponent'; }
+                if (opponentUid) {
+                    const oppSnap = await getDoc(doc(db, 'users', opponentUid));
+                    if (oppSnap.exists()) opponentName = oppSnap.data().username || 'Opponent';
+                }
                 const isMyTurn = currentTurn === currentUser.uid;
                 const statusText = isMyTurn ? 'Your turn' : "Waiting for opponent...";
 
                 if (gameType === 'chess') {
-                    renderChessMultiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText,
-                        container);
+                    // Ensure Chess library is loaded
+                    if (typeof Chess === 'undefined') {
+                        container.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:20px;">Chess library not loaded. Please refresh.</div>';
+                        return;
+                    }
+                    renderChessMultiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText, container);
                 } else if (gameType === 'connect4') {
-                    renderConnect4Multiplayer(gameId, board || null, currentTurn, players, opponentName, isMyTurn,
-                        statusText, container);
+                    renderConnect4Multiplayer(gameId, board || null, currentTurn, players, opponentName, isMyTurn, statusText, container);
                 } else {
-                    container.innerHTML =
-                        `<div style="color:var(--text-secondary);">Game type "${gameType}" is not supported for multiplayer yet.</div>`;
+                    container.innerHTML = `<div style="color:var(--text-secondary);text-align:center;padding:20px;">Game type "${gameType}" not supported for multiplayer.</div>`;
                     return;
                 }
 
+                // Set up real-time listener for game updates
                 if (activeGameListeners[gameId]) activeGameListeners[gameId]();
                 activeGameListeners[gameId] = onSnapshot(doc(db, 'active_games', gameId), (snap) => {
                     if (!snap.exists()) return;
@@ -9585,29 +10038,27 @@
                         const winner = updated.winner;
                         if (winner) {
                             const winName = winner === currentUser.uid ? 'You' : opponentName;
-                            container.innerHTML =
-                                `<div style="color:var(--text-secondary);text-align:center;padding:20px;">🏆 Game over! ${winName} won!</div>`;
+                            container.innerHTML = `<div style="color:var(--text-secondary);text-align:center;padding:20px;">🏆 Game over! ${winName} won!</div>`;
                         } else {
-                            container.innerHTML =
-                                `<div style="color:var(--text-secondary);text-align:center;padding:20px;">🤝 Game over — Draw!</div>`;
+                            container.innerHTML = `<div style="color:var(--text-secondary);text-align:center;padding:20px;">🤝 Game over — Draw!</div>`;
                         }
-                        if (activeGameListeners[gameId]) { activeGameListeners[gameId]();
-                            delete activeGameListeners[gameId]; }
+                        if (activeGameListeners[gameId]) { activeGameListeners[gameId](); delete activeGameListeners[gameId]; }
                         return;
                     }
                     if (updated.board !== undefined) {
                         const newIsMyTurn = updated.currentTurn === currentUser.uid;
                         const newStatusText = newIsMyTurn ? 'Your turn' : "Waiting for opponent...";
                         if (gameType === 'chess') {
-                            renderChessMultiplayer(gameId, updated.board, updated.currentTurn, players, opponentName,
-                                newIsMyTurn, newStatusText, container);
+                            renderChessMultiplayer(gameId, updated.board, updated.currentTurn, players, opponentName, newIsMyTurn, newStatusText, container);
                         } else if (gameType === 'connect4') {
-                            renderConnect4Multiplayer(gameId, updated.board, updated.currentTurn, players, opponentName,
-                                newIsMyTurn, newStatusText, container);
+                            renderConnect4Multiplayer(gameId, updated.board, updated.currentTurn, players, opponentName, newIsMyTurn, newStatusText, container);
                         }
                     }
                 });
-            });
+            } catch (error) {
+                console.error('renderMultiplayerGame error:', error);
+                container.innerHTML = `<div style="color:var(--text-secondary);text-align:center;padding:20px;">⚠️ Error loading game: ${error.message}</div>`;
+            }
         }
 
         document.addEventListener('click', (e) => {
@@ -9631,67 +10082,53 @@
             snake: () => renderSnake()
         };
 
-        document.querySelectorAll('.game-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const game = card.dataset.game;
-                if (gameHandlers[game]) {
-                    document.getElementById('games-list').style.display = 'none';
-                    document.getElementById('game-container').classList.add('active');
-                    gameHandlers[game]();
-                }
-            });
-        });
-
-        document.getElementById('game-back-btn').addEventListener('click', () => {
-            document.getElementById('games-list').style.display = 'grid';
-            document.getElementById('game-container').classList.remove('active');
-            document.getElementById('game-content').innerHTML = '';
-            if (currentGameCleanup) { currentGameCleanup();
-                currentGameCleanup = null; }
-            gameIntervals.forEach(clearInterval);
-            gameIntervals = [];
-        });
-
-        // ─── Difficulty System ───
-        const DIFFICULTIES = {
-            easy: { label: 'Easy', multiplier: 1, desc: 'Random moves' },
-            medium: { label: 'Medium', multiplier: 1.5, desc: 'Smart defense' },
-            expert: { label: 'Cyber-Expert', multiplier: 2.5, desc: 'Minimax optimal' }
-        };
-
-        let currentDifficulty = 'easy';
-
-        function renderDifficultySelector(gameName) {
+        // ─── Bet Selector UI ───
+        function renderBetSelector(gameName, defaultBet = 10, minBet = 1, maxBet = 1000) {
             return `
-                <div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px;">🎯 Difficulty</div>
-                <div class="difficulty-selector">
-                    ${Object.entries(DIFFICULTIES).map(([key, val]) => `
-                        <button class="diff-btn ${key === currentDifficulty ? 'active' : ''}" data-diff="${key}" data-game="${gameName}">
-                            ${val.label}
-                            <span class="diff-label">${val.desc}</span>
-                            <span class="diff-reward-badge">${val.multiplier}×</span>
-                        </button>
-                    `).join('')}
-                </div>
-                <div style="font-size:8px;color:var(--text-muted);text-align:center;margin-bottom:6px;">
-                    Reward multiplier: <strong style="color:var(--neon-gold);">${DIFFICULTIES[currentDifficulty].multiplier}×</strong> coins & XP
+                <div class="bet-selector-wrap" data-game="${gameName}">
+                    <label>💰 Bet</label>
+                    <input type="number" class="bet-input" value="${defaultBet}" min="${minBet}" step="1" data-max="${maxBet}" />
+                    <span class="bet-balance">Balance: <span class="bet-balance-amount">0</span> 🪙</span>
                 </div>
             `;
         }
 
-        function getRewardMultiplier() {
-            return DIFFICULTIES[currentDifficulty]?.multiplier || 1;
+        async function getBetFromSelector(container) {
+            const wrap = container.querySelector('.bet-selector-wrap');
+            if (!wrap) return { bet: 10, valid: true };
+            const input = wrap.querySelector('.bet-input');
+            const bet = parseInt(input.value, 10);
+            if (isNaN(bet) || bet < 1) { showToast('Enter a valid bet amount.', 'error'); return { bet: 0, valid: false }; }
+            const userRef = doc(db, 'users', currentUser.uid);
+            const snap = await getDoc(userRef);
+            const balance = snap.exists() ? snap.data().coins || 0 : 0;
+            if (bet > balance) { showToast('Insufficient coins!', 'error'); return { bet: 0, valid: false }; }
+            if (bet > MAX_COINS) { showToast(`Maximum bet is ${MAX_COINS} coins.`, 'error'); return { bet: 0,
+                valid: false }; }
+            return { bet, valid: true, balance };
         }
 
-        // ─── CHESS (vs CPU) ───
+        async function updateBetBalanceDisplay(container) {
+            const wrap = container.querySelector('.bet-selector-wrap');
+            if (!wrap) return;
+            const balanceEl = wrap.querySelector('.bet-balance-amount');
+            if (!balanceEl) return;
+            const snap = await getDoc(doc(db, 'users', currentUser.uid));
+            const balance = snap.exists() ? snap.data().coins || 0 : 0;
+            balanceEl.textContent = Math.min(balance, MAX_COINS);
+        }
+
+        // ─── Chess (vs CPU) with betting ───
         function renderChessWithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
                 <h4 style="margin-bottom:4px;font-size:15px;">♟️ Chess</h4>
                 ${renderDifficultySelector('chess')}
+                ${renderBetSelector('chess', 10, 1, 500)}
                 <div id="chess-game-container"></div>
             `;
             const gameContainer = document.getElementById('chess-game-container');
+            updateBetBalanceDisplay(container);
 
             container.querySelectorAll('.diff-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -9704,10 +10141,12 @@
                     if (desc) desc.innerHTML =
                         `Reward multiplier: <strong style="color:var(--neon-gold);">${DIFFICULTIES[currentDifficulty].multiplier}×</strong> coins & XP`;
                     renderChessGame(gameContainer);
+                    updateBetBalanceDisplay(container);
                 });
             });
 
             renderChessGame(gameContainer);
+            updateBetBalanceDisplay(container);
         }
 
         function renderChessGame(container) {
@@ -9728,7 +10167,7 @@
             let moveCount = 0;
 
             container.innerHTML =
-                `<div id="chess-board" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-width:280px;margin:0 auto;"></div><div id="chess-status" style="margin-top:6px;font-size:12px;color:var(--text-secondary);text-align:center;">Your turn (white)</div>`;
+                `<div id="chess-board" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-width:280px;margin:0 auto;width:100%;"></div><div id="chess-status" style="margin-top:6px;font-size:12px;color:var(--text-secondary);text-align:center;">Your turn (white)</div>`;
             const boardEl = document.getElementById('chess-board');
 
             function renderBoard() {
@@ -9753,6 +10192,19 @@
                         boardEl.appendChild(cell);
                     }
                 }
+            }
+
+            // 🆕 Add "New Game" button for local chess
+            const statusEl = document.getElementById('chess-status');
+            if (statusEl && !container.querySelector('.chess-new-game-btn')) {
+                const resetButton = document.createElement('button');
+                resetButton.className = 'btn btn-secondary btn-sm chess-new-game-btn';
+                resetButton.textContent = '🔄 New Game';
+                resetButton.style.cssText = 'margin-top:8px;min-height:30px;padding:0 14px;font-size:8px;';
+                resetButton.addEventListener('click', () => {
+                    renderChessGame(container);
+                });
+                statusEl.parentNode.insertBefore(resetButton, statusEl.nextSibling);
             }
 
             function isWhitePiece(p) { return p && '♔♕♖♗♘♙'.includes(p); }
@@ -9786,7 +10238,7 @@
                 } catch (e) { return []; }
             }
 
-            function onCellClick(r, c) {
+            async function onCellClick(r, c) {
                 if (turn !== 'white' || gameOver) return;
                 const key = `${r},${c}`;
                 const square = String.fromCharCode(97 + c) + (8 - r);
@@ -9825,7 +10277,7 @@
                 renderBoard();
             }
 
-            function cpuMove() {
+            async function cpuMove() {
                 if (turn !== 'black' || gameOver) return;
                 const pieces = [];
                 for (let r = 0; r < 8; r++)
@@ -9933,34 +10385,53 @@
                 } catch (e) { return false; }
             }
 
-            function endGame(playerWon) {
+            async function endGame(playerWon) {
                 gameOver = true;
                 const statusEl = document.getElementById('chess-status');
-                if (playerWon) {
-                    statusEl.textContent = '🎉 You win!';
-                    const multiplier = getRewardMultiplier();
-                    const reward = Math.floor(10 * multiplier);
-                    applyWalletCap(currentUser.uid, reward);
-                    applyXpBoost(currentUser.uid, Math.floor(5 * multiplier));
-                    showToast(`🎉 +${reward} coins, +${Math.floor(5 * multiplier)} XP`, 'success');
-                } else {
-                    statusEl.textContent = '😔 CPU wins!';
+                const betResult = await getBetFromSelector(container.closest('#game-content') || container);
+                if (!betResult.valid) {
+                    statusEl.textContent = '⏳ Invalid bet.';
+                    return;
                 }
+                const bet = betResult.bet;
+                const multiplier = getRewardMultiplier();
+                if (playerWon) {
+                    const reward = Math.floor(bet * multiplier);
+                    const result = await applyWalletCap(currentUser.uid, reward);
+                    if (result.success) {
+                        statusEl.textContent = `🎉 You win! +${result.actualDelta} coins!`;
+                        showToast(`🎉 +${result.actualDelta} coins!`, 'success');
+                        await applyXpBoost(currentUser.uid, Math.floor(5 * multiplier));
+                    } else {
+                        statusEl.textContent = '⚠️ Error processing win.';
+                    }
+                } else {
+                    const result = await applyWalletCap(currentUser.uid, -bet);
+                    if (result.success) {
+                        statusEl.textContent = `😔 CPU wins! -${bet} coins.`;
+                        showToast(`😔 Lost ${bet} coins.`, 'error');
+                    } else {
+                        statusEl.textContent = '⚠️ Error processing loss.';
+                    }
+                }
+                updateBetBalanceDisplay(container.closest('#game-content') || container);
                 renderBoard();
             }
 
             renderBoard();
         }
 
-        // ─── CONNECT4 (vs CPU) ───
+        // ─── Connect4 (vs CPU) with betting ───
         function renderConnect4WithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
                 <h4 style="margin-bottom:4px;font-size:15px;">🟡 Connect4</h4>
                 ${renderDifficultySelector('connect4')}
+                ${renderBetSelector('connect4', 10, 1, 500)}
                 <div id="connect4-game-container"></div>
             `;
             const gameContainer = document.getElementById('connect4-game-container');
+            updateBetBalanceDisplay(container);
 
             container.querySelectorAll('.diff-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -9973,10 +10444,12 @@
                     if (desc) desc.innerHTML =
                         `Reward multiplier: <strong style="color:var(--neon-gold);">${DIFFICULTIES[currentDifficulty].multiplier}×</strong> coins & XP`;
                     renderConnect4Game(gameContainer);
+                    updateBetBalanceDisplay(container);
                 });
             });
 
             renderConnect4Game(gameContainer);
+            updateBetBalanceDisplay(container);
         }
 
         function renderConnect4Game(container) {
@@ -9987,7 +10460,7 @@
             let gameOver = false;
 
             container.innerHTML =
-                `<div id="connect-board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:260px;margin:0 auto;"></div><div id="connect-status" style="margin-top:6px;font-size:12px;color:var(--text-secondary);text-align:center;">Your turn (red)</div>`;
+                `<div id="connect-board" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:260px;margin:0 auto;width:100%;"></div><div id="connect-status" style="margin-top:6px;font-size:12px;color:var(--text-secondary);text-align:center;">Your turn (red)</div>`;
             const boardEl = document.getElementById('connect-board');
 
             function renderBoard() {
@@ -10038,13 +10511,7 @@
                         if (checkWin(r, col, 'red')) {
                             gameOver = true;
                             renderBoard();
-                            const multiplier = getRewardMultiplier();
-                            const reward = Math.floor(15 * multiplier);
-                            applyWalletCap(currentUser.uid, reward);
-                            applyXpBoost(currentUser.uid, Math.floor(8 * multiplier));
-                            document.getElementById('connect-status').textContent =
-                                `🎉 You win! +${reward} coins, +${Math.floor(8 * multiplier)} XP`;
-                            showToast(`🎉 Connect4 win! +${reward} coins`, 'success');
+                            handleConnect4Result(true);
                             return;
                         }
                         if (board.every(row => row.every(cell => cell !== null))) {
@@ -10061,6 +10528,37 @@
                         return;
                     }
                 }
+            }
+
+            async function handleConnect4Result(playerWon) {
+                const statusEl = document.getElementById('connect-status');
+                const betResult = await getBetFromSelector(container.closest('#game-content') || container);
+                if (!betResult.valid) {
+                    statusEl.textContent = '⏳ Invalid bet.';
+                    return;
+                }
+                const bet = betResult.bet;
+                const multiplier = getRewardMultiplier();
+                if (playerWon) {
+                    const reward = Math.floor(bet * multiplier);
+                    const result = await applyWalletCap(currentUser.uid, reward);
+                    if (result.success) {
+                        statusEl.textContent = `🎉 You win! +${result.actualDelta} coins!`;
+                        showToast(`🎉 +${result.actualDelta} coins!`, 'success');
+                        await applyXpBoost(currentUser.uid, Math.floor(8 * multiplier));
+                    } else {
+                        statusEl.textContent = '⚠️ Error processing win.';
+                    }
+                } else {
+                    const result = await applyWalletCap(currentUser.uid, -bet);
+                    if (result.success) {
+                        statusEl.textContent = `😔 CPU wins! -${bet} coins.`;
+                        showToast(`😔 Lost ${bet} coins.`, 'error');
+                    } else {
+                        statusEl.textContent = '⚠️ Error processing loss.';
+                    }
+                }
+                updateBetBalanceDisplay(container.closest('#game-content') || container);
             }
 
             function cpuMove() {
@@ -10126,8 +10624,7 @@
                         if (checkWin(r, col, 'yellow')) {
                             gameOver = true;
                             renderBoard();
-                            document.getElementById('connect-status').textContent = '😔 CPU wins!';
-                            showToast('😔 CPU wins!', 'error');
+                            handleConnect4Result(false);
                             return;
                         }
                         if (board.every(row => row.every(cell => cell !== null))) {
@@ -10147,15 +10644,17 @@
             renderBoard();
         }
 
-        // ─── TIC-TAC-TOE (vs CPU) ───
+        // ─── Tic-Tac-Toe (vs CPU) with betting ───
         function renderTicTacToeWithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
                 <h4 style="margin-bottom:4px;font-size:15px;">❌⭕ Tic-Tac-Toe</h4>
                 ${renderDifficultySelector('tictactoe')}
+                ${renderBetSelector('tictactoe', 5, 1, 200)}
                 <div id="ttt-game-container"></div>
             `;
             const gameContainer = document.getElementById('ttt-game-container');
+            updateBetBalanceDisplay(container);
 
             container.querySelectorAll('.diff-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -10168,10 +10667,12 @@
                     if (desc) desc.innerHTML =
                         `Reward multiplier: <strong style="color:var(--neon-gold);">${DIFFICULTIES[currentDifficulty].multiplier}×</strong> coins & XP`;
                     renderTicTacToeGame(gameContainer);
+                    updateBetBalanceDisplay(container);
                 });
             });
 
             renderTicTacToeGame(gameContainer);
+            updateBetBalanceDisplay(container);
         }
 
         function renderTicTacToeGame(container) {
@@ -10240,13 +10741,6 @@
 
             function isBoardFull(boardArr) {
                 return boardArr.every(c => c !== null);
-            }
-
-            function evaluateBoard(boardArr) {
-                const winner = checkWinner(boardArr);
-                if (winner === cpuSymbol) return 10;
-                if (winner === playerSymbol) return -10;
-                return 0;
             }
 
             function minimax(boardArr, depth, isMaximizing) {
@@ -10362,15 +10856,9 @@
                     gameOver = true;
                     renderBoardUI();
                     if (winner === playerSymbol) {
-                        const multiplier = getRewardMultiplier();
-                        const reward = Math.floor(10 * multiplier);
-                        applyWalletCap(currentUser.uid, reward);
-                        applyXpBoost(currentUser.uid, Math.floor(5 * multiplier));
-                        statusEl.textContent = `🎉 You win! +${reward} coins, +${Math.floor(5 * multiplier)} XP`;
-                        showToast(`🎉 Tic-Tac-Toe win! +${reward} coins`, 'success');
+                        handleTicTacToeResult(true);
                     } else {
-                        statusEl.textContent = '😔 CPU wins!';
-                        showToast('😔 CPU wins!', 'error');
+                        handleTicTacToeResult(false);
                     }
                     return;
                 }
@@ -10385,6 +10873,36 @@
                 renderBoardUI();
             }
 
+            async function handleTicTacToeResult(playerWon) {
+                const betResult = await getBetFromSelector(container.closest('#game-content') || container);
+                if (!betResult.valid) {
+                    statusEl.textContent = '⏳ Invalid bet.';
+                    return;
+                }
+                const bet = betResult.bet;
+                const multiplier = getRewardMultiplier();
+                if (playerWon) {
+                    const reward = Math.floor(bet * multiplier);
+                    const result = await applyWalletCap(currentUser.uid, reward);
+                    if (result.success) {
+                        statusEl.textContent = `🎉 You win! +${result.actualDelta} coins!`;
+                        showToast(`🎉 +${result.actualDelta} coins!`, 'success');
+                        await applyXpBoost(currentUser.uid, Math.floor(5 * multiplier));
+                    } else {
+                        statusEl.textContent = '⚠️ Error processing win.';
+                    }
+                } else {
+                    const result = await applyWalletCap(currentUser.uid, -bet);
+                    if (result.success) {
+                        statusEl.textContent = `😔 CPU wins! -${bet} coins.`;
+                        showToast(`😔 Lost ${bet} coins.`, 'error');
+                    } else {
+                        statusEl.textContent = '⚠️ Error processing loss.';
+                    }
+                }
+                updateBetBalanceDisplay(container.closest('#game-content') || container);
+            }
+
             function playerMove(idx) {
                 if (gameOver || turn !== playerSymbol || board[idx] !== null) return;
                 board[idx] = playerSymbol;
@@ -10392,12 +10910,7 @@
                 if (winner) {
                     gameOver = true;
                     renderBoardUI();
-                    const multiplier = getRewardMultiplier();
-                    const reward = Math.floor(10 * multiplier);
-                    applyWalletCap(currentUser.uid, reward);
-                    applyXpBoost(currentUser.uid, Math.floor(5 * multiplier));
-                    statusEl.textContent = `🎉 You win! +${reward} coins, +${Math.floor(5 * multiplier)} XP`;
-                    showToast(`🎉 Tic-Tac-Toe win! +${reward} coins`, 'success');
+                    handleTicTacToeResult(true);
                     return;
                 }
                 if (isBoardFull(board)) {
@@ -10422,15 +10935,17 @@
             renderBoardUI();
         }
 
-        // ─── HANGMAN ───
+        // ─── Hangman with betting ───
         function renderHangmanWithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
                 <h4 style="margin-bottom:4px;font-size:15px;">🔤 Hangman</h4>
                 ${renderDifficultySelector('hangman')}
+                ${renderBetSelector('hangman', 5, 1, 100)}
                 <div id="hangman-game-container"></div>
             `;
             const gameContainer = document.getElementById('hangman-game-container');
+            updateBetBalanceDisplay(container);
 
             container.querySelectorAll('.diff-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -10443,10 +10958,12 @@
                     if (desc) desc.innerHTML =
                         `Reward multiplier: <strong style="color:var(--neon-gold);">${DIFFICULTIES[currentDifficulty].multiplier}×</strong> coins & XP`;
                     renderHangmanGame(gameContainer);
+                    updateBetBalanceDisplay(container);
                 });
             });
 
             renderHangmanGame(gameContainer);
+            updateBetBalanceDisplay(container);
         }
 
         function renderHangmanGame(container) {
@@ -10468,6 +10985,7 @@
                 attempts = 6,
                 gameOver = false;
             let wrongCount = 0;
+            let gameWon = false;
 
             container.innerHTML = `
                 <div class="hangman-gallows">
@@ -10519,7 +11037,7 @@
                 }
             }
 
-            function guess(letter) {
+            async function guess(letter) {
                 if (guessed.includes(letter) || gameOver) return;
                 guessed.push(letter);
                 if (!word.includes(letter)) {
@@ -10530,22 +11048,20 @@
                 updateDisplay();
                 if (attempts === 0) {
                     gameOver = true;
+                    gameWon = false;
                     statusDisplay.textContent = `💀 Game over! The word was ${word}`;
                     statusDisplay.style.color = '#ff2f8e';
                     renderLetters();
-                    showToast(`💀 The word was ${word}`, 'error');
+                    await handleHangmanResult(false);
                     return;
                 }
                 if (word.split('').every(l => guessed.includes(l))) {
                     gameOver = true;
-                    const multiplier = getRewardMultiplier();
-                    const reward = Math.floor(15 * multiplier);
-                    applyWalletCap(currentUser.uid, reward);
-                    applyXpBoost(currentUser.uid, Math.floor(8 * multiplier));
-                    statusDisplay.textContent = `🎉 You won! +${reward} coins, +${Math.floor(8 * multiplier)} XP`;
+                    gameWon = true;
+                    statusDisplay.textContent = `🎉 You won!`;
                     statusDisplay.style.color = '#58d68d';
-                    showToast(`🎉 Hangman win! +${reward} coins`, 'success');
                     renderLetters();
+                    await handleHangmanResult(true);
                     return;
                 }
                 renderLetters();
@@ -10557,6 +11073,36 @@
                 updateGallows();
             }
 
+            async function handleHangmanResult(playerWon) {
+                const betResult = await getBetFromSelector(container.closest('#game-content') || container);
+                if (!betResult.valid) {
+                    statusDisplay.textContent = '⏳ Invalid bet.';
+                    return;
+                }
+                const bet = betResult.bet;
+                const multiplier = getRewardMultiplier();
+                if (playerWon) {
+                    const reward = Math.floor(bet * multiplier);
+                    const result = await applyWalletCap(currentUser.uid, reward);
+                    if (result.success) {
+                        statusDisplay.textContent = `🎉 You won! +${result.actualDelta} coins!`;
+                        showToast(`🎉 +${result.actualDelta} coins!`, 'success');
+                        await applyXpBoost(currentUser.uid, Math.floor(8 * multiplier));
+                    } else {
+                        statusDisplay.textContent = '⚠️ Error processing win.';
+                    }
+                } else {
+                    const result = await applyWalletCap(currentUser.uid, -bet);
+                    if (result.success) {
+                        statusDisplay.textContent = `😔 Lost ${bet} coins.`;
+                        showToast(`😔 Lost ${bet} coins.`, 'error');
+                    } else {
+                        statusDisplay.textContent = '⚠️ Error processing loss.';
+                    }
+                }
+                updateBetBalanceDisplay(container.closest('#game-content') || container);
+            }
+
             renderLetters();
             updateDisplay();
             updateGallows();
@@ -10566,22 +11112,30 @@
             });
         }
 
-        // ─── BATTLESHIP ───
+        // ─── Battleship with betting ───
         function renderBattleship() {
             const container = document.getElementById('game-content');
+            container.innerHTML = `
+                <h4 style="margin-bottom:6px;font-size:15px;">⛴️ Battleship</h4>
+                ${renderBetSelector('battleship', 10, 1, 300)}
+                <div id="bs-status" style="font-size:11px;color:var(--text-secondary);text-align:center;margin-bottom:4px;">Click cells to fire!</div>
+                <div id="bs-board" class="battleship-grid" style="max-width:280px;margin:0 auto;"></div>
+                <div id="bs-info" style="margin-top:6px;font-size:11px;color:var(--text-muted);text-align:center;">Ships left: 5</div>
+            `;
+            updateBetBalanceDisplay(container);
             const size = 10;
             let board = Array.from({ length: size }, () => Array(size).fill(null));
             let ships = [];
             let revealed = Array.from({ length: size }, () => Array(size).fill(false));
             let gameOver = false,
                 shots = 0;
-            container.innerHTML =
-                `<h4 style="margin-bottom:6px;font-size:15px;">⛴️ Battleship</h4><div id="bs-status" style="font-size:11px;color:var(--text-secondary);text-align:center;margin-bottom:4px;">Click cells to fire!</div><div id="bs-board" class="battleship-grid" style="max-width:280px;margin:0 auto;"></div><div id="bs-info" style="margin-top:6px;font-size:11px;color:var(--text-muted);text-align:center;">Ships left: 5</div>`;
             const boardEl = document.getElementById('bs-board');
+            let totalShipCells = 0;
 
             function initShips() {
                 const shipLengths = [5, 4, 3, 3, 2];
                 const placed = [];
+                totalShipCells = 0;
                 for (const len of shipLengths) {
                     let placedOk = false,
                         attempts = 0;
@@ -10600,6 +11154,7 @@
                         }
                         if (ok) { for (const [rr, cc] of cells) board[rr][cc] = 'ship';
                             placed.push(cells);
+                            totalShipCells += len;
                             placedOk = true; }
                     }
                     if (!placedOk) {
@@ -10609,6 +11164,7 @@
                                 placed.push([
                                     [r, c]
                                 ]);
+                                totalShipCells++;
                                 placedOk = true; } }
                     }
                 }
@@ -10633,38 +11189,44 @@
                 }
             }
 
-            function fire(r, c) {
+            async function fire(r, c) {
                 if (gameOver || revealed[r][c]) return;
                 revealed[r][c] = true;
                 shots++;
                 const hit = board[r][c] === 'ship';
-                let allSunk = true,
-                    hits = 0,
-                    total = 0;
+                let hits = 0,
+                    total = totalShipCells;
                 for (let rr = 0; rr < size; rr++)
-                    for (let cc = 0; cc < size; cc++) { if (board[rr][cc] === 'ship') { total++; if (revealed[rr][cc])
-                            hits++; else allSunk = false; } }
+                    for (let cc = 0; cc < size; cc++) { if (board[rr][cc] === 'ship' && revealed[rr][cc]) hits++; }
                 const msg = hit ? '💥 Hit!' : '💧 Miss...';
                 document.getElementById('bs-status').textContent = msg;
                 document.getElementById('bs-info').textContent =
                     `Ships left: ${ships.length} • Shots: ${shots} • Hits: ${hits}/${total}`;
-                if (allSunk) {
+                if (hits === total) {
                     gameOver = true;
                     document.getElementById('bs-status').textContent = '🎉 All ships sunk! You win!';
-                    const multiplier = getRewardMultiplier();
-                    const reward = Math.floor(20 * multiplier);
-                    applyWalletCap(currentUser.uid, reward);
-                    applyXpBoost(currentUser.uid, Math.floor(10 * multiplier));
-                    showToast(`🎉 Battleship win! +${reward} coins`, 'success');
+                    const betResult = await getBetFromSelector(container);
+                    if (betResult.valid) {
+                        const bet = betResult.bet;
+                        const reward = Math.floor(bet * 2);
+                        const result = await applyWalletCap(currentUser.uid, reward);
+                        if (result.success) {
+                            showToast(`🎉 Battleship win! +${result.actualDelta} coins!`, 'success');
+                            await applyXpBoost(currentUser.uid, 10);
+                        }
+                    } else {
+                        showToast('Invalid bet, but you still win!', 'info');
+                    }
+                    updateBetBalanceDisplay(container);
                 }
                 renderBoard();
             }
             renderBoard();
             document.getElementById('bs-info').textContent =
-                `Ships left: ${ships.length} • Shots: 0 • Hits: 0/${ships.reduce((a, s) => a + s.length, 0)}`;
+                `Ships left: ${ships.length} • Shots: 0 • Hits: 0/${totalShipCells}`;
         }
 
-        // ─── COIN CLICKER ───
+        // ─── Coin Clicker (no betting, just fun) ───
         function renderCoinClicker() {
             const container = document.getElementById('game-content');
             let clickScore = 0;
@@ -10716,11 +11278,15 @@
             });
         }
 
-        // ─── SNAKE ───
+        // ─── Snake with betting ───
         function renderSnake() {
             const container = document.getElementById('game-content');
-            container.innerHTML =
-                `<h4 style="margin-bottom:6px;font-size:15px;">🐍 Snake</h4><div style="text-align:center;"><div style="font-size:14px;font-weight:700;color:var(--neon-gold);margin-bottom:4px;">Score: <span id="snake-score">0</span></div><canvas id="snake-canvas" width="280" height="280"></canvas><div style="margin-top:6px;font-size:11px;color:var(--text-secondary);">⬆⬇⬅➡ or WASD</div></div>`;
+            container.innerHTML = `
+                <h4 style="margin-bottom:6px;font-size:15px;">🐍 Snake</h4>
+                ${renderBetSelector('snake', 5, 1, 100)}
+                <div style="text-align:center;"><div style="font-size:14px;font-weight:700;color:var(--neon-gold);margin-bottom:4px;">Score: <span id="snake-score">0</span></div><canvas id="snake-canvas" width="280" height="280"></canvas><div style="margin-top:6px;font-size:11px;color:var(--text-secondary);">⬆⬇⬅➡ or WASD</div></div>
+            `;
+            updateBetBalanceDisplay(container);
             const canvas = document.getElementById('snake-canvas');
             const ctx = canvas.getContext('2d');
             const gridSize = 14,
@@ -10776,7 +11342,7 @@
                 food = pos;
             }
 
-            function gameOver() {
+            async function gameOver() {
                 gameRunning = false;
                 if (moveTimer) { clearInterval(moveTimer);
                     moveTimer = null; }
@@ -10789,13 +11355,20 @@
                 ctx.fillText('💀 Game Over', canvas.width / 2, canvas.height / 2 - 10);
                 ctx.font = '14px sans-serif';
                 ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2 + 30);
-                const multiplier = getRewardMultiplier();
-                const reward = Math.floor(score * multiplier);
-                if (reward > 0) {
-                    applyWalletCap(currentUser.uid, reward);
-                    applyXpBoost(currentUser.uid, Math.floor(score / 2 * multiplier));
-                    showToast(`🐍 +${reward} coins, +${Math.floor(score / 2 * multiplier)} XP`, 'success');
+
+                const betResult = await getBetFromSelector(container);
+                if (betResult.valid && score > 0) {
+                    const bet = betResult.bet;
+                    const reward = Math.floor(score * bet * 0.5);
+                    if (reward > 0) {
+                        const result = await applyWalletCap(currentUser.uid, reward);
+                        if (result.success) {
+                            showToast(`🐍 +${result.actualDelta} coins!`, 'success');
+                            await applyXpBoost(currentUser.uid, Math.floor(score / 2));
+                        }
+                    }
                 }
+                updateBetBalanceDisplay(container);
             }
 
             function resetGame() {
@@ -10833,6 +11406,58 @@
             moveTimer = setInterval(move, 200);
             currentGameCleanup = () => { if (moveTimer) { clearInterval(moveTimer);
                     moveTimer = null; } };
+        }
+
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const game = card.dataset.game;
+                if (gameHandlers[game]) {
+                    document.getElementById('games-list').style.display = 'none';
+                    document.getElementById('game-container').classList.add('active');
+                    gameHandlers[game]();
+                }
+            });
+        });
+
+        document.getElementById('game-back-btn').addEventListener('click', () => {
+            document.getElementById('games-list').style.display = 'grid';
+            document.getElementById('game-container').classList.remove('active');
+            document.getElementById('game-content').innerHTML = '';
+            if (currentGameCleanup) { currentGameCleanup();
+                currentGameCleanup = null; }
+            gameIntervals.forEach(clearInterval);
+            gameIntervals = [];
+        });
+
+        // ─── Difficulty System ───
+        const DIFFICULTIES = {
+            easy: { label: 'Easy', multiplier: 1, desc: 'Random moves' },
+            medium: { label: 'Medium', multiplier: 1.5, desc: 'Smart defense' },
+            expert: { label: 'Cyber-Expert', multiplier: 2.5, desc: 'Minimax optimal' }
+        };
+
+        let currentDifficulty = 'easy';
+
+        function renderDifficultySelector(gameName) {
+            return `
+                <div style="font-size:10px;color:var(--text-secondary);margin-bottom:4px;">🎯 Difficulty</div>
+                <div class="difficulty-selector">
+                    ${Object.entries(DIFFICULTIES).map(([key, val]) => `
+                        <button class="diff-btn ${key === currentDifficulty ? 'active' : ''}" data-diff="${key}" data-game="${gameName}">
+                            ${val.label}
+                            <span class="diff-label">${val.desc}</span>
+                            <span class="diff-reward-badge">${val.multiplier}×</span>
+                        </button>
+                    `).join('')}
+                </div>
+                <div style="font-size:8px;color:var(--text-muted);text-align:center;margin-bottom:6px;">
+                    Reward multiplier: <strong style="color:var(--neon-gold);">${DIFFICULTIES[currentDifficulty].multiplier}×</strong> coins & XP
+                </div>
+            `;
+        }
+
+        function getRewardMultiplier() {
+            return DIFFICULTIES[currentDifficulty]?.multiplier || 1;
         }
 
         // ─── Global Announcement ───
@@ -12639,6 +13264,9 @@
         console.log('🎵 Audio Engine: YouTube/Spotify extraction with glassmorphic player');
         console.log('🖼️ Notes Tray: Horizontal swipe gallery with ultra-premium glass');
         console.log('👑 Admin Panel: Spacious, organized, with live activity ticker');
+        console.log('💰 Betting System: All games now have wagering with coin rewards');
+        console.log('💬 Chat: Search, timestamps, reply/quote, online status, delete messages');
+        console.log('♟️ Chess: Fixed board rendering and alignment');
     </script>
 </body>
 </html>
