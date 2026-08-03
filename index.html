@@ -87,6 +87,134 @@
         }
 
         /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+               LOCKDOWN OVERLAY — Full-screen global lock
+               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        #lockdown-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            background: radial-gradient(circle at 50% 50%, #0a0617 0%, #04020a 100%);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 24px;
+            box-sizing: border-box;
+            text-align: center;
+            backdrop-filter: blur(20px) saturate(210%);
+            -webkit-backdrop-filter: blur(20px) saturate(210%);
+            border: 1px solid rgba(255, 47, 142, 0.06);
+        }
+        #lockdown-overlay.show {
+            display: flex;
+        }
+        #lockdown-overlay .lockdown-icon {
+            font-size: 72px;
+            margin-bottom: 12px;
+            animation: lockdownPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes lockdownPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.06);
+                opacity: 1;
+            }
+        }
+        #lockdown-overlay h1 {
+            font-size: clamp(28px, 8vw, 42px);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        #lockdown-overlay .lockdown-sub {
+            font-size: clamp(12px, 3vw, 16px);
+            color: var(--text-secondary);
+            max-width: 340px;
+            margin: 0 auto 16px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        #lockdown-overlay .lockdown-input-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+            max-width: 320px;
+        }
+        #lockdown-overlay .lockdown-input-row input {
+            width: 100%;
+            padding: 12px 18px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+            text-align: center;
+        }
+        #lockdown-overlay .lockdown-input-row input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 0 4px rgba(34, 229, 255, 0.06);
+        }
+        #lockdown-overlay .lockdown-input-row button {
+            width: 100%;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            border: none;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            font-family: inherit;
+            min-height: 48px;
+        }
+        #lockdown-overlay .lockdown-input-row button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(255, 47, 142, 0.15);
+        }
+        #lockdown-overlay .lockdown-input-row button:active {
+            transform: scale(0.96);
+        }
+        #lockdown-overlay .lockdown-error {
+            color: var(--neon-pink);
+            font-size: 12px;
+            font-weight: 700;
+            min-height: 20px;
+            margin-top: 4px;
+            display: none;
+        }
+        #lockdown-overlay .lockdown-error.show {
+            display: block;
+        }
+        #lockdown-overlay .lockdown-badge {
+            position: absolute;
+            bottom: 32px;
+            font-size: 9px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
                GLASSMORPHIC UTILITIES
                ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
         .glass {
@@ -968,7 +1096,6 @@
             transform: scale(1.25);
             filter: drop-shadow(0 0 24px rgba(34, 229, 255, 0.4));
         }
-        /* --- FIXED: media play button in note bubble --- */
         .note-bubble .note-media-play {
             display: inline-flex;
             align-items: center;
@@ -4650,11 +4777,79 @@
             word-break: break-word;
             line-height: 1.3;
         }
+
+        /* ─── Lockdown admin controls in admin panel ─── */
+        .lockdown-toggle-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 6px 0 4px;
+        }
+        .lockdown-toggle-row .lockdown-status-badge {
+            font-size: 8px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .lockdown-status-badge.active {
+            background: rgba(255, 47, 142, 0.12);
+            color: var(--neon-pink);
+            border: 1px solid rgba(255, 47, 142, 0.15);
+        }
+        .lockdown-status-badge.inactive {
+            background: rgba(88, 214, 141, 0.08);
+            color: #58d68d;
+            border: 1px solid rgba(88, 214, 141, 0.08);
+        }
+        .lockdown-password-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .lockdown-password-row input {
+            flex: 1;
+            min-width: 100px;
+            padding: 6px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-size: 11px;
+            outline: none;
+            min-height: 34px;
+            font-family: inherit;
+        }
+        .lockdown-password-row input:focus {
+            border-color: var(--neon-cyan);
+        }
+        .lockdown-password-row .btn {
+            min-height: 34px;
+            padding: 0 14px;
+            font-size: 8px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- LOADING -->
+    <!-- ==================== LOCKDOWN OVERLAY ==================== -->
+    <div id="lockdown-overlay">
+        <div class="lockdown-icon">🔒</div>
+        <h1>SYSTEM LOCKDOWN</h1>
+        <div class="lockdown-sub">This application has been locked remotely by an administrator.</div>
+        <div class="lockdown-input-row">
+            <input type="password" id="lockdown-password-input" placeholder="Enter admin password" autofocus />
+            <button id="lockdown-unlock-btn">Unlock System</button>
+            <div class="lockdown-error" id="lockdown-error-msg">Incorrect password. Access denied.</div>
+        </div>
+        <div class="lockdown-badge">School Social · Secured</div>
+    </div>
+
+    <!-- ==================== LOADING ==================== -->
     <div id="app-loading-overlay">
         <div class="spinner-ring"></div>
         <div class="loading-status">Connecting to Campus Grid…</div>
@@ -5278,6 +5473,23 @@
                                 </div>
                                 <div id="moderation-status" style="font-size:8px;color:var(--text-muted);margin-top:4px;"></div>
                             </div>
+
+                            <!-- ===== LOCKDOWN SECTION ===== -->
+                            <div style="margin-top:10px;border-top:1px solid var(--border-soft);padding-top:10px;">
+                                <div style="font-size:9px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;">🔒 Global Lockdown</div>
+                                <div class="lockdown-toggle-row">
+                                    <button id="admin-lockdown-toggle" class="btn btn-danger btn-sm" style="min-height:32px;padding:0 14px;font-size:8px;">🔒 Activate Lockdown</button>
+                                    <span class="lockdown-status-badge inactive" id="lockdown-status-badge">● Inactive</span>
+                                </div>
+                                <div style="font-size:9px;color:var(--text-secondary);margin-top:4px;">When active, all users are locked out with a password screen.</div>
+                                <div class="lockdown-password-row" style="margin-top:6px;">
+                                    <input type="text" id="admin-lockdown-password" placeholder="Unlock password" value="admin123" style="flex:2;min-width:100px;" />
+                                    <button id="admin-lockdown-set-password" class="btn btn-secondary btn-sm" style="min-height:30px;padding:0 12px;font-size:7px;">Set Password</button>
+                                </div>
+                                <div id="lockdown-status-msg" style="font-size:8px;color:var(--text-muted);margin-top:4px;"></div>
+                            </div>
+                            <!-- ===== END LOCKDOWN SECTION ===== -->
+
                         </div>
 
                         <div class="admin-tab-panel" id="admin-tab-users">
@@ -5518,12 +5730,12 @@
         </div>
     </div>
 
-    <!-- FIREBASE & CHESS LIBRARIES -->
+    <!-- ==================== SCRIPTS ==================== -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js">
     </script>
     <script type="module">
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        //  IMPORTS — All backend logic preserved exactly as original
+        //  IMPORTS
         // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
@@ -5645,6 +5857,11 @@
         let globalChatSearchQuery = '';
         let globalChatMessages = [];
         let repliedToMsgId = null;
+
+        // ─── LOCKDOWN STATE ───
+        let lockdownUnsub = null;
+        let isLockdownActive = false;
+        let lockdownPassword = 'admin123';
 
         // ─── SWEAR FILTER ───
         const SWEAR_WORDS = [
@@ -5928,14 +6145,167 @@
             return currentUserProfile?.badges || [];
         }
 
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  LOCKDOWN SYSTEM
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const LOCKDOWN_REF = doc(db, 'config', 'appSettings');
+
+        async function initLockdown() {
+            // Ensure the lockdown document exists with defaults
+            const snap = await getDoc(LOCKDOWN_REF);
+            if (!snap.exists()) {
+                await setDoc(LOCKDOWN_REF, {
+                    lockdown: false,
+                    unlockPassword: 'admin123'
+                });
+            } else {
+                const data = snap.data();
+                lockdownPassword = data.unlockPassword || 'admin123';
+                isLockdownActive = data.lockdown === true;
+                updateLockdownUI();
+            }
+            // Listen for real-time changes
+            if (lockdownUnsub) lockdownUnsub();
+            lockdownUnsub = onSnapshot(LOCKDOWN_REF, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    lockdownPassword = data.unlockPassword || 'admin123';
+                    isLockdownActive = data.lockdown === true;
+                    updateLockdownUI();
+                    // Update admin badge in the admin panel
+                    const badge = document.getElementById('lockdown-status-badge');
+                    if (badge) {
+                        if (isLockdownActive) {
+                            badge.textContent = '● Active';
+                            badge.className = 'lockdown-status-badge active';
+                        } else {
+                            badge.textContent = '● Inactive';
+                            badge.className = 'lockdown-status-badge inactive';
+                        }
+                    }
+                    const toggleBtn = document.getElementById('admin-lockdown-toggle');
+                    if (toggleBtn) {
+                        toggleBtn.textContent = isLockdownActive ? '🔓 Deactivate Lockdown' : '🔒 Activate Lockdown';
+                        toggleBtn.className = isLockdownActive ? 'btn btn-cyan btn-sm' : 'btn btn-danger btn-sm';
+                    }
+                }
+            });
+        }
+
+        function updateLockdownUI() {
+            const overlay = document.getElementById('lockdown-overlay');
+            const mainContent = document.getElementById('view-main-app');
+            const authViewEl = document.getElementById('view-auth');
+
+            if (isLockdownActive) {
+                overlay.classList.add('show');
+                // Hide main app and auth behind the overlay
+                if (mainContent) mainContent.style.display = 'none';
+                if (authViewEl) authViewEl.style.display = 'none';
+                if (bottomNav) bottomNav.style.display = 'none';
+                // Focus the password input
+                const input = document.getElementById('lockdown-password-input');
+                if (input) setTimeout(() => input.focus(), 100);
+                // Clear error
+                document.getElementById('lockdown-error-msg').classList.remove('show');
+            } else {
+                overlay.classList.remove('show');
+                // Restore visibility based on auth state
+                if (currentUser) {
+                    if (mainContent) mainContent.style.display = 'block';
+                    if (bottomNav) bottomNav.style.display = 'flex';
+                    if (authViewEl) authViewEl.style.display = 'none';
+                } else {
+                    if (mainContent) mainContent.style.display = 'none';
+                    if (bottomNav) bottomNav.style.display = 'none';
+                    if (authViewEl) authViewEl.style.display = 'flex';
+                }
+            }
+        }
+
+        // Handle unlock attempt from overlay
+        document.getElementById('lockdown-unlock-btn').addEventListener('click', async () => {
+            const input = document.getElementById('lockdown-password-input');
+            const entered = input.value;
+            const errorEl = document.getElementById('lockdown-error-msg');
+
+            if (entered === lockdownPassword) {
+                // Correct — deactivate lockdown
+                await setDoc(LOCKDOWN_REF, {
+                    lockdown: false,
+                    unlockPassword: lockdownPassword
+                }, { merge: true });
+                showToast('🔓 System unlocked!', 'success');
+                errorEl.classList.remove('show');
+                input.value = '';
+            } else {
+                errorEl.classList.add('show');
+                input.value = '';
+                input.focus();
+                showToast('❌ Incorrect password.', 'error');
+            }
+        });
+
+        // Allow Enter key on password input
+        document.getElementById('lockdown-password-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('lockdown-unlock-btn').click();
+            }
+        });
+
+        // Admin controls for lockdown
+        document.getElementById('admin-lockdown-toggle').addEventListener('click', withLoading('admin-lockdown-toggle',
+            async () => {
+                if (!isCurrentUserAdmin()) {
+                    showToast('Only full admins can toggle lockdown.', 'error');
+                    return;
+                }
+                const newState = !isLockdownActive;
+                await setDoc(LOCKDOWN_REF, {
+                    lockdown: newState,
+                    unlockPassword: lockdownPassword
+                }, { merge: true });
+                showToast(newState ? '🔒 Lockdown activated!' : '🔓 Lockdown deactivated.', 'success');
+                await logActivity(`Lockdown ${newState ? 'activated' : 'deactivated'}`);
+            }));
+
+        document.getElementById('admin-lockdown-set-password').addEventListener('click', withLoading(
+            'admin-lockdown-set-password', async () => {
+                if (!isCurrentUserAdmin()) {
+                    showToast('Only full admins can change the lockdown password.', 'error');
+                    return;
+                }
+                const input = document.getElementById('admin-lockdown-password');
+                const newPass = input.value.trim();
+                if (!newPass || newPass.length < 4) {
+                    showToast('Password must be at least 4 characters.', 'error');
+                    return;
+                }
+                lockdownPassword = newPass;
+                await setDoc(LOCKDOWN_REF, {
+                    unlockPassword: newPass
+                }, { merge: true });
+                showToast('✅ Lockdown password updated!', 'success');
+                await logActivity('Updated lockdown password');
+                document.getElementById('lockdown-status-msg').textContent = '✅ Password updated.';
+                setTimeout(() => { document.getElementById('lockdown-status-msg').textContent = ''; }, 3000);
+            }));
+
         // ─── Auth ───
         onAuthStateChanged(auth, async (user) => {
             loadingOverlay.style.display = 'flex';
             if (user) {
                 currentUser = user;
-                authView.style.display = 'none';
-                mainApp.style.display = 'block';
-                bottomNav.style.display = 'flex';
+                // Only show main app if not in lockdown
+                if (!isLockdownActive) {
+                    authView.style.display = 'none';
+                    mainApp.style.display = 'block';
+                    bottomNav.style.display = 'flex';
+                } else {
+                    authView.style.display = 'none';
+                    mainApp.style.display = 'none';
+                    bottomNav.style.display = 'none';
+                }
                 await setupProfileSync(user.uid);
                 startRealtimeFeeds();
                 loadUserList();
@@ -5977,9 +6347,15 @@
                 gameIntervals = [];
                 if (shopEffectsInterval) { clearInterval(shopEffectsInterval);
                     shopEffectsInterval = null; }
-                authView.style.display = 'flex';
-                mainApp.style.display = 'none';
-                bottomNav.style.display = 'none';
+                if (!isLockdownActive) {
+                    authView.style.display = 'flex';
+                    mainApp.style.display = 'none';
+                    bottomNav.style.display = 'none';
+                } else {
+                    authView.style.display = 'none';
+                    mainApp.style.display = 'none';
+                    bottomNav.style.display = 'none';
+                }
                 loadingOverlay.style.display = 'none';
                 document.querySelector('.nav-item.admin-nav').style.display = 'none';
                 document.getElementById('owner-only-section').style.display = 'none';
@@ -7248,14 +7624,13 @@
                         let mediaPlayHTML = '';
                         const noteText = note;
 
-                        // --- FIXED: Audio URL extraction with proper type detection ---
+                        // Audio URL extraction with proper type detection
                         const ytMatch = noteText.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
                         const spMatch = noteText.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
                         const vidMatch = noteText.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
                         const audMatch = noteText.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
                         const scMatch = noteText.match(/soundcloud\.com\/[^\s]+/);
 
-                        // Build the media play button based on detected type
                         let mediaBtnHTML = '';
                         if (ytMatch) {
                             const videoId = ytMatch[1];
@@ -7278,7 +7653,6 @@
 
                         let musicHTML = '';
                         if (musicUrl) {
-                            // For musicUrl we use the dedicated music icon
                             musicHTML =
                                 `<span class="note-music-icon" data-music="${encodeURIComponent(musicUrl)}" title="🎵 Play music">🎵</span>`;
                         } else if (mediaBtnHTML) {
@@ -7300,7 +7674,6 @@
                             ${audioNoteHTML}
                         `;
                         bubble.addEventListener('click', (e) => {
-                            // Don't open modal if clicking on interactive elements
                             if (e.target.closest('.note-music-icon') || e.target.closest(
                                 '.note-media-play') || e.target.closest('[data-audio-note]')) return;
                             const modal = document.getElementById('note-detail-modal');
@@ -7313,7 +7686,6 @@
                             const audioContainer = document.getElementById('note-audio-section-container');
                             audioContainer.innerHTML = '';
 
-                            // --- FIXED: Build the appropriate player in modal ---
                             if (u.noteAudioUrl) {
                                 buildAudioNotePlayer(audioContainer, u.noteAudioUrl, u.username);
                             }
@@ -7357,7 +7729,6 @@
                             }
                         });
 
-                        // --- FIXED: Audio note indicator click ---
                         const audioNoteEl = bubble.querySelector('[data-audio-note]');
                         if (audioNoteEl) {
                             audioNoteEl.addEventListener('click', (e) => {
@@ -7378,7 +7749,6 @@
 
                         fragment.appendChild(bubble);
 
-                        // --- FIXED: Music icon click (opens music popup) ---
                         const musicIcon = bubble.querySelector('.note-music-icon');
                         if (musicIcon) {
                             musicIcon.addEventListener('click', (e) => {
@@ -7388,7 +7758,6 @@
                             });
                         }
 
-                        // --- FIXED: Media play button click (opens glass audio player) ---
                         const mediaPlayBtn = bubble.querySelector('.note-media-play');
                         if (mediaPlayBtn) {
                             mediaPlayBtn.addEventListener('click', (e) => {
@@ -7412,17 +7781,14 @@
             });
         }
 
-        // ─── Build Audio Note Player (for note detail modal) ───
-        // FIXED: Now properly handles YouTube/Spotify/SoundCloud via iframes, not audio elements
+        // ─── Build Audio Note Player ───
         function buildAudioNotePlayer(container, url, username) {
-            // Detect URL type
             const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
             const spMatch = url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
             const scMatch = url.match(/soundcloud\.com\/[^\s]+/);
             const audMatch = url.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
             const vidMatch = url.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
 
-            // For YouTube, Spotify, SoundCloud: use iframe embeds with autoplay
             if (ytMatch) {
                 const vid = ytMatch[1];
                 container.innerHTML = `
@@ -7470,7 +7836,6 @@
                 return;
             }
 
-            // For video URLs: use video element
             if (vidMatch) {
                 container.innerHTML = `
                     <div class="note-audio-section">
@@ -7494,7 +7859,6 @@
                 return;
             }
 
-            // For direct audio URLs: use HTML5 audio with visualizer
             if (audMatch) {
                 const audioUrl = audMatch[0];
                 container.innerHTML = `
@@ -7655,7 +8019,6 @@
                 return;
             }
 
-            // Fallback: show as a link
             container.innerHTML = `
                 <div class="note-audio-section">
                     <div class="audio-label">
@@ -7669,8 +8032,7 @@
             `;
         }
 
-        // ─── Glass Audio Player (for note bubbles) ───
-        // FIXED: Now handles YouTube, Spotify, SoundCloud via iframes, and direct audio via HTML5
+        // ─── Glass Audio Player ───
         let glassAudioContext = null;
         let glassAudioAnalyser = null;
         let glassAudioDataArray = null;
@@ -7685,14 +8047,12 @@
             document.getElementById('note-detail-name').textContent = `@${username || 'user'}`;
             document.getElementById('note-detail-text').textContent = `🎧 Playing: ${title}`;
 
-            // Detect URL type if not explicitly provided
             const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
             const spMatch = url.match(/spotify\.com\/track\/([a-zA-Z0-9]+)/);
             const scMatch = url.match(/soundcloud\.com\/[^\s]+/);
             const audMatch = url.match(/https?:\/\/[^\s]+\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i);
             const vidMatch = url.match(/https?:\/\/[^\s]+\.(mp4|mov|webm|avi|mkv)(\?.*)?$/i);
 
-            // For YouTube, Spotify, SoundCloud: use iframe embeds
             if (ytMatch) {
                 const vid = ytMatch[1];
                 embedContainer.innerHTML = `
@@ -7728,7 +8088,6 @@
                 return;
             }
 
-            // For video: use video element
             if (vidMatch) {
                 embedContainer.innerHTML = `
                     <video controls autoplay style="width:100%;max-height:360px;object-fit:contain;background:#000;border-radius:var(--radius-sm);">
@@ -7748,7 +8107,6 @@
                 return;
             }
 
-            // For direct audio: use glass audio player with visualizer
             if (audMatch || type === 'audio') {
                 const audioUrl = audMatch ? audMatch[0] : url;
                 embedContainer.innerHTML = `
@@ -7893,7 +8251,6 @@
                 return;
             }
 
-            // Fallback: show as a link
             embedContainer.innerHTML = `
                 <div style="padding:12px;background:rgba(0,0,0,0.2);border-radius:var(--radius-sm);word-break:break-all;font-size:10px;color:var(--text-secondary);">
                     <a href="${url}" target="_blank" style="color:var(--neon-cyan);">${url}</a>
@@ -9916,7 +10273,6 @@
             loadGame(gameId);
         }
 
-        // ===== FIXED FUNCTION: renderActiveGames (improved event listener) =====
         function renderActiveGames(snap) {
             const container = document.getElementById('active-games-list');
             if (!container) {
@@ -9952,13 +10308,11 @@
             });
         }
 
-        // ===== FIXED FUNCTION: loadGame (added safety and error handling) =====
         function loadGame(gameId) {
             if (!currentUser) {
                 showToast('You must be logged in to play.', 'error');
                 return;
             }
-            // Ensure the Games tab is active and the container is visible
             switchTab('tab-games');
             const gamesList = document.getElementById('games-list');
             const gameContainer = document.getElementById('game-container');
@@ -9969,7 +10323,6 @@
                 showToast('Game container not found.', 'error');
                 return;
             }
-            // Clear previous content and show loading
             const content = document.getElementById('game-content');
             if (content) {
                 content.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);">Loading game...</div>';
@@ -9983,7 +10336,6 @@
             });
         }
 
-        // ===== FIXED FUNCTION: renderMultiplayerGame (async + error handling) =====
         async function renderMultiplayerGame(gameId) {
             const container = document.getElementById('game-content');
             if (!container) return;
@@ -10015,7 +10367,6 @@
                 const statusText = isMyTurn ? 'Your turn' : "Waiting for opponent...";
 
                 if (gameType === 'chess') {
-                    // Ensure Chess library is loaded
                     if (typeof Chess === 'undefined') {
                         container.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:20px;">Chess library not loaded. Please refresh.</div>';
                         return;
@@ -10028,7 +10379,6 @@
                     return;
                 }
 
-                // Set up real-time listener for game updates
                 if (activeGameListeners[gameId]) activeGameListeners[gameId]();
                 activeGameListeners[gameId] = onSnapshot(doc(db, 'active_games', gameId), (snap) => {
                     if (!snap.exists()) return;
@@ -10082,7 +10432,6 @@
             snake: () => renderSnake()
         };
 
-        // ─── Bet Selector UI ───
         function renderBetSelector(gameName, defaultBet = 10, minBet = 1, maxBet = 1000) {
             return `
                 <div class="bet-selector-wrap" data-game="${gameName}">
@@ -10118,7 +10467,6 @@
             balanceEl.textContent = Math.min(balance, MAX_COINS);
         }
 
-        // ─── Chess (vs CPU) with betting ───
         function renderChessWithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
@@ -10194,7 +10542,6 @@
                 }
             }
 
-            // 🆕 Add "New Game" button for local chess
             const statusEl = document.getElementById('chess-status');
             if (statusEl && !container.querySelector('.chess-new-game-btn')) {
                 const resetButton = document.createElement('button');
@@ -10421,7 +10768,6 @@
             renderBoard();
         }
 
-        // ─── Connect4 (vs CPU) with betting ───
         function renderConnect4WithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
@@ -10644,7 +10990,6 @@
             renderBoard();
         }
 
-        // ─── Tic-Tac-Toe (vs CPU) with betting ───
         function renderTicTacToeWithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
@@ -10935,7 +11280,6 @@
             renderBoardUI();
         }
 
-        // ─── Hangman with betting ───
         function renderHangmanWithDifficulty() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
@@ -11112,7 +11456,6 @@
             });
         }
 
-        // ─── Battleship with betting ───
         function renderBattleship() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
@@ -11226,7 +11569,6 @@
                 `Ships left: ${ships.length} • Shots: 0 • Hits: 0/${totalShipCells}`;
         }
 
-        // ─── Coin Clicker (no betting, just fun) ───
         function renderCoinClicker() {
             const container = document.getElementById('game-content');
             let clickScore = 0;
@@ -11278,7 +11620,6 @@
             });
         }
 
-        // ─── Snake with betting ───
         function renderSnake() {
             const container = document.getElementById('game-content');
             container.innerHTML = `
@@ -13260,7 +13601,21 @@
             loadAdminPanel();
         }));
 
-        console.log('🚀 School Social – Cyberpunk Command Center Edition (UPGRADED)');
+        // ─── INIT ───
+        (async function init() {
+            await initLockdown();
+            console.log('🚀 School Social – Cyberpunk Command Center Edition (LOCKDOWN INTEGRATED)');
+            console.log('🔒 Global Lockdown: Active across all devices via Firestore');
+            console.log('🎵 Audio Engine: YouTube/Spotify extraction with glassmorphic player');
+            console.log('🖼️ Notes Tray: Horizontal swipe gallery with ultra-premium glass');
+            console.log('👑 Admin Panel: Spacious, organized, with live activity ticker');
+            console.log('💰 Betting System: All games now have wagering with coin rewards');
+            console.log('💬 Chat: Search, timestamps, reply/quote, online status, delete messages');
+            console.log('♟️ Chess: Fixed board rendering and alignment');
+        })();
+
+        console.log('🚀 School Social – Cyberpunk Command Center Edition (LOCKDOWN INTEGRATED)');
+        console.log('🔒 Global Lockdown: Active across all devices via Firestore');
         console.log('🎵 Audio Engine: YouTube/Spotify extraction with glassmorphic player');
         console.log('🖼️ Notes Tray: Horizontal swipe gallery with ultra-premium glass');
         console.log('👑 Admin Panel: Spacious, organized, with live activity ticker');
