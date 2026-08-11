@@ -4964,6 +4964,201 @@
         .mine-cell.open { background: rgba(255,255,255,.04); cursor: default; }
         .mine-cell.flag { background: rgba(255, 215, 0, .14); }
 
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+               UI POLISH PASS — buttons, icons, grids
+               ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+        .btn {
+            gap: 6px;
+            letter-spacing: 0.4px;
+            border-radius: var(--radius-md);
+        }
+        .btn > .bi { font-size: 1.15em; line-height: 1; }
+        .btn-sm { border-radius: var(--radius-sm); padding: 0 12px; }
+
+        /* Any row of buttons gets consistent breathing room instead of bunching */
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .btn-row .btn { flex: 1 1 auto; min-width: 96px; }
+        .btn-row.tight .btn { flex: 0 0 auto; min-width: 0; }
+        .invite-actions, .lobby-actions, #challenge-buttons {
+            display: flex !important;
+            flex-wrap: wrap;
+            gap: 8px !important;
+        }
+        .lobby-actions .btn { flex: 1 1 auto; min-width: 104px; padding: 9px 14px !important; font-size: 10px !important; }
+        #challenge-buttons .btn { min-width: 104px; }
+
+        /* Arcade grid: bigger, calmer icon tiles */
+        .games-grid {
+            grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+            gap: 10px;
+        }
+        .game-card {
+            padding: 14px 8px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            border-radius: var(--radius-lg);
+        }
+        .game-card .game-icon {
+            font-size: 24px;
+            margin-bottom: 0;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: linear-gradient(140deg, rgba(34, 229, 255, 0.14), rgba(168, 85, 247, 0.14));
+            border: 1px solid var(--border-glow);
+        }
+        .game-card .game-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+        }
+        .game-back-btn { border-radius: var(--radius-md); }
+
+        /* Bottom nav readability */
+        .nav-item .nav-label { font-size: 8px !important; letter-spacing: 0.2px; }
+        .nav-item .nav-icon { font-size: 19px !important; }
+
+        /* ── Lobby arena (playable Admin Abuse games) ── */
+        .arena-wrap {
+            border: 1px solid var(--border-glow);
+            background: rgba(34, 229, 255, 0.04);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .arena-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .arena-title { font-size: 12px; font-weight: 900; color: var(--text-primary); }
+        .arena-timer {
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--neon-gold);
+            font-variant-numeric: tabular-nums;
+        }
+        .arena-stage {
+            position: relative;
+            height: 190px;
+            border-radius: var(--radius-md);
+            background: radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.16), rgba(4, 2, 10, 0.9));
+            border: 1px solid var(--border-soft);
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        .arena-target {
+            position: absolute;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            border: 1px solid var(--border-glow);
+            background: rgba(255, 255, 255, 0.06);
+            transition: transform 0.12s ease;
+        }
+        .arena-target:active { transform: scale(0.88); }
+        .arena-target.bad { border-color: rgba(255, 47, 142, 0.5); }
+        .arena-idle {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-muted);
+            padding: 12px;
+        }
+        .arena-score-list { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+        .arena-score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 10px;
+            padding: 5px 9px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-input);
+        }
+        .arena-score-row.me { border: 1px solid var(--border-glow); color: var(--text-primary); }
+        .arena-score-row .pts { font-weight: 900; color: var(--neon-gold); }
+
+        /* ── Reports / tickets ── */
+        .report-reason-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .report-reason {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .report-reason:hover { border-color: var(--neon-cyan); }
+        .report-reason.selected {
+            border-color: var(--neon-pink);
+            background: rgba(255, 47, 142, 0.1);
+            color: var(--text-primary);
+        }
+        .ticket-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            margin-bottom: 8px;
+        }
+        .ticket-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .ticket-id { font-size: 8px; color: var(--text-muted); letter-spacing: 0.6px; }
+        .ticket-status {
+            font-size: 8px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            border: 1px solid var(--border-soft);
+        }
+        .ticket-status.open { color: var(--neon-cyan); border-color: rgba(34, 229, 255, 0.35); }
+        .ticket-status.reviewing { color: var(--neon-gold); border-color: rgba(255, 215, 0, 0.35); }
+        .ticket-status.resolved { color: #22c55e; border-color: rgba(34, 197, 94, 0.35); }
+        .ticket-status.rejected { color: var(--neon-pink); border-color: rgba(255, 47, 142, 0.35); }
+        .ticket-body { font-size: 10px; color: var(--text-secondary); margin-top: 6px; line-height: 1.45; }
+        .ticket-reply {
+            margin-top: 6px;
+            font-size: 10px;
+            color: var(--text-primary);
+            border-left: 2px solid var(--neon-cyan);
+            padding-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -5506,6 +5701,8 @@
                     <div id="challenge-buttons" style="display:none; margin-top:6px; gap:6px; flex-wrap:wrap; justify-content:center;">
                         <button id="btn-challenge-chess" class="btn btn-secondary btn-sm" style="width:auto;">♟️ Chess</button>
                         <button id="btn-challenge-connect4" class="btn btn-secondary btn-sm" style="width:auto;">🟡 Connect4</button>
+                        <button id="btn-challenge-tictactoe" class="btn btn-secondary btn-sm" style="width:auto;">❌ Tic-Tac-Toe</button>
+                        <button id="btn-report-user" class="btn btn-danger btn-sm" style="width:auto;"><span class="bi">🚩</span> Report</button>
                     </div>
                     <div style="font-size:9px;color:var(--text-muted);margin-top:2px;font-weight:600;" id="profile-online-status">🟢 Online</div>
                     <div id="xp-boost-indicator-container" style="margin-top:2px;"></div>
@@ -5588,6 +5785,13 @@
                     <button id="btn-save-music" class="btn btn-secondary btn-block" style="padding:9px;">Add Music to Note</button>
                     <div id="music-status-msg" style="font-size:10px;color:var(--text-muted);text-align:center;"></div>
                     <div style="font-size:8px;color:var(--text-muted);">A music icon will appear on your note bubble. Others can click it to play.</div>
+                </div>
+
+                <div class="glass-card" style="display:flex;flex-direction:column;gap:8px;" id="my-reports-card">
+                    <div class="section-title">🚩 My Report Tickets</div>
+                    <div style="font-size:9px;color:var(--text-muted);">Reports you send go straight to the moderation admin panel. Replies from staff show up here.</div>
+                    <button id="btn-open-report" class="btn btn-secondary btn-block" style="padding:9px;"><span class="bi">🚩</span> Report a user</button>
+                    <div id="my-reports-list"></div>
                 </div>
 
                 <div class="glass-card" style="display:flex;flex-direction:column;gap:8px;">
@@ -5941,6 +6145,23 @@
     </div>
 
     <!-- GAME CHALLENGE MODAL -->
+    <div class="modal-overlay" id="report-modal">
+        <div class="modal-box">
+            <button class="modal-close" id="report-close">✕</button>
+            <div class="modal-title">🚩 Report a user</div>
+            <div id="report-target-line" style="font-size:10px;color:var(--text-muted);margin-bottom:8px;"></div>
+            <input type="text" id="report-username-input" class="input" placeholder="Username to report (without @)" style="margin-bottom:8px;" />
+            <div style="font-size:9px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Reason</div>
+            <div class="report-reason-grid" id="report-reason-grid"></div>
+            <textarea id="report-details" class="input" rows="3" placeholder="What happened? Add details, links or post text (max 1000)" maxlength="1000" style="margin-bottom:8px;"></textarea>
+            <div class="btn-row">
+                <button id="report-submit" class="btn btn-primary" style="flex:1;"><span class="bi">📨</span> Send report</button>
+                <button id="report-cancel" class="btn btn-secondary" style="flex:1;">Cancel</button>
+            </div>
+            <div id="report-status" style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:8px;"></div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="game-challenge-modal">
         <div class="modal-box game-challenge-modal">
             <button class="modal-close" id="game-challenge-close">✕</button>
@@ -6020,6 +6241,7 @@
             getFunctions,
             httpsCallable
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-functions.js";
+        import { Chess } from "https://cdn.jsdelivr.net/npm/chess.js@1.4.0/+esm";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAtYQa0nVUrzdBNoYbSojunbq-yk9QZKcw",
@@ -6592,6 +6814,7 @@
                 loadGlobalMultiplierState();
                 loadSystemAlert();
                 initAdminAbuse();
+                initReports();
                 startTradeListeners();
                 refreshAbuseAndShopUI();
                 loadingOverlay.style.display = 'none';
@@ -7632,7 +7855,9 @@
                         </div>
                     </div>
                     <button class="btn btn-secondary follow-btn ${isFollowing ? 'following' : ''}" data-uid="${u.uid}">${isFollowing ? '✅ Following' : '➕ Follow'}</button>
+                    ${u.uid !== currentUser.uid ? `<button class="btn btn-secondary btn-sm" title="Report user" data-report-uid="${u.uid}" data-report-name="${u.username || ''}" style="min-width:38px;padding:0 10px;">🚩</button>` : ''}
                 `;
+
                 container.appendChild(item);
                 item.querySelector('.user-info').addEventListener('click', () => { viewUserProfile(u.uid); });
                 const followBtn = item.querySelector('.btn');
@@ -10556,7 +10781,10 @@
             if (gameType === 'chess') {
                 board = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
             } else if (gameType === 'connect4') {
-                board = Array.from({ length: 6 }, () => Array(7).fill(null));
+                // Firestore cannot store nested arrays — keep the grid as a flat 42-char string.
+                board = '.'.repeat(42);
+            } else if (gameType === 'tictactoe') {
+                board = '.'.repeat(9);
             }
             await setDoc(gameRef, {
                 gameType,
@@ -10666,13 +10894,11 @@
                 const statusText = isMyTurn ? 'Your turn' : "Waiting for opponent...";
 
                 if (gameType === 'chess') {
-                    if (typeof Chess === 'undefined') {
-                        container.innerHTML = '<div style="color:var(--text-secondary);text-align:center;padding:20px;">Chess library not loaded. Please refresh.</div>';
-                        return;
-                    }
                     renderChessMultiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText, container);
                 } else if (gameType === 'connect4') {
                     renderConnect4Multiplayer(gameId, board || null, currentTurn, players, opponentName, isMyTurn, statusText, container);
+                } else if (gameType === 'tictactoe') {
+                    renderTicTacToeMultiplayer(gameId, board || null, currentTurn, players, opponentName, isMyTurn, statusText, container);
                 } else {
                     container.innerHTML = `<div style="color:var(--text-secondary);text-align:center;padding:20px;">Game type "${gameType}" not supported for multiplayer.</div>`;
                     return;
@@ -10701,6 +10927,8 @@
                             renderChessMultiplayer(gameId, updated.board, updated.currentTurn, players, opponentName, newIsMyTurn, newStatusText, container);
                         } else if (gameType === 'connect4') {
                             renderConnect4Multiplayer(gameId, updated.board, updated.currentTurn, players, opponentName, newIsMyTurn, newStatusText, container);
+                        } else if (gameType === 'tictactoe') {
+                            renderTicTacToeMultiplayer(gameId, updated.board, updated.currentTurn, players, opponentName, newIsMyTurn, newStatusText, container);
                         }
                     }
                 });
@@ -10716,7 +10944,8 @@
             const container = document.getElementById('challenge-buttons');
             const opponentUid = container.dataset.targetUid;
             if (!opponentUid) { showToast('No user selected.', 'error'); return; }
-            const gameType = target.id === 'btn-challenge-chess' ? 'chess' : 'connect4';
+            const gameType = target.id === 'btn-challenge-chess' ? 'chess'
+                : target.id === 'btn-challenge-tictactoe' ? 'tictactoe' : 'connect4';
             sendGameInvite(opponentUid, gameType);
         });
 
@@ -14155,6 +14384,7 @@
                 <div id="lobby-room-meta" style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">Connecting…</div>
                 <div class="abuse-banner show"><span>🌧️</span><span style="flex:1;">Stay in the session — exclusive items &amp; coins drop while Admin Abuse is live.</span></div>
                 ${isCurrentUserAdmin() ? '<button id="btn-force-rain" class="btn btn-primary btn-block" style="padding:9px;margin-bottom:8px;">🌧️ Drop Item &amp; Coin Rain Now</button>' : ''}
+                <div id="lobby-arena-mount"></div>
                 <div class="section-title" style="margin-top:4px;">💬 Lobby Chat</div>
                 <div id="lobby-chat-list" style="max-height:150px;overflow-y:auto;font-size:10px;color:var(--text-secondary);"></div>
                 <div class="flex-row" style="margin-top:6px;">
@@ -14216,9 +14446,11 @@
 
             startRainListener(lobbyId);
             startHostRain(lobbyId);
+            startLobbyArena(lobbyId);
         }
 
         function closeLobbyRoom() {
+            stopLobbyArena();
             joinedLobbyId = null;
             if (lobbyRoomUnsub) { lobbyRoomUnsub(); lobbyRoomUnsub = null; }
             if (lobbyChatUnsub) { lobbyChatUnsub(); lobbyChatUnsub = null; }
@@ -15132,6 +15364,677 @@
         console.log('💰 Betting System: All games now have wagering with coin rewards');
         console.log('💬 Chat: Search, timestamps, reply/quote, online status, delete messages');
         console.log('♟️ Chess: Fixed board rendering and alignment');
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  MULTIPLAYER BOARD GAMES — real turn-based play over Firestore
+        //  Boards are stored as flat strings because Firestore rejects
+        //  nested arrays.
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const MP_WIN_COINS = 60;
+
+        function mpHeaderHTML(icon, title, opponentName, statusText, isMyTurn) {
+            return `
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;">
+                    <div>
+                        <div style="font-size:12px;font-weight:900;">${icon} ${title}</div>
+                        <div style="font-size:9px;color:var(--text-muted);">vs @${opponentName}</div>
+                    </div>
+                    <div style="font-size:10px;font-weight:900;color:${isMyTurn ? 'var(--neon-cyan)' : 'var(--text-muted)'};">${statusText}</div>
+                </div>`;
+        }
+
+        async function awardMpWinner(gameId, winnerUid) {
+            // Each client only ever writes to its own coin balance.
+            if (!winnerUid || winnerUid !== currentUser?.uid) return;
+            try {
+                await runTransaction(db, async (tx) => {
+                    const gRef = doc(db, 'active_games', gameId);
+                    const gSnap = await tx.get(gRef);
+                    if (!gSnap.exists()) throw new Error('gone');
+                    const g = gSnap.data();
+                    if (g.rewardClaimedBy === winnerUid) throw new Error('claimed');
+                    const uRef = doc(db, 'users', winnerUid);
+                    const uSnap = await tx.get(uRef);
+                    if (!uSnap.exists()) throw new Error('no profile');
+                    tx.update(gRef, { rewardClaimedBy: winnerUid });
+                    tx.update(uRef, { coins: Math.min(MAX_COINS, (uSnap.data().coins || 0) + MP_WIN_COINS) });
+                });
+                showToast(`🏆 You won! +${MP_WIN_COINS} coins`, 'success');
+            } catch (e) { /* already claimed or race — silent */ }
+        }
+
+        async function finishMpGame(gameId, winnerUid) {
+            await updateDoc(doc(db, 'active_games', gameId), {
+                status: 'finished',
+                winner: winnerUid || null,
+                finishedAt: serverTimestamp()
+            });
+            if (winnerUid) awardMpWinner(gameId, winnerUid);
+        }
+
+        // ─── Connect 4 (multiplayer) ───
+        function c4Cells(board) {
+            const flat = (typeof board === 'string' && board.length === 42) ? board : '.'.repeat(42);
+            return flat.split('');
+        }
+
+        function c4CheckWin(cells, mark) {
+            const at = (r, c) => (r < 0 || r > 5 || c < 0 || c > 6) ? null : cells[r * 7 + c];
+            const dirs = [[0, 1], [1, 0], [1, 1], [1, -1]];
+            for (let r = 0; r < 6; r++) {
+                for (let c = 0; c < 7; c++) {
+                    if (at(r, c) !== mark) continue;
+                    for (const [dr, dc] of dirs) {
+                        let n = 1;
+                        while (n < 4 && at(r + dr * n, c + dc * n) === mark) n++;
+                        if (n === 4) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function renderConnect4Multiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText, container) {
+            const cells = c4Cells(board);
+            const myMark = players[0] === currentUser.uid ? '1' : '2';
+            const colorFor = (v) => v === '1' ? 'linear-gradient(135deg,#ffd700,#f7971e)'
+                : v === '2' ? 'linear-gradient(135deg,var(--neon-pink),var(--neon-purple))'
+                : 'rgba(255,255,255,0.04)';
+            let html = mpHeaderHTML('🟡', 'Connect 4', opponentName, statusText, isMyTurn);
+            html += `<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px;">You are ${myMark === '1' ? '🟡 Yellow' : '🟣 Purple'} — tap a column to drop.</div>`;
+            html += '<div id="c4-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:rgba(34,229,255,0.05);border:1px solid var(--border-glow);border-radius:14px;padding:6px;">';
+            for (let r = 0; r < 6; r++) {
+                for (let c = 0; c < 7; c++) {
+                    const v = cells[r * 7 + c];
+                    html += `<div data-col="${c}" style="aspect-ratio:1;border-radius:50%;background:${colorFor(v)};border:1px solid var(--border-soft);cursor:${isMyTurn ? 'pointer' : 'default'};"></div>`;
+                }
+            }
+            html += '</div>';
+            html += '<div class="btn-row" style="margin-top:10px;"><button id="c4-resign" class="btn btn-secondary btn-sm">Resign</button></div>';
+            container.innerHTML = html;
+
+            container.querySelector('#c4-resign').addEventListener('click', async () => {
+                await finishMpGame(gameId, players.find(p => p !== currentUser.uid));
+                showToast('You resigned.', 'info');
+            });
+
+            if (!isMyTurn) return;
+            container.querySelectorAll('#c4-grid [data-col]').forEach(cell => {
+                cell.addEventListener('click', async () => {
+                    const col = parseInt(cell.dataset.col, 10);
+                    let row = -1;
+                    for (let r = 5; r >= 0; r--) { if (cells[r * 7 + col] === '.') { row = r; break; } }
+                    if (row < 0) { showToast('That column is full.', 'error'); return; }
+                    const next = cells.slice();
+                    next[row * 7 + col] = myMark;
+                    const flat = next.join('');
+                    const opponentUid = players.find(p => p !== currentUser.uid);
+                    if (c4CheckWin(next, myMark)) {
+                        await updateDoc(doc(db, 'active_games', gameId), { board: flat });
+                        await finishMpGame(gameId, currentUser.uid);
+                        return;
+                    }
+                    if (!next.includes('.')) {
+                        await updateDoc(doc(db, 'active_games', gameId), { board: flat });
+                        await finishMpGame(gameId, null);
+                        return;
+                    }
+                    await updateDoc(doc(db, 'active_games', gameId), { board: flat, currentTurn: opponentUid });
+                });
+            });
+        }
+
+        // ─── Tic-Tac-Toe (multiplayer) ───
+        function renderTicTacToeMultiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText, container) {
+            const cells = ((typeof board === 'string' && board.length === 9) ? board : '.'.repeat(9)).split('');
+            const myMark = players[0] === currentUser.uid ? 'X' : 'O';
+            const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            let html = mpHeaderHTML('❌', 'Tic-Tac-Toe', opponentName, statusText, isMyTurn);
+            html += `<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px;">You play ${myMark}.</div>`;
+            html += '<div id="ttt-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:260px;margin:0 auto;">';
+            cells.forEach((v, i) => {
+                html += `<div data-i="${i}" style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;border-radius:14px;background:var(--bg-input);border:1px solid var(--border-soft);cursor:${isMyTurn && v === '.' ? 'pointer' : 'default'};color:${v === 'X' ? 'var(--neon-cyan)' : 'var(--neon-pink)'};">${v === '.' ? '' : v}</div>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+            if (!isMyTurn) return;
+            container.querySelectorAll('#ttt-grid [data-i]').forEach(cell => {
+                cell.addEventListener('click', async () => {
+                    const i = parseInt(cell.dataset.i, 10);
+                    if (cells[i] !== '.') return;
+                    const next = cells.slice();
+                    next[i] = myMark;
+                    const flat = next.join('');
+                    const opponentUid = players.find(p => p !== currentUser.uid);
+                    const won = LINES.some(l => l.every(k => next[k] === myMark));
+                    if (won) {
+                        await updateDoc(doc(db, 'active_games', gameId), { board: flat });
+                        await finishMpGame(gameId, currentUser.uid);
+                        return;
+                    }
+                    if (!next.includes('.')) {
+                        await updateDoc(doc(db, 'active_games', gameId), { board: flat });
+                        await finishMpGame(gameId, null);
+                        return;
+                    }
+                    await updateDoc(doc(db, 'active_games', gameId), { board: flat, currentTurn: opponentUid });
+                });
+            });
+        }
+
+        // ─── Chess (multiplayer, real rules via chess.js) ───
+        const CHESS_GLYPHS = {
+            p: '♟', n: '♞', b: '♝', r: '♜', q: '♛', k: '♚',
+            P: '♙', N: '♘', B: '♗', R: '♖', Q: '♕', K: '♔'
+        };
+        let mpChessSelected = null;
+
+        function renderChessMultiplayer(gameId, board, currentTurn, players, opponentName, isMyTurn, statusText, container) {
+            const fen = (typeof board === 'string' && board.includes('/'))
+                ? board : 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+            let chess;
+            try { chess = new Chess(fen); } catch (e) { chess = new Chess(); }
+            const iAmWhite = players[0] === currentUser.uid;
+            const myColor = iAmWhite ? 'w' : 'b';
+            const myTurn = chess.turn() === myColor && isMyTurn;
+            const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            const ranks = iAmWhite ? [8, 7, 6, 5, 4, 3, 2, 1] : [1, 2, 3, 4, 5, 6, 7, 8];
+            const cols = iAmWhite ? files : files.slice().reverse();
+            const legal = mpChessSelected
+                ? chess.moves({ square: mpChessSelected, verbose: true }).map(m => m.to) : [];
+
+            let html = mpHeaderHTML('♟️', 'Chess', opponentName, chess.isCheck() ? 'Check!' : statusText, myTurn);
+            html += `<div style="font-size:9px;color:var(--text-muted);margin-bottom:6px;">You play ${iAmWhite ? 'White' : 'Black'}.</div>`;
+            html += '<div id="mpchess-board" style="display:grid;grid-template-columns:repeat(8,1fr);border:1px solid var(--border-glow);border-radius:12px;overflow:hidden;max-width:340px;margin:0 auto;">';
+            ranks.forEach((rank, ri) => {
+                cols.forEach((file, ci) => {
+                    const sq = file + rank;
+                    const piece = chess.get(sq);
+                    const dark = (ri + ci) % 2 === 1;
+                    const sel = mpChessSelected === sq;
+                    const target = legal.includes(sq);
+                    const bg = sel ? 'rgba(34,229,255,0.45)'
+                        : target ? 'rgba(255,215,0,0.32)'
+                        : dark ? 'rgba(58,44,92,0.95)' : 'rgba(214,208,232,0.92)';
+                    const glyph = piece ? CHESS_GLYPHS[piece.color === 'w' ? piece.type.toUpperCase() : piece.type] : '';
+                    const color = piece && piece.color === 'w' ? '#ffffff' : '#0b0713';
+                    html += `<div data-sq="${sq}" style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:23px;line-height:1;background:${bg};color:${color};text-shadow:0 1px 2px rgba(0,0,0,.45);cursor:${myTurn ? 'pointer' : 'default'};">${glyph}</div>`;
+                });
+            });
+            html += '</div>';
+            html += '<div class="btn-row" style="margin-top:10px;"><button id="mpchess-resign" class="btn btn-secondary btn-sm">Resign</button><button id="mpchess-clear" class="btn btn-secondary btn-sm">Clear selection</button></div>';
+            container.innerHTML = html;
+
+            container.querySelector('#mpchess-clear').addEventListener('click', () => {
+                mpChessSelected = null;
+                renderChessMultiplayer(gameId, fen, currentTurn, players, opponentName, isMyTurn, statusText, container);
+            });
+            container.querySelector('#mpchess-resign').addEventListener('click', async () => {
+                mpChessSelected = null;
+                await finishMpGame(gameId, players.find(p => p !== currentUser.uid));
+                showToast('You resigned.', 'info');
+            });
+
+            if (!myTurn) return;
+            container.querySelectorAll('#mpchess-board [data-sq]').forEach(cell => {
+                cell.addEventListener('click', async () => {
+                    const sq = cell.dataset.sq;
+                    const piece = chess.get(sq);
+                    if (!mpChessSelected) {
+                        if (piece && piece.color === myColor) {
+                            mpChessSelected = sq;
+                            renderChessMultiplayer(gameId, fen, currentTurn, players, opponentName, isMyTurn, statusText, container);
+                        }
+                        return;
+                    }
+                    if (mpChessSelected === sq) {
+                        mpChessSelected = null;
+                        renderChessMultiplayer(gameId, fen, currentTurn, players, opponentName, isMyTurn, statusText, container);
+                        return;
+                    }
+                    let move = null;
+                    try {
+                        move = chess.move({ from: mpChessSelected, to: sq, promotion: 'q' });
+                    } catch (e) { move = null; }
+                    if (!move) {
+                        if (piece && piece.color === myColor) mpChessSelected = sq;
+                        else { showToast('Illegal move.', 'error'); mpChessSelected = null; }
+                        renderChessMultiplayer(gameId, fen, currentTurn, players, opponentName, isMyTurn, statusText, container);
+                        return;
+                    }
+                    mpChessSelected = null;
+                    const nextFen = chess.fen();
+                    const opponentUid = players.find(p => p !== currentUser.uid);
+                    await updateDoc(doc(db, 'active_games', gameId), {
+                        board: nextFen,
+                        currentTurn: opponentUid,
+                        lastMove: `${move.from}${move.to}`
+                    });
+                    if (chess.isCheckmate()) await finishMpGame(gameId, currentUser.uid);
+                    else if (chess.isDraw() || chess.isStalemate() || chess.isInsufficientMaterial()) await finishMpGame(gameId, null);
+                });
+            });
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  LOBBY ARENA — the Admin Abuse lobbies are now actually playable.
+        //  Every joined player plays the same 30s round; the shared round doc
+        //  lives at custom_lobbies/{id}/arena/current and keeps live scores.
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const ARENA_MODES = {
+            'coin-storm': { label: '🪙 Coin Storm', spawnMs: 700, life: 1400, good: ['🪙', '💰'], bad: ['💣'], hit: 1, miss: -2, help: 'Tap coins fast. Bombs cost you points.' },
+            'neon-tag': { label: '⚡ Neon Tag', spawnMs: 620, life: 1000, good: ['⚡', '💠'], bad: ['🌀'], hit: 2, miss: -1, help: 'Tag the neon sparks before they vanish.' },
+            'chaos-royale': { label: '🔥 Chaos Royale', spawnMs: 520, life: 1200, good: ['🔥', '👑', '💎'], bad: ['💀', '💣'], hit: 2, miss: -3, help: 'Grab loot, dodge skulls. Pure chaos.' },
+            'admin-arena': { label: '👑 Admin Arena', spawnMs: 420, life: 850, good: ['👑', '⚔️', '💎'], bad: ['💀'], hit: 3, miss: -4, help: 'Fastest mode. Admin-grade reflexes only.' }
+        };
+        const ARENA_ROUND_MS = 30000;
+        let arenaLobbyId = null;
+        let arenaUnsub = null;
+        let arenaSpawnTimer = null;
+        let arenaTickTimer = null;
+        let arenaFlushTimer = null;
+        let arenaLocalScore = 0;
+        let arenaRound = null;
+        let arenaRunning = false;
+        let arenaClaimed = new Set();
+
+        function arenaRef(lobbyId) { return doc(db, 'custom_lobbies', lobbyId, 'arena', 'current'); }
+
+        function startLobbyArena(lobbyId) {
+            stopLobbyArena();
+            arenaLobbyId = lobbyId;
+            const mount = document.getElementById('lobby-arena-mount');
+            if (!mount) return;
+            const lobby = liveLobbies.find(l => l.id === lobbyId);
+            const mode = ARENA_MODES[lobby?.gameType] ? lobby.gameType : 'chaos-royale';
+            const cfg = ARENA_MODES[mode];
+            mount.innerHTML = `
+                <div class="arena-wrap">
+                    <div class="arena-head">
+                        <span class="arena-title">${cfg.label}</span>
+                        <span class="arena-timer" id="arena-timer">--</span>
+                    </div>
+                    <div class="arena-stage" id="arena-stage">
+                        <div class="arena-idle" id="arena-idle">
+                            <div style="font-size:11px;color:var(--text-secondary);font-weight:800;">${cfg.help}</div>
+                            <div>30 second rounds • everyone in the lobby plays at once</div>
+                            <button id="arena-start" class="btn btn-primary btn-sm"><span class="bi">▶️</span> Start round</button>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:10px;">
+                        <span style="color:var(--text-muted);">Your score</span>
+                        <span id="arena-my-score" style="font-weight:900;color:var(--neon-cyan);">0</span>
+                    </div>
+                    <div class="arena-score-list" id="arena-scores"></div>
+                </div>`;
+            mount.querySelector('#arena-start').addEventListener('click', () => arenaStartRound(lobbyId, mode));
+
+            arenaUnsub = onSnapshot(arenaRef(lobbyId), (snap) => {
+                arenaRound = snap.exists() ? snap.data() : null;
+                arenaSyncFromRound(lobbyId);
+            }, (err) => console.warn('Arena listener error:', err));
+        }
+
+        function stopLobbyArena() {
+            if (arenaUnsub) { arenaUnsub(); arenaUnsub = null; }
+            [arenaSpawnTimer, arenaTickTimer, arenaFlushTimer].forEach(t => { if (t) clearInterval(t); });
+            arenaSpawnTimer = arenaTickTimer = arenaFlushTimer = null;
+            arenaRunning = false;
+            arenaRound = null;
+            arenaLocalScore = 0;
+            arenaLobbyId = null;
+        }
+
+        async function arenaStartRound(lobbyId, mode) {
+            if (!adminAbuseActive) { showToast('Rounds only run while Admin Abuse is live.', 'error'); return; }
+            const now = Date.now();
+            if (arenaRound && arenaRound.endAtMs > now) { showToast('A round is already running.', 'info'); return; }
+            try {
+                await setDoc(arenaRef(lobbyId), {
+                    mode,
+                    startedBy: currentUser.uid,
+                    startAtMs: now + 2000,
+                    endAtMs: now + 2000 + ARENA_ROUND_MS,
+                    scores: {},
+                    prizeClaimedBy: null,
+                    createdAt: serverTimestamp()
+                });
+                showToast('🔥 Round starting — get ready!', 'success');
+            } catch (e) {
+                showToast('Could not start the round.', 'error');
+            }
+        }
+
+        function arenaSyncFromRound(lobbyId) {
+            const stage = document.getElementById('arena-stage');
+            if (!stage) return;
+            arenaRenderScores();
+            const now = Date.now();
+            if (!arenaRound) { arenaShowIdle('Start a round to play.'); return; }
+            if (arenaRound.endAtMs <= now) {
+                if (arenaRunning) arenaEndRound(lobbyId);
+                else arenaShowResults();
+                return;
+            }
+            if (!arenaRunning) arenaBeginLocalRound(lobbyId);
+        }
+
+        function arenaShowIdle(msg) {
+            const stage = document.getElementById('arena-stage');
+            const timer = document.getElementById('arena-timer');
+            if (timer) timer.textContent = '--';
+            if (!stage) return;
+            const lobby = liveLobbies.find(l => l.id === arenaLobbyId);
+            const mode = ARENA_MODES[lobby?.gameType] ? lobby.gameType : 'chaos-royale';
+            stage.innerHTML = `
+                <div class="arena-idle">
+                    <div style="font-size:11px;color:var(--text-secondary);font-weight:800;">${msg}</div>
+                    <div>${ARENA_MODES[mode].help}</div>
+                    <button id="arena-start" class="btn btn-primary btn-sm"><span class="bi">▶️</span> Start round</button>
+                </div>`;
+            const btn = stage.querySelector('#arena-start');
+            if (btn) btn.addEventListener('click', () => arenaStartRound(arenaLobbyId, mode));
+        }
+
+        function arenaBeginLocalRound(lobbyId) {
+            arenaRunning = true;
+            arenaLocalScore = 0;
+            const cfg = ARENA_MODES[arenaRound.mode] || ARENA_MODES['chaos-royale'];
+            const stage = document.getElementById('arena-stage');
+            if (stage) stage.innerHTML = '';
+            arenaUpdateMyScore();
+
+            if (arenaTickTimer) clearInterval(arenaTickTimer);
+            arenaTickTimer = setInterval(() => {
+                const timer = document.getElementById('arena-timer');
+                if (!arenaRound) return;
+                const left = arenaRound.startAtMs - Date.now();
+                const remain = arenaRound.endAtMs - Date.now();
+                if (timer) {
+                    timer.textContent = left > 0
+                        ? `starts in ${Math.ceil(left / 1000)}s`
+                        : `${Math.max(0, Math.ceil(remain / 1000))}s left`;
+                }
+                if (remain <= 0) arenaEndRound(lobbyId);
+            }, 200);
+
+            if (arenaSpawnTimer) clearInterval(arenaSpawnTimer);
+            arenaSpawnTimer = setInterval(() => {
+                if (!arenaRound || Date.now() < arenaRound.startAtMs) return;
+                arenaSpawnTarget(cfg);
+            }, cfg.spawnMs);
+
+            if (arenaFlushTimer) clearInterval(arenaFlushTimer);
+            arenaFlushTimer = setInterval(() => arenaFlushScore(lobbyId), 1500);
+        }
+
+        function arenaSpawnTarget(cfg) {
+            const stage = document.getElementById('arena-stage');
+            if (!stage) return;
+            const isBad = Math.random() < 0.28;
+            const pool = isBad ? cfg.bad : cfg.good;
+            const el = document.createElement('div');
+            el.className = 'arena-target' + (isBad ? ' bad' : '');
+            el.textContent = pool[Math.floor(Math.random() * pool.length)];
+            const w = stage.clientWidth || 260;
+            const h = stage.clientHeight || 190;
+            el.style.left = Math.max(2, Math.random() * (w - 50)) + 'px';
+            el.style.top = Math.max(2, Math.random() * (h - 50)) + 'px';
+            let used = false;
+            el.addEventListener('click', () => {
+                if (used) return;
+                used = true;
+                arenaLocalScore += isBad ? cfg.miss : cfg.hit;
+                arenaUpdateMyScore();
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 120);
+            });
+            stage.appendChild(el);
+            setTimeout(() => el.remove(), cfg.life);
+        }
+
+        function arenaUpdateMyScore() {
+            const el = document.getElementById('arena-my-score');
+            if (el) el.textContent = arenaLocalScore;
+        }
+
+        async function arenaFlushScore(lobbyId) {
+            if (!currentUser || !arenaRound) return;
+            try {
+                await updateDoc(arenaRef(lobbyId), {
+                    [`scores.${currentUser.uid}`]: {
+                        name: currentUserProfile?.username || 'player',
+                        score: arenaLocalScore
+                    }
+                });
+            } catch (e) { /* transient */ }
+        }
+
+        async function arenaEndRound(lobbyId) {
+            if (!arenaRunning) return;
+            arenaRunning = false;
+            [arenaSpawnTimer, arenaTickTimer, arenaFlushTimer].forEach(t => { if (t) clearInterval(t); });
+            arenaSpawnTimer = arenaTickTimer = arenaFlushTimer = null;
+            await arenaFlushScore(lobbyId);
+            arenaShowResults();
+            arenaClaimPrize(lobbyId);
+        }
+
+        function arenaLeaderboard() {
+            const scores = (arenaRound && arenaRound.scores) || {};
+            return Object.entries(scores)
+                .map(([uid, v]) => ({ uid, name: v?.name || 'player', score: v?.score || 0 }))
+                .sort((a, b) => b.score - a.score);
+        }
+
+        function arenaRenderScores() {
+            const list = document.getElementById('arena-scores');
+            if (!list) return;
+            const rows = arenaLeaderboard();
+            list.innerHTML = rows.length
+                ? rows.slice(0, 8).map((r, i) => `
+                    <div class="arena-score-row ${r.uid === currentUser?.uid ? 'me' : ''}">
+                        <span>${['🥇', '🥈', '🥉'][i] || (i + 1) + '.'} @${r.name}</span>
+                        <span class="pts">${r.score}</span>
+                    </div>`).join('')
+                : '<div style="font-size:9px;color:var(--text-muted);">No scores yet this round.</div>';
+        }
+
+        function arenaShowResults() {
+            const rows = arenaLeaderboard();
+            const winner = rows[0];
+            const timer = document.getElementById('arena-timer');
+            if (timer) timer.textContent = 'round over';
+            const stage = document.getElementById('arena-stage');
+            if (!stage) return;
+            const lobby = liveLobbies.find(l => l.id === arenaLobbyId);
+            const mode = ARENA_MODES[lobby?.gameType] ? lobby.gameType : 'chaos-royale';
+            stage.innerHTML = `
+                <div class="arena-idle">
+                    <div style="font-size:13px;font-weight:900;color:var(--neon-gold);">🏆 ${winner ? '@' + winner.name + ' wins with ' + winner.score : 'No winner'}</div>
+                    <div>Winner takes bonus coins + an exclusive event drop.</div>
+                    <button id="arena-start" class="btn btn-primary btn-sm"><span class="bi">🔁</span> Start next round</button>
+                </div>`;
+            const btn = stage.querySelector('#arena-start');
+            if (btn) btn.addEventListener('click', () => arenaStartRound(arenaLobbyId, mode));
+        }
+
+        async function arenaClaimPrize(lobbyId) {
+            const rows = arenaLeaderboard();
+            const winner = rows[0];
+            if (!winner || winner.uid !== currentUser?.uid || winner.score <= 0) return;
+            const key = lobbyId + ':' + (arenaRound?.startAtMs || 0);
+            if (arenaClaimed.has(key)) return;
+            arenaClaimed.add(key);
+            const drop = EXCLUSIVE_DROPS[Math.floor(Math.random() * EXCLUSIVE_DROPS.length)];
+            const coins = 120 + winner.score * 5;
+            try {
+                await runTransaction(db, async (tx) => {
+                    const aRef = arenaRef(lobbyId);
+                    const aSnap = await tx.get(aRef);
+                    if (!aSnap.exists()) throw new Error('gone');
+                    if (aSnap.data().prizeClaimedBy) throw new Error('claimed');
+                    const uRef = doc(db, 'users', currentUser.uid);
+                    const uSnap = await tx.get(uRef);
+                    if (!uSnap.exists()) throw new Error('no profile');
+                    const data = uSnap.data();
+                    const inv = data.inventory || [];
+                    tx.update(aRef, { prizeClaimedBy: currentUser.uid });
+                    tx.update(uRef, {
+                        coins: Math.min(MAX_COINS, (data.coins || 0) + coins),
+                        inventory: [...inv, {
+                            id: drop.id,
+                            name: drop.name,
+                            rarity: drop.rarity,
+                            exclusive: true,
+                            source: 'arena',
+                            lobbyId,
+                            acquiredAt: Date.now()
+                        }]
+                    });
+                });
+                showToast(`🏆 Round won! +${coins} coins and ${drop.name}`, 'success', 4500);
+            } catch (e) { /* someone else claimed */ }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  REPORT TICKETS — written to the shared `reports` collection that
+        //  the moderation admin panel site reads from.
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const REPORT_REASONS = [
+            { id: 'harassment', label: '😠 Harassment' },
+            { id: 'bullying', label: '🚫 Bullying' },
+            { id: 'hate', label: '💢 Hate speech' },
+            { id: 'nsfw', label: '🔞 Inappropriate content' },
+            { id: 'spam', label: '📢 Spam / scam' },
+            { id: 'threats', label: '⚠️ Threats' },
+            { id: 'impersonation', label: '🎭 Impersonation' },
+            { id: 'cheating', label: '🎮 Cheating / exploits' },
+            { id: 'other', label: '❓ Something else' }
+        ];
+        const REPORT_SOURCE = 'school-social';
+        let myReportsUnsub = null;
+        let reportSelectedReason = null;
+        let reportTargetUid = null;
+
+        function openReportModal(targetUid, targetName) {
+            if (!currentUser) { showToast('Log in to send a report.', 'error'); return; }
+            reportTargetUid = targetUid || null;
+            reportSelectedReason = null;
+            const grid = document.getElementById('report-reason-grid');
+            grid.innerHTML = REPORT_REASONS.map(r =>
+                `<div class="report-reason" data-reason="${r.id}">${r.label}</div>`).join('');
+            grid.querySelectorAll('.report-reason').forEach(el => {
+                el.addEventListener('click', () => {
+                    grid.querySelectorAll('.report-reason').forEach(x => x.classList.remove('selected'));
+                    el.classList.add('selected');
+                    reportSelectedReason = el.dataset.reason;
+                });
+            });
+            const nameInput = document.getElementById('report-username-input');
+            nameInput.value = targetName ? String(targetName).replace(/^@/, '') : '';
+            document.getElementById('report-target-line').textContent = targetName
+                ? `Reporting @${String(targetName).replace(/^@/, '')}`
+                : 'Type the username you want to report.';
+            document.getElementById('report-details').value = '';
+            document.getElementById('report-status').textContent = '';
+            document.getElementById('report-modal').classList.add('show');
+        }
+
+        function closeReportModal() {
+            document.getElementById('report-modal').classList.remove('show');
+        }
+
+        async function submitReport() {
+            const status = document.getElementById('report-status');
+            const username = (document.getElementById('report-username-input').value || '').trim().replace(/^@/, '');
+            const details = (document.getElementById('report-details').value || '').trim();
+            if (!username) { status.textContent = 'Enter the username you are reporting.'; return; }
+            if (!reportSelectedReason) { status.textContent = 'Pick a reason for this report.'; return; }
+            if (details.length < 10) { status.textContent = 'Add at least 10 characters of detail so staff can act.'; return; }
+            if (username.toLowerCase() === (currentUserProfile?.username || '').toLowerCase()) {
+                status.textContent = 'You cannot report yourself.';
+                return;
+            }
+            let targetUid = reportTargetUid;
+            let targetName = username;
+            if (!targetUid) {
+                const match = allUsersCache.find(u => (u.username || '').toLowerCase() === username.toLowerCase());
+                if (match) { targetUid = match.uid; targetName = match.username; }
+            }
+            status.textContent = 'Sending…';
+            try {
+                await addDoc(collection(db, 'reports'), {
+                    source: REPORT_SOURCE,
+                    reporterUid: currentUser.uid,
+                    reporterName: currentUserProfile?.username || 'player',
+                    targetUid: targetUid || null,
+                    targetName,
+                    reason: reportSelectedReason,
+                    reasonLabel: (REPORT_REASONS.find(r => r.id === reportSelectedReason) || {}).label || reportSelectedReason,
+                    details: details.slice(0, 1000),
+                    status: 'open',
+                    adminReply: null,
+                    handledBy: null,
+                    createdAt: serverTimestamp(),
+                    createdAtMs: Date.now()
+                });
+                closeReportModal();
+                showToast('🚩 Report sent to the moderation team.', 'success');
+            } catch (e) {
+                status.textContent = 'Could not send the report. Try again.';
+            }
+        }
+
+        function initReports() {
+            if (myReportsUnsub) myReportsUnsub();
+            const q = query(collection(db, 'reports'), where('reporterUid', '==', currentUser.uid), limit(30));
+            myReportsUnsub = onSnapshot(q, (snap) => {
+                const list = document.getElementById('my-reports-list');
+                if (!list) return;
+                const rows = [];
+                snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+                rows.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+                list.innerHTML = rows.length ? rows.map(r => {
+                    const st = (r.status || 'open').toLowerCase();
+                    return `
+                        <div class="ticket-card">
+                            <div class="ticket-top">
+                                <span class="ticket-id">#${r.id.slice(0, 6).toUpperCase()} • @${r.targetName || 'unknown'}</span>
+                                <span class="ticket-status ${st}">${st}</span>
+                            </div>
+                            <div class="ticket-body"><strong>${r.reasonLabel || r.reason || 'Report'}</strong><br />${filterSwearWords(r.details || '')}</div>
+                            ${r.adminReply ? `<div class="ticket-reply">🛡️ Staff: ${filterSwearWords(r.adminReply)}</div>` : ''}
+                        </div>`;
+                }).join('') : '<div style="font-size:10px;color:var(--text-muted);">You have not sent any reports.</div>';
+            }, (err) => console.warn('Reports listener error:', err));
+        }
+
+        document.getElementById('report-close').addEventListener('click', closeReportModal);
+        document.getElementById('report-cancel').addEventListener('click', closeReportModal);
+        document.getElementById('report-submit').addEventListener('click', submitReport);
+        document.getElementById('report-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeReportModal();
+        });
+        document.getElementById('btn-open-report').addEventListener('click', () => openReportModal(null, ''));
+        document.getElementById('btn-report-user').addEventListener('click', async () => {
+            const uid = viewedProfileUid;
+            if (!uid || uid === currentUser?.uid) { openReportModal(null, ''); return; }
+            const cached = allUsersCache.find(u => u.uid === uid);
+            let name = cached?.username;
+            if (!name) {
+                const snap = await getDoc(doc(db, 'users', uid));
+                name = snap.exists() ? snap.data().username : '';
+            }
+            openReportModal(uid, name || '');
+        });
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-report-uid]');
+            if (!btn) return;
+            e.stopPropagation();
+            openReportModal(btn.dataset.reportUid, btn.dataset.reportName || '');
+        });
+
     </script>
 </body>
 </html>
