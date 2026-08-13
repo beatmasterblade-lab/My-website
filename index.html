@@ -5536,7 +5536,7 @@ html.instant-boot *{animation-delay:0s!important}
             <div class="auth-hero-futuristic">
                 <div class="auth-topline"><span class="auth-live-dot"></span> CAMPUS NETWORK ONLINE <span class="auth-topline-right">v2.0</span></div>
                 <div class="auth-signal auth-signal-pro"><span class="auth-signal-core">SS</span><span class="auth-signal-ring"></span></div>
-                <div class="auth-logo"><span class="auth-eyebrow">YOUR SOCIAL UNIVERSE</span><h1>School<span>Social</span></h1><p>Connect with people ⊗ Build your profile ⊗  Play/gamble</p></div>
+                <div class="auth-logo"><span class="auth-eyebrow">YOUR SOCIAL UNIVERSE</span><h1>School<span>Social</span></h1><p>Connect with your people. Build your profile. Play your way.</p></div>
                 <div class="auth-feature-grid auth-feature-grid-pro"><div><i>◈</i><b>LIVE SOCIAL</b><span>Notes, chat & discovery in real time.</span></div><div><i>◉</i><b>PLAYER ECONOMY</b><span>Earn coins, collect items & unlock effects.</span></div><div><i>✦</i><b>ARCADE + EVENTS</b><span>Games, roulette, events and challenges.</span></div></div>
                 <div class="auth-mini-stats"><span><b>01</b> COMMUNITY</span><span><b>24/7</b> ACTIVITY</span><span><b>∞</b> CUSTOMIZATION</span></div>
             </div>
@@ -8621,7 +8621,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                         let musicHTML = '';
                         if (musicUrl) {
                             musicHTML =
-                                `<span class="note-music-icon" data-music="${encodeURIComponent(musicUrl)}" title="🎵 Tap to play music" role="button" tabindex="0" aria-label="Play note music">🎵</span>`;
+                                `<span class="note-music-icon" data-music="${encodeURIComponent(musicUrl)}" title="🎵 Play music">🎵</span>`;
                         } else if (mediaBtnHTML) {
                             musicHTML = mediaBtnHTML;
                         }
@@ -8671,11 +8671,11 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                             if (ytMatch2) {
                                 const vid = ytMatch2[1];
                                 embedContainer.innerHTML =
-                                    `<iframe src="https://www.youtube-nocookie.com/embed/${vid}?playsinline=1&autoplay=1&rel=0" title="YouTube music player" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="min-height:220px;border-radius:var(--radius-sm);width:100%;border:0;"></iframe>`;
+                                    `<iframe src="https://www.youtube.com/embed/${vid}?playsinline=1&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen style="min-height:180px;border-radius:var(--radius-sm);width:100%;"></iframe>`;
                             } else if (spMatch2) {
                                 const tid = spMatch2[1];
                                 embedContainer.innerHTML =
-                                    `<iframe src="https://open.spotify.com/embed/track/${tid}?utm_source=generator&theme=0" title="Spotify music player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="min-height:152px;border-radius:var(--radius-sm);width:100%;border:0;"></iframe>`;
+                                    `<iframe src="https://open.spotify.com/embed/track/${tid}?autoplay=1" allow="autoplay; encrypted-media" style="min-height:80px;border-radius:var(--radius-sm);width:100%;"></iframe>`;
                             } else if (scMatch2) {
                                 embedContainer.innerHTML =
                                     `<iframe src="https://w.soundcloud.com/player/?url=${encodeURIComponent(scMatch2[0])}&auto_play=true" allow="autoplay" style="width:100%;height:100px;border-radius:var(--radius-sm);"></iframe>`;
@@ -8687,7 +8687,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                                         .catch === 'function') { playPromise.catch(() => {}); } }
                             } else if (audMatch2) {
                                 embedContainer.innerHTML =
-                                    `<audio controls preload="metadata" style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${audMatch2[0]}">Your browser doesn't support audio.</audio>`;
+                                    `<audio controls autoplay style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${audMatch2[0]}" type="audio/mpeg">Your browser doesn't support audio.</audio>`;
                                 const audioEl = embedContainer.querySelector('audio');
                                 if (audioEl) { const playPromise = audioEl.play(); if (playPromise && typeof playPromise
                                         .catch === 'function') { playPromise.catch(() => {}); } }
@@ -8722,18 +8722,10 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
 
                         const musicIcon = bubble.querySelector('.note-music-icon');
                         if (musicIcon) {
-                            const playNoteMusic = (e) => {
+                            musicIcon.addEventListener('click', (e) => {
                                 e.stopPropagation();
-                                const url = decodeURIComponent(musicIcon.dataset.music || '');
-                                if (!url) return;
+                                const url = decodeURIComponent(musicIcon.dataset.music);
                                 openMusicPopup(url, `@${u.username}'s Track`);
-                            };
-                            musicIcon.addEventListener('click', playNoteMusic);
-                            musicIcon.addEventListener('keydown', (e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    playNoteMusic(e);
-                                }
                             });
                         }
 
@@ -9283,8 +9275,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             if (youtubeMatch) {
                 const videoId = youtubeMatch[1];
                 embed.innerHTML =
-                    `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0" title="YouTube music player" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width:100%;min-height:220px;border-radius:var(--radius-sm);border:0;"></iframe>
-                    <div style="display:flex;justify-content:center;margin-top:7px;"><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Open YouTube ↗</a></div>`;
+                    `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;min-height:200px;border-radius:var(--radius-sm);"></iframe>`;
                 statusEl.textContent = '✅ YouTube track loaded';
                 popup.classList.add('show');
                 return;
@@ -9293,8 +9284,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             if (spotifyMatch) {
                 const trackId = spotifyMatch[1];
                 embed.innerHTML =
-                    `<iframe src="https://open.spotify.com/embed/track/${trackId}?utm_source=generator&theme=0" title="Spotify music player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="width:100%;height:152px;border-radius:var(--radius-sm);border:0;"></iframe>
-                    <div style="display:flex;justify-content:center;margin-top:7px;"><a href="https://open.spotify.com/track/${trackId}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Open Spotify ↗</a></div>`;
+                    `<iframe src="https://open.spotify.com/embed/track/${trackId}?autoplay=1" allow="autoplay; encrypted-media" style="width:100%;height:80px;border-radius:var(--radius-sm);"></iframe>`;
                 statusEl.textContent = '✅ Spotify track loaded';
                 popup.classList.add('show');
                 return;
@@ -9310,7 +9300,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
 
             if (url.match(/\.(mp3|wav|ogg|m4a|aac|flac)(\?.*)?$/i)) {
                 embed.innerHTML =
-                    `<audio controls preload="metadata" style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${url}">Your browser doesn't support audio.</audio>`;
+                    `<audio controls autoplay style="width:100%;border-radius:var(--radius-sm);padding:8px 0;background:rgba(0,0,0,0.2);"><source src="${url}" type="audio/mpeg">Your browser doesn't support audio.</audio>`;
                 const audioEl = embed.querySelector('audio');
                 if (audioEl) {
                     const playPromise = audioEl.play();
@@ -10063,7 +10053,11 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
 
 /* =========================================================
    FACE-TIME STYLE WEBRTC CALLS
-   Uses WebRTC media + Firestore only for signaling.
+   Robust WebRTC + Firestore signaling:
+   - Buffers ICE candidates until remoteDescription exists
+   - Handles ICE/connection state changes and retries
+   - Uses multiple STUN servers
+   - Cleans up stale rooms and listeners safely
    ========================================================= */
 let callPeer = null;
 let callRoomId = null;
@@ -10075,20 +10069,23 @@ let remoteCallStream = null;
 let currentCallRole = null;
 let currentCallPartnerUid = null;
 let currentCallPartnerName = '';
+let pendingRemoteCandidates = [];
+let callConnectingTimer = null;
+let callRetryTimer = null;
+let callHasConnected = false;
+let callEnding = false;
 
 const RTC_CONFIG = {
+  iceCandidatePoolSize: 10,
+  bundlePolicy: 'max-bundle',
+  rtcpMuxPolicy: 'require',
   iceServers: [
     { urls: 'stun:stun.l.google.com:19302' },
     { urls: 'stun:stun1.l.google.com:19302' },
-    { urls: 'stun:stun2.l.google.com:19302' }
-  ],
-  bundlePolicy: 'max-bundle',
-  rtcpMuxPolicy: 'require',
-  iceCandidatePoolSize: 4
+    { urls: 'stun:stun2.l.google.com:19302' },
+    { urls: 'stun:stun.cloudflare.com:3478' }
+  ]
 };
-
-let pendingRemoteCandidates = [];
-let callReconnectTimer = null;
 
 function showCallModal() {
   const m = document.getElementById('video-call-modal');
@@ -10096,16 +10093,30 @@ function showCallModal() {
   m.classList.add('show');
   m.setAttribute('aria-hidden','false');
 }
+
 function hideCallModal() {
   const m = document.getElementById('video-call-modal');
   if (!m) return;
   m.classList.remove('show');
   m.setAttribute('aria-hidden','true');
 }
+
 function setCallStatus(s) {
   const el = document.getElementById('video-call-status');
   if (el) el.textContent = s;
 }
+
+function clearCallTimers() {
+  if (callConnectingTimer) {
+    clearTimeout(callConnectingTimer);
+    callConnectingTimer = null;
+  }
+  if (callRetryTimer) {
+    clearTimeout(callRetryTimer);
+    callRetryTimer = null;
+  }
+}
+
 function stopCallMedia() {
   if (localCallStream) localCallStream.getTracks().forEach(t => t.stop());
   if (remoteCallStream) remoteCallStream.getTracks().forEach(t => t.stop());
@@ -10116,314 +10127,553 @@ function stopCallMedia() {
   if (lv) lv.srcObject = null;
   if (rv) rv.srcObject = null;
 }
+
 function cleanupCallRoom() {
-  if (callRoomUnsub) { callRoomUnsub(); callRoomUnsub = null; }
-  if (callCandidatesUnsub) { callCandidatesUnsub(); callCandidatesUnsub = null; }
-  if (callPeer) { try { callPeer.close(); } catch(e) {} callPeer = null; }
-}
-async function endVideoCall(deleteRoom=true) {
-  const rid = callRoomId;
-  if (callReconnectTimer) { clearTimeout(callReconnectTimer); callReconnectTimer = null; }
+  clearCallTimers();
+  if (callRoomUnsub) {
+    try { callRoomUnsub(); } catch (_) {}
+    callRoomUnsub = null;
+  }
+  if (callCandidatesUnsub) {
+    try { callCandidatesUnsub(); } catch (_) {}
+    callCandidatesUnsub = null;
+  }
+  if (callPeer) {
+    try { callPeer.onicecandidate = null; } catch (_) {}
+    try { callPeer.ontrack = null; } catch (_) {}
+    try { callPeer.close(); } catch (_) {}
+    callPeer = null;
+  }
   pendingRemoteCandidates = [];
+}
+
+async function endVideoCall(deleteRoom=true) {
+  if (callEnding) return;
+  callEnding = true;
+
+  const rid = callRoomId;
+  const role = currentCallRole;
+
   cleanupCallRoom();
   stopCallMedia();
+
   if (deleteRoom && rid) {
-    try { await deleteDoc(doc(db,'call_rooms',rid)); } catch(e) {}
+    try {
+      await updateDoc(doc(db, 'call_rooms', rid), {
+        status: 'ended',
+        endedAt: serverTimestamp(),
+        endedBy: currentUser?.uid || null
+      });
+    } catch (_) {
+      try { await deleteDoc(doc(db, 'call_rooms', rid)); } catch (_) {}
+    }
   }
+
   callRoomId = null;
   currentCallRole = null;
   currentCallPartnerUid = null;
   currentCallPartnerName = '';
-  document.getElementById('incoming-call-panel').style.display = 'none';
-  document.getElementById('active-call-panel').style.display = 'none';
+  callHasConnected = false;
+
+  const incoming = document.getElementById('incoming-call-panel');
+  const active = document.getElementById('active-call-panel');
+  if (incoming) incoming.style.display = 'none';
+  if (active) active.style.display = 'none';
+
+  const mic = document.getElementById('btn-toggle-mic');
+  const cam = document.getElementById('btn-toggle-camera');
+  if (mic) mic.textContent = '🎙️ Mic';
+  if (cam) cam.textContent = '📷 Camera';
+
   hideCallModal();
+  callEnding = false;
 }
+
 async function getCallMedia() {
-  // Browser camera/microphone access requires HTTPS (or localhost).
-  // A downloaded .html opened directly with file:// cannot request the camera.
   if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-    throw new Error('Camera access requires HTTPS. Open School Social from its secure web address instead of opening the HTML file directly.');
+    throw new Error('Camera access requires HTTPS. Open School Social from its secure web address.');
   }
 
-  if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function') {
-    throw new Error('This browser does not provide camera access here. Try Safari/Chrome on the secure School Social website.');
+  if (!navigator.mediaDevices?.getUserMedia) {
+    throw new Error('This browser does not provide camera access here. Try Safari or Chrome on the secure School Social website.');
   }
+
+  // Keep the requested 1440p/60 target, but let the browser choose the
+  // best supported mode rather than failing when a camera cannot provide it.
+  const constraints = {
+    video: {
+      width: { ideal: 2560, min: 640 },
+      height: { ideal: 1440, min: 360 },
+      frameRate: { ideal: 60, min: 30 },
+      facingMode: 'user'
+    },
+    audio: {
+      echoCancellation: true,
+      noiseSuppression: true,
+      autoGainControl: true,
+      channelCount: 1
+    }
+  };
 
   try {
-    localCallStream = await navigator.mediaDevices.getUserMedia({
-      // User-requested high-quality call target: 1440p at 60 FPS.
-      // This requires a camera that supports 2560x1440@60 and sufficient bandwidth.
-      video: {
-        width: { min: 2560, ideal: 2560, max: 2560 },
-        height: { min: 1440, ideal: 1440, max: 1440 },
-        frameRate: { min: 60, ideal: 60, max: 60 },
-        facingMode: 'user'
-      },
-      audio: {
-        echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true,
-        channelCount: 1
-      }
-    });
+    localCallStream = await navigator.mediaDevices.getUserMedia(constraints);
   } catch (err) {
-    let message = 'Could not access your camera or microphone.';
-    if (err?.name === 'NotAllowedError' || err?.name === 'PermissionDeniedError') {
-      message = 'Camera/microphone permission was blocked. Allow Camera and Microphone for School Social, then try again.';
-    } else if (err?.name === 'NotFoundError' || err?.name === 'DevicesNotFoundError') {
-      message = 'No camera or microphone was found on this device.';
-    } else if (err?.name === 'NotReadableError' || err?.name === 'TrackStartError') {
-      message = 'Your camera or microphone is already being used by another app.';
-    } else if (err?.name === 'SecurityError') {
-      message = 'Camera access was blocked by the browser security settings. Use the secure School Social website.';
-    } else if (err?.message) {
-      message += ' ' + err.message;
+    // A high-resolution camera request should not make the call fail.
+    // Retry with a universally supported 720p/30 profile.
+    try {
+      localCallStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          width: { ideal: 1280, min: 640 },
+          height: { ideal: 720, min: 360 },
+          frameRate: { ideal: 30, min: 30 },
+          facingMode: 'user'
+        },
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+    } catch (fallbackErr) {
+      let message = 'Could not access your camera or microphone.';
+      const e = fallbackErr || err;
+      if (e?.name === 'NotAllowedError' || e?.name === 'PermissionDeniedError') {
+        message = 'Camera/microphone permission was blocked. Allow Camera and Microphone for School Social, then try again.';
+      } else if (e?.name === 'NotFoundError' || e?.name === 'DevicesNotFoundError') {
+        message = 'No camera or microphone was found on this device.';
+      } else if (e?.name === 'NotReadableError' || e?.name === 'TrackStartError') {
+        message = 'Your camera or microphone is already being used by another app.';
+      } else if (e?.name === 'SecurityError') {
+        message = 'Camera access was blocked by browser security. Use the secure School Social website.';
+      } else if (e?.message) {
+        message += ' ' + e.message;
+      }
+      throw new Error(message);
     }
-    throw new Error(message);
   }
 
   const localVideo = document.getElementById('local-video');
   if (localVideo) {
+    localVideo.autoplay = true;
+    localVideo.playsInline = true;
+    localVideo.muted = true;
     localVideo.srcObject = localCallStream;
-    try { await localVideo.play(); } catch(e) {}
+    try { await localVideo.play(); } catch (_) {}
   }
 }
-function makePeer() {
-  const pc = new RTCPeerConnection(RTC_CONFIG);
-  remoteCallStream = new MediaStream();
 
-  const remoteVideo = document.getElementById('remote-video');
-  if (remoteVideo) {
-    remoteVideo.srcObject = remoteCallStream;
-    remoteVideo.autoplay = true;
-    remoteVideo.playsInline = true;
-  }
+async function addPendingRemoteCandidates() {
+  if (!callPeer?.remoteDescription) return;
 
-  pc.ontrack = e => {
-    const tracks = e.streams?.[0]?.getTracks?.() || [e.track];
-    tracks.forEach(track => {
-      if (track && !remoteCallStream.getTracks().some(t => t.id === track.id)) {
-        remoteCallStream.addTrack(track);
-      }
-    });
-    if (remoteVideo) remoteVideo.play().catch(() => {});
-  };
-
-  // Keep the video lightweight and avoid sending more than the connection can
-  // comfortably handle. This is especially important on mobile networks.
-  pc.getTransceivers().forEach(transceiver => {
-    if (transceiver.sender?.track?.kind === 'video') {
-      try {
-        const params = transceiver.sender.getParameters();
-        params.encodings = [{
-          ...(params.encodings?.[0] || {}),
-          maxBitrate: 12000000,
-          maxFramerate: 60,
-          scaleResolutionDownBy: 1
-        }];
-        transceiver.sender.setParameters(params).catch(() => {});
-      } catch (_) {}
+  const candidates = pendingRemoteCandidates.splice(0);
+  for (const candidate of candidates) {
+    try {
+      await callPeer.addIceCandidate(candidate);
+    } catch (e) {
+      console.warn('Could not add buffered ICE candidate:', e);
     }
-  });
+  }
+}
 
+function watchConnectionState(pc) {
   pc.onconnectionstatechange = () => {
     const state = pc.connectionState;
+
     if (state === 'connected') {
-      if (callReconnectTimer) { clearTimeout(callReconnectTimer); callReconnectTimer = null; }
+      callHasConnected = true;
+      clearCallTimers();
       setCallStatus(`Connected with @${currentCallPartnerName}`);
-    } else if (state === 'connecting') {
-      setCallStatus('Connecting…');
-    } else if (state === 'disconnected') {
+      return;
+    }
+
+    if (state === 'connecting') {
+      setCallStatus('Connecting… finding the best connection');
+    }
+
+    if (state === 'disconnected') {
       setCallStatus('Connection interrupted — reconnecting…');
-      if (callReconnectTimer) clearTimeout(callReconnectTimer);
-      callReconnectTimer = setTimeout(() => {
-        if (callPeer === pc && pc.connectionState === 'disconnected') {
-          try { pc.restartIce(); } catch (_) {}
-        }
-      }, 1200);
-    } else if (state === 'failed') {
-      setCallStatus('Connection failed. Trying to recover…');
-      try { pc.restartIce(); } catch (_) {}
-      setTimeout(() => {
-        if (callPeer === pc && pc.connectionState === 'failed') {
-          showToast('Video connection could not recover. Try ending the call and calling again.', 'error');
-        }
-      }, 3500);
+      if (!callRetryTimer) {
+        callRetryTimer = setTimeout(() => {
+          callRetryTimer = null;
+          try {
+            if (callPeer && callPeer.connectionState === 'disconnected') {
+              callPeer.restartIce?.();
+              setCallStatus('Reconnecting…');
+            }
+          } catch (_) {}
+        }, 1200);
+      }
+    }
+
+    if (state === 'failed') {
+      setCallStatus('Connection failed — retrying…');
+      try { pc.restartIce?.(); } catch (_) {}
+
+      if (!callRetryTimer) {
+        callRetryTimer = setTimeout(() => {
+          if (!callHasConnected && callPeer?.connectionState === 'failed') {
+            showToast('Could not connect. Both people should try again on a stable Wi‑Fi or mobile connection.', 'error');
+            endVideoCall(true);
+          }
+        }, 5000);
+      }
+    }
+
+    if (state === 'closed') {
+      clearCallTimers();
     }
   };
 
   pc.oniceconnectionstatechange = () => {
-    if (pc.iceConnectionState === 'failed') {
-      try { pc.restartIce(); } catch (_) {}
+    const state = pc.iceConnectionState;
+    if (state === 'checking') setCallStatus('Connecting… checking network paths');
+    if (state === 'connected' || state === 'completed') {
+      if (!callHasConnected) setCallStatus(`Connecting @${currentCallPartnerName}…`);
+    }
+    if (state === 'failed') {
+      try { pc.restartIce?.(); } catch (_) {}
     }
   };
+}
 
+function makePeer() {
+  const pc = new RTCPeerConnection(RTC_CONFIG);
+
+  remoteCallStream = new MediaStream();
+  const remoteVideo = document.getElementById('remote-video');
+  if (remoteVideo) {
+    remoteVideo.autoplay = true;
+    remoteVideo.playsInline = true;
+    remoteVideo.srcObject = remoteCallStream;
+  }
+
+  pc.ontrack = e => {
+    const stream = e.streams?.[0];
+    const tracks = stream ? stream.getTracks() : [e.track];
+    tracks.forEach(track => {
+      if (!remoteCallStream.getTracks().some(t => t.id === track.id)) {
+        remoteCallStream.addTrack(track);
+      }
+    });
+    try { remoteVideo?.play(); } catch (_) {}
+  };
+
+  watchConnectionState(pc);
   return pc;
 }
+
+function addLocalTracksAndTunePeer() {
+  if (!callPeer || !localCallStream) return;
+
+  localCallStream.getTracks().forEach(track => {
+    const sender = callPeer.addTrack(track, localCallStream);
+
+    if (track.kind === 'video') {
+      try {
+        const params = sender.getParameters();
+        params.degradationPreference = 'maintain-framerate';
+        params.encodings = params.encodings?.length ? params.encodings : [{}];
+
+        // 12 Mbps gives 1440p/60 room to breathe without forcing an
+        // unlimited encoder rate that can choke weaker connections.
+        params.encodings[0].maxBitrate = 12000000;
+        params.encodings[0].maxFramerate = 60;
+        sender.setParameters(params).catch(() => {});
+      } catch (_) {}
+    }
+  });
+}
+
+async function listenForRemoteCandidates(roomRef, subcollectionName) {
+  callCandidatesUnsub = onSnapshot(collection(roomRef, subcollectionName), snap => {
+    snap.docChanges().forEach(change => {
+      if (change.type !== 'added' || !callPeer) return;
+
+      const data = change.doc.data();
+      const candidate = new RTCIceCandidate(data);
+
+      // IMPORTANT: candidates can arrive before the offer/answer is set.
+      // Never throw them away — buffer them and add them afterward.
+      if (!callPeer.remoteDescription) {
+        pendingRemoteCandidates.push(candidate);
+        return;
+      }
+
+      callPeer.addIceCandidate(candidate).catch(e => {
+        console.warn('ICE candidate failed:', e);
+      });
+    });
+  }, err => {
+    console.error('ICE listener failed:', err);
+    setCallStatus('Signaling connection interrupted…');
+  });
+}
+
 async function startVideoCall(partnerUid, partnerName) {
   if (!currentUser || !partnerUid) return;
-  if (callPeer) { showToast('A call is already active.', 'info'); return; }
+  if (callPeer || callRoomId) {
+    showToast('A call is already active.', 'info');
+    return;
+  }
+
   currentCallRole = 'caller';
   currentCallPartnerUid = partnerUid;
   currentCallPartnerName = partnerName || 'friend';
+  callHasConnected = false;
+
   document.getElementById('incoming-call-panel').style.display = 'none';
   document.getElementById('active-call-panel').style.display = 'block';
   document.getElementById('video-call-title').textContent = `📹 Calling @${currentCallPartnerName}`;
   showCallModal();
   setCallStatus('Requesting camera & microphone…');
+
   try {
     await getCallMedia();
+
     callPeer = makePeer();
-    localCallStream.getTracks().forEach(t => callPeer.addTrack(t, localCallStream));
-    const roomRef = doc(collection(db,'call_rooms'));
+    addLocalTracksAndTunePeer();
+
+    const roomRef = doc(collection(db, 'call_rooms'));
     callRoomId = roomRef.id;
-    const callerCandidates = collection(roomRef,'callerCandidates');
+    const callerCandidates = collection(roomRef, 'callerCandidates');
+
     callPeer.onicecandidate = async e => {
-      if (e.candidate) await addDoc(callerCandidates, e.candidate.toJSON());
+      if (!e.candidate || !callRoomId) return;
+      try {
+        await addDoc(callerCandidates, e.candidate.toJSON());
+      } catch (err) {
+        console.warn('Could not publish caller ICE candidate:', err);
+      }
     };
-    const offer = await callPeer.createOffer();
+
+    const offer = await callPeer.createOffer({
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true
+    });
     await callPeer.setLocalDescription(offer);
+
     await setDoc(roomRef, {
       callerUid: currentUser.uid,
       callerName: currentUserProfile?.username || currentUser.email || 'user',
       calleeUid: partnerUid,
       calleeName: currentCallPartnerName,
-      offer: { type: offer.type, sdp: offer.sdp },
+      offer: {
+        type: offer.type,
+        sdp: offer.sdp
+      },
       answer: null,
       status: 'ringing',
       createdAt: serverTimestamp()
     });
+
     setCallStatus(`Calling @${currentCallPartnerName}…`);
+
     callRoomUnsub = onSnapshot(roomRef, async snap => {
-      if (!snap.exists()) return;
+      if (!snap.exists() || !callPeer) return;
+
       const data = snap.data();
+
       if (data.answer && !callPeer.currentRemoteDescription) {
-        await callPeer.setRemoteDescription(new RTCSessionDescription(data.answer));
-        const queued = pendingRemoteCandidates.splice(0);
-        for (const candidate of queued) {
-          try { await callPeer.addIceCandidate(candidate); } catch (_) {}
+        try {
+          await callPeer.setRemoteDescription(new RTCSessionDescription(data.answer));
+          await addPendingRemoteCandidates();
+          setCallStatus(`Connecting with @${currentCallPartnerName}…`);
+        } catch (e) {
+          console.error('Could not set remote answer:', e);
+          setCallStatus('Could not establish the call.');
         }
-        setCallStatus(`Connected with @${currentCallPartnerName}`);
       }
-      if (data.status === 'declined' || data.status === 'ended') {
-        showToast(data.status === 'declined' ? 'Call declined.' : 'Call ended.', 'info');
-        endVideoCall(false);
+
+      if (data.status === 'declined') {
+        showToast('Call declined.', 'info');
+        await endVideoCall(false);
+      }
+
+      if (data.status === 'ended') {
+        await endVideoCall(false);
       }
     });
-    callCandidatesUnsub = onSnapshot(collection(roomRef,'calleeCandidates'), snap => {
-      snap.docChanges().forEach(async change => {
-        if (change.type !== 'added' || !callPeer) return;
-        const candidate = new RTCIceCandidate(change.doc.data());
-        if (!callPeer.remoteDescription) {
-          pendingRemoteCandidates.push(candidate);
-          return;
-        }
-        try { await callPeer.addIceCandidate(candidate); } catch(e) {}
-      });
-    });
+
+    await listenForRemoteCandidates(roomRef, 'calleeCandidates');
+
+    // If signaling succeeds but no peer connection appears, recover instead
+    // of leaving the user stuck on "Connecting" forever.
+    callConnectingTimer = setTimeout(() => {
+      if (!callHasConnected && callPeer && ['new','connecting'].includes(callPeer.connectionState)) {
+        try { callPeer.restartIce?.(); } catch (_) {}
+        setCallStatus('Still connecting… retrying network path');
+      }
+    }, 7000);
+
   } catch (e) {
     console.error('Start video call:', e);
     showToast('Could not start camera: ' + e.message, 'error');
     await endVideoCall(false);
   }
 }
+
 async function acceptIncomingCall(roomId, roomData) {
   if (!currentUser || callPeer) return;
+
   currentCallRole = 'callee';
   callRoomId = roomId;
   currentCallPartnerUid = roomData.callerUid;
   currentCallPartnerName = roomData.callerName || 'friend';
+  callHasConnected = false;
+
   document.getElementById('incoming-call-panel').style.display = 'none';
   document.getElementById('active-call-panel').style.display = 'block';
   document.getElementById('video-call-title').textContent = `📹 @${currentCallPartnerName}`;
   showCallModal();
   setCallStatus('Starting camera & microphone…');
+
   try {
     await getCallMedia();
+
     callPeer = makePeer();
-    localCallStream.getTracks().forEach(t => callPeer.addTrack(t, localCallStream));
-    const roomRef = doc(db,'call_rooms',roomId);
-    const calleeCandidates = collection(roomRef,'calleeCandidates');
+    addLocalTracksAndTunePeer();
+
+    const roomRef = doc(db, 'call_rooms', roomId);
+    const calleeCandidates = collection(roomRef, 'calleeCandidates');
+
     callPeer.onicecandidate = async e => {
-      if (e.candidate) await addDoc(calleeCandidates, e.candidate.toJSON());
+      if (!e.candidate || !callRoomId) return;
+      try {
+        await addDoc(calleeCandidates, e.candidate.toJSON());
+      } catch (err) {
+        console.warn('Could not publish callee ICE candidate:', err);
+      }
     };
+
+    // Listen BEFORE setting the remote description so no caller candidates
+    // are missed. They are buffered until the offer is applied.
+    await listenForRemoteCandidates(roomRef, 'callerCandidates');
+
     await callPeer.setRemoteDescription(new RTCSessionDescription(roomData.offer));
-    const queued = pendingRemoteCandidates.splice(0);
-    for (const candidate of queued) {
-      try { await callPeer.addIceCandidate(candidate); } catch (_) {}
-    }
-    const answer = await callPeer.createAnswer();
+    await addPendingRemoteCandidates();
+
+    const answer = await callPeer.createAnswer({
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true
+    });
     await callPeer.setLocalDescription(answer);
-    await updateDoc(roomRef, { answer:{type:answer.type,sdp:answer.sdp}, status:'connected' });
-    callCandidatesUnsub = onSnapshot(collection(roomRef,'callerCandidates'), snap => {
-      snap.docChanges().forEach(async change => {
-        if (change.type !== 'added' || !callPeer) return;
-        const candidate = new RTCIceCandidate(change.doc.data());
-        if (!callPeer.remoteDescription) {
-          pendingRemoteCandidates.push(candidate);
-          return;
-        }
-        try { await callPeer.addIceCandidate(candidate); } catch(e) {}
-      });
+
+    await updateDoc(roomRef, {
+      answer: {
+        type: answer.type,
+        sdp: answer.sdp
+      },
+      status: 'connected'
     });
+
+    setCallStatus(`Connecting with @${currentCallPartnerName}…`);
+
     callRoomUnsub = onSnapshot(roomRef, snap => {
-      if (!snap.exists()) return;
+      if (!snap.exists() || !callPeer) return;
       const d = snap.data();
-      if (d.status === 'ended' || d.status === 'declined') endVideoCall(false);
+      if (d.status === 'ended' || d.status === 'declined') {
+        endVideoCall(false);
+      }
     });
-    setCallStatus(`Connected with @${currentCallPartnerName}`);
+
+    callConnectingTimer = setTimeout(() => {
+      if (!callHasConnected && callPeer && ['new','connecting'].includes(callPeer.connectionState)) {
+        try { callPeer.restartIce?.(); } catch (_) {}
+        setCallStatus('Still connecting… retrying network path');
+      }
+    }, 7000);
+
   } catch(e) {
     console.error('Accept call:', e);
     showToast('Could not answer call: ' + e.message, 'error');
     await endVideoCall(false);
   }
 }
+
 async function declineIncomingCall(roomId) {
-  try { await updateDoc(doc(db,'call_rooms',roomId), {status:'declined'}); } catch(e) {}
+  try {
+    await updateDoc(doc(db, 'call_rooms', roomId), {
+      status: 'declined',
+      endedAt: serverTimestamp()
+    });
+  } catch(e) {
+    console.warn('Could not decline call:', e);
+  }
+  if (callRoomId === roomId) callRoomId = null;
   hideCallModal();
   document.getElementById('incoming-call-panel').style.display='none';
 }
+
 function setupIncomingCallListener() {
   if (incomingCallUnsub || !currentUser) return;
-  const q = query(collection(db,'call_rooms'), where('calleeUid','==',currentUser.uid), limit(10));
+
+  const q = query(
+    collection(db, 'call_rooms'),
+    where('calleeUid', '==', currentUser.uid),
+    limit(10)
+  );
+
   incomingCallUnsub = onSnapshot(q, snap => {
     if (callPeer) return;
-    const pending = snap.docs.find(x => x.data()?.status === 'ringing');
+
+    const pending = snap.docs
+      .filter(x => x.data()?.status === 'ringing')
+      .sort((a,b) => {
+        const at = a.data()?.createdAt?.toMillis?.() || 0;
+        const bt = b.data()?.createdAt?.toMillis?.() || 0;
+        return bt - at;
+      })[0];
+
     if (!pending) return;
-    const d = pending;
-    const data = d.data();
-    callRoomId = d.id;
+
+    const data = pending.data();
+    callRoomId = pending.id;
     currentCallPartnerUid = data.callerUid;
     currentCallPartnerName = data.callerName || 'friend';
+
     document.getElementById('incoming-call-name').textContent = `@${currentCallPartnerName}`;
     document.getElementById('video-call-title').textContent = '📹 Incoming FaceTime';
     document.getElementById('active-call-panel').style.display = 'none';
     document.getElementById('incoming-call-panel').style.display = 'block';
     showCallModal();
     setCallStatus('Incoming video call');
-    document.getElementById('btn-answer-call').onclick = () => acceptIncomingCall(d.id,data);
-    document.getElementById('btn-decline-call').onclick = () => declineIncomingCall(d.id);
+
+    document.getElementById('btn-answer-call').onclick = () => acceptIncomingCall(pending.id, data);
+    document.getElementById('btn-decline-call').onclick = () => declineIncomingCall(pending.id);
+  }, err => {
+    console.error('Incoming call listener failed:', err);
   });
 }
+
 document.getElementById('btn-video-call')?.addEventListener('click', () => {
-  if (!privateChatPartner) { showToast('Open a private chat first.', 'info'); return; }
+  if (!privateChatPartner) {
+    showToast('Open a private chat first.', 'info');
+    return;
+  }
+
   if (!window.isSecureContext && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
     showToast('FaceTime needs the secure School Social website (HTTPS). A downloaded HTML file cannot use your camera.', 'error');
     return;
   }
+
   const u = allUsersCache.find(x => x.uid === privateChatPartner);
   startVideoCall(privateChatPartner, u?.username || 'friend');
 });
+
 document.getElementById('btn-end-call')?.addEventListener('click', () => endVideoCall(true));
+
 document.getElementById('video-call-close')?.addEventListener('click', () => {
-  if (callPeer) endVideoCall(true); else hideCallModal();
+  if (callPeer || callRoomId) endVideoCall(true);
+  else hideCallModal();
 });
+
 document.getElementById('btn-toggle-mic')?.addEventListener('click', () => {
   const track = localCallStream?.getAudioTracks?.()[0];
   if (!track) return;
   track.enabled = !track.enabled;
   document.getElementById('btn-toggle-mic').textContent = track.enabled ? '🎙️ Mic' : '🔇 Muted';
 });
+
 document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
   const track = localCallStream?.getVideoTracks?.()[0];
   if (!track) return;
