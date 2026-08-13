@@ -5454,6 +5454,53 @@ html.instant-boot *{animation-delay:0s!important}
 </style>
 <script>document.documentElement.classList.add('instant-boot');setTimeout(function(){document.documentElement.classList.remove('instant-boot')},220);</script>
 
+
+<style id="school-social-upgrade-v3">
+/* SS login identity animation */
+.auth-signal-pro{isolation:isolate;animation:ssLogoFloat 4s ease-in-out infinite;}
+.auth-signal-pro .auth-signal-core{position:relative;z-index:5;animation:ssLogoSpin 5s linear infinite,ssLogoPulse 2.2s ease-in-out infinite;}
+.auth-signal-pro::before,.auth-signal-pro::after,.auth-signal-pro .auth-signal-ring{content:"";position:absolute;inset:-12px;border:1px solid rgba(34,229,255,.38);border-radius:50%;pointer-events:none;}
+.auth-signal-pro::before{inset:-22px;border-color:rgba(168,85,247,.30);animation:ssOrbit 7s linear infinite;}
+.auth-signal-pro::after{inset:-34px;border-color:rgba(255,47,142,.24);border-style:dashed;animation:ssOrbitReverse 10s linear infinite;}
+.auth-signal-pro .auth-signal-ring{inset:-45px;border-color:rgba(34,229,255,.13);animation:ssOrbit 14s linear infinite;}
+@keyframes ssLogoSpin{from{transform:rotateY(0deg) rotateZ(0deg)}to{transform:rotateY(360deg) rotateZ(360deg)}}
+@keyframes ssLogoPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(34,229,255,.28))}50%{filter:drop-shadow(0 0 22px rgba(34,229,255,.75))}}
+@keyframes ssOrbit{to{transform:rotate(360deg)}}
+@keyframes ssOrbitReverse{to{transform:rotate(-360deg)}}
+@keyframes ssLogoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Cleaner, less-messy profile presentation — existing controls/features remain intact. */
+#tab-profile .profile-cover{height:clamp(110px,24vw,190px);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.22);}
+#tab-profile .profile-avatar-large{width:clamp(82px,16vw,126px);height:clamp(82px,16vw,126px);border-radius:28px;margin-top:-42px;border:4px solid var(--bg-panel);box-shadow:0 12px 35px rgba(0,0,0,.35);}
+#tab-profile .profile-name{font-size:clamp(20px,4vw,30px);letter-spacing:-.4px;margin-top:7px;}
+#tab-profile .profile-bio{max-width:720px;margin:6px auto 10px;line-height:1.55;color:var(--text-secondary);}
+#tab-profile .profile-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-width:620px;margin:12px auto;}
+#tab-profile .profile-stats .stat{min-width:0;padding:10px 6px;border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));border:1px solid var(--border-soft);}
+#tab-profile .badges-container{max-width:760px;margin:10px auto 14px;padding:8px;border-radius:16px;background:rgba(255,255,255,.018);border:1px solid var(--border-soft);}
+#tab-profile .profile-interests{padding:10px;border-radius:16px;background:rgba(255,255,255,.018);border:1px solid var(--border-soft);}
+#tab-profile .profile-social-row,#tab-profile .profile-custom-row{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.045);}
+
+/* Admin Owner sub-tabs + Vault */
+.owner-subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;padding:5px;border:1px solid rgba(255,215,0,.13);border-radius:14px;background:rgba(255,255,255,.018);}
+.owner-subtab{border:1px solid var(--border-soft);background:rgba(255,255,255,.025);color:var(--text-secondary);border-radius:10px;padding:8px 11px;font:800 9px/1 inherit;cursor:pointer;transition:.18s;}
+.owner-subtab:hover{border-color:rgba(255,215,0,.45);color:#fff;}
+.owner-subtab.active{color:#000;background:linear-gradient(135deg,#ffd700,#ff9d00);border-color:#ffd700;box-shadow:0 0 18px rgba(255,215,0,.18);}
+.owner-main-tools{display:block;}
+.owner-vault-panel{display:none;padding:12px;border:1px solid rgba(255,215,0,.18);border-radius:16px;background:linear-gradient(145deg,rgba(255,215,0,.045),rgba(255,255,255,.015));}
+.owner-vault-panel.active{display:block;}
+.owner-vault-lock{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.owner-vault-lock input{flex:1;min-width:180px;}
+.vault-result{margin-top:9px;padding:10px;border-radius:14px;background:rgba(0,0,0,.18);border:1px solid var(--border-soft);display:none;}
+.vault-result.show{display:block;}
+.vault-field{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.045);font-size:9px;}
+.vault-field:last-child{border-bottom:0;}
+.vault-field .label{color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
+.vault-field .value{color:#fff;text-align:right;word-break:break-word;}
+.vault-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
+.vault-note{font-size:8px;color:var(--text-muted);line-height:1.45;margin-top:8px;}
+@media(max-width:600px){#tab-profile .profile-stats{grid-template-columns:repeat(3,1fr);}.owner-subtab{flex:1;min-width:100px;text-align:center;}.vault-field{flex-direction:column;gap:2px}.vault-field .value{text-align:left;}}
+@media(prefers-reduced-motion:reduce){.auth-signal-pro,.auth-signal-pro .auth-signal-core,.auth-signal-pro::before,.auth-signal-pro::after,.auth-signal-pro .auth-signal-ring{animation:none!important;}}
+</style>
 </head>
 <body>
 
@@ -5565,6 +5612,7 @@ html.instant-boot *{animation-delay:0s!important}
                     </select>
                     <input type="text" id="signup-security-q-custom" class="input" placeholder="Your own security question" style="display:none;margin-top:6px;" />
                     <input type="text" id="signup-security-a" class="input" placeholder="Your answer" />
+                    <div style="font-size:8px;color:var(--text-muted);margin-top:4px;line-height:1.4;">Keep this answer private. It is used to recover your account if you forget your password.</div>
                 </div>
                 <button id="btn-signup" class="btn btn-primary btn-block">Register</button>
                 <p class="auth-switch">Already registered? <span id="switch-to-login">Sign In</span></p>
@@ -6286,6 +6334,10 @@ html.instant-boot *{animation-delay:0s!important}
                         <div class="admin-tab-panel" id="admin-tab-owner">
                             <div class="admin-owner-section" id="owner-only-section" style="border-color:rgba(255,215,0,0.2);">
                                 <div class="owner-title">👑 Owner-Only Tools <span class="owner-only-badge">Owner/Co‑Owner</span></div>
+                                <div class="owner-subtabs" id="owner-subtabs">
+                                    <button type="button" class="owner-subtab active" data-owner-subtab="tools">🧰 Owner Tools</button>
+                                    <button type="button" class="owner-subtab" data-owner-subtab="vault">🔐 Admin Owner Vault</button>
+                                </div>
 
                                 <div class="admin-owner-grid" id="owner-stats-grid">
                                     <div class="owner-stat"><div class="num" id="ostats-users">0</div><div class="lbl">Total Users</div></div>
@@ -6293,6 +6345,8 @@ html.instant-boot *{animation-delay:0s!important}
                                     <div class="owner-stat"><div class="num" id="ostats-coins">0</div><div class="lbl">Total Coins</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-online">0</div><div class="lbl">Online Now</div></div>
                                 </div>
+
+                                <div id="owner-main-tools" class="owner-main-tools">
 
                                 <div style="margin-top:10px;border-top:1px solid var(--border-soft);padding-top:10px;">
                                     <div style="font-size:9px;color:var(--text-secondary);margin-bottom:4px;">🪙 Coin Generator — give coins to any user</div>
@@ -6415,6 +6469,24 @@ html.instant-boot *{animation-delay:0s!important}
                                     </div>
                                     <div id="custom-badge-matrix-status" style="font-size:8px;color:var(--text-muted);margin-top:2px;"></div>
                                 </div>
+                                </div>
+
+                                <div id="owner-vault-panel" class="owner-vault-panel">
+                                    <div style="font-weight:900;color:#ffd700;font-size:12px;">🔐 Admin Owner Vault</div>
+                                    <div class="vault-note">Secondary recovery gate for Owner/Co‑Owner. This vault never displays a user's existing password or security-answer secret. It provides account recovery controls instead.</div>
+                                    <div id="owner-vault-lock" class="owner-vault-lock" style="margin-top:9px;">
+                                        <input id="owner-vault-password" class="input" type="password" placeholder="Vault password" autocomplete="off" />
+                                        <button id="owner-vault-unlock" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 13px;">Unlock Vault</button>
+                                    </div>
+                                    <div id="owner-vault-body" style="display:none;">
+                                        <div class="coin-gen-row" style="margin-top:10px;">
+                                            <input id="owner-vault-username" class="input" type="text" placeholder="Search username" style="flex:1;min-height:34px;" />
+                                            <button id="owner-vault-search" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 13px;">Search</button>
+                                            <button id="owner-vault-lock-btn" class="btn btn-secondary btn-sm" style="min-height:34px;padding:0 13px;">Lock</button>
+                                        </div>
+                                        <div id="owner-vault-result" class="vault-result"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -6508,7 +6580,7 @@ html.instant-boot *{animation-delay:0s!important}
 <div id="video-call-modal" aria-hidden="true">
   <div class="video-call-card">
     <div class="video-call-head">
-      <div><div class="video-call-title" id="video-call-title">📹 FaceTime</div><div class="video-call-status" id="video-call-status">Ready</div></div>
+      <div><div class="video-call-title" id="video-call-title">📹 FaceTime</div><div class="video-call-status" id="video-call-status">Ready · Android / iPhone / iPad / PC compatible</div></div>
       <button id="video-call-close" class="btn btn-secondary btn-sm" style="min-height:30px;padding:0 10px;">✕</button>
     </div>
     <div id="incoming-call-panel" style="display:none;text-align:center;padding:16px 6px 8px;">
@@ -10907,7 +10979,12 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                         showToast(`Purchased ${item.name}!`, 'success');
                         const updated = await getDoc(doc(db, 'users', currentUser.uid));
                         if (updated.exists()) {
-                            unlockedEmotes = updated.data().unlockedEmotes || [];
+                            const fresh = updated.data();
+                            // Keep the live profile cache in sync so purchased cosmetics/effects are immediately usable.
+                            currentUserProfile = { ...(currentUserProfile || {}), ...fresh };
+                            if (typeof applyPermanentProfileEffects === 'function') applyPermanentProfileEffects(fresh);
+                            if (typeof renderActiveShopEffects === 'function') renderActiveShopEffects();
+                            unlockedEmotes = fresh.unlockedEmotes || [];
                             renderEmotePicker();
                             loadUserXpBoost();
                         }
@@ -14456,6 +14533,161 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             });
         });
 
+        // ─── Owner Sub-Tabs + Admin Owner Vault ───
+        let ownerVaultUnlocked = false;
+        let ownerVaultAutoLockTimer = null;
+
+        async function sha256Text(value) {
+            const data = new TextEncoder().encode(value);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+        }
+
+        async function logOwnerVaultAction(message) {
+            try {
+                await addDoc(collection(db, 'owner_vault_logs'), {
+                    byUid: currentUser.uid,
+                    byUsername: currentUserProfile?.username || 'unknown',
+                    message,
+                    createdAt: serverTimestamp()
+                });
+            } catch (e) { console.warn('Vault audit log unavailable:', e); }
+        }
+
+        function lockOwnerVault() {
+            ownerVaultUnlocked = false;
+            if (ownerVaultAutoLockTimer) clearTimeout(ownerVaultAutoLockTimer);
+            ownerVaultAutoLockTimer = null;
+            const body = document.getElementById('owner-vault-body');
+            const lock = document.getElementById('owner-vault-lock');
+            const result = document.getElementById('owner-vault-result');
+            if (body) body.style.display = 'none';
+            if (lock) lock.style.display = 'flex';
+            if (result) { result.classList.remove('show'); result.innerHTML = ''; }
+            const pass = document.getElementById('owner-vault-password');
+            if (pass) pass.value = '';
+        }
+
+        function armOwnerVaultAutoLock() {
+            if (ownerVaultAutoLockTimer) clearTimeout(ownerVaultAutoLockTimer);
+            ownerVaultAutoLockTimer = setTimeout(lockOwnerVault, 10 * 60 * 1000);
+        }
+
+        async function unlockOwnerVault() {
+            if (!isCurrentUserOwnerOrCoOwner()) {
+                showToast('Only Owner and Co-Owner can open the Owner Vault.', 'error');
+                return;
+            }
+            const input = document.getElementById('owner-vault-password');
+            const password = input?.value || '';
+            if (password.length < 6) { showToast('Vault password must be at least 6 characters.', 'error'); return; }
+
+            const ref = doc(db, 'app_settings', 'owner_vault');
+            const snap = await getDoc(ref);
+            const hash = await sha256Text(password);
+
+            if (!snap.exists()) {
+                // First Owner/Co-Owner can initialize the vault. Only the hash is stored.
+                await setDoc(ref, { passwordHash: hash, initializedBy: currentUser.uid, updatedAt: serverTimestamp() });
+                showToast('Owner Vault created. Keep this password safe.', 'success');
+                await logOwnerVaultAction('Initialized Owner Vault');
+            } else if (snap.data().passwordHash !== hash) {
+                showToast('Incorrect Owner Vault password.', 'error');
+                await logOwnerVaultAction('Failed Owner Vault unlock attempt');
+                return;
+            } else {
+                await logOwnerVaultAction('Unlocked Owner Vault');
+            }
+
+            ownerVaultUnlocked = true;
+            document.getElementById('owner-vault-lock').style.display = 'none';
+            document.getElementById('owner-vault-body').style.display = 'block';
+            armOwnerVaultAutoLock();
+        }
+
+        async function searchOwnerVaultUser() {
+            if (!ownerVaultUnlocked || !isCurrentUserOwnerOrCoOwner()) {
+                showToast('Unlock the Owner Vault first.', 'error'); return;
+            }
+            armOwnerVaultAutoLock();
+            const username = document.getElementById('owner-vault-username').value.trim().toLowerCase();
+            const result = document.getElementById('owner-vault-result');
+            if (!username) { showToast('Enter a username.', 'error'); return; }
+
+            const usernameSnap = await getDoc(doc(db, 'usernames', username));
+            if (!usernameSnap.exists()) {
+                result.classList.add('show');
+                result.innerHTML = '<div style="color:#ff2f8e;">❌ User not found.</div>';
+                return;
+            }
+            const uid = usernameSnap.data().uid;
+            const userSnap = await getDoc(doc(db, 'users', uid));
+            if (!userSnap.exists()) {
+                result.classList.add('show');
+                result.innerHTML = '<div style="color:#ff2f8e;">❌ User profile not found.</div>';
+                return;
+            }
+            const d = userSnap.data();
+            const badges = Array.isArray(d.badges) ? d.badges.join(', ') || 'None' : 'None';
+            const inventory = Array.isArray(d.inventory) ? d.inventory.map(x => typeof x === 'string' ? x : (x?.id || 'item')).join(', ') || 'None' : 'None';
+            const question = d.securityQuestion || 'Not configured';
+
+            result.classList.add('show');
+            result.innerHTML = `
+                <div style="font-weight:900;color:#ffd700;margin-bottom:7px;">👤 @${d.username || username}</div>
+                <div class="vault-field"><span class="label">UID</span><span class="value">${d.uid || uid}</span></div>
+                <div class="vault-field"><span class="label">Display Name</span><span class="value">${d.displayName || '—'}</span></div>
+                <div class="vault-field"><span class="label">Security Question</span><span class="value">${question}</span></div>
+                <div class="vault-field"><span class="label">Password</span><span class="value">🔒 Not retrievable — use recovery reset</span></div>
+                <div class="vault-field"><span class="label">Badges</span><span class="value">${badges}</span></div>
+                <div class="vault-field"><span class="label">Inventory</span><span class="value">${inventory}</span></div>
+                <div class="vault-actions">
+                    <button class="btn btn-gold btn-sm" id="vault-reset-password">🔄 Require Password Reset</button>
+                    <button class="btn btn-secondary btn-sm" id="vault-reset-question">🛡️ Reset Security Question</button>
+                </div>
+                <div id="vault-action-status" class="vault-note"></div>`;
+
+            document.getElementById('vault-reset-password').onclick = async () => {
+                if (!confirm(`Require @${d.username || username} to complete password recovery?`)) return;
+                await updateDoc(doc(db, 'users', uid), { forcePasswordReset: true });
+                await logOwnerVaultAction(`Required password recovery for @${d.username || username}`);
+                document.getElementById('vault-action-status').textContent = '✅ Recovery flag saved. The user can use Forgot Password and their security question.';
+                showToast('Recovery reset enabled.', 'success');
+            };
+
+            document.getElementById('vault-reset-question').onclick = async () => {
+                const newQuestion = prompt('Enter the new security question:');
+                if (!newQuestion || newQuestion.trim().length < 5) return;
+                const newAnswer = prompt('Enter the new security answer. This will not be displayed later:');
+                if (!newAnswer || newAnswer.trim().length < 2) return;
+                // Store a normalized value for the legacy recovery flow while avoiding any admin display.
+                // A future server callable can migrate this to a one-way hash without changing the UI.
+                await updateDoc(doc(db, 'users', uid), {
+                    securityQuestion: newQuestion.trim().slice(0,120),
+                    securityAnswer: newAnswer.trim().toLowerCase().slice(0,120)
+                });
+                await logOwnerVaultAction(`Reset security question for @${d.username || username}`);
+                document.getElementById('vault-action-status').textContent = '✅ Security question updated.';
+                showToast('Security question updated.', 'success');
+            };
+        }
+
+        document.querySelectorAll('.owner-subtab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!isCurrentUserOwnerOrCoOwner()) return;
+                document.querySelectorAll('.owner-subtab').forEach(b => b.classList.toggle('active', b === btn));
+                const vault = btn.dataset.ownerSubtab === 'vault';
+                document.getElementById('owner-main-tools').style.display = vault ? 'none' : 'block';
+                document.getElementById('owner-vault-panel').classList.toggle('active', vault);
+                if (!vault) lockOwnerVault();
+            });
+        });
+        document.getElementById('owner-vault-unlock')?.addEventListener('click', unlockOwnerVault);
+        document.getElementById('owner-vault-search')?.addEventListener('click', searchOwnerVaultUser);
+        document.getElementById('owner-vault-lock-btn')?.addEventListener('click', lockOwnerVault);
+        document.getElementById('owner-vault-password')?.addEventListener('keydown', e => { if (e.key === 'Enter') unlockOwnerVault(); });
+        document.getElementById('owner-vault-username')?.addEventListener('keydown', e => { if (e.key === 'Enter') searchOwnerVaultUser(); });
+
         // ─── Owner-Only: Role List ───
         async function loadOwnerRoleList() {
             if (!isCurrentUserOwnerOrCoOwner()) return;
@@ -15082,7 +15314,7 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             const badges = (data.badges || []).join(', ') || 'None';
             const inventory = (data.inventory || []).join(', ') || 'None';
             const secQ = data.securityQuestion || 'Not set';
-            const secA = data.securityAnswer || 'Not set';
+            const recoveryState = data.securityQuestion ? 'Security question configured' : 'No security question configured';
 
             resultEl.classList.add('show');
             resultEl.innerHTML = `
@@ -15096,7 +15328,7 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                 <div class="lookup-field"><span class="label">Banned</span><span class="value">${data.banned ? '⛔ Yes' : '✅ No'}</span></div>
                 <div class="lookup-field"><span class="label">Created</span><span class="value">${created}</span></div>
                 <div class="lookup-field"><span class="label">Security Q</span><span class="value">${secQ}</span></div>
-                <div class="lookup-field"><span class="label">Security A</span><span class="value">${secA}</span></div>
+                <div class="lookup-field"><span class="label">Recovery</span><span class="value">${recoveryState}</span></div>
                 <div class="lookup-field"><span class="label">Muted</span><span class="value">${data.muted ? '🔇 Yes' : '🔊 No'}</span></div>
                 <div class="lookup-field"><span class="label">Restricted</span><span class="value">${data.restricted ? '⛔ Yes' : '✅ No'}</span></div>
             `;
