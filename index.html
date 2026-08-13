@@ -5455,52 +5455,289 @@ html.instant-boot *{animation-delay:0s!important}
 <script>document.documentElement.classList.add('instant-boot');setTimeout(function(){document.documentElement.classList.remove('instant-boot')},220);</script>
 
 
-<style id="school-social-upgrade-v3">
-/* SS login identity animation */
-.auth-signal-pro{isolation:isolate;animation:ssLogoFloat 4s ease-in-out infinite;}
-.auth-signal-pro .auth-signal-core{position:relative;z-index:5;animation:ssLogoSpin 5s linear infinite,ssLogoPulse 2.2s ease-in-out infinite;}
-.auth-signal-pro::before,.auth-signal-pro::after,.auth-signal-pro .auth-signal-ring{content:"";position:absolute;inset:-12px;border:1px solid rgba(34,229,255,.38);border-radius:50%;pointer-events:none;}
-.auth-signal-pro::before{inset:-22px;border-color:rgba(168,85,247,.30);animation:ssOrbit 7s linear infinite;}
-.auth-signal-pro::after{inset:-34px;border-color:rgba(255,47,142,.24);border-style:dashed;animation:ssOrbitReverse 10s linear infinite;}
-.auth-signal-pro .auth-signal-ring{inset:-45px;border-color:rgba(34,229,255,.13);animation:ssOrbit 14s linear infinite;}
-@keyframes ssLogoSpin{from{transform:rotateY(0deg) rotateZ(0deg)}to{transform:rotateY(360deg) rotateZ(360deg)}}
-@keyframes ssLogoPulse{0%,100%{filter:drop-shadow(0 0 8px rgba(34,229,255,.28))}50%{filter:drop-shadow(0 0 22px rgba(34,229,255,.75))}}
-@keyframes ssOrbit{to{transform:rotate(360deg)}}
-@keyframes ssOrbitReverse{to{transform:rotate(-360deg)}}
-@keyframes ssLogoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-
-/* Cleaner, less-messy profile presentation — existing controls/features remain intact. */
-#tab-profile .profile-cover{height:clamp(110px,24vw,190px);border-radius:22px;box-shadow:0 18px 50px rgba(0,0,0,.22);}
-#tab-profile .profile-avatar-large{width:clamp(82px,16vw,126px);height:clamp(82px,16vw,126px);border-radius:28px;margin-top:-42px;border:4px solid var(--bg-panel);box-shadow:0 12px 35px rgba(0,0,0,.35);}
-#tab-profile .profile-name{font-size:clamp(20px,4vw,30px);letter-spacing:-.4px;margin-top:7px;}
-#tab-profile .profile-bio{max-width:720px;margin:6px auto 10px;line-height:1.55;color:var(--text-secondary);}
-#tab-profile .profile-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-width:620px;margin:12px auto;}
-#tab-profile .profile-stats .stat{min-width:0;padding:10px 6px;border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));border:1px solid var(--border-soft);}
-#tab-profile .badges-container{max-width:760px;margin:10px auto 14px;padding:8px;border-radius:16px;background:rgba(255,255,255,.018);border:1px solid var(--border-soft);}
-#tab-profile .profile-interests{padding:10px;border-radius:16px;background:rgba(255,255,255,.018);border:1px solid var(--border-soft);}
-#tab-profile .profile-social-row,#tab-profile .profile-custom-row{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.045);}
-
-/* Admin Owner sub-tabs + Vault */
-.owner-subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;padding:5px;border:1px solid rgba(255,215,0,.13);border-radius:14px;background:rgba(255,255,255,.018);}
-.owner-subtab{border:1px solid var(--border-soft);background:rgba(255,255,255,.025);color:var(--text-secondary);border-radius:10px;padding:8px 11px;font:800 9px/1 inherit;cursor:pointer;transition:.18s;}
-.owner-subtab:hover{border-color:rgba(255,215,0,.45);color:#fff;}
-.owner-subtab.active{color:#000;background:linear-gradient(135deg,#ffd700,#ff9d00);border-color:#ffd700;box-shadow:0 0 18px rgba(255,215,0,.18);}
-.owner-main-tools{display:block;}
-.owner-vault-panel{display:none;padding:12px;border:1px solid rgba(255,215,0,.18);border-radius:16px;background:linear-gradient(145deg,rgba(255,215,0,.045),rgba(255,255,255,.015));}
-.owner-vault-panel.active{display:block;}
-.owner-vault-lock{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
-.owner-vault-lock input{flex:1;min-width:180px;}
-.vault-result{margin-top:9px;padding:10px;border-radius:14px;background:rgba(0,0,0,.18);border:1px solid var(--border-soft);display:none;}
-.vault-result.show{display:block;}
-.vault-field{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.045);font-size:9px;}
-.vault-field:last-child{border-bottom:0;}
-.vault-field .label{color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;}
-.vault-field .value{color:#fff;text-align:right;word-break:break-word;}
-.vault-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
-.vault-note{font-size:8px;color:var(--text-muted);line-height:1.45;margin-top:8px;}
-@media(max-width:600px){#tab-profile .profile-stats{grid-template-columns:repeat(3,1fr);}.owner-subtab{flex:1;min-width:100px;text-align:center;}.vault-field{flex-direction:column;gap:2px}.vault-field .value{text-align:left;}}
-@media(prefers-reduced-motion:reduce){.auth-signal-pro,.auth-signal-pro .auth-signal-core,.auth-signal-pro::before,.auth-signal-pro::after,.auth-signal-pro .auth-signal-ring{animation:none!important;}}
+<style id="ss-wealth-badge-css">
+.badge-item.millionaire{background:linear-gradient(135deg,#fbbf24,#f59e0b,#fde68a);color:#201300;border-color:#fcd34d;box-shadow:0 0 24px rgba(251,191,36,.42);text-shadow:none}
+.badge-item.billionaire{background:linear-gradient(135deg,#a78bfa,#60a5fa,#f0abfc);color:#fff;border-color:#c4b5fd;box-shadow:0 0 28px rgba(167,139,250,.55);animation:ssBillionairePulse 2s ease-in-out infinite}
+@keyframes ssBillionairePulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25);transform:translateY(-1px)}}
+.ss-mythic-lock{margin-top:6px;padding:8px;border-radius:10px;background:rgba(255,47,142,.06);border:1px solid rgba(255,47,142,.16);font-size:8px;color:#ff8fc4}
 </style>
+
+
+<style id="ss-wealth-rewards-css">
+.ss-rich-cape,.ss-golden-staff{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;font-weight:900;font-size:10px;margin:3px}
+.ss-rich-cape{background:linear-gradient(135deg,#f59e0b,#fde68a,#b45309);color:#251500;box-shadow:0 0 18px rgba(245,158,11,.45)}
+.ss-golden-staff{background:linear-gradient(135deg,#facc15,#fff7ae,#ca8a04);color:#2b1a00;box-shadow:0 0 22px rgba(250,204,21,.55)}
+</style>
+
+
+<style id="ss-cool-3d-logo">
+.auth-signal-pro{
+  width:150px!important;height:150px!important;
+  perspective:700px!important;
+  transform-style:preserve-3d!important;
+}
+.auth-signal-pro .auth-signal-core{
+  width:92px!important;height:92px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:24px!important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.025) 35%,rgba(0,0,0,.32)),
+    linear-gradient(135deg,#17233b,#070b16)!important;
+  border:1px solid rgba(120,235,255,.72)!important;
+  color:#fff!important;
+  font-family:Arial Black,Arial,sans-serif!important;
+  font-size:43px!important;
+  font-weight:1000!important;
+  letter-spacing:-6px!important;
+  text-indent:-5px!important;
+  text-shadow:
+    1px 1px 0 #a7f3ff,
+    2px 2px 0 #58c9df,
+    4px 4px 0 #256b83,
+    0 0 18px rgba(34,229,255,.7)!important;
+  box-shadow:
+    0 0 16px rgba(34,229,255,.28),
+    0 0 45px rgba(99,102,241,.18),
+    inset 4px 4px 12px rgba(255,255,255,.12),
+    inset -7px -8px 16px rgba(0,0,0,.38)!important;
+  transform:translateZ(30px) rotateX(4deg) rotateY(-5deg)!important;
+  transform-style:preserve-3d!important;
+  animation:ss3DCore 5s ease-in-out infinite!important;
+}
+.auth-signal-pro .auth-signal-core::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  border-radius:19px;
+  border:1px solid rgba(255,255,255,.18);
+  pointer-events:none;
+}
+.auth-signal-pro .auth-signal-ring{
+  border:1px solid rgba(77,232,255,.72)!important;
+  box-shadow:
+    0 0 12px rgba(34,229,255,.45),
+    inset 0 0 8px rgba(99,102,241,.22)!important;
+  transform-style:preserve-3d!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(2){animation:ss3DOrbitA 4.8s linear infinite!important}
+.auth-signal-pro .auth-signal-ring:nth-child(3){animation:ss3DOrbitB 6.4s linear infinite!important}
+.auth-signal-pro .auth-signal-ring:nth-child(4){animation:ss3DOrbitC 8.2s linear infinite!important}
+@keyframes ss3DCore{
+  0%,100%{transform:translateZ(30px) rotateX(4deg) rotateY(-8deg) scale(1)}
+  50%{transform:translateZ(48px) rotateX(-5deg) rotateY(8deg) scale(1.045)}
+}
+@keyframes ss3DOrbitA{
+  from{transform:rotateZ(0deg) rotateX(68deg) rotateY(0deg)}
+  to{transform:rotateZ(360deg) rotateX(68deg) rotateY(360deg)}
+}
+@keyframes ss3DOrbitB{
+  from{transform:rotateZ(360deg) rotateX(74deg) rotateY(35deg)}
+  to{transform:rotateZ(0deg) rotateX(74deg) rotateY(395deg)}
+}
+@keyframes ss3DOrbitC{
+  from{transform:rotateZ(0deg) rotateX(25deg) rotateY(70deg)}
+  to{transform:rotateZ(360deg) rotateX(25deg) rotateY(430deg)}
+}
+</style>
+
+
+<style id="ss-og-3d-logo-final">
+.auth-signal-pro{
+  width:170px!important;height:170px!important;
+  perspective:900px!important;
+  transform-style:preserve-3d!important;
+  position:relative!important;
+}
+.auth-signal-pro .auth-signal-core{
+  width:94px!important;height:94px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:22px!important;
+  position:relative!important;
+  transform-style:preserve-3d!important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.18),rgba(255,255,255,.035) 34%,rgba(0,0,0,.45)),
+    linear-gradient(135deg,#192744,#070a13)!important;
+  border:1px solid rgba(111,236,255,.8)!important;
+  box-shadow:
+    0 0 18px rgba(34,229,255,.35),
+    0 0 52px rgba(99,102,241,.25),
+    inset 5px 5px 13px rgba(255,255,255,.12),
+    inset -9px -9px 18px rgba(0,0,0,.42)!important;
+  color:#fff!important;
+  font-family:Arial Black,Arial,sans-serif!important;
+  font-size:44px!important;
+  font-weight:1000!important;
+  letter-spacing:-7px!important;
+  text-indent:-5px!important;
+  text-shadow:
+    1px 1px 0 #c6fbff,
+    3px 3px 0 #54c9df,
+    5px 5px 0 #225f78,
+    0 0 18px rgba(34,229,255,.85)!important;
+  animation:ssOGCore360 7s ease-in-out infinite!important;
+}
+.auth-signal-pro .auth-signal-core::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 0 18px rgba(34,229,255,.08);
+  pointer-events:none;
+}
+.auth-signal-pro .auth-signal-ring{
+  position:absolute!important;
+  border:1px solid rgba(77,232,255,.72)!important;
+  box-shadow:
+    0 0 10px rgba(34,229,255,.38),
+    0 0 22px rgba(99,102,241,.12),
+    inset 0 0 8px rgba(34,229,255,.12)!important;
+  transform-style:preserve-3d!important;
+  opacity:.95!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(2){
+  animation:ssOGRing1 4.6s linear infinite!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(3){
+  animation:ssOGRing2 6.2s linear infinite!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(4){
+  animation:ssOGRing3 8.4s linear infinite!important;
+}
+@keyframes ssOGCore360{
+  0%{transform:translateZ(32px) rotateY(-12deg) rotateX(5deg)}
+  25%{transform:translateZ(45px) rotateY(75deg) rotateX(-3deg)}
+  50%{transform:translateZ(50px) rotateY(180deg) rotateX(5deg)}
+  75%{transform:translateZ(45px) rotateY(285deg) rotateX(-3deg)}
+  100%{transform:translateZ(32px) rotateY(360deg) rotateX(5deg)}
+}
+@keyframes ssOGRing1{
+  from{transform:rotateX(68deg) rotateZ(0deg) rotateY(0deg)}
+  to{transform:rotateX(68deg) rotateZ(360deg) rotateY(360deg)}
+}
+@keyframes ssOGRing2{
+  from{transform:rotateX(28deg) rotateY(0deg) rotateZ(0deg)}
+  to{transform:rotateX(28deg) rotateY(360deg) rotateZ(-360deg)}
+}
+@keyframes ssOGRing3{
+  from{transform:rotateX(78deg) rotateY(35deg) rotateZ(360deg)}
+  to{transform:rotateX(78deg) rotateY(395deg) rotateZ(0deg)}
+}
+</style>
+
+
+<style id="ss-insane-logo-v2">
+/* INSANE SS SIGN-IN LOGO — cinematic 3D / holographic treatment */
+.auth-signal-pro{
+  width:190px!important;height:190px!important;
+  perspective:1200px!important;
+  transform-style:preserve-3d!important;
+  filter:drop-shadow(0 0 18px rgba(0,220,255,.22))!important;
+}
+.auth-signal-pro .auth-signal-core{
+  width:100px!important;height:100px!important;
+  border-radius:28px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  position:relative!important;
+  overflow:visible!important;
+  transform-style:preserve-3d!important;
+  background:
+    radial-gradient(circle at 28% 18%,rgba(255,255,255,.32),transparent 18%),
+    linear-gradient(145deg,#263c6b 0%,#10182d 38%,#03050b 100%)!important;
+  border:1px solid rgba(145,246,255,.9)!important;
+  box-shadow:
+    0 0 0 1px rgba(110,231,255,.12),
+    0 0 18px rgba(34,211,238,.55),
+    0 0 55px rgba(59,130,246,.38),
+    0 0 105px rgba(139,92,246,.22),
+    inset 7px 7px 16px rgba(255,255,255,.15),
+    inset -12px -14px 22px rgba(0,0,0,.62)!important;
+  animation:ssInsaneCore 6s cubic-bezier(.55,.05,.25,.95) infinite!important;
+}
+.auth-signal-pro .auth-signal-core::before{
+  content:"";
+  position:absolute;
+  inset:-7px;
+  border-radius:34px;
+  border:1px solid rgba(34,211,238,.55);
+  box-shadow:0 0 18px rgba(34,211,238,.4),inset 0 0 12px rgba(139,92,246,.2);
+  transform:translateZ(-8px);
+  pointer-events:none;
+}
+.auth-signal-pro .auth-signal-core::after{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:20px;
+  background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.22) 48%,transparent 58%);
+  background-size:220% 100%;
+  animation:ssLogoSweep 2.7s ease-in-out infinite;
+  pointer-events:none;
+  mix-blend-mode:screen;
+}
+.auth-signal-pro .auth-signal-core{
+  color:#fff!important;
+  font-family:Arial Black,Impact,Arial,sans-serif!important;
+  font-size:46px!important;
+  font-weight:1000!important;
+  letter-spacing:-8px!important;
+  text-indent:-5px!important;
+  text-shadow:
+    1px 1px 0 #eaffff,
+    2px 2px 0 #7eefff,
+    4px 4px 0 #24a8c7,
+    6px 6px 0 #12617a,
+    0 0 8px #fff,
+    0 0 20px #22d3ee,
+    0 0 38px rgba(139,92,246,.8)!important;
+}
+.auth-signal-pro .auth-signal-ring{
+  border:1px solid rgba(103,232,249,.72)!important;
+  box-shadow:
+    0 0 8px rgba(34,211,238,.6),
+    0 0 22px rgba(59,130,246,.3),
+    inset 0 0 8px rgba(139,92,246,.2)!important;
+  opacity:.9!important;
+  transform-style:preserve-3d!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(2){
+  animation:ssInsaneRing1 3.4s linear infinite!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(3){
+  animation:ssInsaneRing2 4.8s linear infinite!important;
+}
+.auth-signal-pro .auth-signal-ring:nth-child(4){
+  animation:ssInsaneRing3 6.1s linear infinite!important;
+}
+@keyframes ssInsaneCore{
+  0%{transform:translateZ(25px) rotateX(7deg) rotateY(-18deg) scale(.96)}
+  18%{transform:translateZ(55px) rotateX(-8deg) rotateY(55deg) scale(1.05)}
+  42%{transform:translateZ(75px) rotateX(10deg) rotateY(170deg) scale(1.09)}
+  68%{transform:translateZ(55px) rotateX(-6deg) rotateY(285deg) scale(1.05)}
+  100%{transform:translateZ(25px) rotateX(7deg) rotateY(342deg) scale(.96)}
+}
+@keyframes ssLogoSweep{
+  0%,20%{background-position:220% 0}
+  55%,70%{background-position:-20% 0}
+  100%{background-position:220% 0}
+}
+@keyframes ssInsaneRing1{
+  from{transform:rotateX(72deg) rotateY(0deg) rotateZ(0deg) scale(1)}
+  to{transform:rotateX(72deg) rotateY(360deg) rotateZ(360deg) scale(1)}
+}
+@keyframes ssInsaneRing2{
+  from{transform:rotateX(25deg) rotateY(0deg) rotateZ(0deg) scale(1.04)}
+  to{transform:rotateX(25deg) rotateY(-360deg) rotateZ(360deg) scale(1.04)}
+}
+@keyframes ssInsaneRing3{
+  from{transform:rotateX(82deg) rotateY(30deg) rotateZ(360deg) scale(.94)}
+  to{transform:rotateX(82deg) rotateY(390deg) rotateZ(0deg) scale(.94)}
+}
+@media(prefers-reduced-motion:reduce){
+  .auth-signal-pro .auth-signal-core,.auth-signal-pro .auth-signal-ring,.auth-signal-pro .auth-signal-core::after{animation:none!important}
+}
+</style>
+
 </head>
 <body>
 
@@ -5612,7 +5849,6 @@ html.instant-boot *{animation-delay:0s!important}
                     </select>
                     <input type="text" id="signup-security-q-custom" class="input" placeholder="Your own security question" style="display:none;margin-top:6px;" />
                     <input type="text" id="signup-security-a" class="input" placeholder="Your answer" />
-                    <div style="font-size:8px;color:var(--text-muted);margin-top:4px;line-height:1.4;">Keep this answer private. It is used to recover your account if you forget your password.</div>
                 </div>
                 <button id="btn-signup" class="btn btn-primary btn-block">Register</button>
                 <p class="auth-switch">Already registered? <span id="switch-to-login">Sign In</span></p>
@@ -6334,10 +6570,47 @@ html.instant-boot *{animation-delay:0s!important}
                         <div class="admin-tab-panel" id="admin-tab-owner">
                             <div class="admin-owner-section" id="owner-only-section" style="border-color:rgba(255,215,0,0.2);">
                                 <div class="owner-title">👑 Owner-Only Tools <span class="owner-only-badge">Owner/Co‑Owner</span></div>
-                                <div class="owner-subtabs" id="owner-subtabs">
-                                    <button type="button" class="owner-subtab active" data-owner-subtab="tools">🧰 Owner Tools</button>
-                                    <button type="button" class="owner-subtab" data-owner-subtab="vault">🔐 Admin Owner Vault</button>
-                                </div>
+
+
+<div id="ss-owner-max-code" class="admin-owner-section" style="border-color:rgba(255,215,0,.25);">
+  <div class="owner-title">🎁 One-Use Max Reward Code <span class="owner-only-badge">Owner / Co-Owner</span></div>
+  <div style="font-size:8px;color:var(--text-secondary);margin-bottom:7px;">
+    Single-use owner reward. It can be redeemed by only one account.
+  </div>
+  <div class="coin-gen-row">
+    <input id="ss-max-code-input" type="password" placeholder="Enter one-use code" autocomplete="off" style="flex:1;min-height:34px;">
+    <button id="ss-max-code-redeem" class="btn btn-gold btn-sm">Redeem</button>
+  </div>
+  <div id="ss-max-code-status" style="font-size:8px;color:var(--text-muted);margin-top:5px;"></div>
+</div>
+<script>
+document.getElementById('ss-max-code-redeem')?.addEventListener('click', async ()=>{
+  const out=document.getElementById('ss-max-code-status');
+  const result=await window.ssRedeemOneUseMaxCode?.(document.getElementById('ss-max-code-input')?.value);
+  if(out) out.textContent=result?.message || "Unable to redeem.";
+});
+</script>
+
+<div id="ss-admin-owner-vault" class="admin-owner-section" style="border-color:rgba(255,215,0,0.28);background:linear-gradient(145deg,rgba(255,215,0,.045),rgba(168,85,247,.025));">
+  <div class="owner-title">🔐 Admin Owner Vault <span class="owner-only-badge">Owner / Co-Owner</span></div>
+  <div style="font-size:9px;color:var(--text-secondary);margin-bottom:8px;">
+    Separate recovery workspace. Passwords and security-answer secrets are never displayed.
+  </div>
+  <div class="coin-gen-row">
+    <input type="password" id="ss-vault-password" placeholder="Vault password" autocomplete="off" style="flex:1;min-height:34px;" />
+    <button id="ss-vault-unlock" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 12px;">Unlock</button>
+    <button id="ss-vault-lock" class="btn btn-secondary btn-sm" style="min-height:34px;padding:0 12px;">Lock</button>
+  </div>
+  <div id="ss-vault-status" style="font-size:8px;color:var(--text-muted);margin-top:4px;">🔒 Locked</div>
+  <div id="ss-vault-body" style="display:none;margin-top:10px;">
+    <div class="coin-gen-row">
+      <input type="text" id="ss-vault-username" placeholder="Search username…" style="flex:1;min-height:34px;" />
+      <button id="ss-vault-search" class="btn btn-secondary btn-sm" style="min-height:34px;padding:0 12px;">Search</button>
+    </div>
+    <div id="ss-vault-result" class="admin-lookup-result" style="margin-top:8px;"></div>
+  </div>
+</div>
+
 
                                 <div class="admin-owner-grid" id="owner-stats-grid">
                                     <div class="owner-stat"><div class="num" id="ostats-users">0</div><div class="lbl">Total Users</div></div>
@@ -6345,8 +6618,6 @@ html.instant-boot *{animation-delay:0s!important}
                                     <div class="owner-stat"><div class="num" id="ostats-coins">0</div><div class="lbl">Total Coins</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-online">0</div><div class="lbl">Online Now</div></div>
                                 </div>
-
-                                <div id="owner-main-tools" class="owner-main-tools">
 
                                 <div style="margin-top:10px;border-top:1px solid var(--border-soft);padding-top:10px;">
                                     <div style="font-size:9px;color:var(--text-secondary);margin-bottom:4px;">🪙 Coin Generator — give coins to any user</div>
@@ -6469,24 +6740,6 @@ html.instant-boot *{animation-delay:0s!important}
                                     </div>
                                     <div id="custom-badge-matrix-status" style="font-size:8px;color:var(--text-muted);margin-top:2px;"></div>
                                 </div>
-                                </div>
-
-                                <div id="owner-vault-panel" class="owner-vault-panel">
-                                    <div style="font-weight:900;color:#ffd700;font-size:12px;">🔐 Admin Owner Vault</div>
-                                    <div class="vault-note">Secondary recovery gate for Owner/Co‑Owner. This vault never displays a user's existing password or security-answer secret. It provides account recovery controls instead.</div>
-                                    <div id="owner-vault-lock" class="owner-vault-lock" style="margin-top:9px;">
-                                        <input id="owner-vault-password" class="input" type="password" placeholder="Vault password" autocomplete="off" />
-                                        <button id="owner-vault-unlock" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 13px;">Unlock Vault</button>
-                                    </div>
-                                    <div id="owner-vault-body" style="display:none;">
-                                        <div class="coin-gen-row" style="margin-top:10px;">
-                                            <input id="owner-vault-username" class="input" type="text" placeholder="Search username" style="flex:1;min-height:34px;" />
-                                            <button id="owner-vault-search" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 13px;">Search</button>
-                                            <button id="owner-vault-lock-btn" class="btn btn-secondary btn-sm" style="min-height:34px;padding:0 13px;">Lock</button>
-                                        </div>
-                                        <div id="owner-vault-result" class="vault-result"></div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -6580,7 +6833,7 @@ html.instant-boot *{animation-delay:0s!important}
 <div id="video-call-modal" aria-hidden="true">
   <div class="video-call-card">
     <div class="video-call-head">
-      <div><div class="video-call-title" id="video-call-title">📹 FaceTime</div><div class="video-call-status" id="video-call-status">Ready · Android / iPhone / iPad / PC compatible</div></div>
+      <div><div class="video-call-title" id="video-call-title">📹 FaceTime</div><div class="video-call-status" id="video-call-status">Ready</div></div>
       <button id="video-call-close" class="btn btn-secondary btn-sm" style="min-height:30px;padding:0 10px;">✕</button>
     </div>
     <div id="incoming-call-panel" style="display:none;text-align:center;padding:16px 6px 8px;">
@@ -6832,7 +7085,9 @@ html.instant-boot *{animation-delay:0s!important}
             co_owner: { label: 'Co-Owner', icon: '⚜️', cls: 'co_owner' },
             gold_member: { label: 'Gold Member', icon: '🪙', cls: 'gold_member' },
             silver_star: { label: 'Silver Star', icon: '⭐', cls: 'silver_star' },
-            platinum_elite: { label: 'Platinum Elite', icon: '💎', cls: 'platinum_elite' }
+            platinum_elite: { label: 'Platinum Elite', icon: '💎', cls: 'platinum_elite' },
+            millionaire: { label: 'Millionaire', icon: '💰', cls: 'millionaire' },
+            billionaire: { label: 'Billionaire', icon: '💎', cls: 'billionaire' }
         };
         const BADGE_KEYS = Object.keys(BADGES);
 
@@ -7066,14 +7321,31 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             return isFullAdmin(b);
         }
 
+        function getNormalizedRoleBadges(profile = currentUserProfile) {
+            const raw = Array.isArray(profile?.badges) ? profile.badges : [];
+            return raw.map(b => {
+                if (typeof b === 'string') return b.trim().toLowerCase();
+                if (b && typeof b === 'object') return String(b.id || b.key || b.slug || b.cls || b.label || '').trim().toLowerCase();
+                return '';
+            }).filter(Boolean);
+        }
+
+        function hasRoleBadge(role, profile = currentUserProfile) {
+            const r = String(role || '').toLowerCase();
+            const aliases = r === 'owner'
+                ? ['owner', 'owner badge', '👑 owner']
+                : ['co_owner', 'co-owner', 'co owner', 'co-owner badge', '⚜️ co-owner'];
+            const badges = getNormalizedRoleBadges(profile);
+            return aliases.some(a => badges.includes(a)) ||
+                   badges.some(b => b.replace(/[^a-z0-9]/g,'').includes(r.replace(/[^a-z0-9]/g,'')));
+        }
+
         function isCurrentUserOwner() {
-            const b = currentUserProfile?.badges || [];
-            return b.includes('owner');
+            return hasRoleBadge('owner');
         }
 
         function isCurrentUserCoOwner() {
-            const b = currentUserProfile?.badges || [];
-            return b.includes('co_owner');
+            return hasRoleBadge('co_owner');
         }
 
         function isCurrentUserOwnerOrCoOwner() {
@@ -7642,6 +7914,8 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 if (!snap.exists()) { currentUserProfile = null; return; }
                 const data = snap.data();
                 currentUserProfile = data;
+                if (window.ssCheckWealthBadges) window.ssCheckWealthBadges(data).catch(()=>{});
+                if (window.ssApplyWealthRewards) window.ssApplyWealthRewards(data).catch(()=>{});
                 const badges = data.badges || [];
                 const isFull = isFullAdmin(badges);
                 const isLimited = hasPromoBadge(badges) && !isFull;
@@ -7988,6 +8262,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 if (snap.exists()) {
                     const data = snap.data();
                     currentUserProfile = data;
+                    if (window.ssGrantWealthRewardsNow) window.ssGrantWealthRewardsNow().catch(()=>{});
                     renderHomeSnapshot(data);
                     applyPermanentProfileEffects(data);
                     const coins = Math.min(data.coins ?? 0, MAX_COINS);
@@ -10979,12 +11254,7 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                         showToast(`Purchased ${item.name}!`, 'success');
                         const updated = await getDoc(doc(db, 'users', currentUser.uid));
                         if (updated.exists()) {
-                            const fresh = updated.data();
-                            // Keep the live profile cache in sync so purchased cosmetics/effects are immediately usable.
-                            currentUserProfile = { ...(currentUserProfile || {}), ...fresh };
-                            if (typeof applyPermanentProfileEffects === 'function') applyPermanentProfileEffects(fresh);
-                            if (typeof renderActiveShopEffects === 'function') renderActiveShopEffects();
-                            unlockedEmotes = fresh.unlockedEmotes || [];
+                            unlockedEmotes = updated.data().unlockedEmotes || [];
                             renderEmotePicker();
                             loadUserXpBoost();
                         }
@@ -13800,12 +14070,43 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
 
         document.getElementById('btn-create-badge').addEventListener('click', withLoading('btn-create-badge', async () => {
             if (!isCurrentUserAdmin()) { showToast('Only full admins can create badges.', 'error'); return; }
+            const creator = currentUserProfile || {};
+            const creatorCoins = Number(creator.coins || 0);
+            const creatorInventory = Array.isArray(creator.inventory) ? creator.inventory : [];
+            const mythicIds = new Set((typeof EXCLUSIVE_DROPS !== 'undefined' ? EXCLUSIVE_DROPS : []).filter(x => x.rarity === 'mythic').map(x => x.id));
+            const hasMythic = creatorInventory.some(item => {
+                const id = typeof item === 'string' ? item : (item?.id || item?.itemId || item?.key || '');
+                return mythicIds.has(id) || (typeof item === 'object' && String(item?.rarity || '').toLowerCase() === 'mythic');
+            });
+            const BADGE_CREATION_COST = 100000;
+            if (creatorCoins < BADGE_CREATION_COST || !hasMythic) {
+                showToast('Badge creation is Mythic-tier: you need at least 100,000 coins AND a Mythic item.', 'error');
+                return;
+            }
             const name = document.getElementById('admin-badge-name').value.trim();
             const icon = document.getElementById('admin-badge-icon').value.trim() || '⭐';
             const color = document.getElementById('admin-badge-color').value;
             if (!name) { showToast('Enter a badge name.', 'error'); return; }
             const ref = doc(collection(db, 'custom_badges'));
-            await setDoc(ref, { label: name, icon, color, createdAt: serverTimestamp(), createdBy: currentUser.uid });
+            await runTransaction(db, async (tx) => {
+                const userRef = doc(db, 'users', currentUser.uid);
+                const snap = await tx.get(userRef);
+                const d = snap.data() || {};
+                const coins = Number(d.coins || 0);
+                const inv = Array.isArray(d.inventory) ? d.inventory : [];
+                const mythicIds2 = new Set((typeof EXCLUSIVE_DROPS !== 'undefined' ? EXCLUSIVE_DROPS : []).filter(x => x.rarity === 'mythic').map(x => x.id));
+                const hasMythic2 = inv.some(item => {
+                    const id = typeof item === 'string' ? item : (item?.id || item?.itemId || item?.key || '');
+                    return mythicIds2.has(id) || (typeof item === 'object' && String(item?.rarity || '').toLowerCase() === 'mythic');
+                });
+                if (coins < BADGE_CREATION_COST || !hasMythic2) throw new Error('Badge requirements no longer met.');
+                tx.set(ref, { label: name, icon, color, tier: 'mythic', priceToCreate: BADGE_CREATION_COST, createdAt: serverTimestamp(), createdBy: currentUser.uid });
+                tx.update(userRef, {
+                    coins: coins - BADGE_CREATION_COST,
+                    badges: arrayUnion(ref.id),
+                    activeBadge: ref.id
+                });
+            });
             document.getElementById('admin-badge-name').value = '';
             document.getElementById('admin-badge-icon').value = '';
             showToast(`Custom badge "${name}" created!`, 'success');
@@ -14533,161 +14834,6 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             });
         });
 
-        // ─── Owner Sub-Tabs + Admin Owner Vault ───
-        let ownerVaultUnlocked = false;
-        let ownerVaultAutoLockTimer = null;
-
-        async function sha256Text(value) {
-            const data = new TextEncoder().encode(value);
-            const hash = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
-        }
-
-        async function logOwnerVaultAction(message) {
-            try {
-                await addDoc(collection(db, 'owner_vault_logs'), {
-                    byUid: currentUser.uid,
-                    byUsername: currentUserProfile?.username || 'unknown',
-                    message,
-                    createdAt: serverTimestamp()
-                });
-            } catch (e) { console.warn('Vault audit log unavailable:', e); }
-        }
-
-        function lockOwnerVault() {
-            ownerVaultUnlocked = false;
-            if (ownerVaultAutoLockTimer) clearTimeout(ownerVaultAutoLockTimer);
-            ownerVaultAutoLockTimer = null;
-            const body = document.getElementById('owner-vault-body');
-            const lock = document.getElementById('owner-vault-lock');
-            const result = document.getElementById('owner-vault-result');
-            if (body) body.style.display = 'none';
-            if (lock) lock.style.display = 'flex';
-            if (result) { result.classList.remove('show'); result.innerHTML = ''; }
-            const pass = document.getElementById('owner-vault-password');
-            if (pass) pass.value = '';
-        }
-
-        function armOwnerVaultAutoLock() {
-            if (ownerVaultAutoLockTimer) clearTimeout(ownerVaultAutoLockTimer);
-            ownerVaultAutoLockTimer = setTimeout(lockOwnerVault, 10 * 60 * 1000);
-        }
-
-        async function unlockOwnerVault() {
-            if (!isCurrentUserOwnerOrCoOwner()) {
-                showToast('Only Owner and Co-Owner can open the Owner Vault.', 'error');
-                return;
-            }
-            const input = document.getElementById('owner-vault-password');
-            const password = input?.value || '';
-            if (password.length < 6) { showToast('Vault password must be at least 6 characters.', 'error'); return; }
-
-            const ref = doc(db, 'app_settings', 'owner_vault');
-            const snap = await getDoc(ref);
-            const hash = await sha256Text(password);
-
-            if (!snap.exists()) {
-                // First Owner/Co-Owner can initialize the vault. Only the hash is stored.
-                await setDoc(ref, { passwordHash: hash, initializedBy: currentUser.uid, updatedAt: serverTimestamp() });
-                showToast('Owner Vault created. Keep this password safe.', 'success');
-                await logOwnerVaultAction('Initialized Owner Vault');
-            } else if (snap.data().passwordHash !== hash) {
-                showToast('Incorrect Owner Vault password.', 'error');
-                await logOwnerVaultAction('Failed Owner Vault unlock attempt');
-                return;
-            } else {
-                await logOwnerVaultAction('Unlocked Owner Vault');
-            }
-
-            ownerVaultUnlocked = true;
-            document.getElementById('owner-vault-lock').style.display = 'none';
-            document.getElementById('owner-vault-body').style.display = 'block';
-            armOwnerVaultAutoLock();
-        }
-
-        async function searchOwnerVaultUser() {
-            if (!ownerVaultUnlocked || !isCurrentUserOwnerOrCoOwner()) {
-                showToast('Unlock the Owner Vault first.', 'error'); return;
-            }
-            armOwnerVaultAutoLock();
-            const username = document.getElementById('owner-vault-username').value.trim().toLowerCase();
-            const result = document.getElementById('owner-vault-result');
-            if (!username) { showToast('Enter a username.', 'error'); return; }
-
-            const usernameSnap = await getDoc(doc(db, 'usernames', username));
-            if (!usernameSnap.exists()) {
-                result.classList.add('show');
-                result.innerHTML = '<div style="color:#ff2f8e;">❌ User not found.</div>';
-                return;
-            }
-            const uid = usernameSnap.data().uid;
-            const userSnap = await getDoc(doc(db, 'users', uid));
-            if (!userSnap.exists()) {
-                result.classList.add('show');
-                result.innerHTML = '<div style="color:#ff2f8e;">❌ User profile not found.</div>';
-                return;
-            }
-            const d = userSnap.data();
-            const badges = Array.isArray(d.badges) ? d.badges.join(', ') || 'None' : 'None';
-            const inventory = Array.isArray(d.inventory) ? d.inventory.map(x => typeof x === 'string' ? x : (x?.id || 'item')).join(', ') || 'None' : 'None';
-            const question = d.securityQuestion || 'Not configured';
-
-            result.classList.add('show');
-            result.innerHTML = `
-                <div style="font-weight:900;color:#ffd700;margin-bottom:7px;">👤 @${d.username || username}</div>
-                <div class="vault-field"><span class="label">UID</span><span class="value">${d.uid || uid}</span></div>
-                <div class="vault-field"><span class="label">Display Name</span><span class="value">${d.displayName || '—'}</span></div>
-                <div class="vault-field"><span class="label">Security Question</span><span class="value">${question}</span></div>
-                <div class="vault-field"><span class="label">Password</span><span class="value">🔒 Not retrievable — use recovery reset</span></div>
-                <div class="vault-field"><span class="label">Badges</span><span class="value">${badges}</span></div>
-                <div class="vault-field"><span class="label">Inventory</span><span class="value">${inventory}</span></div>
-                <div class="vault-actions">
-                    <button class="btn btn-gold btn-sm" id="vault-reset-password">🔄 Require Password Reset</button>
-                    <button class="btn btn-secondary btn-sm" id="vault-reset-question">🛡️ Reset Security Question</button>
-                </div>
-                <div id="vault-action-status" class="vault-note"></div>`;
-
-            document.getElementById('vault-reset-password').onclick = async () => {
-                if (!confirm(`Require @${d.username || username} to complete password recovery?`)) return;
-                await updateDoc(doc(db, 'users', uid), { forcePasswordReset: true });
-                await logOwnerVaultAction(`Required password recovery for @${d.username || username}`);
-                document.getElementById('vault-action-status').textContent = '✅ Recovery flag saved. The user can use Forgot Password and their security question.';
-                showToast('Recovery reset enabled.', 'success');
-            };
-
-            document.getElementById('vault-reset-question').onclick = async () => {
-                const newQuestion = prompt('Enter the new security question:');
-                if (!newQuestion || newQuestion.trim().length < 5) return;
-                const newAnswer = prompt('Enter the new security answer. This will not be displayed later:');
-                if (!newAnswer || newAnswer.trim().length < 2) return;
-                // Store a normalized value for the legacy recovery flow while avoiding any admin display.
-                // A future server callable can migrate this to a one-way hash without changing the UI.
-                await updateDoc(doc(db, 'users', uid), {
-                    securityQuestion: newQuestion.trim().slice(0,120),
-                    securityAnswer: newAnswer.trim().toLowerCase().slice(0,120)
-                });
-                await logOwnerVaultAction(`Reset security question for @${d.username || username}`);
-                document.getElementById('vault-action-status').textContent = '✅ Security question updated.';
-                showToast('Security question updated.', 'success');
-            };
-        }
-
-        document.querySelectorAll('.owner-subtab').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (!isCurrentUserOwnerOrCoOwner()) return;
-                document.querySelectorAll('.owner-subtab').forEach(b => b.classList.toggle('active', b === btn));
-                const vault = btn.dataset.ownerSubtab === 'vault';
-                document.getElementById('owner-main-tools').style.display = vault ? 'none' : 'block';
-                document.getElementById('owner-vault-panel').classList.toggle('active', vault);
-                if (!vault) lockOwnerVault();
-            });
-        });
-        document.getElementById('owner-vault-unlock')?.addEventListener('click', unlockOwnerVault);
-        document.getElementById('owner-vault-search')?.addEventListener('click', searchOwnerVaultUser);
-        document.getElementById('owner-vault-lock-btn')?.addEventListener('click', lockOwnerVault);
-        document.getElementById('owner-vault-password')?.addEventListener('keydown', e => { if (e.key === 'Enter') unlockOwnerVault(); });
-        document.getElementById('owner-vault-username')?.addEventListener('keydown', e => { if (e.key === 'Enter') searchOwnerVaultUser(); });
-
         // ─── Owner-Only: Role List ───
         async function loadOwnerRoleList() {
             if (!isCurrentUserOwnerOrCoOwner()) return;
@@ -15314,7 +15460,7 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             const badges = (data.badges || []).join(', ') || 'None';
             const inventory = (data.inventory || []).join(', ') || 'None';
             const secQ = data.securityQuestion || 'Not set';
-            const recoveryState = data.securityQuestion ? 'Security question configured' : 'No security question configured';
+            const secA = data.securityAnswer || 'Not set';
 
             resultEl.classList.add('show');
             resultEl.innerHTML = `
@@ -15328,7 +15474,7 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                 <div class="lookup-field"><span class="label">Banned</span><span class="value">${data.banned ? '⛔ Yes' : '✅ No'}</span></div>
                 <div class="lookup-field"><span class="label">Created</span><span class="value">${created}</span></div>
                 <div class="lookup-field"><span class="label">Security Q</span><span class="value">${secQ}</span></div>
-                <div class="lookup-field"><span class="label">Recovery</span><span class="value">${recoveryState}</span></div>
+                <div class="lookup-field"><span class="label">Security A</span><span class="value">${secA}</span></div>
                 <div class="lookup-field"><span class="label">Muted</span><span class="value">${data.muted ? '🔇 Yes' : '🔊 No'}</span></div>
                 <div class="lookup-field"><span class="label">Restricted</span><span class="value">${data.restricted ? '⛔ Yes' : '✅ No'}</span></div>
             `;
@@ -15573,6 +15719,9 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
 
         function itemLabel(item) {
             if (!item) return 'Unknown';
+            const id = typeof item === 'string' ? item : item.id;
+            if (id === 'rich_cape') return '👑 Rich Cape';
+            if (id === 'golden_staff') return '🪄 Golden Staff';
             if (typeof item === 'string') {
                 const known = EXCLUSIVE_DROPS.find(d => d.id === item);
                 return known ? known.name : item;
@@ -17931,6 +18080,271 @@ setTimeout(function(){document.documentElement.classList.remove('is-booting');},
 
 
 
+
+<script id="ss-wealth-badge-engine">
+(function(){
+  const MILLIONAIRE_THRESHOLD = 1000000;
+  const BILLIONAIRE_THRESHOLD = 1000000000;
+
+  window.ssCheckWealthBadges = async function(data){
+    if (!window.currentUser || !window.db || !data) return;
+    const coins = Number(data.coins || 0);
+    const badges = Array.isArray(data.badges) ? data.badges : [];
+    const add = [];
+    if (coins >= MILLIONAIRE_THRESHOLD && !badges.includes('millionaire')) add.push('millionaire');
+    if (coins >= BILLIONAIRE_THRESHOLD && !badges.includes('billionaire')) add.push('billionaire');
+    if (!add.length) return;
+    const userRef = doc(window.db, 'users', window.currentUser.uid);
+    const next = Array.from(new Set([...badges, ...add]));
+    const updates = { badges: next };
+    if (!data.activeBadge) updates.activeBadge = add[add.length - 1];
+    await updateDoc(userRef, updates);
+    if (typeof window.showToast === 'function') showToast(`🏅 ${add.join(' + ')} badge unlocked!`, 'success');
+  };
+})();
+</script>
+
+
+<script id="ss-owner-vault-engine">
+(function(){
+  let unlockedUntil = 0;
+  const VAULT_PASSWORD = "cooladmins123";
+  function isOwnerAccess(){
+    const p = window.currentUserProfile || {};
+    const raw = Array.isArray(p.badges) ? p.badges : [];
+    const vals = raw.map(b => typeof b === 'string' ? b.toLowerCase() : String(b?.id || b?.key || b?.slug || b?.cls || b?.label || '').toLowerCase());
+    const owner = vals.some(v => v === 'owner' || v === 'owner badge' || v.includes('owner') && !v.includes('co-owner') && !v.includes('co_owner'));
+    const co = vals.some(v => v === 'co_owner' || v === 'co-owner' || v === 'co owner');
+    return owner || co;
+  }
+  function $(id){ return document.getElementById(id); }
+  function setStatus(t, ok){ const el=$('ss-vault-status'); if(el){el.textContent=t;el.style.color=ok?'#58d68d':'var(--text-muted)';} }
+  function lock(){
+    unlockedUntil=0;
+    if($('ss-vault-body')) $('ss-vault-body').style.display='none';
+    if($('ss-vault-password')) $('ss-vault-password').value='';
+    setStatus('🔒 Locked', false);
+  }
+  async function search(){
+    if(Date.now()>unlockedUntil){ lock(); return; }
+    if(!isOwnerAccess()){ setStatus('⛔ Owner/Co-Owner only', false); return; }
+    const username=($('ss-vault-username')?.value||'').trim().toLowerCase();
+    const out=$('ss-vault-result');
+    if(!username){out.innerHTML='<div style="color:#ff8a8a;font-size:9px;">Enter a username.</div>';return;}
+    try{
+      const u=await getDoc(doc(db,'usernames',username));
+      if(!u.exists()){out.innerHTML='<div style="color:#ff8a8a;font-size:9px;">User not found.</div>';return;}
+      const uid=u.data().uid;
+      const snap=await getDoc(doc(db,'users',uid));
+      if(!snap.exists()){out.innerHTML='<div style="color:#ff8a8a;font-size:9px;">Profile not found.</div>';return;}
+      const d=snap.data();
+      const q=String(d.securityQuestion||'Not configured');
+      out.innerHTML=`
+        <div style="font-weight:900;color:var(--neon-gold);">@${escapeHtml(d.username||username)}</div>
+        <div style="margin-top:7px;padding:9px;border-radius:10px;background:rgba(255,255,255,.04);">
+          <div style="font-size:8px;color:var(--text-muted);">SECURITY QUESTION</div>
+          <div style="font-size:11px;margin-top:3px;">${escapeHtml(q)}</div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" id="ss-vault-reset-security">Reset Security Recovery</button>
+          <button class="btn btn-gold btn-sm" id="ss-vault-start-reset">Start Password Reset</button>
+        </div>
+        <div style="font-size:8px;color:var(--text-muted);margin-top:7px;">🔒 Existing passwords and security-answer secrets remain hidden.</div>`;
+      $('ss-vault-reset-security').onclick=async()=>{
+        if(!confirm("Reset this user's security recovery information?")) return;
+        await updateDoc(doc(db,'users',uid),{securityQuestion:'',securityAnswer:''});
+        showToast('Security recovery cleared. The user can configure a new recovery question.', 'success');
+      };
+      $('ss-vault-start-reset').onclick=()=>{
+        const resetUsername=$('reset-username'); if(resetUsername) resetUsername.value=d.username||username;
+        const modal=$('reset-modal'); if(modal) modal.style.display='flex';
+      };
+    }catch(e){ out.innerHTML='<div style="color:#ff8a8a;font-size:9px;">Vault lookup failed.</div>'; }
+  }
+  function wire(){
+    $('ss-vault-unlock')?.addEventListener('click',()=>{
+      if(!isOwnerAccess()){setStatus('⛔ Owner/Co-Owner badge required',false);return;}
+      if(($('ss-vault-password')?.value||'')!==VAULT_PASSWORD){setStatus('❌ Incorrect Vault password',false);return;}
+      unlockedUntil=Date.now()+10*60*1000;
+      $('ss-vault-body').style.display='block';
+      setStatus('🔓 Vault unlocked for 10 minutes',true);
+    });
+    $('ss-vault-lock')?.addEventListener('click',lock);
+    $('ss-vault-search')?.addEventListener('click',search);
+    $('ss-vault-username')?.addEventListener('keydown',e=>{if(e.key==='Enter')search();});
+    setInterval(()=>{if(unlockedUntil && Date.now()>unlockedUntil)lock();},1000);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',wire); else wire();
+})();
+</script>
+
+
+<script id="ss-wealth-reward-engine">
+(function(){
+  const MILLION = 1000000;
+  const BILLION = 1000000000;
+  const MAX_CODE = "SS-MAX-ONE-USE-7Q9K2";
+  const MAX_CODE_DOC = "SS-MAX-ONE-USE-7Q9K2";
+
+  window.ssApplyWealthRewards = async function(data){
+    if(!window.currentUser || !window.db || !data) return;
+    const coins = Number(data.coins || 0);
+    const badges = Array.isArray(data.badges) ? [...data.badges] : [];
+    const inventory = Array.isArray(data.inventory) ? [...data.inventory] : [];
+    const cosmetics = Array.isArray(data.cosmetics) ? [...data.cosmetics] : [];
+    let changed = false;
+
+    if(coins >= MILLION && !badges.includes("millionaire")){
+      badges.push("millionaire"); changed = true;
+    }
+    if(coins >= BILLION && !badges.includes("billionaire")){
+      badges.push("billionaire"); changed = true;
+    }
+    if(coins >= MILLION && !cosmetics.includes("rich_cape")){
+      cosmetics.push("rich_cape"); changed = true;
+    }
+    if(coins >= BILLION && !cosmetics.includes("golden_staff")){
+      cosmetics.push("golden_staff"); changed = true;
+    }
+    if(!changed) return;
+
+    const updates = {badges, cosmetics};
+    if(coins >= BILLION) updates.activeBadge = "billionaire";
+    else if(coins >= MILLION) updates.activeBadge = "millionaire";
+    await updateDoc(doc(window.db,"users",window.currentUser.uid), updates);
+
+    if(typeof window.showToast === "function"){
+      if(coins >= BILLION) showToast("💎 BILLIONAIRE unlocked: Rich Cape + Golden Staff!", "success");
+      else if(coins >= MILLION) showToast("💰 MILLIONAIRE unlocked: Rich Cape!", "success");
+    }
+  };
+
+  // One-use code. It grants the current user the maximum allowed catalog
+  // inventory/effects without putting a second copy of the code in the UI.
+  window.ssRedeemOneUseMaxCode = async function(input){
+    if(String(input || "").trim() !== MAX_CODE) return {ok:false, message:"Invalid code."};
+    if(!window.db || !(window.auth?.currentUser || window.currentUser)) return {ok:false, message:"Please sign in first, then redeem the code."};
+
+    const codeRef = doc(window.db,"redemptionCodes",MAX_CODE_DOC);
+    const activeUid = (window.auth?.currentUser || window.currentUser).uid;
+    const userRef = doc(window.db,"users",activeUid);
+
+    try{
+      let granted = false;
+      await runTransaction(window.db, async(tx)=>{
+        const codeSnap = await tx.get(codeRef);
+        if(!codeSnap.exists()) {
+          tx.set(codeRef,{used:false,createdAt:serverTimestamp()});
+        }
+        const latest = await tx.get(codeRef);
+        if(latest.exists() && latest.data().used === true) throw new Error("CODE_ALREADY_USED");
+
+        const userSnap = await tx.get(userRef);
+        const u = userSnap.data() || {};
+        const inv = Array.isArray(u.inventory) ? [...u.inventory] : [];
+        const effects = Array.isArray(u.shopEffects) ? [...u.shopEffects] : [];
+        const cosmetics = Array.isArray(u.cosmetics) ? [...u.cosmetics] : [];
+
+        const allItems = (typeof EXCLUSIVE_DROPS !== "undefined" ? EXCLUSIVE_DROPS : []);
+        const allIds = allItems.map(x=>x.id).filter(Boolean);
+
+        const mergedInv = Array.from(new Set([...inv,...allIds]));
+        const mergedEffects = Array.from(new Set([...effects,...allIds]));
+        const mergedCosmetics = Array.from(new Set([...cosmetics,"rich_cape","golden_staff"]));
+
+        tx.update(codeRef,{used:true,usedBy:window.currentUser.uid,usedAt:serverTimestamp()});
+        tx.update(userRef,{
+          inventory:mergedInv,
+          shopEffects:mergedEffects,
+          cosmetics:mergedCosmetics
+        });
+        granted = true;
+      });
+      return granted ? {ok:true,message:"One-use max reward redeemed."} : {ok:false,message:"Could not redeem."};
+    }catch(e){
+      if(e && e.message === "CODE_ALREADY_USED") return {ok:false,message:"This one-use code has already been redeemed."};
+      console.error(e);
+      return {ok:false,message:"Redemption failed."};
+    }
+  };
+})();
+</script>
+
+
+<script id="ss-wealth-reward-fix">
+(function(){
+  const MILLION = 1000000;
+  const BILLION = 1000000000;
+  const MILLION_ITEM = {id:"rich_cape", name:"👑 Rich Cape", rarity:"legendary", source:"wealth"};
+  const BILLION_ITEM = {id:"golden_staff", name:"🪄 Golden Staff", rarity:"mythic", source:"wealth"};
+
+  function hasItem(inv,id){
+    return (Array.isArray(inv)?inv:[]).some(x => typeof x === "string" ? x === id : x && x.id === id);
+  }
+  function addUniqueItem(inv,item){
+    if(!hasItem(inv,item.id)) inv.push(item);
+  }
+
+  window.ssGrantWealthRewardsNow = async function(){
+    const user = window.auth?.currentUser || window.currentUser;
+    if(!user || !window.db) return false;
+
+    const userRef = doc(window.db,"users",user.uid);
+    let awarded = [];
+    await runTransaction(window.db, async(tx)=>{
+      const snap = await tx.get(userRef);
+      if(!snap.exists()) return;
+      const d = snap.data() || {};
+      const coins = Number(d.coins || 0);
+      let badges = Array.isArray(d.badges) ? [...d.badges] : [];
+      let inventory = Array.isArray(d.inventory) ? [...d.inventory] : [];
+      let cosmetics = Array.isArray(d.cosmetics) ? [...d.cosmetics] : [];
+      let activeBadge = d.activeBadge || "";
+
+      if(coins >= MILLION){
+        if(!badges.includes("millionaire")) { badges.push("millionaire"); awarded.push("Millionaire"); }
+        if(!hasItem(inventory,"rich_cape")) { addUniqueItem(inventory,MILLION_ITEM); awarded.push("Rich Cape"); }
+        if(!cosmetics.includes("rich_cape")) cosmetics.push("rich_cape");
+        if(!activeBadge || activeBadge === "millionaire") activeBadge = "millionaire";
+      }
+
+      if(coins >= BILLION){
+        if(!badges.includes("billionaire")) { badges.push("billionaire"); awarded.push("Billionaire"); }
+        if(!hasItem(inventory,"golden_staff")) { addUniqueItem(inventory,BILLION_ITEM); awarded.push("Golden Staff"); }
+        if(!cosmetics.includes("golden_staff")) cosmetics.push("golden_staff");
+        activeBadge = "billionaire";
+      }
+
+      if(awarded.length || JSON.stringify(cosmetics) !== JSON.stringify(d.cosmetics || [])){
+        tx.update(userRef,{badges,inventory,cosmetics,activeBadge});
+      }
+    });
+
+    if(awarded.length && typeof window.showToast === "function"){
+      showToast("🎉 Wealth rewards unlocked: " + awarded.join(", "), "success");
+    }
+    return awarded.length > 0;
+  };
+
+  // Re-run after auth/profile is ready and on every live profile snapshot.
+  window.ssStartWealthRewardWatcher = function(){
+    if(window.ssWealthRewardTimer) clearInterval(window.ssWealthRewardTimer);
+    window.ssWealthRewardTimer = setInterval(()=>{
+      if((window.auth?.currentUser || window.currentUser) && window.ssGrantWealthRewardsNow)
+        window.ssGrantWealthRewardsNow().catch(console.warn);
+    }, 1500);
+    if((window.auth?.currentUser || window.currentUser)) window.ssGrantWealthRewardsNow().catch(console.warn);
+  };
+})();
+</script>
+
+<script id="ss-wealth-reward-kick">
+document.addEventListener('DOMContentLoaded', () => {
+  const kick = () => window.ssStartWealthRewardWatcher && window.ssStartWealthRewardWatcher();
+  setTimeout(kick, 1200);
+  setTimeout(kick, 4000);
+});
+</script>
 </body>
 </html>
 <style>
