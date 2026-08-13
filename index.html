@@ -10075,17 +10075,75 @@ let callRetryTimer = null;
 let callHasConnected = false;
 let callEnding = false;
 
-const RTC_CONFIG = {
+let RTC_CONFIG = {
   iceCandidatePoolSize: 10,
   bundlePolicy: 'max-bundle',
   rtcpMuxPolicy: 'require',
+  iceTransportPolicy: 'all',
   iceServers: [
+    { urls: 'stun:stun.cloudflare.com:3478' },
     { urls: 'stun:stun.l.google.com:19302' },
     { urls: 'stun:stun1.l.google.com:19302' },
-    { urls: 'stun:stun2.l.google.com:19302' },
-    { urls: 'stun:stun.cloudflare.com:3478' }
+    { urls: 'stun:stun2.l.google.com:19302' }
   ]
 };
+
+// Global-call upgrade:
+// The browser must receive short-lived TURN credentials from your server.
+// Never put the long-lived Cloudflare TURN API token in this HTML.
+// Set window.SCHOOL_SOCIAL_TURN_ENDPOINT to your server endpoint, e.g.
+// "/api/turn-credentials" or "/_api/turn-credentials".
+let turnCredentialsLoaded = false;
+
+async function loadGlobalTurnCredentials() {
+  if (turnCredentialsLoaded) return true;
+
+  const endpoint =
+    window.SCHOOL_SOCIAL_TURN_ENDPOINT ||
+    '/api/turn-credentials';
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      credentials: 'include',
+      headers: { 'Accept': 'application/json' },
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      console.warn('TURN credential endpoint unavailable:', response.status);
+      return false;
+    }
+
+    const data = await response.json();
+    const iceServers = Array.isArray(data.iceServers) ? data.iceServers : [];
+
+    // Only accept the short-lived iceServers object returned by the
+    // backend. The permanent TURN key/token must never reach this page.
+    const validTurnServers = iceServers.filter(server =>
+      server &&
+      server.urls &&
+      (server.username || server.credential)
+    );
+
+    if (validTurnServers.length) {
+      RTC_CONFIG = {
+        ...RTC_CONFIG,
+        iceServers: [
+          ...RTC_CONFIG.iceServers,
+          ...validTurnServers
+        ]
+      };
+      turnCredentialsLoaded = true;
+      console.info('Global TURN relay enabled.');
+      return true;
+    }
+  } catch (error) {
+    console.warn('TURN setup unavailable; using direct WebRTC paths:', error);
+  }
+
+  return false;
+}
 
 function showCallModal() {
   const m = document.getElementById('video-call-modal');
@@ -10275,6 +10333,23 @@ async function addPendingRemoteCandidates() {
   }
 }
 
+async function getCallNetworkDiagnostics(pc) {
+  try {
+    const stats = await pc.getStats();
+    let candidates = 0;
+    let relayCandidates = 0;
+    stats.forEach(report => {
+      if (report.type === 'local-candidate') {
+        candidates++;
+        if (report.candidateType === 'relay') relayCandidates++;
+      }
+    });
+    return { candidates, relayCandidates };
+  } catch (_) {
+    return { candidates: 0, relayCandidates: 0 };
+  }
+}
+
 function watchConnectionState(pc) {
   pc.onconnectionstatechange = () => {
     const state = pc.connectionState;
@@ -10428,6 +10503,8 @@ async function startVideoCall(partnerUid, partnerName) {
   setCallStatus('Requesting camera & microphone…');
 
   try {
+    await loadGlobalTurnCredentials();
+    await loadGlobalTurnCredentials();
     await getCallMedia();
 
     callPeer = makePeer();
@@ -10498,10 +10575,16 @@ async function startVideoCall(partnerUid, partnerName) {
 
     // If signaling succeeds but no peer connection appears, recover instead
     // of leaving the user stuck on "Connecting" forever.
-    callConnectingTimer = setTimeout(() => {
+    callConnectingTimer = setTimeout(async () => {
       if (!callHasConnected && callPeer && ['new','connecting'].includes(callPeer.connectionState)) {
+        await loadGlobalTurnCredentials();
         try { callPeer.restartIce?.(); } catch (_) {}
-        setCallStatus('Still connecting… retrying network path');
+        const diag = await getCallNetworkDiagnostics(callPeer);
+        setCallStatus(
+          diag.relayCandidates
+            ? 'Still connecting… switching network path'
+            : 'Still connecting… retrying network path'
+        );
       }
     }, 7000);
 
@@ -10576,10 +10659,16 @@ async function acceptIncomingCall(roomId, roomData) {
       }
     });
 
-    callConnectingTimer = setTimeout(() => {
+    callConnectingTimer = setTimeout(async () => {
       if (!callHasConnected && callPeer && ['new','connecting'].includes(callPeer.connectionState)) {
+        await loadGlobalTurnCredentials();
         try { callPeer.restartIce?.(); } catch (_) {}
-        setCallStatus('Still connecting… retrying network path');
+        const diag = await getCallNetworkDiagnostics(callPeer);
+        setCallStatus(
+          diag.relayCandidates
+            ? 'Still connecting… switching network path'
+            : 'Still connecting… retrying network path'
+        );
       }
     }, 7000);
 
