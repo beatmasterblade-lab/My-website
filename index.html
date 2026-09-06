@@ -5912,6 +5912,33 @@ html.instant-boot *{animation-delay:0s!important}
 }
 .reels-empty .empty-icon, .reels-error .empty-icon{ font-size:44px; }
 
+.reel-slide-instagram{
+    align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 30%, #1a1230 0%, #050208 75%);
+}
+.reel-instagram-embed-wrap{
+    position:relative; width:min(100%, 540px); height:min(100%, 760px);
+    overflow:hidden; padding:0; display:flex; align-items:center; justify-content:center;
+    background:#000; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.35);
+}
+.reel-instagram-embed-wrap iframe{
+    width:100%; height:100%; min-height:520px; border:0; display:block;
+    background:#000;
+}
+.reel-instagram-fallback{
+    position:absolute; inset:auto 12px 12px; z-index:2; display:none;
+    padding:9px 12px; border-radius:10px; background:rgba(0,0,0,.72);
+    color:#fff; font-size:12px; text-align:center;
+}
+.reel-instagram-fallback a{ color:#fff; font-weight:800; text-decoration:none; }
+.reel-instagram-embed-wrap::-webkit-scrollbar{ display:none; }
+.reel-instagram-tag{
+    position:absolute; top:calc(env(safe-area-inset-top,0px) + 64px); left:50%; transform:translateX(-50%);
+    font-size:10px; font-weight:700; color:#fff; padding:4px 12px; border-radius:999px;
+    background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.16);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:3;
+}
+
 /* Small, safe polish: the nav bar now carries one more item — tighten gracefully */
 .bottom-navbar{ padding:0 0; }
 .nav-item .nav-label{ letter-spacing:0.3px; }
@@ -9952,7 +9979,9 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 avatarURL = data.avatarURL || '';
                 isVerified = !!data.verified; }
 
-            const mediaType = hasFile ? 'image' : (isVideoUrl(imageUrl) ? 'video' : 'image');
+            const mediaType = hasFile
+                ? 'image'
+                : (isInstagramUrl(imageUrl) ? 'instagram' : (isVideoUrl(imageUrl) ? 'video' : 'image'));
 
             try {
                 await addDoc(collection(db, 'posts'), {
@@ -18264,6 +18293,31 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             if (!url || typeof url !== 'string') return false;
             return /\.(mp4|webm|mov|m4v|ogv)(\?.*)?(#.*)?$/i.test(url.trim());
         }
+
+        // Instagram links are NOT image URLs. Treat them as embeds so the
+        // reels feed does not try to put an Instagram page inside <img>.
+        function getInstagramPermalink(url) {
+            if (!url || typeof url !== 'string') return null;
+            try {
+                const u = new URL(url.trim());
+                if (!/(^|\.)instagram\.com$/i.test(u.hostname)) return null;
+                const parts = u.pathname.split('/').filter(Boolean);
+                const kind = (parts[0] || '').toLowerCase();
+                const id = parts[1] || '';
+                if (!['reel', 'reels', 'p', 'tv'].includes(kind) || !id) return null;
+                return `https://www.instagram.com/${kind === 'reels' ? 'reel' : kind}/${encodeURIComponent(id)}/`;
+            } catch (e) {
+                return null;
+            }
+        }
+        function isInstagramUrl(url) {
+            return !!getInstagramPermalink(url);
+        }
+        function getInstagramEmbedUrl(url) {
+            const permalink = getInstagramPermalink(url);
+            if (!permalink) return null;
+            return permalink + 'embed/';
+        }
         function isVideoPost(post) {
             if (!post) return false;
             if (post.mediaType === 'video') return true;
@@ -18277,6 +18331,92 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#39;');
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  INSTAGRAM REELS — no login, no API keys.
+        //  Uses Instagram's own public embed widget to show real videos
+        //  from specific public posts/reels you choose. To feature a new
+        //  one: open it on instagram.com → "···" menu → Embed → copy the
+        //  link (or just the post URL) → add it to the list below.
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const INSTAGRAM_REEL_LINKS = [
+            'https://www.instagram.com/reel/Dco41zIhCHg/',
+            // 'https://www.instagram.com/reel/XXXXXXXXXXX/',
+            // 'https://www.instagram.com/p/XXXXXXXXXXX/',
+        ];
+        const INSTAGRAM_REEL_INTERVAL = 1; // show one IG embed after every N posts
+        let instagramReelsIndex = 0;
+        let reelsSinceLastInstagram = 0;
+        let instagramEmbedScriptPromise = null;
+
+        // Loads Instagram's public embed.js exactly once, however many
+        // embeds end up on the page.
+        function ensureInstagramEmbedScript() {
+            if (window.instgrm) return Promise.resolve();
+            if (instagramEmbedScriptPromise) return instagramEmbedScriptPromise;
+            instagramEmbedScriptPromise = new Promise((resolve, reject) => {
+                const existing = document.getElementById('instagram-embed-js');
+                if (existing) { existing.addEventListener('load', () => resolve()); return; }
+                const script = document.createElement('script');
+                script.id = 'instagram-embed-js';
+                script.async = true;
+                script.src = 'https://www.instagram.com/embed.js';
+                script.onload = () => resolve();
+                script.onerror = () => reject(new Error('Failed to load Instagram embed.js'));
+                document.body.appendChild(script);
+            });
+            return instagramEmbedScriptPromise;
+        }
+
+        // Tells the (already-loaded) Instagram embed script to scan the
+        // page and turn any new <blockquote class="instagram-media"> into
+        // a live embed. Safe to call repeatedly.
+        function processInstagramEmbeds() {
+            ensureInstagramEmbedScript().then(() => {
+                if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
+            }).catch(e => console.warn('Instagram embed load failed:', e));
+        }
+
+        function nextInstagramReelLink() {
+            if (!INSTAGRAM_REEL_LINKS.length) return null;
+            const link = INSTAGRAM_REEL_LINKS[instagramReelsIndex % INSTAGRAM_REEL_LINKS.length];
+            instagramReelsIndex++;
+            return link;
+        }
+
+        function buildInstagramReelSlide(url, instanceId) {
+            const slide = document.createElement('div');
+            slide.className = 'reel-slide reel-slide-instagram';
+            slide.dataset.instanceId = instanceId;
+            const permalink = getInstagramPermalink(url);
+            const embedUrl = getInstagramEmbedUrl(url);
+            if (!permalink || !embedUrl) return slide;
+
+            slide.innerHTML = `
+                <div class="reel-instagram-embed-wrap">
+                    <iframe
+                        src="${reelsEscapeHtml(embedUrl)}"
+                        title="Instagram Reel"
+                        loading="eager"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                        allowfullscreen
+                        scrolling="no"
+                        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                    <div class="reel-instagram-fallback">
+                        Instagram didn't load here. <a href="${reelsEscapeHtml(permalink)}" target="_blank" rel="noopener noreferrer">Open Reel</a>
+                    </div>
+                </div>
+                <div class="reel-instagram-tag">📷 From Instagram</div>
+            `;
+            const iframe = slide.querySelector('iframe');
+            const fallback = slide.querySelector('.reel-instagram-fallback');
+            if (iframe && fallback) {
+                const timer = setTimeout(() => { fallback.style.display = 'block'; }, 8000);
+                iframe.addEventListener('load', () => clearTimeout(timer), { once: true });
+                iframe.addEventListener('error', () => { clearTimeout(timer); fallback.style.display = 'block'; });
+            }
+            return slide;
         }
 
         function pauseAllReelVideos() {
@@ -18332,6 +18472,10 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             reelsExhausted = false;
             reelsLoopCount = 0;
             reelsAnyPostFound = false;
+            if (forceRefresh) {
+                instagramReelsIndex = 0;
+                reelsSinceLastInstagram = 0;
+            }
             if (reelsCommentUnsub) { reelsCommentUnsub(); reelsCommentUnsub = null; }
             if (reelsIO) { reelsIO.disconnect(); reelsIO = null; }
             viewport.innerHTML = '';
@@ -18378,6 +18522,20 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                         const slide = buildReelSlide(docSnap.id, post, instanceId);
                         viewport.appendChild(slide);
                         observeReelSlide(slide);
+
+                        // Sprinkle in a real Instagram embed every few posts.
+                        reelsSinceLastInstagram++;
+                        if (reelsSinceLastInstagram >= INSTAGRAM_REEL_INTERVAL) {
+                            const igUrl = nextInstagramReelLink();
+                            if (igUrl) {
+                                const igInstanceId = `ig-${reelsLoopCount}-${instagramReelsIndex}`;
+                                const igSlide = buildInstagramReelSlide(igUrl, igInstanceId);
+                                viewport.appendChild(igSlide);
+                                observeReelSlide(igSlide);
+                                processInstagramEmbeds();
+                            }
+                            reelsSinceLastInstagram = 0;
+                        }
                     });
                 }
 
@@ -18495,9 +18653,14 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             slide.innerHTML = `
                 <div class="reel-media-wrap">
                     ${post.imageUrl
-                        ? (video
-                            ? `<video src="${post.imageUrl}" playsinline loop muted preload="metadata"></video>`
-                            : `<img src="${post.imageUrl}" alt="reel" loading="lazy" />`)
+                        ? (post.mediaType === 'instagram' || isInstagramUrl(post.imageUrl)
+                            ? `<div class="reel-instagram-embed-wrap">
+                                <iframe src="${reelsEscapeHtml(getInstagramEmbedUrl(post.imageUrl) || '')}" title="Instagram Reel" loading="eager" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen scrolling="no" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                                <div class="reel-instagram-fallback">Instagram didn't load here. <a href="${reelsEscapeHtml(getInstagramPermalink(post.imageUrl) || post.imageUrl)}" target="_blank" rel="noopener noreferrer">Open Reel</a></div>
+                              </div>`
+                            : (video
+                                ? `<video src="${post.imageUrl}" playsinline loop muted preload="metadata"></video>`
+                                : `<img src="${post.imageUrl}" alt="reel" loading="lazy" />`))
                         : `<div class="reel-no-media"><span style="font-size:32px;">📝</span>Text post</div>`}
                 </div>
                 ${video ? `<button type="button" class="reel-mute-btn" aria-label="Toggle sound">${reelsSoundOn ? '🔊' : '🔇'}</button>` : ''}
@@ -18533,6 +18696,13 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
 
         function wireReelSlide(slide, pid, post) {
             const mediaWrap = slide.querySelector('.reel-media-wrap');
+            const instagramIframe = mediaWrap?.querySelector('.reel-instagram-embed-wrap iframe');
+            const instagramFallback = mediaWrap?.querySelector('.reel-instagram-fallback');
+            if (instagramIframe && instagramFallback) {
+                const timer = setTimeout(() => { instagramFallback.style.display = 'block'; }, 8000);
+                instagramIframe.addEventListener('load', () => clearTimeout(timer), { once: true });
+                instagramIframe.addEventListener('error', () => { clearTimeout(timer); instagramFallback.style.display = 'block'; });
+            }
             const heartBurst = slide.querySelector('.reel-double-tap-heart');
             const likeBtn = slide.querySelector('.reel-like-btn');
             const commentBtn = slide.querySelector('.reel-comment-btn');
