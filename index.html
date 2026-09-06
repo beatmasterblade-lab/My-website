@@ -5738,6 +5738,188 @@ html.instant-boot *{animation-delay:0s!important}
 }
 </style>
 
+<style id="ss-reels-css">
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       REELS — Infinite, fully-connected vertical feed
+       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.tab-reels-page{ padding:0 !important; gap:0 !important; overflow:visible; }
+
+.reels-topbar{
+    position:fixed; top:0; left:50%; transform:translateX(-50%);
+    width:100%; max-width:480px; z-index:45;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:calc(env(safe-area-inset-top,0px) + 14px) 16px 28px;
+    background:linear-gradient(180deg, rgba(4,2,10,0.75) 0%, rgba(4,2,10,0.35) 55%, transparent 100%);
+    pointer-events:none;
+}
+.reels-topbar > *{ pointer-events:auto; }
+.reels-topbar h2{
+    font-size:15px; font-weight:900; color:#fff; letter-spacing:0.2px;
+    text-shadow:0 2px 14px rgba(0,0,0,0.7);
+    display:flex; align-items:center; gap:6px;
+}
+.reels-refresh-btn{
+    width:34px; height:34px; border-radius:50%; cursor:pointer;
+    background:rgba(255,255,255,0.10); border:1px solid rgba(255,255,255,0.16);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    color:#fff; font-size:16px; display:flex; align-items:center; justify-content:center;
+    transition:var(--transition); font-family:inherit;
+}
+.reels-refresh-btn:active{ transform:scale(0.88) rotate(180deg); }
+.reels-refresh-btn.spinning{ animation:reelsRefreshSpin 0.7s linear; }
+@keyframes reelsRefreshSpin{ to{ transform:rotate(360deg); } }
+
+.reels-viewport{
+    position:fixed; top:0; left:50%; transform:translateX(-50%);
+    width:100%; max-width:480px; height:100dvh;
+    z-index:40; background:#000;
+    overflow-y:auto; overflow-x:hidden;
+    scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+}
+.reels-viewport::-webkit-scrollbar{ display:none; }
+
+.reel-slide{
+    position:relative; width:100%; height:calc(100dvh - 64px);
+    scroll-snap-align:start; scroll-snap-stop:always;
+    display:flex; align-items:flex-end; overflow:hidden; background:#050208;
+}
+.reel-slide.reel-loop-divider{
+    align-items:center; justify-content:center; flex-direction:column; gap:10px; text-align:center; padding:0 40px;
+    background:radial-gradient(circle at 50% 40%, #170f2e 0%, #050208 75%);
+}
+.reel-loop-divider .reel-loop-icon{ font-size:38px; }
+.reel-loop-divider .reel-loop-title{ font-size:13px; font-weight:800; color:#fff; }
+.reel-loop-divider .reel-loop-sub{ font-size:11px; color:var(--text-secondary); max-width:260px; }
+
+.reel-media-wrap{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:#000; }
+.reel-media-wrap img, .reel-media-wrap video{ width:100%; height:100%; object-fit:cover; display:block; }
+.reel-media-wrap::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:48%; pointer-events:none;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,0.82) 88%);
+}
+.reel-no-media{ color:var(--text-muted); font-size:12px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+
+.reel-mute-btn{
+    position:absolute; top:calc(env(safe-area-inset-top,0px) + 64px); right:12px; z-index:3;
+    width:32px; height:32px; border-radius:50%; cursor:pointer;
+    background:rgba(0,0,0,0.45); border:1px solid rgba(255,255,255,0.16);
+    color:#fff; font-size:13px; display:flex; align-items:center; justify-content:center;
+    font-family:inherit; transition:var(--transition);
+}
+.reel-mute-btn:active{ transform:scale(0.88); }
+
+.reel-double-tap-heart{
+    position:absolute; left:50%; top:50%; font-size:92px; z-index:4;
+    transform:translate(-50%,-50%) scale(0); opacity:0; pointer-events:none;
+    filter:drop-shadow(0 4px 24px rgba(0,0,0,0.5));
+}
+.reel-double-tap-heart.pop{ animation:reelHeartPop 0.85s cubic-bezier(0.17,0.89,0.32,1.49); }
+@keyframes reelHeartPop{
+    0%{ transform:translate(-50%,-50%) scale(0); opacity:0; }
+    15%{ transform:translate(-50%,-50%) scale(1.15); opacity:1; }
+    30%{ transform:translate(-50%,-50%) scale(0.95); }
+    85%{ transform:translate(-50%,-50%) scale(1); opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(1.05); opacity:0; }
+}
+
+.reel-action-rail{
+    position:absolute; right:10px; bottom:calc(96px + var(--safe-bottom)); z-index:3;
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+}
+.reel-action-btn{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; color:#fff; cursor:pointer; font-family:inherit;
+    -webkit-tap-highlight-color:transparent; padding:0;
+}
+.reel-action-icon{
+    width:42px; height:42px; border-radius:50%;
+    background:rgba(20,16,35,0.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:center; font-size:19px;
+    border:1px solid rgba(255,255,255,0.08); transition:var(--transition);
+}
+.reel-action-btn:active .reel-action-icon{ transform:scale(0.86); }
+.reel-action-btn.liked .reel-action-icon{ color:var(--neon-pink); background:rgba(255,47,142,0.18); border-color:rgba(255,47,142,0.35); }
+.reel-action-count{ font-size:10px; font-weight:700; text-shadow:0 1px 4px rgba(0,0,0,0.8); }
+
+.reel-caption-block{
+    position:relative; z-index:2; width:100%;
+    padding:0 68px 22px 14px; padding-bottom:calc(22px + var(--safe-bottom));
+    color:#fff;
+}
+.reel-user-row{ display:flex; align-items:center; gap:8px; margin-bottom:7px; flex-wrap:wrap; }
+.reel-avatar{
+    width:32px; height:32px; border-radius:50%; overflow:hidden; flex-shrink:0;
+    background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple));
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;
+    border:1.5px solid rgba(255,255,255,0.55);
+}
+.reel-avatar img{ width:100%; height:100%; object-fit:cover; }
+.reel-username{ font-weight:800; font-size:13px; text-shadow:0 1px 6px rgba(0,0,0,0.75); cursor:pointer; }
+.reel-caption-text{ font-size:12.5px; line-height:1.45; color:rgba(255,255,255,0.94); text-shadow:0 1px 6px rgba(0,0,0,0.75); word-break:break-word; }
+.reel-time{ font-size:9px; color:rgba(255,255,255,0.55); margin-top:5px; }
+.reel-follow-btn{ min-height:24px !important; padding:0 11px !important; font-size:8px !important; letter-spacing:0.4px; }
+
+.reel-skeleton-slide{
+    display:flex; align-items:flex-end; padding:14px; background:linear-gradient(135deg,#150f28,#08050f);
+}
+.reel-skeleton-caption{ display:flex; gap:10px; align-items:center; width:100%; padding-bottom:40px; }
+.sk-avatar{ width:34px; height:34px; border-radius:50%; flex-shrink:0; }
+.sk-lines{ flex:1; display:flex; flex-direction:column; gap:8px; }
+.sk-bar{
+    border-radius:6px;
+    background:linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.13) 37%, rgba(255,255,255,0.05) 63%);
+    background-size:400% 100%; animation:skShimmer 1.4s ease infinite;
+}
+.sk-bar.h1{ height:11px; width:50%; }
+.sk-bar.h2{ height:9px; width:78%; }
+.sk-avatar.sk-bar{ height:34px; }
+@keyframes skShimmer{ 0%{ background-position:100% 0; } 100%{ background-position:0 0; } }
+
+.tab-reels-page.active{ animation:none !important; }
+
+.reel-loading-more{
+    position:fixed; bottom:calc(74px + var(--safe-bottom)); left:50%; transform:translateX(-50%); z-index:46;
+    font-size:9px; color:rgba(255,255,255,0.65); display:flex; align-items:center; gap:6px;
+    background:rgba(0,0,0,0.5); padding:6px 13px; border-radius:999px; backdrop-filter:blur(8px);
+}
+.reel-spinner{
+    width:11px; height:11px; border-radius:50%; border:2px solid rgba(255,255,255,0.25);
+    border-top-color:#fff; animation:reelSpin2 0.7s linear infinite;
+}
+@keyframes reelSpin2{ to{ transform:rotate(360deg); } }
+
+/* Comments bottom-sheet (reuses .modal-overlay + existing .comment-item/.comment-input-row styles) */
+.modal-overlay.reel-comments-overlay{ align-items:flex-end; padding:0; }
+.reel-comments-sheet{
+    width:100%; max-width:480px; max-height:72vh;
+    background:var(--bg-glass); border:1px solid var(--border-soft); border-bottom:none;
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+    display:flex; flex-direction:column;
+    padding:10px 14px calc(14px + var(--safe-bottom));
+    box-shadow:var(--shadow-card);
+    animation:fadeSlide 0.25s ease;
+}
+.reel-comments-handle{ width:36px; height:4px; border-radius:4px; background:rgba(255,255,255,0.22); margin:0 auto 10px; }
+.reel-comments-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-shrink:0; }
+.reel-comments-head h3{ font-size:11px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:0.8px; }
+.reel-comments-close{ background:none; border:none; color:var(--text-muted); font-size:18px; cursor:pointer; padding:2px 6px; font-family:inherit; }
+.reel-comments-list{ flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:8px; min-height:110px; max-height:46vh; }
+
+.reels-empty, .reels-error{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:10px; text-align:center; padding:0 30px; color:var(--text-secondary);
+}
+.reels-empty .empty-icon, .reels-error .empty-icon{ font-size:44px; }
+
+/* Small, safe polish: the nav bar now carries one more item — tighten gracefully */
+.bottom-navbar{ padding:0 0; }
+.nav-item .nav-label{ letter-spacing:0.3px; }
+
+/* Video posts inside the normal feed reuse .post-img sizing automatically */
+.post-img-container video.post-img{ background:#000; }
+</style>
+
 </head>
 <body>
 
@@ -5918,7 +6100,7 @@ html.instant-boot *{animation-delay:0s!important}
                     <div class="section-title">Publish Update</div>
                     <input type="text" id="new-post-caption" class="input" placeholder="What's happening?" />
                     <div class="flex-row">
-                        <input type="text" id="new-post-url" class="input" placeholder="Image URL" style="flex:1;" />
+                        <input type="text" id="new-post-url" class="input" placeholder="Image or video URL" style="flex:1;" />
                         <span style="color:var(--text-muted);font-size:11px;font-weight:600;">or</span>
                         <label class="btn btn-secondary" style="min-height:46px;padding:0 14px;font-size:9px;cursor:pointer;flex:1;border-radius:var(--radius-sm);">
                             📷 Photo
@@ -5934,6 +6116,15 @@ html.instant-boot *{animation-delay:0s!important}
                 </div>
                 <div id="home-feed-stream" style="display:flex;flex-direction:column;gap:12px;"></div>
             </main>
+
+            <!-- TAB: REELS -->
+            <section id="tab-reels" class="tab-content tab-reels-page">
+                <div class="reels-topbar">
+                    <h2>🎬 Reels</h2>
+                    <button type="button" class="reels-refresh-btn" id="reels-refresh-btn" aria-label="Refresh reels">↻</button>
+                </div>
+                <div class="reels-viewport" id="reels-viewport"></div>
+            </section>
 
             <!-- TAB: GAMES -->
             <section id="tab-games" class="tab-content">
@@ -6755,6 +6946,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             <!-- BOTTOM NAV -->
             <nav class="bottom-navbar" id="global-navbar">
                 <button class="nav-item active" data-tab="tab-feed"><span class="nav-icon">🔮</span><span class="nav-label">Feed</span></button>
+                <button class="nav-item" data-tab="tab-reels"><span class="nav-icon">🎬</span><span class="nav-label">Reels</span></button>
                 <button class="nav-item" data-tab="tab-games"><span class="nav-icon">🎮</span><span class="nav-label">Games</span></button>
                 <button class="nav-item" data-tab="tab-casino"><span class="nav-icon">🎰</span><span class="nav-label">Casino</span></button>
                 <button class="nav-item" data-tab="tab-store"><span class="nav-icon">🛒</span><span class="nav-label">Store</span></button>
@@ -6899,7 +7091,8 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             writeBatch,
             where,
             getDocs,
-            limit
+            limit,
+            startAfter
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
         import {
             getStorage,
@@ -8711,7 +8904,9 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     const likeCount = Object.keys(likesObj).length;
                     const isLiked = !!likesObj[currentUser?.uid];
                     const mediaHTML = post.imageUrl ?
-                        `<div class="post-img-container"><img src="${post.imageUrl}" class="post-img" alt="post" loading="lazy" onerror="this.style.display='none'" /></div>` :
+                        (isVideoPost(post)
+                            ? `<div class="post-img-container"><video src="${post.imageUrl}" class="post-img" controls muted loop playsinline preload="metadata"></video></div>`
+                            : `<div class="post-img-container"><img src="${post.imageUrl}" class="post-img" alt="post" loading="lazy" onerror="this.style.display='none'" /></div>`) :
                         '';
                     const expiryInfo = getPostExpiryInfo(post.createdAt);
                     const expiryLabel = expiryInfo && !expiryInfo.expired ? expiryInfo.label : '';
@@ -9757,6 +9952,8 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 avatarURL = data.avatarURL || '';
                 isVerified = !!data.verified; }
 
+            const mediaType = hasFile ? 'image' : (isVideoUrl(imageUrl) ? 'video' : 'image');
+
             try {
                 await addDoc(collection(db, 'posts'), {
                     senderUid: currentUser.uid,
@@ -9765,6 +9962,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     verified: isVerified,
                     caption,
                     imageUrl,
+                    mediaType,
                     pinned: false,
                     likes: {},
                     createdAt: serverTimestamp()
@@ -14932,12 +15130,14 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
 
         // ─── Navigation ───
         function switchTab(tabId) {
+            if (tabId !== 'tab-reels') pauseAllReelVideos();
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             const target = document.getElementById(tabId);
             if (target) target.classList.add('active');
             const navItem = document.querySelector(`.nav-item[data-tab="${tabId}"]`);
             if (navItem) navItem.classList.add('active');
+            if (tabId === 'tab-reels') initReelsFeed();
             if (tabId === 'tab-profile') { viewedProfileUid = null; if (currentUser) setupProfileSync(currentUser.uid);
                 loadCustomBadges(); }
             if (tabId === 'tab-messages') loadUserList();
@@ -18043,6 +18243,534 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             arcadeCleanup = () => { alive = false; clearInterval(spawn); };
         }
 
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  REELS — infinite, fully-connected vertical feed
+        //  Reuses the same `posts` collection, likes map, and
+        //  comments subcollection as the main Feed tab.
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        const REELS_PAGE_SIZE = 6;
+        let reelsInitialized = false;
+        let reelsLoading = false;
+        let reelsCursorDoc = null;
+        let reelsExhausted = false;
+        let reelsLoopCount = 0;
+        let reelsAnyPostFound = false;
+        let reelsIO = null;
+        let reelsCommentUnsub = null;
+        let reelsSoundOn = false;
+        let reelsProcessing = false;
+
+        function isVideoUrl(url) {
+            if (!url || typeof url !== 'string') return false;
+            return /\.(mp4|webm|mov|m4v|ogv)(\?.*)?(#.*)?$/i.test(url.trim());
+        }
+        function isVideoPost(post) {
+            if (!post) return false;
+            if (post.mediaType === 'video') return true;
+            if (post.mediaType === 'image') return false;
+            return isVideoUrl(post.imageUrl || '');
+        }
+        function reelsEscapeHtml(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function pauseAllReelVideos() {
+            document.querySelectorAll('#reels-viewport video').forEach(v => { try { v.pause(); } catch (e) {} });
+        }
+
+        function reelsSkeletonSlide() {
+            const el = document.createElement('div');
+            el.className = 'reel-slide reel-skeleton-slide';
+            el.innerHTML = `
+                <div class="reel-skeleton-caption">
+                    <div class="sk-avatar sk-bar"></div>
+                    <div class="sk-lines">
+                        <div class="sk-bar h1"></div>
+                        <div class="sk-bar h2"></div>
+                    </div>
+                </div>`;
+            return el;
+        }
+
+        function reelsLoopDividerSlide() {
+            const el = document.createElement('div');
+            el.className = 'reel-slide reel-loop-divider';
+            el.innerHTML = `
+                <span class="reel-loop-icon">🔁</span>
+                <span class="reel-loop-title">You're all caught up</span>
+                <span class="reel-loop-sub">Replaying posts from the top — keep scrolling.</span>`;
+            return el;
+        }
+
+        function reelsEmptyState() {
+            const el = document.createElement('div');
+            el.className = 'reels-empty';
+            el.innerHTML = `
+                <span class="empty-icon">🎬</span>
+                <div style="font-weight:800;color:#fff;font-size:13px;">No reels yet</div>
+                <div style="font-size:11px;">Posts with a photo or video show up here. Be the first!</div>
+                <button type="button" class="btn btn-primary btn-sm" id="reels-empty-post-btn" style="margin-top:6px;">＋ Create a post</button>`;
+            return el;
+        }
+
+        async function initReelsFeed(forceRefresh) {
+            const viewport = document.getElementById('reels-viewport');
+            if (!viewport) return;
+            if (reelsInitialized && !forceRefresh) {
+                // Already loaded once — just make sure the right video is playing.
+                setTimeout(reelsUpdateActiveSlide, 50);
+                return;
+            }
+            reelsInitialized = true;
+            reelsLoading = false;
+            reelsCursorDoc = null;
+            reelsExhausted = false;
+            reelsLoopCount = 0;
+            reelsAnyPostFound = false;
+            if (reelsCommentUnsub) { reelsCommentUnsub(); reelsCommentUnsub = null; }
+            if (reelsIO) { reelsIO.disconnect(); reelsIO = null; }
+            viewport.innerHTML = '';
+            viewport.appendChild(reelsSkeletonSlide());
+            await loadMoreReels();
+        }
+
+        async function loadMoreReels() {
+            const viewport = document.getElementById('reels-viewport');
+            if (!viewport || reelsLoading) return;
+            reelsLoading = true;
+
+            const isFollowUp = !viewport.querySelector('.reel-skeleton-slide') && viewport.children.length > 0;
+            let pill = null;
+            if (isFollowUp) {
+                pill = document.createElement('div');
+                pill.className = 'reel-loading-more';
+                pill.innerHTML = '<span class="reel-spinner"></span> Loading more';
+                document.getElementById('tab-reels')?.appendChild(pill);
+            }
+
+            try {
+                let addedAny = false;
+                let guard = 0;
+                // Skip past runs of text-only / expired posts until we find media
+                // posts, hit the real end of the collection, or hit a safety cap.
+                while (!addedAny && !reelsExhausted && guard < 10) {
+                    guard++;
+                    const qRef = reelsCursorDoc
+                        ? query(collection(db, 'posts'), orderBy('createdAt', 'desc'), startAfter(reelsCursorDoc), limit(REELS_PAGE_SIZE))
+                        : query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(REELS_PAGE_SIZE));
+                    const snap = await getDocs(qRef);
+                    if (snap.docs.length > 0) reelsCursorDoc = snap.docs[snap.docs.length - 1];
+                    if (snap.docs.length < REELS_PAGE_SIZE) reelsExhausted = true;
+
+                    snap.forEach(docSnap => {
+                        const post = docSnap.data();
+                        if (!post.imageUrl) return;
+                        const expiry = getPostExpiryInfo(post.createdAt);
+                        if (expiry && expiry.expired) return;
+                        reelsAnyPostFound = true;
+                        addedAny = true;
+                        const instanceId = `${docSnap.id}__l${reelsLoopCount}`;
+                        const slide = buildReelSlide(docSnap.id, post, instanceId);
+                        viewport.appendChild(slide);
+                        observeReelSlide(slide);
+                    });
+                }
+
+                const skeleton = viewport.querySelector('.reel-skeleton-slide');
+                if (skeleton) skeleton.remove();
+
+                if (!addedAny) {
+                    if (!reelsAnyPostFound) {
+                        // Nothing postable has ever existed in this collection — show an empty state, don't loop forever.
+                        if (!viewport.querySelector('.reels-empty')) {
+                            const empty = reelsEmptyState();
+                            viewport.appendChild(empty);
+                            const postBtn = empty.querySelector('#reels-empty-post-btn');
+                            if (postBtn) postBtn.addEventListener('click', () => switchTab('tab-feed'));
+                        }
+                    } else if (reelsExhausted) {
+                        // Reached the real end of Firestore data, but posts do exist —
+                        // loop back to the top so scrolling truly never stops.
+                        reelsLoopCount++;
+                        reelsCursorDoc = null;
+                        reelsExhausted = false;
+                        const divider = reelsLoopDividerSlide();
+                        viewport.appendChild(divider);
+                        observeReelSlide(divider);
+                        reelsLoading = false;
+                        if (pill) pill.remove();
+                        await loadMoreReels();
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.error('Reels load error:', e);
+                if (!reelsAnyPostFound && !document.querySelector('#reels-viewport .reels-error')) {
+                    const viewportEl = document.getElementById('reels-viewport');
+                    const errEl = document.createElement('div');
+                    errEl.className = 'reels-error';
+                    errEl.innerHTML = `<span class="empty-icon">⚠️</span><div style="font-weight:800;color:#fff;font-size:13px;">Couldn't load Reels</div><div style="font-size:11px;">Check your connection and try again.</div>`;
+                    viewportEl.appendChild(errEl);
+                }
+            } finally {
+                reelsLoading = false;
+                if (pill) pill.remove();
+            }
+        }
+
+        function observeReelSlide(slide) {
+            if (!slide) return;
+            if (!reelsIO) {
+                const viewport = document.getElementById('reels-viewport');
+                reelsIO = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const el = entry.target;
+                        const video = el.querySelector('video');
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+                            el.classList.add('reel-active');
+                            if (video) { video.muted = !reelsSoundOn; video.play().catch(() => {}); }
+                            reelsMaybePrefetch(el);
+                        } else {
+                            el.classList.remove('reel-active');
+                            if (video) { try { video.pause(); } catch (e) {} }
+                        }
+                    });
+                }, { root: viewport, threshold: [0, 0.6, 1] });
+            }
+            reelsIO.observe(slide);
+        }
+
+        function reelsMaybePrefetch(activeSlide) {
+            const viewport = document.getElementById('reels-viewport');
+            if (!viewport) return;
+            const slides = Array.from(viewport.children);
+            const idx = slides.indexOf(activeSlide);
+            if (idx === -1) return;
+            if (idx >= slides.length - 3) loadMoreReels();
+        }
+
+        function reelsUpdateActiveSlide() {
+            const viewport = document.getElementById('reels-viewport');
+            if (!viewport) return;
+            const rect = viewport.getBoundingClientRect();
+            const midpoint = rect.top + rect.height / 2;
+            let closest = null, closestDist = Infinity;
+            viewport.querySelectorAll('.reel-slide').forEach(slide => {
+                const r = slide.getBoundingClientRect();
+                const dist = Math.abs((r.top + r.height / 2) - midpoint);
+                if (dist < closestDist) { closestDist = dist; closest = slide; }
+            });
+            if (closest) {
+                const video = closest.querySelector('video');
+                if (video) { video.muted = !reelsSoundOn; video.play().catch(() => {}); }
+            }
+        }
+
+        function buildReelSlide(pid, post, instanceId) {
+            const slide = document.createElement('div');
+            slide.className = 'reel-slide';
+            slide.dataset.pid = pid;
+            slide.dataset.instanceId = instanceId;
+
+            const likesObj = post.likes || {};
+            const likeCount = Object.keys(likesObj).length;
+            const isLiked = !!(currentUser && likesObj[currentUser.uid]);
+            const video = isVideoPost(post);
+            const avatarHTML = post.avatarURL
+                ? `<img src="${post.avatarURL}" alt="">`
+                : reelsEscapeHtml(((post.username || '?')[0] || '?').toUpperCase());
+            const isOwner = !!(currentUser && post.senderUid === currentUser.uid);
+            const canModerate = isCurrentUserAdmin();
+            const userBadges = getCurrentUserBadges();
+            const canDelete = isOwner || userBadges.includes('owner') || userBadges.includes('co_owner');
+            const isFollowing = (currentUserProfile?.following || []).includes(post.senderUid);
+            const showFollow = !!(currentUser && post.senderUid && !isOwner);
+            const timeStr = post.createdAt?.toDate?.()?.toLocaleDateString?.() || '';
+
+            slide.innerHTML = `
+                <div class="reel-media-wrap">
+                    ${post.imageUrl
+                        ? (video
+                            ? `<video src="${post.imageUrl}" playsinline loop muted preload="metadata"></video>`
+                            : `<img src="${post.imageUrl}" alt="reel" loading="lazy" />`)
+                        : `<div class="reel-no-media"><span style="font-size:32px;">📝</span>Text post</div>`}
+                </div>
+                ${video ? `<button type="button" class="reel-mute-btn" aria-label="Toggle sound">${reelsSoundOn ? '🔊' : '🔇'}</button>` : ''}
+                <div class="reel-double-tap-heart">❤️</div>
+                <div class="reel-action-rail">
+                    <button type="button" class="reel-action-btn reel-like-btn ${isLiked ? 'liked' : ''}" aria-label="Like">
+                        <span class="reel-action-icon">❤️</span><span class="reel-action-count reel-like-count">${likeCount}</span>
+                    </button>
+                    <button type="button" class="reel-action-btn reel-comment-btn" aria-label="Comments">
+                        <span class="reel-action-icon">💬</span><span class="reel-action-count reel-comment-count">0</span>
+                    </button>
+                    <button type="button" class="reel-action-btn reel-share-btn" aria-label="Share">
+                        <span class="reel-action-icon">↗️</span><span class="reel-action-count">Share</span>
+                    </button>
+                    ${canModerate ? `<button type="button" class="reel-action-btn reel-pin-btn" aria-label="${post.pinned ? 'Unpin' : 'Pin'}"><span class="reel-action-icon">📌</span></button>` : ''}
+                    ${canDelete ? `<button type="button" class="reel-action-btn reel-delete-btn" aria-label="Delete"><span class="reel-action-icon">✕</span></button>` : ''}
+                </div>
+                <div class="reel-caption-block">
+                    <div class="reel-user-row">
+                        <div class="reel-avatar">${avatarHTML}</div>
+                        <span class="reel-username">@${reelsEscapeHtml(post.username || 'anonymous')}</span>
+                        ${verifiedBadgeHTML(post.verified)}
+                        ${showFollow ? `<button type="button" class="btn btn-secondary btn-sm reel-follow-btn">${isFollowing ? '✅ Following' : '➕ Follow'}</button>` : ''}
+                    </div>
+                    ${post.caption ? `<div class="reel-caption-text">${reelsEscapeHtml(post.caption)}</div>` : ''}
+                    ${timeStr ? `<div class="reel-time">${timeStr}</div>` : ''}
+                </div>
+            `;
+
+            wireReelSlide(slide, pid, post);
+            return slide;
+        }
+
+        function wireReelSlide(slide, pid, post) {
+            const mediaWrap = slide.querySelector('.reel-media-wrap');
+            const heartBurst = slide.querySelector('.reel-double-tap-heart');
+            const likeBtn = slide.querySelector('.reel-like-btn');
+            const commentBtn = slide.querySelector('.reel-comment-btn');
+            const commentCountEl = slide.querySelector('.reel-comment-count');
+            const shareBtn = slide.querySelector('.reel-share-btn');
+            const muteBtn = slide.querySelector('.reel-mute-btn');
+            const pinBtn = slide.querySelector('.reel-pin-btn');
+            const deleteBtn = slide.querySelector('.reel-delete-btn');
+            const followBtn = slide.querySelector('.reel-follow-btn');
+            const usernameEl = slide.querySelector('.reel-username');
+            const avatarEl = slide.querySelector('.reel-avatar');
+            const video = slide.querySelector('video');
+
+            getDocs(collection(db, 'posts', pid, 'comments')).then(snap => {
+                if (commentCountEl) commentCountEl.textContent = snap.size;
+            }).catch(() => {});
+
+            async function toggleReelLike(forceLikeOnly) {
+                if (!currentUser) { showToast('Sign in to like posts.', 'info'); return; }
+                if (reelsProcessing) return;
+                reelsProcessing = true;
+                try {
+                    const ref = doc(db, 'posts', pid);
+                    let nowLiked = false;
+                    await runTransaction(db, async (tx) => {
+                        const snap = await tx.get(ref);
+                        if (!snap.exists()) return;
+                        const data = snap.data();
+                        const likes = data.likes || {};
+                        if (likes[currentUser.uid]) {
+                            if (forceLikeOnly) { nowLiked = true; return; }
+                            delete likes[currentUser.uid];
+                            nowLiked = false;
+                        } else {
+                            likes[currentUser.uid] = true;
+                            nowLiked = true;
+                        }
+                        tx.update(ref, { likes });
+                    });
+                    document.querySelectorAll(`.reel-slide[data-pid="${pid}"] .reel-like-btn`).forEach(btn => {
+                        btn.classList.toggle('liked', nowLiked);
+                    });
+                    const fresh = await getDoc(ref);
+                    if (fresh.exists()) {
+                        const count = Object.keys(fresh.data().likes || {}).length;
+                        document.querySelectorAll(`.reel-slide[data-pid="${pid}"] .reel-like-count`).forEach(el => el.textContent = count);
+                    }
+                } catch (e) {
+                    console.warn('Reel like error:', e);
+                } finally {
+                    reelsProcessing = false;
+                }
+            }
+
+            if (likeBtn) likeBtn.addEventListener('click', () => toggleReelLike(false));
+
+            if (mediaWrap) {
+                let lastTap = 0;
+                mediaWrap.addEventListener('click', () => {
+                    const now = Date.now();
+                    if (now - lastTap < 300) {
+                        toggleReelLike(true);
+                        if (heartBurst) {
+                            heartBurst.classList.remove('pop');
+                            void heartBurst.offsetWidth;
+                            heartBurst.classList.add('pop');
+                        }
+                    }
+                    lastTap = now;
+                });
+            }
+
+            if (muteBtn && video) {
+                muteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    reelsSoundOn = !reelsSoundOn;
+                    document.querySelectorAll('#reels-viewport video').forEach(v => v.muted = !reelsSoundOn);
+                    document.querySelectorAll('.reel-mute-btn').forEach(b => b.textContent = reelsSoundOn ? '🔊' : '🔇');
+                });
+            }
+
+            if (commentBtn) commentBtn.addEventListener('click', () => openReelComments(pid, commentCountEl));
+            if (shareBtn) shareBtn.addEventListener('click', () => shareReelPost(post));
+
+            if (pinBtn) pinBtn.addEventListener('click', async () => {
+                try {
+                    await updateDoc(doc(db, 'posts', pid), { pinned: !post.pinned });
+                    post.pinned = !post.pinned;
+                    pinBtn.setAttribute('aria-label', post.pinned ? 'Unpin' : 'Pin');
+                    showToast(post.pinned ? 'Post pinned to top.' : 'Post unpinned.', 'success');
+                } catch (e) { showToast('Could not update pin.', 'error'); }
+            });
+
+            if (deleteBtn) deleteBtn.addEventListener('click', async () => {
+                if (!confirm('Delete this post?')) return;
+                try {
+                    const commentsSnap = await getDocs(collection(db, 'posts', pid, 'comments'));
+                    const batch = writeBatch(db);
+                    commentsSnap.forEach(d => batch.delete(d.ref));
+                    await batch.commit();
+                    await deleteDoc(doc(db, 'posts', pid));
+                    document.querySelectorAll(`.reel-slide[data-pid="${pid}"]`).forEach(s => {
+                        if (reelsIO) reelsIO.unobserve(s);
+                        s.remove();
+                    });
+                    showToast('Post deleted.', 'info');
+                } catch (e) { console.warn(e); showToast('Delete failed.', 'error'); }
+            });
+
+            if (followBtn) followBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                await toggleFollow(post.senderUid);
+                const nowFollowing = (currentUserProfile?.following || []).includes(post.senderUid);
+                followBtn.textContent = nowFollowing ? '✅ Following' : '➕ Follow';
+            });
+
+            const goToProfile = () => { if (post.senderUid && (!currentUser || post.senderUid !== currentUser.uid)) viewUserProfile(post.senderUid); };
+            if (usernameEl) usernameEl.addEventListener('click', goToProfile);
+            if (avatarEl) avatarEl.addEventListener('click', goToProfile);
+        }
+
+        function openReelComments(pid, countEl) {
+            let modal = document.getElementById('reel-comments-modal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'reel-comments-modal';
+                modal.className = 'modal-overlay reel-comments-overlay';
+                modal.innerHTML = `
+                    <div class="reel-comments-sheet">
+                        <div class="reel-comments-handle"></div>
+                        <div class="reel-comments-head">
+                            <h3>Comments</h3>
+                            <button type="button" class="reel-comments-close" aria-label="Close">✕</button>
+                        </div>
+                        <div class="reel-comments-list"></div>
+                        <div class="comment-input-row">
+                            <input type="text" class="reel-comment-input" placeholder="Write a reply…" />
+                            <button type="button" class="reel-comment-send-btn">Send</button>
+                        </div>
+                    </div>`;
+                document.body.appendChild(modal);
+                modal.addEventListener('click', (e) => { if (e.target === modal) closeReelComments(); });
+                modal.querySelector('.reel-comments-close').addEventListener('click', closeReelComments);
+            }
+
+            const list = modal.querySelector('.reel-comments-list');
+            const input = modal.querySelector('.reel-comment-input');
+            const sendBtn = modal.querySelector('.reel-comment-send-btn');
+            input.value = '';
+            modal.dataset.pid = pid;
+            modal.classList.add('show');
+
+            if (reelsCommentUnsub) { reelsCommentUnsub(); reelsCommentUnsub = null; }
+            const commentsQuery = query(collection(db, 'posts', pid, 'comments'), orderBy('createdAt', 'asc'));
+            reelsCommentUnsub = onSnapshot(commentsQuery, (snap) => {
+                if (countEl) countEl.textContent = snap.size;
+                document.querySelectorAll(`.reel-slide[data-pid="${pid}"] .reel-comment-count`).forEach(el => el.textContent = snap.size);
+                list.innerHTML = '';
+                if (snap.empty) {
+                    list.innerHTML = '<span style="font-size:9px;color:var(--text-muted);padding:4px 0;">No comments yet. Say something!</span>';
+                    return;
+                }
+                snap.forEach(docSnap => {
+                    const c = docSnap.data();
+                    const div = document.createElement('div');
+                    div.className = 'comment-item';
+                    const avatarHTML = c.avatarURL ? `<img src="${c.avatarURL}" />` : reelsEscapeHtml(((c.username || '?')[0] || '?').toUpperCase());
+                    const timeStr = c.createdAt?.toDate?.()?.toLocaleString?.() || '';
+                    div.innerHTML = `
+                        <div class="comment-avatar">${avatarHTML}</div>
+                        <div class="comment-body">
+                            <div class="comment-name">@${reelsEscapeHtml(c.username || 'anon')}</div>
+                            <div class="comment-text">${reelsEscapeHtml(c.message || '')}</div>
+                            <div class="comment-time">${timeStr}</div>
+                        </div>`;
+                    list.appendChild(div);
+                });
+                list.scrollTop = list.scrollHeight;
+            });
+
+            const send = async () => {
+                const text = input.value.trim();
+                if (!text || !currentUser) return;
+                if (reelsProcessing) return;
+                reelsProcessing = true;
+                try {
+                    const profileSnap = await getDoc(doc(db, 'users', currentUser.uid));
+                    const username = profileSnap.exists() ? profileSnap.data().username : 'anonymous';
+                    const avatarURL = profileSnap.exists() ? (profileSnap.data().avatarURL || '') : '';
+                    await addDoc(collection(db, 'posts', pid, 'comments'), {
+                        senderUid: currentUser.uid,
+                        username,
+                        avatarURL,
+                        message: text,
+                        createdAt: serverTimestamp()
+                    });
+                    input.value = '';
+                } catch (e) {
+                    console.warn('Reel comment error:', e);
+                    showToast('Failed to post reply.', 'error');
+                } finally {
+                    reelsProcessing = false;
+                }
+            };
+            sendBtn.onclick = send;
+            input.onkeydown = (e) => { if (e.key === 'Enter') send(); };
+        }
+
+        function closeReelComments() {
+            const modal = document.getElementById('reel-comments-modal');
+            if (modal) modal.classList.remove('show');
+            if (reelsCommentUnsub) { reelsCommentUnsub(); reelsCommentUnsub = null; }
+        }
+
+        async function shareReelPost(post) {
+            const shareData = {
+                title: 'School Social',
+                text: `Check out @${post.username || 'this'}'s post on School Social`,
+                url: window.location.href
+            };
+            if (navigator.share) {
+                try { await navigator.share(shareData); } catch (e) { /* user cancelled — no error needed */ }
+            } else if (navigator.clipboard) {
+                try {
+                    await navigator.clipboard.writeText(shareData.url);
+                    showToast('Link copied to clipboard!', 'success');
+                } catch (e) {
+                    showToast('Could not copy link.', 'error');
+                }
+            } else {
+                showToast('Sharing is not supported on this device.', 'info');
+            }
+        }
+
+        document.getElementById('reels-refresh-btn')?.addEventListener('click', function () {
+            this.classList.remove('spinning'); void this.offsetWidth; this.classList.add('spinning');
+            initReelsFeed(true);
+        });
 
     </script>
 
