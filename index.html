@@ -8143,14 +8143,28 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             const nose = landmarks[1];
             const leftEye = landmarks[33];
             const rightEye = landmarks[263];
-            const eyeDistance = Math.hypot(leftEye.x - rightEye.x, leftEye.y - rightEye.y);
+            const eyeDx = rightEye.x - leftEye.x;
+            const eyeDy = rightEye.y - leftEye.y;
+            const eyeDistance = Math.hypot(eyeDx, eyeDy);
+            if (!Number.isFinite(eyeDistance) || eyeDistance < 0.028) return null;
+
+            // Make the template invariant to small head tilts and device/camera
+            // framing differences. We translate to the nose, scale by eye distance,
+            // then rotate the face so the eye line is horizontal. This is important
+            // when the enrollment camera and the login camera are different devices.
+            const cos = eyeDx / eyeDistance;
+            const sin = eyeDy / eyeDistance;
             const out = [];
             for (const index of BIOMETRIC_KEY_POINTS) {
                 const p = landmarks[index];
                 if (!p) return null;
+                const rawX = p.x - nose.x;
+                const rawY = p.y - nose.y;
+                const rotatedX = rawX * cos + rawY * sin;
+                const rotatedY = -rawX * sin + rawY * cos;
                 out.push(
-                    Number(((p.x - nose.x) / eyeDistance).toFixed(5)),
-                    Number(((p.y - nose.y) / eyeDistance).toFixed(5)),
+                    Number((rotatedX / eyeDistance).toFixed(5)),
+                    Number((rotatedY / eyeDistance).toFixed(5)),
                     Number((((p.z || 0) - (nose.z || 0)) / eyeDistance).toFixed(5))
                 );
             }
@@ -8365,10 +8379,13 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             }
         }
 
-        async function ssEnrollBiometricServer(uid, template, kind = 'user') {
+        async function ssEnrollBiometricServer(uid, template, kind = 'user', templates = null) {
             if (!uid || !Array.isArray(template) || !template.length) throw new Error('Invalid biometric enrollment.');
             if (!auth.currentUser || auth.currentUser.uid !== uid) throw new Error('Please stay signed in while enrolling this biometric.');
-            const result = await ssBiometricApi('/biometric_enroll', { template, kind });
+            const cleanTemplates = Array.isArray(templates)
+                ? templates.filter(t => Array.isArray(t) && t.length === template.length).slice(0, 8)
+                : [];
+            const result = await ssBiometricApi('/biometric_enroll', { template, templates: cleanTemplates, kind });
             if (!result?.ok) throw new Error('The biometric server did not confirm enrollment.');
             return result;
         }
@@ -8487,7 +8504,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                         return;
                     }
 
-                    const serverEnrollment = await ssEnrollBiometricServer(biometricTargetUid, enrollment.template, 'user');
+                    const serverEnrollment = await ssEnrollBiometricServer(biometricTargetUid, enrollment.template, 'user', enrollment.templates);
                     const idStatus = document.getElementById('biometric-id-status');
                     if (idStatus) {
                         idStatus.style.display = 'block';
