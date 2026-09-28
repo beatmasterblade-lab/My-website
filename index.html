@@ -6093,7 +6093,7 @@ html.instant-boot *{animation-delay:0s!important}
                 <div id="biometric-login-section" style="display:none;flex-direction:column;gap:8px;padding:10px;border:1px solid rgba(34,229,255,.13);border-radius:16px;background:linear-gradient(145deg,rgba(34,229,255,.045),rgba(168,85,247,.035));">
                     <div style="text-align:center;font-size:18px;line-height:1;filter:drop-shadow(0 0 12px rgba(34,229,255,.35));">◉</div>
                     <div style="font-size:10px;font-weight:850;color:#fff;text-align:center;letter-spacing:.3px;">Biometric Sign-In</div>
-                    <div style="font-size:9px;color:var(--text-secondary);line-height:1.45;text-align:center;">Enter your username, then scan the face saved for that account on this device.</div>
+                    <div style="font-size:9px;color:var(--text-secondary);line-height:1.45;text-align:center;">Enter your username, then scan your face. Your biometric enrollment is securely stored with your account.</div>
                     <div id="biometric-login-status" style="font-size:9px;color:var(--text-muted);text-align:center;min-height:18px;"></div>
                     <button id="btn-login-biometric" class="btn btn-cyan btn-block" type="button" disabled>Scan Face &amp; Sign In</button>
                     <button id="btn-cancel-biometric-login" class="btn btn-secondary btn-block" type="button">Use Password Instead</button>
@@ -7176,7 +7176,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             <button id="post-signup-skip-biometrics" class="btn btn-secondary btn-block post-signup-later" type="button">Do It Later</button>
         </div>
         <div style="font-size:8px;color:var(--text-muted);line-height:1.45;margin-top:12px;">
-            Setup saves a biometric for this account on this device. Choosing “Do It Later” keeps biometrics off until you enable them from your account settings.
+            Setup securely saves the biometric enrollment to your School Social account. Choosing “Do It Later” keeps biometrics off until you enable them from your account settings.
         </div>
     </div>
 </div>
@@ -7268,7 +7268,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
         <div id="biometric-status" class="biometric-status">Put your face anywhere in view. The scanner will find the facial points automatically.</div>
         <div id="biometric-id-status" style="display:none;margin:8px 0;padding:10px 12px;border-radius:12px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.22);font-size:11px;color:#8be9ff;text-align:center;word-break:break-all;"></div>
         <button id="biometric-start" class="btn btn-primary btn-block" type="button">Start Biometric Scan</button>
-        <div class="biometric-note">Your face template and encrypted biometric sign-in credential stay tied to this account on this browser. They are not shared between accounts.</div>
+        <div class="biometric-note">Your biometric enrollment is encrypted and stored securely for this account. It is not stored as an account login credential in this browser.</div>
     </div>
 </div>
 
@@ -7345,24 +7345,29 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
         const SS_BIOMETRIC_API = 'https://school-social-biometric-gateway.floot.app/_api';
 
         async function ssBiometricApi(path, body) {
+            const requestBody = { ...(body || {}) };
             const user = auth.currentUser;
-            const headers = { 'Content-Type': 'application/json' };
-            if (user) {
-                const token = await user.getIdToken();
-                headers.Authorization = `Bearer ${token}`;
+            if (user && path === '/biometric_enroll') {
+                requestBody.authToken = await user.getIdToken();
             }
+
+            // IMPORTANT: the biometric gateway's hosting layer answers OPTIONS requests
+            // before the endpoint handler runs. Sending Authorization + JSON would trigger
+            // a CORS preflight that Safari can reject. text/plain is a CORS-safelisted
+            // content type, so the request goes straight to the POST handler over HTTPS.
+            // The server parses the JSON body normally and uses authToken for enrollment.
             let response;
             try {
                 response = await fetch(`${SS_BIOMETRIC_API}${path}`, {
                     method: 'POST',
-                    headers,
-                    body: JSON.stringify(body),
+                    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+                    body: JSON.stringify(requestBody),
                     mode: 'cors',
                     cache: 'no-store',
                     credentials: 'omit'
                 });
             } catch (networkError) {
-                const err = new Error('Could not reach the biometric gateway. If you opened School Social inside an HTML/online viewer, open the HTML as a normal HTTPS page because some viewers block camera/API requests.');
+                const err = new Error('Could not reach the biometric gateway. The face scanner is working, but the secure biometric service request was blocked by the browser/network.');
                 err.cause = networkError;
                 err.code = 'BIOMETRIC_NETWORK_ERROR';
                 throw err;
@@ -8027,18 +8032,12 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             return BIOMETRIC_PREFIX + String(uid || '');
         }
 
+        // Account biometrics are server-managed for cross-device use.
+        // Do not read a face template from localStorage for account authentication.
+        // The server stores the encrypted enrollment and the login scanner sends only
+        // the freshly captured facial geometry for verification.
         function getAccountBiometric(uid) {
-            if (!uid) return null;
-            try {
-                const raw = localStorage.getItem(biometricStorageKey(uid));
-                if (!raw) return null;
-                const value = JSON.parse(raw);
-                if (!value || !String(value.uid || '') || String(value.uid) !== String(uid)) return null;
-                if (!Array.isArray(value.template) || !value.template.length) return null;
-                return value;
-            } catch (_) {
-                return null;
-            }
+            return null;
         }
 
         function createBiometricId() {
@@ -8046,28 +8045,16 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             return 'SSBIO-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 10).toUpperCase();
         }
 
+        // Kept as compatibility shims for older UI code. Account templates are no
+        // longer persisted in browser storage; the biometric gateway is authoritative.
         function saveAccountBiometric(uid, record) {
-            if (!uid || !record || !Array.isArray(record.template) || !record.template.length) throw new Error('Invalid biometric template.');
-            const payload = {
-                ...record,
-                version: 5,
-                uid: String(uid),
-                biometricId: record.biometricId || createBiometricId(),
-                createdAt: record.createdAt || Date.now(),
-                savedAt: Date.now()
-            };
-            try {
-                localStorage.setItem(biometricStorageKey(uid), JSON.stringify(payload));
-                const check = getAccountBiometric(uid);
-                if (!check || check.biometricId !== payload.biometricId) throw new Error('The browser did not confirm the biometric save.');
-                return check;
-            } catch (err) {
-                throw new Error(err?.name === 'QuotaExceededError' ? 'There is not enough browser storage to save the biometric.' : (err?.message || 'Could not save the biometric.'));
-            }
+            if (!uid || !record) throw new Error('Invalid biometric enrollment.');
+            return { ...record, uid: String(uid), biometricId: record.biometricId || createBiometricId() };
         }
 
         function clearAccountBiometric(uid) {
-            if (uid) localStorage.removeItem(biometricStorageKey(uid));
+            // Account biometric removal should be handled by the authenticated server
+            // flow; intentionally do not delete or manipulate a local face template.
         }
 
         // Face points used for the biometric template. These focus on stable
@@ -8500,16 +8487,13 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                         return;
                     }
 
-                    await ssEnrollBiometricServer(biometricTargetUid, enrollment.template, 'user');
-                    // Keep the local record only for UI/status compatibility. Cross-device
-                    // login does NOT depend on this browser copy anymore.
-                    const savedRecord = saveAccountBiometric(biometricTargetUid, enrollment);
+                    const serverEnrollment = await ssEnrollBiometricServer(biometricTargetUid, enrollment.template, 'user');
                     const idStatus = document.getElementById('biometric-id-status');
                     if (idStatus) {
                         idStatus.style.display = 'block';
-                        idStatus.textContent = `✓ Biometric ID saved: ${savedRecord.biometricId} · ${savedRecord.pointCount} facial points · ${savedRecord.sampleCount} clean frames`;
+                        idStatus.textContent = `✓ Biometric enrollment saved securely to School Social · ${enrollment.pointCount} facial points · ${enrollment.sampleCount} clean frames`;
                     }
-                    biometricSetStatus('✓ Facial points captured and biometric ID saved on this device.', true);
+                    biometricSetStatus('✓ Biometric enrollment saved securely. You can use it on another supported device.', true);
                     showToast('🔐 Biometrics set up successfully.', 'success');
                     const signupStatus = document.getElementById('signup-biometric-status');
                     if (signupStatus) {
@@ -8595,12 +8579,11 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             const status = document.getElementById('account-biometrics-status');
             const btn = document.getElementById('btn-account-biometrics');
             if (!status || !btn) return;
-            const hasBio = !!getAccountBiometric(uid);
-            status.textContent = hasBio
-                ? '✅ Biometrics are saved for this account on this device.'
-                : 'Optional. No biometric is saved for this account on this device.';
-            status.style.color = hasBio ? '#58d68d' : 'var(--text-muted)';
-            btn.textContent = hasBio ? '🔐 Update Biometrics For This Account' : '🔐 Setup Biometrics For This Account';
+            // Enrollment is stored server-side, so this UI must never describe it as
+            // being tied to the current device/browser.
+            status.textContent = '🔐 Account biometrics are securely managed by School Social and can be used on supported devices.';
+            status.style.color = '#58d68d';
+            btn.textContent = '🔐 Update Biometrics For This Account';
         }
 
         document.getElementById('biometric-close')?.addEventListener('click', closeBiometricModal);
@@ -9069,76 +9052,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
             showToast('Account created! Welcome 🎉 Biometrics are optional.', 'success');
         }));
 
-        // ─── Free local biometric credential bridge ───
-        // This keeps Firebase on the free client SDK path: after the face matcher succeeds,
-        // the app unlocks an encrypted copy of the account password stored in IndexedDB and
-        // uses the normal Firebase email/password sign-in. The password is never stored in
-        // localStorage and is never sent to a third-party biometric service.
-        const SS_BIO_CRED_DB = 'schoolSocialBiometricCredentialV1';
-        const SS_BIO_CRED_STORE = 'credentials';
-
-        function ssOpenBioCredentialDb() {
-            return new Promise((resolve, reject) => {
-                const req = indexedDB.open(SS_BIO_CRED_DB, 1);
-                req.onupgradeneeded = () => {
-                    const db = req.result;
-                    if (!db.objectStoreNames.contains(SS_BIO_CRED_STORE)) db.createObjectStore(SS_BIO_CRED_STORE, { keyPath: 'uid' });
-                };
-                req.onsuccess = () => resolve(req.result);
-                req.onerror = () => reject(req.error || new Error('Could not open biometric credential storage.'));
-            });
-        }
-
-        async function ssGetBioCredential(uid) {
-            const dbx = await ssOpenBioCredentialDb();
-            return await new Promise((resolve, reject) => {
-                const tx = dbx.transaction(SS_BIO_CRED_STORE, 'readonly');
-                const req = tx.objectStore(SS_BIO_CRED_STORE).get(uid);
-                req.onsuccess = () => resolve(req.result || null);
-                req.onerror = () => reject(req.error || new Error('Could not read biometric credential.'));
-            });
-        }
-
-        async function ssSaveBioCredential(uid, password) {
-            const key = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
-            const iv = crypto.getRandomValues(new Uint8Array(12));
-            const encoded = new TextEncoder().encode(password);
-            const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded);
-            const dbx = await ssOpenBioCredentialDb();
-            await new Promise((resolve, reject) => {
-                const tx = dbx.transaction(SS_BIO_CRED_STORE, 'readwrite');
-                tx.objectStore(SS_BIO_CRED_STORE).put({ uid, key, iv: Array.from(iv), ciphertext: Array.from(new Uint8Array(ciphertext)), createdAt: Date.now() });
-                tx.oncomplete = resolve;
-                tx.onerror = () => reject(tx.error || new Error('Could not save biometric credential.'));
-            });
-        }
-
-        async function ssUnlockBioCredential(uid) {
-            const record = await ssGetBioCredential(uid);
-            if (!record?.key || !record?.iv || !record?.ciphertext) return null;
-            const plaintext = await crypto.subtle.decrypt(
-                { name: 'AES-GCM', iv: new Uint8Array(record.iv) },
-                record.key,
-                new Uint8Array(record.ciphertext)
-            );
-            return new TextDecoder().decode(plaintext);
-        }
-
-        async function ssPrepareBiometricCredential(uid) {
-            if (!uid || !currentUser || currentUser.uid !== uid) return false;
-            if (await ssGetBioCredential(uid)) return true;
-
-            const password = window.prompt('One-time setup: enter this account password so biometric sign-in can securely unlock the Firebase login on this device.');
-            if (!password) return false;
-            if (!currentUser.email) throw new Error('This account does not have an email login available.');
-
-            const credential = EmailAuthProvider.credential(currentUser.email, password);
-            await reauthenticateWithCredential(currentUser, credential);
-            await ssSaveBioCredential(uid, password);
-            return true;
-        }
-
-        // ─── Biometric sign-in UI ───
+        // ─── Cross-device biometric sign-in UI ───
         let biometricLoginUid = null;
         const biometricLoginSection = document.getElementById('biometric-login-section');
         const biometricPasswordSection = document.getElementById('login-password-section');
@@ -9185,7 +9099,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                     biometricLoginButton.disabled = false;
                     biometricLoginButton.dataset.uid = uid;
                 }
-                biometricLoginStatus.textContent = 'Biometric sign-in is ready. Scan your face on this device.';
+                biometricLoginStatus.textContent = 'Biometric sign-in is ready. Scan your face — your enrollment is stored securely for this account.';
             } catch (err) {
                 biometricLoginStatus.textContent = err?.message || 'Could not check biometric availability.';
             }
