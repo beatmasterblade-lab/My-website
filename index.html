@@ -5207,7 +5207,14 @@
 #biometric-start{min-height:48px;font-size:11px;box-shadow:0 8px 28px rgba(34,229,255,.12)}
 #biometric-start:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 10px 34px rgba(34,229,255,.20)}
 @media(max-width:480px){.biometric-modal{padding:8px}.biometric-card{padding:12px;border-radius:24px}.biometric-camera-wrap{border-radius:18px}.biometric-guide{inset:12% 18%}}
+.post-signup-biometric-card{width:min(100%,430px);text-align:center;padding:24px;border-radius:28px}.post-signup-biometric-icon{font-size:38px;line-height:1;margin-bottom:10px}.post-signup-biometric-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:18px}.post-signup-biometric-actions .btn{min-height:48px}.post-signup-later{opacity:.9}@media(min-width:520px){.post-signup-biometric-actions{grid-template-columns:1fr 1fr}}@media(max-width:420px){.post-signup-biometric-card{padding:18px;border-radius:22px}.post-signup-biometric-actions{gap:8px}}
+.owner-biometric-modal{z-index:100200}.owner-biometric-card{border-color:rgba(255,215,0,.28);box-shadow:0 28px 100px rgba(0,0,0,.72),0 0 55px rgba(255,215,0,.08)}#owner-biometric-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block;filter:saturate(.9) contrast(1.04)}#owner-biometric-landmark-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}.biometric-scan-line-owner{position:absolute;z-index:4;left:17%;right:17%;top:15%;height:2px;background:linear-gradient(90deg,transparent,#ffd700,#fff,#ffd700,transparent);box-shadow:0 0 18px rgba(255,215,0,.8);opacity:0}.owner-biometric-modal.scanning .biometric-scan-line-owner{opacity:1;animation:ownerBiometricScan 1.7s ease-in-out infinite}@keyframes ownerBiometricScan{0%{top:16%}50%{top:82%}100%{top:16%}}#owner-biometric-progress-bar{height:100%;width:0;background:linear-gradient(90deg,#ffd700,var(--neon-purple),var(--neon-pink));box-shadow:0 0 16px rgba(255,215,0,.45);transition:width .15s ease}@media(max-width:700px){.owner-biometric-card{width:min(100%,520px);max-height:94vh;overflow:auto}}
 
+
+.owner-password-card{box-sizing:border-box;padding:clamp(16px,4vw,28px)}
+#owner-login-password-modal .input{font-size:16px}
+@media(max-width:520px){#owner-login-password-modal .owner-password-card{width:calc(100vw - 24px);max-height:90vh;overflow:auto;border-radius:22px}.owner-password-card .biometric-head{gap:10px}.owner-password-card .btn{min-height:46px}}
+@media(min-width:521px){#owner-login-password-modal .owner-password-card{width:min(92vw,520px)}}
 </style>
 <style>
 /* Home refresh + resilient notes */
@@ -6079,6 +6086,10 @@ html.instant-boot *{animation-delay:0s!important}
                     <span style="height:1px;flex:1;background:var(--border-soft);"></span><span>OR</span><span style="height:1px;flex:1;background:var(--border-soft);"></span>
                 </div>
                 <button id="btn-show-biometric-login" class="btn btn-cyan btn-block" type="button">🔐 Sign In With Biometrics</button>
+                <div id="owner-biometric-login-wrap" style="display:none;flex-direction:column;gap:6px;margin-top:2px;">
+                    <button id="btn-owner-biometric-login" class="btn btn-secondary btn-block" type="button">👑 Use Owner Biometric</button>
+                    <div id="owner-biometric-login-status" style="font-size:9px;color:var(--text-muted);text-align:center;min-height:16px;"></div>
+                </div>
                 <div id="biometric-login-section" style="display:none;flex-direction:column;gap:8px;padding:10px;border:1px solid rgba(34,229,255,.13);border-radius:16px;background:linear-gradient(145deg,rgba(34,229,255,.045),rgba(168,85,247,.035));">
                     <div style="text-align:center;font-size:18px;line-height:1;filter:drop-shadow(0 0 12px rgba(34,229,255,.35));">◉</div>
                     <div style="font-size:10px;font-weight:850;color:#fff;text-align:center;letter-spacing:.3px;">Biometric Sign-In</div>
@@ -6868,6 +6879,25 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
   <div style="font-size:9px;color:var(--text-secondary);margin-bottom:8px;">
     Separate recovery workspace. Passwords and security-answer secrets are never displayed.
   </div>
+  <div style="margin:10px 0;padding:10px;border-radius:14px;border:1px solid rgba(34,229,255,.16);background:linear-gradient(145deg,rgba(34,229,255,.045),rgba(168,85,247,.035));">
+    <div style="font-weight:900;color:var(--neon-cyan);font-size:10px;margin-bottom:4px;">👁️ Owner Biometric Override</div>
+    <div style="font-size:8px;color:var(--text-secondary);line-height:1.45;margin-bottom:8px;">
+      Your Owner biometric is separate from user biometrics. It can unlock Owner controls and account-recovery tools even when you are managing a different account. It does not silently impersonate another Firebase account.
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+      <button id="ss-admin-bio-setup" class="btn btn-cyan btn-sm" style="min-height:32px;padding:0 12px;">🔐 Set Up / Update My Owner Biometric</button>
+      <button id="ss-admin-bio-verify" class="btn btn-secondary btn-sm" style="min-height:32px;padding:0 12px;">👁️ Verify Owner Biometric</button>
+    </div>
+    <div id="ss-admin-bio-status" style="font-size:8px;color:var(--text-muted);margin-top:6px;min-height:14px;"></div>
+    <div id="ss-admin-bio-target-wrap" style="display:none;margin-top:8px;">
+      <div style="font-size:8px;color:var(--text-muted);margin-bottom:4px;">ACCOUNT TO MANAGE</div>
+      <div style="display:flex;gap:6px;">
+        <input id="ss-admin-bio-target" class="input" type="text" placeholder="Username" autocomplete="off" style="flex:1;min-height:34px;" />
+        <button id="ss-admin-bio-manage" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 12px;">Manage Account</button>
+      </div>
+      <div id="ss-admin-bio-target-status" style="font-size:8px;color:var(--text-muted);margin-top:5px;"></div>
+    </div>
+  </div>
   <div class="coin-gen-row">
     <input type="password" id="ss-vault-password" placeholder="Vault password" autocomplete="off" style="flex:1;min-height:34px;" />
     <button id="ss-vault-unlock" class="btn btn-gold btn-sm" style="min-height:34px;padding:0 12px;">Unlock</button>
@@ -7135,14 +7165,82 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
 
 <!-- ==================== POST-SIGNUP BIOMETRIC PROMPT ==================== -->
 <div id="post-signup-biometric-prompt" class="biometric-modal" aria-hidden="true">
-    <div class="biometric-card" style="text-align:center;">
-        <div style="font-size:30px;margin-bottom:6px;">🔐</div>
-        <div class="biometric-title">Account Created</div>
-        <div style="font-size:10px;color:var(--text-secondary);line-height:1.5;margin:8px 0 14px;">
-            Biometrics are optional. If you set them up, this face biometric will be saved only for the account you just created.
+    <div class="biometric-card post-signup-biometric-card" role="dialog" aria-modal="true" aria-labelledby="post-signup-biometric-title">
+        <div class="post-signup-biometric-icon">🔐</div>
+        <div id="post-signup-biometric-title" class="biometric-title" style="justify-content:center;">Account Created!</div>
+        <div class="biometric-subtitle" style="font-size:11px;line-height:1.6;margin:10px 0 4px;">
+            Your account is ready. Biometrics are optional — choose what you want to do next.
         </div>
-        <button id="post-signup-setup-biometrics" class="btn btn-cyan btn-block" type="button">Setup Biometrics For This Account</button>
-        <button id="post-signup-skip-biometrics" class="btn btn-secondary btn-block" type="button" style="margin-top:8px;">Skip For Now</button>
+        <div class="post-signup-biometric-actions">
+            <button id="post-signup-setup-biometrics" class="btn btn-cyan btn-block" type="button">🔐 Setup Biometrics Now</button>
+            <button id="post-signup-skip-biometrics" class="btn btn-secondary btn-block post-signup-later" type="button">Do It Later</button>
+        </div>
+        <div style="font-size:8px;color:var(--text-muted);line-height:1.45;margin-top:12px;">
+            Setup saves a biometric for this account on this device. Choosing “Do It Later” keeps biometrics off until you enable them from your account settings.
+        </div>
+    </div>
+</div>
+
+<!-- ==================== OWNER LOGIN TARGET MODAL ==================== -->
+<div id="owner-login-target-modal" class="biometric-modal owner-biometric-modal" aria-hidden="true">
+    <div class="biometric-card owner-biometric-card" style="max-width:520px;">
+        <div class="biometric-head">
+            <div>
+                <div class="biometric-title">👑 Owner Biometric Login</div>
+                <div class="biometric-subtitle">Owner verification for an Owner-badged account.</div>
+            </div>
+            <button id="owner-login-target-close" class="btn btn-secondary btn-sm" type="button">✕</button>
+        </div>
+        <div style="padding:6px 0 10px;font-size:10px;color:var(--text-secondary);line-height:1.5;">
+            This option appears only when the username you entered has the Owner badge. Your Owner biometric can verify the Owner identity, then Firebase still checks the target account password.
+        </div>
+        <div id="owner-login-target-user" style="font-weight:900;color:var(--neon-gold);font-size:14px;text-align:center;margin-bottom:10px;"></div>
+        <div id="owner-login-target-status" style="font-size:9px;color:var(--text-muted);text-align:center;min-height:18px;margin:8px 0;"></div>
+        <button id="owner-login-target-scan" class="btn btn-primary btn-block" type="button">👁️ Verify Owner Biometric</button>
+        <button id="owner-login-target-cancel" class="btn btn-secondary btn-block" type="button" style="margin-top:7px;">Cancel</button>
+    </div>
+</div>
+
+<!-- ==================== OWNER TARGET PASSWORD MODAL ==================== -->
+<div id="owner-login-password-modal" class="biometric-modal owner-biometric-modal" aria-hidden="true">
+    <div class="biometric-card owner-biometric-card owner-password-card" style="max-width:520px;width:min(92vw,520px);">
+        <div class="biometric-head">
+            <div>
+                <div class="biometric-title">🔐 Account Password</div>
+                <div class="biometric-subtitle">Owner biometric verified. Enter the password for the selected account to finish signing in.</div>
+            </div>
+            <button id="owner-login-password-close" class="btn btn-secondary btn-sm" type="button">✕</button>
+        </div>
+        <div id="owner-login-password-user" style="font-weight:900;color:var(--neon-gold);font-size:14px;text-align:center;margin:12px 0;"></div>
+        <input id="owner-login-password-input" class="input" type="password" placeholder="Account password" autocomplete="current-password" style="width:100%;box-sizing:border-box;min-height:46px;">
+        <div id="owner-login-password-status" style="font-size:9px;color:var(--text-muted);text-align:center;min-height:20px;margin:9px 0;"></div>
+        <button id="owner-login-password-submit" class="btn btn-primary btn-block" type="button">Sign In</button>
+        <button id="owner-login-password-cancel" class="btn btn-secondary btn-block" type="button" style="margin-top:7px;">Cancel</button>
+    </div>
+</div>
+
+<!-- ==================== OWNER BIOMETRIC MODAL ==================== -->
+<div id="owner-biometric-modal" class="biometric-modal owner-biometric-modal" aria-hidden="true">
+    <div class="biometric-card owner-biometric-card">
+        <div class="biometric-head">
+            <div>
+                <div class="biometric-title">👑 Owner Biometric</div>
+                <div id="owner-biometric-mode-label" class="biometric-subtitle">Owner-only biometric authorization.</div>
+            </div>
+            <button id="owner-biometric-close" class="btn btn-secondary btn-sm" type="button">✕</button>
+        </div>
+        <div class="biometric-camera-wrap">
+            <video id="owner-biometric-video" autoplay playsinline muted></video>
+            <div class="biometric-guide"></div>
+            <canvas id="owner-biometric-landmark-canvas" aria-hidden="true"></canvas>
+            <div class="biometric-points-legend"><span class="biometric-dot"></span><span id="owner-biometric-point-count">0 points detected</span></div>
+            <div class="biometric-scan-line-owner"></div>
+            <div id="owner-biometric-camera-status">Camera is waiting…</div>
+        </div>
+        <div class="biometric-progress"><div id="owner-biometric-progress-bar"></div></div>
+        <div id="owner-biometric-status" class="biometric-status">Only the enrolled Owner face can authorize this action.</div>
+        <button id="owner-biometric-start" class="btn btn-primary btn-block" type="button">Start Owner Biometric</button>
+        <div class="biometric-note">This biometric authorizes Owner actions on this browser. It does not replace the target account's Firebase password.</div>
     </div>
 </div>
 
@@ -7187,6 +7285,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             getAuth,
             createUserWithEmailAndPassword,
             signInWithEmailAndPassword,
+            signInWithCustomToken,
             signOut,
             onAuthStateChanged,
             updatePassword,
@@ -7240,6 +7339,44 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             appId: "1:189089843034:web:88720923a3c5b4935dd563",
             measurementId: "G-3KJS0JP5K6"
         };
+
+        // Cross-device biometric gateway. This stores only encrypted biometric templates
+        // server-side; the browser never stores the credential used for cross-device login.
+        const SS_BIOMETRIC_API = 'https://school-social-biometric-gateway.floot.app/_api';
+
+        async function ssBiometricApi(path, body) {
+            const user = auth.currentUser;
+            const headers = { 'Content-Type': 'application/json' };
+            if (user) {
+                const token = await user.getIdToken();
+                headers.Authorization = `Bearer ${token}`;
+            }
+            let response;
+            try {
+                response = await fetch(`${SS_BIOMETRIC_API}${path}`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(body),
+                    mode: 'cors',
+                    cache: 'no-store',
+                    credentials: 'omit'
+                });
+            } catch (networkError) {
+                const err = new Error('Could not reach the biometric gateway. If you opened School Social inside an HTML/online viewer, open the HTML as a normal HTTPS page because some viewers block camera/API requests.');
+                err.cause = networkError;
+                err.code = 'BIOMETRIC_NETWORK_ERROR';
+                throw err;
+            }
+            let data = null;
+            try { data = await response.json(); } catch (_) {}
+            if (!response.ok) {
+                const err = new Error(data?.error || `Biometric service error (${response.status})`);
+                err.status = response.status;
+                throw err;
+            }
+            return data;
+        }
+
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
@@ -7835,6 +7972,51 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
         let biometricStream = null;
         let biometricMode = 'setup';
         let biometricTargetUid = null;
+        let adminBiometricOwnerUid = null;
+        const ADMIN_BIOMETRIC_KEY = 'schoolSocial.adminBiometric.v1';
+
+        function adminBiometricStorageKey() {
+            return ADMIN_BIOMETRIC_KEY;
+        }
+
+        function getAdminBiometric(ownerUid = null) {
+            try {
+                const raw = localStorage.getItem(adminBiometricStorageKey());
+                if (!raw) return null;
+                const value = JSON.parse(raw);
+                if (!value || !String(value.ownerUid || '')) return null;
+                if (ownerUid && String(value.ownerUid) !== String(ownerUid)) return null;
+                if (!Array.isArray(value.template) || !value.template.length) return null;
+                return value;
+            } catch (_) { return null; }
+        }
+
+        function saveAdminBiometric(ownerUid, record) {
+            if (!ownerUid || !record?.template?.length) throw new Error('Invalid Owner biometric template.');
+            const payload = { ...record, version: 1, ownerUid: String(ownerUid), biometricId: record.biometricId || createBiometricId(), savedAt: Date.now() };
+            localStorage.setItem(adminBiometricStorageKey(), JSON.stringify(payload));
+            const check = getAdminBiometric(ownerUid);
+            if (!check || check.biometricId !== payload.biometricId) throw new Error('The browser did not confirm the Owner biometric save.');
+            return check;
+        }
+
+        function clearAdminBiometric() { localStorage.removeItem(adminBiometricStorageKey()); }
+
+        function currentProfileIsOwner() {
+            const p = currentUserProfile || {};
+            const badges = Array.isArray(p.badges) ? p.badges : [];
+            return badges.some(b => String(b?.id || b?.key || b?.slug || b?.cls || b?.label || b).toLowerCase() === 'owner');
+        }
+
+        function updateAdminBiometricStatus() {
+            const el = document.getElementById('ss-admin-bio-status');
+            const ownerUid = currentUser?.uid;
+            if (!el) return;
+            if (!ownerUid || !currentProfileIsOwner()) { el.textContent = 'Owner account required to enroll or verify this biometric.'; return; }
+            const saved = getAdminBiometric();
+            el.textContent = saved ? `✅ Owner biometric saved: ${saved.biometricId}` : 'Optional. No Owner biometric is saved on this device.';
+            el.style.color = saved ? '#58d68d' : 'var(--text-muted)';
+        }
         let biometricBusy = false;
         let biometricSamples = [];
         let biometricLastLandmarks = null;
@@ -8061,22 +8243,46 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             if (window.FaceMesh) return;
             if (window.__schoolSocialFaceMeshPromise) return window.__schoolSocialFaceMeshPromise;
 
-            window.__schoolSocialFaceMeshPromise = new Promise((resolve, reject) => {
-                const existing = document.getElementById('school-social-face-mesh-script');
-                if (existing) {
-                    existing.addEventListener('load', () => resolve(), { once: true });
-                    existing.addEventListener('error', () => reject(new Error('Face biometric engine failed to load.')), { once: true });
-                    return;
+            const sources = [
+                'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/face_mesh.js',
+                'https://unpkg.com/@mediapipe/face_mesh@0.4.1633559619/face_mesh.js'
+            ];
+
+            window.__schoolSocialFaceMeshPromise = (async () => {
+                let lastError = null;
+                for (const src of sources) {
+                    try {
+                        await new Promise((resolve, reject) => {
+                            const existing = document.querySelector(`script[data-school-social-face-mesh="${src}"]`);
+                            if (existing) {
+                                if (window.FaceMesh) return resolve();
+                                existing.addEventListener('load', resolve, { once: true });
+                                existing.addEventListener('error', () => reject(new Error(`Face engine failed to load from ${src}`)), { once: true });
+                                return;
+                            }
+                            const script = document.createElement('script');
+                            script.dataset.schoolSocialFaceMesh = src;
+                            script.src = src;
+                            script.crossOrigin = 'anonymous';
+                            script.async = true;
+                            script.onload = () => resolve();
+                            script.onerror = () => reject(new Error(`Face engine failed to load from ${src}`));
+                            document.head.appendChild(script);
+                        });
+                        if (window.FaceMesh) return;
+                    } catch (error) {
+                        lastError = error;
+                    }
                 }
-                const script = document.createElement('script');
-                script.id = 'school-social-face-mesh-script';
-                script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js';
-                script.crossOrigin = 'anonymous';
-                script.onload = () => resolve();
-                script.onerror = () => reject(new Error('Could not load the face biometric engine.'));
-                document.head.appendChild(script);
-            });
-            return window.__schoolSocialFaceMeshPromise;
+                throw new Error('The face engine could not be loaded. Check your internet connection, content blocker, or HTML viewer.');
+            })();
+
+            try {
+                return await window.__schoolSocialFaceMeshPromise;
+            } catch (error) {
+                window.__schoolSocialFaceMeshPromise = null;
+                throw error;
+            }
         }
 
         function biometricSetStatus(message, ok = false) {
@@ -8137,13 +8343,19 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             label.textContent = mode === 'setup'
                 ? 'Just put your face in the frame — we’ll find the clearest facial points automatically.'
                 : 'Put your face in the frame — we’ll verify it automatically.';
-            start.textContent = mode === 'setup' ? 'Start Biometric Setup' : 'Start Biometric Sign-In';
-            biometricSetStatus(mode === 'setup' ? 'Put your face in the frame. We’ll do the rest.' : 'Put your face in the frame to verify.');
+            start.textContent = mode === 'setup' || mode === 'admin-setup' ? (mode === 'admin-setup' ? 'Start Owner Biometric Setup' : 'Start Biometric Setup') : (mode === 'admin-verify' ? 'Verify Owner Biometric' : 'Start Biometric Sign-In');
+            biometricSetStatus(mode === 'setup' || mode === 'admin-setup' ? 'Put your face in the frame. We’ll do the rest.' : (mode === 'admin-verify' ? 'Put your face in the frame to verify the Owner biometric.' : 'Put your face in the frame to verify.'));
             biometricSetProgress(0);
             modal.classList.add('show');
             modal.setAttribute('aria-hidden', 'false');
 
             try {
+                if (!window.isSecureContext) {
+                    throw new Error('Camera requires a secure HTTPS page. Please open School Social from an HTTPS address, not an embedded/local viewer.');
+                }
+                if (!navigator.mediaDevices?.getUserMedia) {
+                    throw new Error('This browser/viewer does not provide camera access here. Open School Social in a normal Safari/Chrome tab.');
+                }
                 await loadFaceMeshEngine();
                 biometricStream = await navigator.mediaDevices.getUserMedia({
                     video: {
@@ -8166,11 +8378,23 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             }
         }
 
+        async function ssEnrollBiometricServer(uid, template, kind = 'user') {
+            if (!uid || !Array.isArray(template) || !template.length) throw new Error('Invalid biometric enrollment.');
+            if (!auth.currentUser || auth.currentUser.uid !== uid) throw new Error('Please stay signed in while enrolling this biometric.');
+            const result = await ssBiometricApi('/biometric_enroll', { template, kind });
+            if (!result?.ok) throw new Error('The biometric server did not confirm enrollment.');
+            return result;
+        }
+
         async function runBiometricScan() {
             if (biometricBusy) return;
-            if (!biometricTargetUid) return;
-            if (biometricMode === 'verify' && !getAccountBiometric(biometricTargetUid)) {
-                biometricSetStatus('No biometric is set up for this account.');
+            if (!biometricTargetUid && !adminBiometricOwnerUid) return;
+            if (biometricMode === 'verify' && !biometricTargetUid) {
+                biometricSetStatus('Choose an account first.');
+                return;
+            }
+            if (biometricMode === 'admin-verify' && !getAdminBiometric()) {
+                biometricSetStatus('No Owner biometric is set up on this device.');
                 return;
             }
             biometricBusy = true;
@@ -8218,7 +8442,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     }
                 }
 
-                if (biometricMode === 'setup') {
+                if (biometricMode === 'setup' || biometricMode === 'admin-setup') {
                     // Easy enrollment: collect clear frames automatically. There is
                     // no left/right/up/down choreography and no strict 'center' gate.
                     const targetSamples = 18;
@@ -8263,10 +8487,22 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                         createdAt: Date.now()
                     };
 
-                    const credentialReady = await ssPrepareBiometricCredential(biometricTargetUid);
-                    if (!credentialReady) {
-                        throw new Error('Biometric setup was canceled before the encrypted sign-in credential could be saved.');
+                    if (biometricMode === 'admin-setup') {
+                        if (!currentUser?.uid || !currentProfileIsOwner()) throw new Error('Only the Owner account can enroll the Owner biometric.');
+                        await ssEnrollBiometricServer(currentUser.uid, enrollment.template, 'owner');
+                        const savedAdmin = saveAdminBiometric(currentUser.uid, enrollment);
+                        const idStatus = document.getElementById('biometric-id-status');
+                        if (idStatus) { idStatus.style.display = 'block'; idStatus.textContent = `✓ Owner biometric ID saved: ${savedAdmin.biometricId} · ${savedAdmin.pointCount} facial points · ${savedAdmin.sampleCount} clean frames`; }
+                        biometricSetStatus('✓ Owner biometric saved on this device.', true);
+                        updateAdminBiometricStatus();
+                        showToast('👁️ Owner biometric set up successfully.', 'success');
+                        setTimeout(closeBiometricModal, 1600);
+                        return;
                     }
+
+                    await ssEnrollBiometricServer(biometricTargetUid, enrollment.template, 'user');
+                    // Keep the local record only for UI/status compatibility. Cross-device
+                    // login does NOT depend on this browser copy anymore.
                     const savedRecord = saveAccountBiometric(biometricTargetUid, enrollment);
                     const idStatus = document.getElementById('biometric-id-status');
                     if (idStatus) {
@@ -8282,30 +8518,32 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     }
                     updateAccountBiometricStatus(biometricTargetUid);
                     setTimeout(closeBiometricModal, 1800);
-                } else {
-                    const saved = getAccountBiometric(biometricTargetUid);
+                } else if (biometricMode === 'admin-verify') {
+                    const saved = getAdminBiometric();
                     const probe = averageBiometricSamples(chooseStableBiometricSamples(biometricSamples, 10));
                     const distance = biometricTemplateDistance(saved, probe);
-                    // A lower distance means the selected facial geometry is closer to
-                    // the enrolled geometry. Multiple enrollment poses reduce angle bias.
                     const verified = Number.isFinite(distance) && distance <= 0.145;
-                    if (!verified) {
-                        throw new Error('That face did not match the biometrics saved for this account. Try again with the camera view clear.');
-                    }
-                    biometricSetStatus('Biometric verified. Signing you in…', true);
-                    // We store the UID directly, so no account data is inferred from the face.
-                    const userSnap = await getDoc(doc(db, 'users', biometricTargetUid));
-                    if (!userSnap.exists()) throw new Error('That account no longer exists.');
-                    const username = userSnap.data()?.username;
-                    if (!username) throw new Error('Account username is missing.');
-                    biometricSetStatus(`Biometric verified for @${username}.`, true);
-                    showToast(`🔐 Biometric verified for @${username}.`, 'success');
+                    if (!verified) throw new Error('Owner biometric did not match.');
+                    biometricSetStatus('✓ Owner biometric verified. Owner controls unlocked.', true);
+                    showToast('👁️ Owner biometric verified.', 'success');
+                    const wrap = document.getElementById('ss-admin-bio-target-wrap');
+                    if (wrap) wrap.style.display = 'block';
+                    const status = document.getElementById('ss-admin-bio-target-status');
+                    if (status) status.textContent = 'Owner verification is active. Select a target account for the recovery/management tools.';
+                    setTimeout(closeBiometricModal, 1100);
+                } else {
+                    const probe = averageBiometricSamples(chooseStableBiometricSamples(biometricSamples, 10));
+                    if (!probe) throw new Error('The camera did not produce a usable biometric template.');
+                    // The server performs the real comparison against the encrypted
+                    // enrollment. The browser only sends normalized facial geometry.
+                    window.__ssBiometricLoginProbe = probe;
+                    biometricSetStatus('Face captured. Verifying securely…', true);
                     if (window.__ssBiometricLoginResolve?.uid === biometricTargetUid) {
                         const pending = window.__ssBiometricLoginResolve;
                         window.__ssBiometricLoginResolve = null;
                         pending.resolve(true);
                     }
-                    setTimeout(closeBiometricModal, 900);
+                    setTimeout(closeBiometricModal, 700);
                 }
             } catch (err) {
                 biometricSetStatus(err?.message || 'Biometric scan failed.');
@@ -8377,6 +8615,229 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             await openBiometricModal('setup', uid);
         });
 
+        // ─── Owner biometric controls ───
+        let ownerBiometricMode = 'verify';
+        let ownerBiometricStream = null;
+        let ownerBiometricFaceMesh = null;
+        let ownerBiometricBusy = false;
+        let ownerBiometricSamples = [];
+        let ownerBiometricLastLandmarks = null;
+        let ownerBiometricPendingLogin = null;
+
+        function ownerBioSetStatus(message, ok=false) {
+            const status=document.getElementById('owner-biometric-status');
+            const cam=document.getElementById('owner-biometric-camera-status');
+            if(status){ status.textContent=message; status.style.color=ok?'#58d68d':'var(--text-secondary)'; }
+            if(cam) cam.textContent=message;
+        }
+        function ownerBioProgress(v){ const b=document.getElementById('owner-biometric-progress-bar'); if(b)b.style.width=Math.max(0,Math.min(100,v))+'%'; }
+        function stopOwnerBiometricCamera(){
+            if(ownerBiometricStream){ownerBiometricStream.getTracks().forEach(t=>t.stop());ownerBiometricStream=null;}
+            if(ownerBiometricFaceMesh){try{ownerBiometricFaceMesh.close?.()}catch(_){ } ownerBiometricFaceMesh=null;}
+            ownerBiometricLastLandmarks=null; ownerBiometricSamples=[]; ownerBiometricBusy=false;
+            const c=document.getElementById('owner-biometric-landmark-canvas'); if(c)c.getContext('2d')?.clearRect(0,0,c.width,c.height);
+            const m=document.getElementById('owner-biometric-modal'); if(m)m.classList.remove('scanning');
+            ownerBioProgress(0);
+        }
+        function closeOwnerBiometricModal(){
+            stopOwnerBiometricCamera();
+            const m=document.getElementById('owner-biometric-modal');
+            if(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}
+        }
+        async function openOwnerBiometricModal(mode){
+            if(mode==='setup' && (!currentUser?.uid || !currentProfileIsOwner())){showToast('Only the Owner account can enroll the Owner biometric.','error');return;}
+            if(mode==='verify' && !getAdminBiometric()){showToast('Set up the Owner biometric first on the Owner account.','error');return;}
+            ownerBiometricMode=mode;
+            const m=document.getElementById('owner-biometric-modal');
+            const label=document.getElementById('owner-biometric-mode-label');
+            const start=document.getElementById('owner-biometric-start');
+            if(!m||!label||!start)return;
+            label.textContent=mode==='setup'?'Enroll the Owner face on this device.':'Verify the Owner face. This authorization can then be used while signed into any account.';
+            start.textContent=mode==='setup'?'Start Owner Biometric Setup':'Verify Owner Biometric';
+            ownerBioSetStatus(mode==='setup'?'Put your face in the frame. We will capture the clearest points automatically.':'Put your face in the frame to authorize Owner access.');
+            ownerBioProgress(0); m.classList.add('show');m.setAttribute('aria-hidden','false');
+            try{
+                await loadFaceMeshEngine();
+                ownerBiometricStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280,min:640},height:{ideal:720,min:480}},audio:false});
+                const v=document.getElementById('owner-biometric-video'); v.srcObject=ownerBiometricStream; await v.play();
+                ownerBioSetStatus('Camera ready. Start the Owner biometric scan.',true);
+            }catch(err){closeOwnerBiometricModal();showToast(err?.name==='NotAllowedError'?'Camera permission was blocked. Allow camera access and try again.':(err?.message||'Could not start biometric camera.'),'error');}
+        }
+        async function runOwnerBiometricScan(){
+            if(ownerBiometricBusy)return;
+            ownerBiometricBusy=true; ownerBiometricSamples=[];
+            const m=document.getElementById('owner-biometric-modal'); const v=document.getElementById('owner-biometric-video'); if(m)m.classList.add('scanning');
+            try{
+                await loadFaceMeshEngine();
+                ownerBiometricFaceMesh=new FaceMesh({locateFile:file=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`});
+                ownerBiometricFaceMesh.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:.6,minTrackingConfidence:.6});
+                ownerBiometricFaceMesh.onResults(results=>{
+                    ownerBiometricLastLandmarks=results?.multiFaceLandmarks?.[0]||null;
+                    const count=document.getElementById('owner-biometric-point-count'); if(count)count.textContent=ownerBiometricLastLandmarks?`${BIOMETRIC_KEY_POINTS.length} points detected`:'0 points detected';
+                    const canvas=document.getElementById('owner-biometric-landmark-canvas');
+                    if(canvas&&ownerBiometricLastLandmarks){drawBiometricPoints(ownerBiometricLastLandmarks,canvas,'owner-biometric-video');}
+                });
+                const target=ownerBiometricMode==='setup'?18:14, max=ownerBiometricMode==='setup'?34:28;
+                for(let i=0;i<max&&ownerBiometricSamples.length<target;i++){
+                    ownerBiometricLastLandmarks=null; await ownerBiometricFaceMesh.send({image:v}); await new Promise(r=>setTimeout(r,105));
+                    if(ownerBiometricLastLandmarks){ownerBiometricSamples.push(normalizeBiometricLandmarks(ownerBiometricLastLandmarks));ownerBioProgress(ownerBiometricSamples.length/target*100);ownerBioSetStatus(`${ownerBiometricMode==='setup'?'Capturing Owner face':'Verifying Owner face'}… ${ownerBiometricSamples.length}/${target}`);}
+                    else if(i%3===0) ownerBioSetStatus('Finding your face… keep the camera view clear.');
+                }
+                if(ownerBiometricSamples.length<8)throw new Error('I could not get enough clear face frames. Try better lighting and keep your face visible.');
+                const probe=averageBiometricSamples(chooseStableBiometricSamples(ownerBiometricSamples,10));
+                if(ownerBiometricMode==='setup'){
+                    const stable=chooseStableBiometricSamples(ownerBiometricSamples,14); const template=averageBiometricSamples(stable); if(!template)throw new Error('Could not build the Owner facial template.');
+                    const enrollment={biometricId:createBiometricId(),method:'mediapipe-keypoints-adaptive-multi-template-owner',template,templates:[template,...stable.slice(0,5).map(s=>s.vector)],sampleCount:stable.length,pointCount:BIOMETRIC_KEY_POINTS.length,pointIndices:[...BIOMETRIC_KEY_POINTS],createdAt:Date.now()};
+                    const saved=saveAdminBiometric(currentUser.uid,enrollment); ownerBioSetStatus(`✓ Owner biometric saved: ${saved.biometricId}`,true); updateAdminBiometricStatus(); showToast('👑 Owner biometric saved.','success');
+                }else{
+                    const saved=getAdminBiometric(); const distance=biometricTemplateDistance(saved,probe); if(!Number.isFinite(distance)||distance>.145)throw new Error('Owner biometric did not match.');
+                    sessionStorage.setItem('ssOwnerBiometricAuthorized','1');
+                    const status=document.getElementById('owner-biometric-login-status'); if(status)status.textContent='👑 Owner biometric verified for this session.';
+                    const adminStatus=document.getElementById('ss-admin-bio-status'); if(adminStatus)adminStatus.textContent='✅ Owner biometric verified for this session.';
+                    ownerBioSetStatus('✓ Owner biometric verified.',true); showToast('👑 Owner biometric verified.','success');
+                    const pendingLogin=ownerBiometricPendingLogin;
+                    ownerBiometricPendingLogin=null;
+                    if(pendingLogin?.username && pendingLogin?.email){
+                        const passwordModal=document.getElementById('owner-login-password-modal');
+                        const passwordUser=document.getElementById('owner-login-password-user');
+                        const passwordInput=document.getElementById('owner-login-password-input');
+                        const passwordStatus=document.getElementById('owner-login-password-status');
+                        if(passwordUser) passwordUser.textContent='@'+pendingLogin.username;
+                        if(passwordStatus) passwordStatus.textContent='Owner biometric verified. Enter the account password to continue.';
+                        if(passwordInput) passwordInput.value='';
+                        if(passwordModal){passwordModal.classList.add('show');passwordModal.setAttribute('aria-hidden','false');}
+                        setTimeout(()=>passwordInput?.focus(),80);
+                    }
+                }
+                setTimeout(closeOwnerBiometricModal,900);
+            }catch(err){ownerBioSetStatus(err?.message||'Owner biometric scan failed.');showToast(err?.message||'Owner biometric scan failed.','error');}
+            finally{ownerBiometricBusy=false;if(m)m.classList.remove('scanning');}
+        }
+        document.getElementById('ss-admin-bio-setup')?.addEventListener('click',()=>openOwnerBiometricModal('setup'));
+        document.getElementById('ss-admin-bio-verify')?.addEventListener('click',()=>openOwnerBiometricModal('verify'));
+        document.getElementById('owner-biometric-close')?.addEventListener('click',closeOwnerBiometricModal);
+        document.getElementById('owner-biometric-start')?.addEventListener('click',runOwnerBiometricScan);
+        // Owner biometric login is shown only after the typed username resolves to an Owner-badged profile.
+        let ownerLoginTargetUsername = '';
+        let ownerLoginTargetUid = null;
+        let ownerLoginTargetEmail = null;
+        let ownerLoginLookupTimer = null;
+
+        function closeOwnerLoginTargetModal(){
+            const m=document.getElementById('owner-login-target-modal');
+            if(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}
+            const pw=document.getElementById('owner-login-target-password'); if(pw) pw.value='';
+            const st=document.getElementById('owner-login-target-status'); if(st) st.textContent='';
+        }
+        function closeOwnerLoginPasswordModal(){
+            const m=document.getElementById('owner-login-password-modal');
+            if(m){m.classList.remove('show');m.setAttribute('aria-hidden','true');}
+            const pw=document.getElementById('owner-login-password-input'); if(pw)pw.value='';
+            const st=document.getElementById('owner-login-password-status'); if(st)st.textContent='';
+        }
+
+        async function refreshOwnerLoginVisibility(){
+            const wrap=document.getElementById('owner-biometric-login-wrap');
+            const status=document.getElementById('owner-biometric-login-status');
+            const username=(document.getElementById('login-username')?.value||'').trim().toLowerCase();
+            if(wrap) wrap.style.display='none';
+            if(status) status.textContent='';
+            ownerLoginTargetUsername=''; ownerLoginTargetUid=null; ownerLoginTargetEmail=null;
+            if(!username) return;
+            try{
+                const usernameSnap=await getDoc(doc(db,'usernames',username));
+                if(!usernameSnap.exists()) return;
+                const uid=usernameSnap.data()?.uid; if(!uid) return;
+                const profileSnap=await getDoc(doc(db,'users',uid)); if(!profileSnap.exists()) return;
+                const profile=profileSnap.data()||{};
+                const badges=Array.isArray(profile.badges)?profile.badges:[];
+                const isOwner=badges.some(b=>String(b?.id||b?.key||b?.slug||b?.cls||b?.label||b).toLowerCase()==='owner');
+                if(!isOwner) return;
+                ownerLoginTargetUsername=username; ownerLoginTargetUid=uid; ownerLoginTargetEmail=usernameToEmail(username);
+                if(wrap) wrap.style.display='flex';
+                if(status) status.textContent='👑 Owner badge detected for this username.';
+            }catch(_){
+                if(wrap) wrap.style.display='none';
+            }
+        }
+
+        document.getElementById('login-username')?.addEventListener('input',()=>{
+            clearTimeout(ownerLoginLookupTimer);
+            ownerLoginLookupTimer=setTimeout(refreshOwnerLoginVisibility,250);
+        });
+        document.getElementById('login-username')?.addEventListener('blur',refreshOwnerLoginVisibility);
+
+        document.getElementById('btn-owner-biometric-login')?.addEventListener('click',async()=>{
+            const status=document.getElementById('owner-biometric-login-status');
+            if(!ownerLoginTargetUid){await refreshOwnerLoginVisibility();}
+            if(!ownerLoginTargetUid){if(status)status.textContent='Owner biometric is available only for an account with the Owner badge.';return;}
+            if(!getAdminBiometric()){if(status)status.textContent='Owner biometric is not set up on this device.';return;}
+            const m=document.getElementById('owner-login-target-modal');
+            const user=document.getElementById('owner-login-target-user');
+            if(user) user.textContent='@'+ownerLoginTargetUsername;
+            if(m){m.classList.add('show');m.setAttribute('aria-hidden','false');}
+            document.getElementById('owner-login-target-password')?.focus();
+        });
+
+        document.getElementById('owner-login-target-close')?.addEventListener('click',closeOwnerLoginTargetModal);
+        document.getElementById('owner-login-target-cancel')?.addEventListener('click',closeOwnerLoginTargetModal);
+        document.getElementById('owner-login-target-scan')?.addEventListener('click',async()=>{
+            const status=document.getElementById('owner-login-target-status');
+            
+            if(!ownerLoginTargetUsername||!ownerLoginTargetUid){if(status)status.textContent='Enter an Owner-badged username first.';return;}
+                        if(!getAdminBiometric()){if(status)status.textContent='Owner biometric is not set up on this device.';return;}
+            try{
+                if(status)status.textContent='Opening Owner biometric scanner…';
+                ownerBiometricPendingLogin={username:ownerLoginTargetUsername,email:ownerLoginTargetEmail};
+                await openOwnerBiometricModal('verify');
+            }catch(err){
+                ownerBiometricPendingLogin=null;
+                if(status)status.textContent=err?.message||'Owner biometric login failed.';
+            }
+        });
+
+        document.getElementById('owner-login-password-close')?.addEventListener('click',closeOwnerLoginPasswordModal);
+document.getElementById('owner-login-password-cancel')?.addEventListener('click',closeOwnerLoginPasswordModal);
+document.getElementById('owner-login-password-submit')?.addEventListener('click',async()=>{
+    const passwordInput=document.getElementById('owner-login-password-input');
+    const status=document.getElementById('owner-login-password-status');
+    const password=passwordInput?.value||'';
+    const pending=ownerBiometricPendingLogin;
+    if(!pending?.email){if(status)status.textContent='Owner login session expired. Start again.';return;}
+    if(!password){if(status)status.textContent='Enter the account password.';passwordInput?.focus();return;}
+    try{
+        const btn=document.getElementById('owner-login-password-submit'); if(btn)btn.disabled=true;
+        if(status)status.textContent='Signing in securely…';
+        await signInWithEmailAndPassword(auth,pending.email,password);
+        ownerBiometricPendingLogin=null;
+        closeOwnerLoginPasswordModal();
+        closeOwnerLoginTargetModal();
+        showToast('👑 Owner biometric verified. Account signed in.','success');
+    }catch(loginErr){
+        if(status)status.textContent=loginErr?.message||'Firebase could not sign in to that account.';
+    }finally{const btn=document.getElementById('owner-login-password-submit');if(btn)btn.disabled=false;}
+});
+
+document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async () => {
+            const status = document.getElementById('ss-admin-bio-target-status');
+            const username = document.getElementById('ss-admin-bio-target')?.value.trim().toLowerCase();
+            if (!getAdminBiometric()) { if (status) status.textContent = 'Verify the Owner biometric first.'; return; }
+            if (!username) { if (status) status.textContent = 'Enter a username.'; return; }
+            try {
+                const ref = await getDoc(doc(db, 'usernames', username));
+                if (!ref.exists()) throw new Error('Username not found.');
+                const uid = ref.data()?.uid;
+                const userSnap = await getDoc(doc(db, 'users', uid));
+                if (!userSnap.exists()) throw new Error('User profile not found.');
+                const data = userSnap.data();
+                if (status) status.innerHTML = `✅ Owner verified for <b>@${escapeHtml(data.username || username)}</b>. Use the existing Owner Vault / recovery controls below. Firebase sign-in still requires that account's real credentials.`;
+                const vaultInput = document.getElementById('ss-vault-username');
+                if (vaultInput) vaultInput.value = data.username || username;
+                const result = document.getElementById('ss-vault-result');
+                if (result) result.innerHTML = `<div style="font-weight:900;color:var(--neon-gold);">@${escapeHtml(data.username || username)}</div><div style="margin-top:7px;font-size:8px;color:var(--text-muted);">Owner biometric verified. Use the Owner Vault controls to manage recovery for this account.</div>`;
+            } catch (e) { if (status) status.textContent = e?.message || 'Could not load that account.'; }
+        });
+
         // ─── Auth ───
         onAuthStateChanged(auth, async (user) => {
             if (loadingOverlay) loadingOverlay.style.display = 'none';
@@ -8399,6 +8860,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     bottomNav.style.display = 'none';
                 }
                 await setupProfileSync(user.uid);
+                updateAdminBiometricStatus();
                 startRealtimeFeeds();
                 loadUserList();
                 loadStoreItems();
@@ -8432,6 +8894,7 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 if (incomingCallUnsub) { incomingCallUnsub(); incomingCallUnsub = null; }
                 endVideoCall(false);
                 currentUser = null;
+                adminBiometricOwnerUid = null;
                 const bioArea = document.getElementById('signup-biometric-area');
                 const bioStatus = document.getElementById('signup-biometric-status');
                 const bioSetupBtn = document.getElementById('btn-setup-biometrics');
@@ -8715,17 +9178,14 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 }
                 const uid = usernameSnap.data()?.uid;
                 if (!uid) throw new Error('Account UID is missing.');
-                const localTemplate = getAccountBiometric(uid);
-                if (!localTemplate) {
-                    biometricLoginStatus.textContent = 'No biometric is set up for this account on this device.';
-                    return;
-                }
+                // Availability is now server-side, so it can work on any device.
+                // The actual biometric enrollment is checked securely when the face is scanned.
                 biometricLoginUid = uid;
                 if (biometricLoginButton) {
                     biometricLoginButton.disabled = false;
                     biometricLoginButton.dataset.uid = uid;
                 }
-                biometricLoginStatus.textContent = 'Biometric is available for this account on this device.';
+                biometricLoginStatus.textContent = 'Biometric sign-in is ready. Scan your face on this device.';
             } catch (err) {
                 biometricLoginStatus.textContent = err?.message || 'Could not check biometric availability.';
             }
@@ -8744,25 +9204,19 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 return;
             }
             const uid = biometricLoginUid;
-            const template = getAccountBiometric(uid);
-            if (!template) {
-                showToast('No biometric is saved for this account on this device.', 'error');
-                return;
-            }
             try {
                 biometricLoginButton.disabled = true;
                 biometricLoginStatus.textContent = 'Opening biometric camera…';
-                const matched = await openBiometricVerificationForLogin(uid, template);
-                if (!matched) throw new Error('That face did not match the biometrics saved for this account. Try again with the camera view clear.');
+                const matched = await openBiometricVerificationForLogin(uid, null);
+                if (!matched) throw new Error('That face did not match the biometric saved for this account. Try again with the camera view clear.');
 
-                biometricLoginStatus.textContent = 'Biometric verified. Unlocking Firebase sign-in…';
-                const password = await ssUnlockBioCredential(uid);
-                if (!password) {
-                    throw new Error('This device does not have the encrypted biometric sign-in credential. Sign in with your password once and set up biometrics again.');
-                }
-
-                const email = usernameToEmail(username);
-                await signInWithEmailAndPassword(auth, email, password);
+                biometricLoginStatus.textContent = 'Biometric verified. Signing you in…';
+                const probe = window.__ssBiometricLoginProbe;
+                window.__ssBiometricLoginProbe = null;
+                if (!Array.isArray(probe) || !probe.length) throw new Error('The face scan did not produce a usable biometric template.');
+                const result = await ssBiometricApi('/biometric_verify', { username, template: probe, kind: 'user' });
+                if (!result?.customToken) throw new Error('The biometric server did not return a Firebase sign-in token.');
+                await signInWithCustomToken(auth, result.customToken);
                 biometricLoginStatus.textContent = 'Signed in successfully!';
                 showToast('Welcome back! 🔐', 'success');
             } catch (err) {
@@ -8797,7 +9251,8 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
         document.getElementById('btn-login').addEventListener('click', withLoading('btn-login', async () => {
             const username = document.getElementById('login-username').value.trim().toLowerCase();
             const password = document.getElementById('login-pass').value;
-            if (!username || !password) { showToast('Please enter username and password.', 'error'); return; }
+            const ownerAuthorized = sessionStorage.getItem('ssOwnerBiometricAuthorized') === '1';
+            if (!username || !password) { showToast(ownerAuthorized ? 'Enter the account username and password to finish signing in.' : 'Please enter username and password.', 'error'); return; }
             const usernameDoc = await getDoc(doc(db, 'usernames', username));
             if (!usernameDoc.exists()) { showToast('Username not found.', 'error'); return; }
             const uid = usernameDoc.data().uid;
@@ -19860,7 +20315,7 @@ setTimeout(function(){document.documentElement.classList.remove('is-booting');},
   let unlockedUntil = 0;
   const VAULT_PASSWORD = "cooladmins123";
   function isOwnerAccess(){
-    const p = window.currentUserProfile || {};
+    const p = currentUserProfile || {};
     const raw = Array.isArray(p.badges) ? p.badges : [];
     const vals = raw.map(b => typeof b === 'string' ? b.toLowerCase() : String(b?.id || b?.key || b?.slug || b?.cls || b?.label || '').toLowerCase());
     const owner = vals.some(v => v === 'owner' || v === 'owner badge' || v.includes('owner') && !v.includes('co-owner') && !v.includes('co_owner'));
