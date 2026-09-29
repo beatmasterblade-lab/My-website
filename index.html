@@ -5186,7 +5186,7 @@
 .biometric-subtitle{font-size:9px;color:var(--text-muted);margin-top:4px;line-height:1.4}
 .biometric-camera-wrap{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:22px;background:#01040a;border:1px solid rgba(34,229,255,.20);box-shadow:inset 0 0 45px rgba(34,229,255,.045),0 14px 40px rgba(0,0,0,.35);isolation:isolate}
 .biometric-camera-wrap:before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(rgba(34,229,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(34,229,255,.035) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse at center,#000 25%,transparent 78%)}
-#account-biometric-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block;filter:saturate(.9) contrast(1.04)}
+#account-biometric-video{width:100%;height:100%;object-fit:cover;object-position:center center;transform:scaleX(-1);display:block;filter:saturate(.9) contrast(1.04);background:#01040a;-webkit-transform:translateZ(0) scaleX(-1);backface-visibility:hidden;-webkit-backface-visibility:hidden}
 #biometric-landmark-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
 .biometric-points-legend{position:absolute;left:12px;top:12px;z-index:6;display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;background:rgba(4,10,20,.72);backdrop-filter:blur(8px);border:1px solid rgba(34,211,238,.28);font-size:10px;color:#d8f8ff;box-shadow:0 0 20px rgba(34,211,238,.12)}
 .biometric-dot{width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 10px #22d3ee;display:inline-block}
@@ -5206,7 +5206,7 @@
 .biometric-card .btn{position:relative;z-index:1}
 #biometric-start{min-height:48px;font-size:11px;box-shadow:0 8px 28px rgba(34,229,255,.12)}
 #biometric-start:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 10px 34px rgba(34,229,255,.20)}
-@media(max-width:480px){.biometric-modal{padding:8px}.biometric-card{padding:12px;border-radius:24px}.biometric-camera-wrap{border-radius:18px}.biometric-guide{inset:12% 18%}}
+@media(max-width:480px){.biometric-camera-wrap{aspect-ratio:3/4;min-height:320px}.biometric-card{max-height:calc(100dvh - 16px);overflow:auto}.biometric-modal{padding:8px}.biometric-card{padding:12px;border-radius:24px}.biometric-camera-wrap{border-radius:18px}.biometric-guide{inset:12% 18%}}
 .post-signup-biometric-card{width:min(100%,430px);text-align:center;padding:24px;border-radius:28px}.post-signup-biometric-icon{font-size:38px;line-height:1;margin-bottom:10px}.post-signup-biometric-actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:18px}.post-signup-biometric-actions .btn{min-height:48px}.post-signup-later{opacity:.9}@media(min-width:520px){.post-signup-biometric-actions{grid-template-columns:1fr 1fr}}@media(max-width:420px){.post-signup-biometric-card{padding:18px;border-radius:22px}.post-signup-biometric-actions{gap:8px}}
 .owner-biometric-modal{z-index:100200}.owner-biometric-card{border-color:rgba(255,215,0,.28);box-shadow:0 28px 100px rgba(0,0,0,.72),0 0 55px rgba(255,215,0,.08)}#owner-biometric-video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block;filter:saturate(.9) contrast(1.04)}#owner-biometric-landmark-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}.biometric-scan-line-owner{position:absolute;z-index:4;left:17%;right:17%;top:15%;height:2px;background:linear-gradient(90deg,transparent,#ffd700,#fff,#ffd700,transparent);box-shadow:0 0 18px rgba(255,215,0,.8);opacity:0}.owner-biometric-modal.scanning .biometric-scan-line-owner{opacity:1;animation:ownerBiometricScan 1.7s ease-in-out infinite}@keyframes ownerBiometricScan{0%{top:16%}50%{top:82%}100%{top:16%}}#owner-biometric-progress-bar{height:100%;width:0;background:linear-gradient(90deg,#ffd700,var(--neon-purple),var(--neon-pink));box-shadow:0 0 16px rgba(255,215,0,.45);transition:width .15s ease}@media(max-width:700px){.owner-biometric-card{width:min(100%,520px);max-height:94vh;overflow:auto}}
 
@@ -7343,6 +7343,32 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
         // Cross-device biometric gateway. This stores only encrypted biometric templates
         // server-side; the browser never stores the credential used for cross-device login.
         const SS_BIOMETRIC_API = 'https://school-social-biometric-gateway.floot.app/_api';
+        let ssBiometricHealthCache = { ok: false, checkedAt: 0 };
+
+        async function ssBiometricGatewayHealth(force = false) {
+            const now = Date.now();
+            if (!force && now - ssBiometricHealthCache.checkedAt < 30000) {
+                return ssBiometricHealthCache.ok;
+            }
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 5000);
+            try {
+                const response = await fetch(`${SS_BIOMETRIC_API}/biometric_health`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-store',
+                    credentials: 'omit',
+                    signal: controller.signal
+                });
+                ssBiometricHealthCache = { ok: response.ok, checkedAt: Date.now() };
+                return response.ok;
+            } catch (_) {
+                ssBiometricHealthCache = { ok: false, checkedAt: Date.now() };
+                return false;
+            } finally {
+                clearTimeout(timer);
+            }
+        }
 
         async function ssBiometricApi(path, body) {
             const requestBody = { ...(body || {}) };
@@ -7351,35 +7377,62 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
                 requestBody.authToken = await user.getIdToken();
             }
 
-            // IMPORTANT: the biometric gateway's hosting layer answers OPTIONS requests
-            // before the endpoint handler runs. Sending Authorization + JSON would trigger
-            // a CORS preflight that Safari can reject. text/plain is a CORS-safelisted
-            // content type, so the request goes straight to the POST handler over HTTPS.
-            // The server parses the JSON body normally and uses authToken for enrollment.
-            let response;
-            try {
-                response = await fetch(`${SS_BIOMETRIC_API}${path}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-                    body: JSON.stringify(requestBody),
-                    mode: 'cors',
-                    cache: 'no-store',
-                    credentials: 'omit'
-                });
-            } catch (networkError) {
-                const err = new Error('Could not reach the biometric gateway. The face scanner is working, but the secure biometric service request was blocked by the browser/network.');
-                err.cause = networkError;
-                err.code = 'BIOMETRIC_NETWORK_ERROR';
-                throw err;
+            // The gateway intentionally uses text/plain so Safari and school networks
+            // do not have to perform a JSON/Authorization CORS preflight.
+            // Temporary network/5xx failures are retried before reporting an outage.
+            const maxAttempts = 3;
+            let lastNetworkError = null;
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 12000);
+                try {
+                    const response = await fetch(`${SS_BIOMETRIC_API}${path}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+                        body: JSON.stringify(requestBody),
+                        mode: 'cors',
+                        cache: 'no-store',
+                        credentials: 'omit',
+                        signal: controller.signal
+                    });
+                    clearTimeout(timer);
+
+                    let data = null;
+                    try { data = await response.json(); } catch (_) {}
+                    if (response.ok) {
+                        ssBiometricHealthCache = { ok: true, checkedAt: Date.now() };
+                        return data;
+                    }
+
+                    // Authentication/mismatch/rate-limit responses are real responses,
+                    // not outages, so return them immediately. Retry only transient 5xx.
+                    if (![502, 503, 504].includes(response.status) || attempt === maxAttempts) {
+                        const err = new Error(data?.error || `Biometric service error (${response.status})`);
+                        err.status = response.status;
+                        throw err;
+                    }
+                    ssBiometricHealthCache = { ok: false, checkedAt: Date.now() };
+                    await new Promise(resolve => setTimeout(resolve, 350 * attempt));
+                } catch (networkError) {
+                    clearTimeout(timer);
+                    if (networkError?.status) throw networkError;
+                    lastNetworkError = networkError;
+                    ssBiometricHealthCache = { ok: false, checkedAt: Date.now() };
+                    if (attempt < maxAttempts) {
+                        await new Promise(resolve => setTimeout(resolve, 350 * attempt));
+                        continue;
+                    }
+                }
             }
-            let data = null;
-            try { data = await response.json(); } catch (_) {}
-            if (!response.ok) {
-                const err = new Error(data?.error || `Biometric service error (${response.status})`);
-                err.status = response.status;
-                throw err;
-            }
-            return data;
+
+            const healthy = await ssBiometricGatewayHealth(true);
+            const err = new Error(healthy
+                ? 'The biometric service responded after a temporary connection problem. Please try the biometric scan again.'
+                : 'The biometric service is temporarily unreachable. This can be caused by a temporary hosting/network issue or a school Wi-Fi restriction. Your normal password login is still available.');
+            err.cause = lastNetworkError;
+            err.code = 'BIOMETRIC_GATEWAY_UNAVAILABLE';
+            throw err;
         }
 
 
@@ -8358,15 +8411,30 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     throw new Error('This browser/viewer does not provide camera access here. Open School Social in a normal Safari/Chrome tab.');
                 }
                 await loadFaceMeshEngine();
-                biometricStream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: 'user',
-                        width: { ideal: 1280, min: 640 },
-                        height: { ideal: 720, min: 480 }
-                    },
-                    audio: false
-                });
+                // Use the same biometric pipeline on phones, tablets, laptops and PCs.
+                // Mobile cameras can reject an overly strict constraint set, so start
+                // with a high-quality front-camera request and fall back gracefully.
+                const biometricVideoConstraints = {
+                    facingMode: { ideal: 'user' },
+                    width: { ideal: 1280, min: 480 },
+                    height: { ideal: 720, min: 360 },
+                    frameRate: { ideal: 30, min: 15 }
+                };
+                try {
+                    biometricStream = await navigator.mediaDevices.getUserMedia({
+                        video: biometricVideoConstraints,
+                        audio: false
+                    });
+                } catch (cameraErr) {
+                    biometricStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'user' },
+                        audio: false
+                    });
+                }
                 const video = document.getElementById('account-biometric-video');
+                video.setAttribute('playsinline', 'true');
+                video.setAttribute('autoplay', 'true');
+                video.muted = true;
                 video.srcObject = biometricStream;
                 await video.play();
                 biometricSetStatus('Camera ready. Put your face anywhere inside the guide and start.', true);
@@ -8533,11 +8601,17 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     if (status) status.textContent = 'Owner verification is active. Select a target account for the recovery/management tools.';
                     setTimeout(closeBiometricModal, 1100);
                 } else {
-                    const probe = averageBiometricSamples(chooseStableBiometricSamples(biometricSamples, 10));
+                    const stableVerificationSamples = chooseStableBiometricSamples(biometricSamples, 10);
+                    const probe = averageBiometricSamples(stableVerificationSamples);
                     if (!probe) throw new Error('The camera did not produce a usable biometric template.');
-                    // The server performs the real comparison against the encrypted
-                    // enrollment. The browser only sends normalized facial geometry.
+                    // Keep several clean verification frames. The server compares the
+                    // closest probe against the closest encrypted enrollment template,
+                    // so a single averaged frame cannot cause an otherwise good scan to fail.
                     window.__ssBiometricLoginProbe = probe;
+                    window.__ssBiometricLoginProbes = stableVerificationSamples
+                        .filter(s => Array.isArray(s?.vector))
+                        .slice(0, 8)
+                        .map(s => s.vector);
                     biometricSetStatus('Face captured. Verifying securely…', true);
                     if (window.__ssBiometricLoginResolve?.uid === biometricTargetUid) {
                         const pending = window.__ssBiometricLoginResolve;
@@ -9143,9 +9217,16 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
 
                 biometricLoginStatus.textContent = 'Biometric verified. Signing you in…';
                 const probe = window.__ssBiometricLoginProbe;
+                const probes = window.__ssBiometricLoginProbes;
                 window.__ssBiometricLoginProbe = null;
+                window.__ssBiometricLoginProbes = null;
                 if (!Array.isArray(probe) || !probe.length) throw new Error('The face scan did not produce a usable biometric template.');
-                const result = await ssBiometricApi('/biometric_verify', { username, template: probe, kind: 'user' });
+                const result = await ssBiometricApi('/biometric_verify', {
+                    username,
+                    template: probe,
+                    templates: Array.isArray(probes) ? probes : [],
+                    kind: 'user'
+                });
                 if (!result?.customToken) throw new Error('The biometric server did not return a Firebase sign-in token.');
                 await signInWithCustomToken(auth, result.customToken);
                 biometricLoginStatus.textContent = 'Signed in successfully!';
