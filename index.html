@@ -5,7 +5,6 @@
 <meta name="theme-color" content="#050810">
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firebase.googleapis.com" crossorigin>
-<link rel="dns-prefetch" href="https://school-social-biometric-gateway.floot.app">
 <script>document.documentElement.classList.add("is-booting");</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -5330,6 +5329,16 @@
 .ss-group-card-title{font-weight:900;font-size:11px;color:#fff}.ss-group-card-meta{font-size:7px;color:var(--text-muted);margin-top:3px}
 .ss-group-box{margin-top:10px}.ss-group-stream{height:min(52vh,460px)!important;min-height:280px!important}
 .ss-group-members{display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 10px}.ss-member-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--border-soft);font-size:8px}.ss-member-chip .role{font-size:7px;color:var(--neon-cyan);font-weight:900}
+/* Group chat emoji picker + stable message composer */
+.ss-group-composer{position:relative!important;overflow:visible!important}
+.ss-group-emote-dropdown{position:absolute!important;right:72px!important;bottom:54px!important;z-index:9999!important;width:min(310px,calc(100vw - 36px))!important;max-height:210px!important;overflow:auto!important;display:none!important;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;padding:8px!important;border-radius:15px!important;background:rgba(7,10,18,.97)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 18px 45px rgba(0,0,0,.45)!important;backdrop-filter:blur(14px)!important}
+.ss-group-emote-dropdown.open{display:grid!important}
+.ss-group-emote-dropdown .emote-option{display:grid!important;place-items:center!important;min-height:32px!important;font-size:20px!important;cursor:pointer!important;border-radius:9px!important;padding:2px!important}
+.ss-group-emote-dropdown .emote-option:hover{background:rgba(255,255,255,.09)!important}
+.ss-group-emote-dropdown .emote-option{appearance:none!important;-webkit-appearance:none!important;border:0!important;outline:0!important;background:transparent!important;color:inherit!important;box-shadow:none!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;line-height:1!important;text-shadow:none!important;}
+.ss-group-emote-dropdown .emote-option::before,.ss-group-emote-dropdown .emote-option::after{display:none!important;content:none!important}
+.ss-group-emote-dropdown .emote-option:hover,.ss-group-emote-dropdown .emote-option:focus,.ss-group-emote-dropdown .emote-option:active{background:rgba(255,255,255,.08)!important;box-shadow:none!important;outline:0!important;}
+@media(max-width:520px){.ss-group-emote-dropdown{grid-template-columns:repeat(7,minmax(0,1fr));right:4px!important;bottom:54px!important}}
 .ss-group-composer{padding:6px!important;border-radius:18px;background:rgba(7,10,18,.72);border:1px solid rgba(255,255,255,.08);gap:6px!important}.ss-group-composer .input{min-height:46px;padding:12px 14px;background:transparent;border:0;box-shadow:none;font-size:12px}.ss-group-composer .emote-picker-btn{width:42px;height:42px;border-radius:13px}.ss-group-composer #btn-send-group{min-height:42px;border-radius:13px;padding:0 17px;font-weight:900}
 .ss-typing-indicator{display:flex;align-items:center;gap:7px;min-height:24px;padding:2px 8px;color:var(--text-muted);font-size:8px}.ss-typing-dots{display:inline-flex;gap:3px}.ss-typing-dots i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:ssTypingBounce 1.1s infinite ease-in-out}.ss-typing-dots i:nth-child(2){animation-delay:.14s}.ss-typing-dots i:nth-child(3){animation-delay:.28s}@keyframes ssTypingBounce{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-4px);opacity:1}}
 .ss-msg-meta{display:flex;align-items:center;gap:5px;margin:4px 6px 0;font-size:7px;color:var(--text-muted)}.ss-message-status{font-weight:900;letter-spacing:.1px}.ss-message-status.seen{color:var(--neon-cyan)}.ss-reaction-row{display:flex;gap:4px;flex-wrap:wrap;margin:5px 5px 0}.ss-reaction{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);color:#fff;border-radius:999px;padding:3px 7px;font-size:9px;cursor:pointer}.ss-reaction.active{border-color:rgba(34,211,238,.45);background:rgba(34,211,238,.1)}.ss-react-pop{display:none;gap:3px;position:absolute;z-index:8;padding:5px;border-radius:12px;background:#101827;border:1px solid rgba(255,255,255,.12);box-shadow:0 10px 28px rgba(0,0,0,.35)}.ss-react-pop button{border:0;background:transparent;font-size:15px;cursor:pointer;padding:3px}.chat-msg{position:relative}.chat-bubble{overflow-wrap:anywhere}.ss-group-modal{max-width:520px!important;width:calc(100% - 24px)!important}.ss-group-modal .input{margin-bottom:8px}.ss-group-modal-sub{font-size:8px;color:var(--text-muted);margin:4px 0 10px}.ss-group-member-search{margin:4px 0 8px!important}.ss-selected-members{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}.ss-selected-title{width:100%;font-size:8px;color:var(--text-muted);font-weight:800;margin-bottom:1px}.ss-selected-member{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(34,211,238,.3);background:rgba(34,211,238,.09);color:#fff;border-radius:999px;padding:6px 9px;font:800 8px inherit;cursor:pointer}.ss-selected-remove{color:var(--neon-pink);font-size:9px}.ss-member-search-empty{grid-column:1/-1;text-align:center;padding:18px 10px;color:var(--text-muted);font-size:9px;border:1px dashed var(--border-soft);border-radius:12px}.ss-member-pick{display:flex!important;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--border-soft);background:rgba(255,255,255,.035);color:#fff;border-radius:12px;padding:9px 10px;cursor:pointer;font:800 9px inherit;transition:var(--transition)}.ss-member-pick:hover{border-color:var(--neon-cyan);background:rgba(34,211,238,.08);transform:translateY(-1px)}.ss-member-avatar{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.2);color:var(--neon-cyan);flex:0 0 auto}.ss-member-pick-name{flex:1}.ss-member-pick-add{font-size:18px;color:var(--neon-cyan)}
@@ -5345,7 +5354,11 @@
 .video-call-title{font-size:16px!important;font-weight:950!important;letter-spacing:.2px}
 .video-call-status{font-size:8px!important;color:var(--text-muted)!important;margin-top:2px}
 .video-stage{position:relative!important;aspect-ratio:16/9!important;min-height:300px;border-radius:22px!important;overflow:hidden!important;background:#05080e!important;border:1px solid rgba(255,255,255,.08)!important}
-#remote-video{width:100%;height:100%;object-fit:cover;background:#05080e}
+#remote-video{width:100%;height:100%;object-fit:cover;background:#05080e;display:block;transform-origin:50% 50%;will-change:transform}
+#video-stage{overflow:hidden!important}
+#group-call-remote-grid{overflow:hidden!important}
+#group-call-remote-grid .group-call-tile{overflow:hidden!important;contain:layout paint}
+#group-call-remote-grid .group-call-tile video{display:block;transform-origin:50% 50%;will-change:transform}
 .group-call-remote-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(var(--group-call-cols,2),minmax(0,1fr));grid-template-rows:repeat(var(--group-call-rows,1),minmax(0,1fr));gap:6px;padding:6px;background:#05080e;overflow:hidden;align-content:stretch;justify-content:stretch}
 .group-call-tile{position:relative;min-width:0;min-height:0;width:100%;height:100%;border-radius:16px;overflow:hidden;background:#0a0f18;border:1px solid rgba(255,255,255,.08);contain:layout paint;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
 .group-call-tile video{width:100%;height:100%;min-height:0;min-width:0;object-fit:cover;display:block;background:#0a0f18}
@@ -6358,8 +6371,186 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
 @media(max-width:700px){.auth-signal-pro{width:168px!important;height:168px!important}.auth-signal-pro .auth-signal-core{width:94px!important;height:94px!important}}
 @media(prefers-reduced-motion:reduce){.auth-signal-pro .ss-logo-aura,.auth-signal-pro .ss-logo-ring,.auth-signal-pro .auth-signal-core,.auth-signal-pro .auth-signal-core::after{animation:none!important}}
 </style>
+<style id="ss-school-network-resilience-v1">
+#ss-school-network-note{display:none;margin:8px 0;padding:9px 11px;border-radius:13px;border:1px solid rgba(255,211,77,.20);background:rgba(255,211,77,.055);color:#ffeaa0;font-size:9px;line-height:1.45;text-align:center}
+#ss-school-network-note.show{display:block}
+</style>
+<script id="ss-school-network-resilience-runtime">
+(function(){
+  // Never probe the biometric gateway during startup. This keeps the app usable on
+  // school networks that block the optional biometric host.
+  window.SS_SCHOOL_NETWORK_SAFE = true;
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible') window.SS_SCHOOL_NETWORK_SAFE = true;
+  },{passive:true});
+})();
+</script>
+<style id="ss-school-network-resilience-v1">
+#ss-school-network-note{display:none;margin:8px 0;padding:9px 11px;border-radius:13px;border:1px solid rgba(255,211,77,.20);background:rgba(255,211,77,.055);color:#ffeaa0;font-size:9px;line-height:1.45;text-align:center}
+#ss-school-network-note.show{display:block}
+</style>
+
+<style id="ss-clean-admin-tabs-v4">
+/* Cleaner, touch-friendly admin tab rail */
+.admin-tabs{
+  display:flex!important;flex-wrap:nowrap!important;gap:7px!important;
+  margin:0 0 14px!important;padding:7px!important;
+  overflow-x:auto!important;overflow-y:hidden!important;
+  overscroll-behavior-x:contain;scroll-behavior:smooth;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  border:1px solid rgba(255,255,255,.07)!important;
+  border-radius:16px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 10px 30px rgba(0,0,0,.12);
+}
+.admin-tabs::-webkit-scrollbar{display:none}
+.admin-tabs::after{content:"";flex:0 0 1px}
+.admin-tabs .admin-tab-btn{
+  flex:0 0 auto!important;white-space:nowrap!important;
+  min-height:36px!important;padding:0 13px!important;
+  border-radius:11px!important;border:1px solid rgba(255,255,255,.07)!important;
+  background:rgba(255,255,255,.025)!important;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease!important;
+  scroll-snap-align:center;
+}
+.admin-tabs .admin-tab-btn:active{transform:scale(.97)}
+.admin-tabs .admin-tab-btn.active{
+  background:linear-gradient(180deg,rgba(34,229,255,.13),rgba(34,229,255,.055))!important;
+  box-shadow:0 7px 20px rgba(34,229,255,.08),inset 0 0 0 1px rgba(34,229,255,.08)!important;
+}
+.admin-tabs .admin-tab-btn.owner-tab.active{
+  background:linear-gradient(180deg,rgba(255,215,0,.13),rgba(255,215,0,.045))!important;
+  box-shadow:0 7px 20px rgba(255,215,0,.07),inset 0 0 0 1px rgba(255,215,0,.08)!important;
+}
+@media(max-width:700px){
+ .admin-tabs{margin-left:-2px!important;margin-right:-2px!important;padding:6px!important;border-radius:14px!important}
+ .admin-tabs .admin-tab-btn{min-height:38px!important;padding:0 12px!important;font-size:8px!important;letter-spacing:.55px!important}
+}
+@media(prefers-reduced-motion:reduce){.admin-tabs{scroll-behavior:auto}.admin-tabs .admin-tab-btn{transition:none!important}}
+</style>
+
+
+<style id="ss-admin-tabs-stable-v5">
+/* Stable admin navigation: scrolls inside itself and never changes page width. */
+#tab-admin{min-width:0!important;max-width:100%!important;overflow-x:hidden!important;box-sizing:border-box!important;}
+#tab-admin *{box-sizing:border-box;}
+#tab-admin .admin-tabs{width:100%!important;max-width:100%!important;min-width:0!important;display:flex!important;flex:0 1 auto!important;flex-wrap:nowrap!important;align-items:center!important;gap:8px!important;padding:7px!important;margin:0 0 14px!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-inline:contain!important;scrollbar-gutter:stable!important;transform:none!important;}
+#tab-admin .admin-tabs::-webkit-scrollbar{display:none!important;width:0!important;height:0!important;}
+#tab-admin .admin-tabs .admin-tab-btn{flex:0 0 auto!important;width:auto!important;max-width:none!important;min-width:max-content!important;white-space:nowrap!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:38px!important;padding:0 14px!important;margin:0!important;transform:none!important;}
+#tab-admin .admin-tabs .admin-tab-btn.active{transform:none!important;}
+#tab-admin .admin-grid,#tab-admin .admin-owner-grid,#tab-admin .admin-panel-content{min-width:0!important;max-width:100%!important;}
+@media(max-width:600px){#tab-admin .admin-tabs{gap:6px!important;padding:6px!important;}#tab-admin .admin-tabs .admin-tab-btn{min-height:35px!important;padding:0 11px!important;font-size:8px!important;}}
+</style>
+
+
+<style id="ss-logo-clean-stable-v6">
+/* One stable SS logo system. Earlier logo animation rules are intentionally overridden here. */
+.auth-signal-pro{width:178px!important;height:178px!important;position:relative!important;display:grid!important;place-items:center!important;perspective:none!important;transform:none!important;transform-style:flat!important;overflow:visible!important;pointer-events:none!important;animation:none!important;}
+.auth-signal-pro .auth-signal-core{width:92px!important;height:92px!important;border-radius:27px!important;display:grid!important;place-items:center!important;position:relative!important;z-index:3!important;transform:none!important;transform-style:flat!important;animation:ssLogoCoreFloat 4.2s ease-in-out infinite!important;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(34,229,255,.09) 42%,rgba(10,12,28,.96))!important;border:1px solid rgba(255,255,255,.22)!important;box-shadow:0 18px 45px rgba(0,0,0,.38),0 0 35px rgba(34,229,255,.22),inset 0 1px 0 rgba(255,255,255,.25)!important;}
+.auth-signal-pro .auth-signal-core::before{content:'SS'!important;position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;font-size:42px!important;font-weight:1000!important;letter-spacing:-4px!important;color:#fff!important;text-shadow:0 0 18px rgba(34,229,255,.7),2px 3px 0 rgba(34,229,255,.18)!important;pointer-events:none!important;}
+.auth-signal-pro .auth-signal-core>*{position:relative!important;z-index:2!important;pointer-events:none!important;}
+.auth-signal-pro .auth-signal-ring{position:absolute!important;inset:23px!important;border-radius:50%!important;border:1px solid rgba(34,229,255,.65)!important;box-shadow:0 0 18px rgba(34,229,255,.18),inset 0 0 12px rgba(34,229,255,.08)!important;transform:none!important;transform-style:flat!important;animation:ssLogoRing 6s linear infinite!important;pointer-events:none!important;}
+.auth-signal-pro .auth-signal-ring:nth-child(3){inset:12px!important;border-color:rgba(168,85,247,.45)!important;animation-duration:9s!important;animation-direction:reverse!important;}
+.auth-signal-pro .auth-signal-ring:nth-child(4){inset:3px!important;border-color:rgba(255,255,255,.16)!important;animation-duration:13s!important;}
+@keyframes ssLogoCoreFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.025)}}
+@keyframes ssLogoRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@media(max-width:520px){.auth-signal-pro{width:150px!important;height:150px!important}.auth-signal-pro .auth-signal-core{width:78px!important;height:78px!important}.auth-signal-pro .auth-signal-core::before{font-size:35px!important}.auth-signal-pro .auth-signal-ring{inset:20px!important}.auth-signal-pro .auth-signal-ring:nth-child(3){inset:10px!important}.auth-signal-pro .auth-signal-ring:nth-child(4){inset:2px!important}}
+@media(prefers-reduced-motion:reduce){.auth-signal-pro .auth-signal-core,.auth-signal-pro .auth-signal-ring{animation:none!important}}
+</style>
+
+
+
+<style id="ss-groupchat-enhancement-v2">
+.ss-group-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}
+.ss-group-tools .btn{min-height:34px}
+.ss-group-theme-menu{position:absolute;right:0;top:calc(100% + 6px);z-index:99999;min-width:240px;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(10,13,24,.985);box-shadow:0 20px 55px rgba(0,0,0,.55);display:none;pointer-events:auto;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.ss-group-theme-menu.open{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.ss-theme-option{appearance:none;-webkit-appearance:none;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:9px;text-align:left;color:#fff;background:rgba(255,255,255,.05);cursor:pointer;font:800 11px inherit;display:flex;align-items:center;gap:5px;min-height:38px;pointer-events:auto;position:relative;z-index:2}
+.ss-theme-option:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.28)}
+.ss-theme-option:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.28)}
+.ss-theme-dot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-2px;margin-right:5px;background:var(--theme-preview,#7dd3fc)}
+
+.ss-group-box{position:relative;overflow:visible;isolation:isolate;transition:background .25s ease,box-shadow .25s ease,border-color .25s ease;}
+.ss-group-box::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--ss-chat-bg,transparent);opacity:1;pointer-events:none;transition:background .25s ease;}
+.ss-group-box.ss-theme-neon{--ss-chat-bg:radial-gradient(circle at 15% 10%,rgba(34,211,238,.22),transparent 34%),linear-gradient(135deg,rgba(14,165,233,.20),rgba(168,85,247,.20));--ss-theme-accent:#22d3ee;}
+.ss-group-box.ss-theme-neon{--ss-chat-bg:linear-gradient(135deg,rgba(14,165,233,.16),rgba(168,85,247,.16));}
+ .ss-group-box.ss-theme-sunset{--ss-theme-accent:#fb7185;--ss-chat-bg:linear-gradient(135deg,rgba(249,115,22,.18),rgba(236,72,153,.16));}
+ .ss-group-box.ss-theme-ocean{--ss-theme-accent:#38bdf8;--ss-chat-bg:linear-gradient(135deg,rgba(6,182,212,.18),rgba(59,130,246,.15));}
+ .ss-group-box.ss-theme-forest{--ss-theme-accent:#34d399;--ss-chat-bg:linear-gradient(135deg,rgba(34,197,94,.16),rgba(16,185,129,.12));}
+ .ss-group-box.ss-theme-galaxy{--ss-theme-accent:#a78bfa;--ss-chat-bg:linear-gradient(135deg,rgba(99,102,241,.20),rgba(217,70,239,.16));}
+ .ss-group-box.ss-theme-rose{--ss-theme-accent:#fb7185;--ss-chat-bg:linear-gradient(135deg,rgba(244,63,94,.17),rgba(236,72,153,.14));}
+ .ss-group-box.ss-theme-gold{--ss-theme-accent:#facc15;--ss-chat-bg:linear-gradient(135deg,rgba(234,179,8,.18),rgba(249,115,22,.12));}
+.ss-group-box[class*="ss-theme-"] .ss-group-stream{background:var(--ss-chat-bg,transparent);border-radius:14px;padding:8px}
+.ss-group-box[class*="ss-theme-"]{border-color:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 28%,transparent);box-shadow:0 18px 55px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 10%,transparent);}
+.ss-group-box[class*="ss-theme-"] .ss-chat-header{background:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 7%,transparent);border-radius:14px;padding:8px;}
+.ss-group-box[class*="ss-theme-"] .ss-group-composer{background:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 7%,transparent);border-radius:14px;padding:7px;}
+.ss-group-box[class*="ss-theme-"] .ss-chat-bubble,.ss-group-box[class*="ss-theme-"] .chat-bubble{border-color:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 24%,transparent);}
+
+.ss-group-box.ss-theme-neon .chat-bubble,.ss-group-box.ss-theme-galaxy .chat-bubble{box-shadow:0 0 18px rgba(99,102,241,.12)}
+.ss-group-photo-btn{width:42px!important;height:42px!important;padding:0!important;display:grid;place-items:center}
+.ss-chat-image{display:block;max-width:min(260px,72vw);max-height:280px;border-radius:14px;object-fit:cover;margin-top:2px;border:1px solid rgba(255,255,255,.12)}
+.ss-group-danger{border-color:rgba(239,68,68,.35)!important;color:#fecaca!important}
+</style>
+
+<style id="ss-groupchat-ui-polish-v3">
+.ss-group-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.025);margin-bottom:10px;}
+.ss-group-list{display:grid;gap:8px;max-height:52vh;overflow:auto;padding:2px;scrollbar-width:thin;}
+.ss-group-card{display:flex!important;align-items:center!important;gap:12px!important;padding:13px 14px!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:16px!important;background:rgba(255,255,255,.035)!important;transition:transform .16s ease,border-color .16s ease,background .16s ease!important;}
+.ss-group-card:hover{transform:translateY(-1px)!important;border-color:rgba(125,211,252,.25)!important;background:rgba(255,255,255,.055)!important;}
+.ss-group-card>div{min-width:0;flex:1;}
+.ss-group-card-title{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ss-group-card-meta{font-size:10px;color:var(--text-muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ss-group-box{padding:10px!important;border-radius:18px!important;}
+.ss-chat-actions{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end;}
+.ss-group-composer{align-items:center!important;gap:7px!important;margin-top:8px!important;}
+.ss-group-composer .input{min-width:0;flex:1;}
+@media(max-width:700px){.ss-group-topbar{align-items:flex-start;flex-direction:column}.ss-chat-actions{width:100%;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}.ss-chat-actions .btn{flex:0 0 auto}.ss-group-composer{display:grid!important;grid-template-columns:1fr auto auto auto!important}.ss-group-composer .input{width:100%;}.ss-group-theme-menu{right:auto;left:0;position:fixed;top:auto;bottom:74px;max-width:calc(100vw - 24px);}}
+</style>
+
+<style id="ss-groupchat-clean-ui-v4">
+.ss-group-box{border:1px solid rgba(255,255,255,.08)!important;background:rgba(8,12,22,.72)!important;box-shadow:0 18px 55px rgba(0,0,0,.22)!important;}
+.ss-group-box .ss-chat-header{padding:10px!important;gap:10px!important;background:rgba(255,255,255,.025)!important;border:1px solid rgba(255,255,255,.07)!important;}
+.ss-group-box .ss-chat-actions{gap:6px!important;}
+.ss-group-box .ss-chat-actions .btn{min-height:34px!important;border-radius:10px!important;padding:0 10px!important;font-size:8px!important;font-weight:800!important;white-space:nowrap;transition:transform .14s ease,background .14s ease,border-color .14s ease,box-shadow .14s ease;}
+.ss-group-box .ss-chat-actions .btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px rgba(0,0,0,.18);}
+.ss-group-box #group-chat-call{border-color:rgba(34,211,238,.24)!important;background:rgba(34,211,238,.08)!important;}
+.ss-group-box #group-chat-delete{background:rgba(239,68,68,.08)!important;}
+.ss-group-composer{display:grid!important;grid-template-columns:minmax(0,1fr) 42px 42px auto!important;align-items:center!important;gap:6px!important;padding:6px!important;margin-top:8px!important;border-radius:16px!important;background:rgba(4,7,14,.78)!important;border:1px solid rgba(255,255,255,.08)!important;box-shadow:0 12px 30px rgba(0,0,0,.18)!important;}
+.ss-group-composer .input{height:42px!important;min-height:42px!important;border-radius:12px!important;padding:0 13px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.06)!important;font-size:11px!important;}
+.ss-group-composer .input:focus{border-color:rgba(34,211,238,.34)!important;box-shadow:0 0 0 3px rgba(34,211,238,.06)!important;}
+.ss-group-composer .emote-picker-btn,.ss-group-photo-btn{width:42px!important;height:42px!important;min-height:42px!important;border-radius:12px!important;background:rgba(255,255,255,.05)!important;border:1px solid rgba(255,255,255,.07)!important;}
+.ss-group-composer #btn-send-group{height:42px!important;min-height:42px!important;border-radius:12px!important;padding:0 16px!important;font-size:9px!important;font-weight:900!important;}
+.ss-message-pending{opacity:.82!important;animation:ssPendingIn .18s ease-out;}
+.ss-message-pending .ss-message-status{opacity:.72!important;}
+@keyframes ssPendingIn{from{opacity:.35;transform:translateY(4px)}to{opacity:.82;transform:none}}
+@media(max-width:700px){.ss-group-box .ss-chat-actions{overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:1px!important}.ss-group-box .ss-chat-actions::-webkit-scrollbar{display:none!important}.ss-group-box .ss-chat-actions .btn{flex:0 0 auto!important}.ss-group-composer{grid-template-columns:minmax(0,1fr) 40px 40px 68px!important}.ss-group-composer .emote-picker-btn,.ss-group-photo-btn{width:40px!important;height:40px!important}.ss-group-composer #btn-send-group{padding:0 12px!important}}
+</style>
 </head>
 <body>
+<div id="ss-global-updating-overlay" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:2147483000;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;background:radial-gradient(circle at 50% 20%,rgba(34,229,255,.13),transparent 34%),linear-gradient(135deg,#060814,#0d1022 52%,#08050f);overflow:hidden;">
+<div class="ss-updating-orb ss-updating-orb-a"></div><div class="ss-updating-orb ss-updating-orb-b"></div>
+<div style="position:relative;width:min(92vw,560px);padding:34px 26px;border-radius:28px;border:1px solid rgba(255,255,255,.14);background:rgba(8,11,24,.88);backdrop-filter:blur(22px);box-shadow:0 30px 100px rgba(0,0,0,.65),0 0 80px rgba(34,229,255,.08);text-align:center;animation:ssUpdatingCardIn .55s cubic-bezier(.2,.9,.2,1);">
+<div style="font-size:58px;line-height:1;margin-bottom:12px;animation:ssUpdatingPulse 1.8s ease-in-out infinite;">🛠️</div>
+<div style="font-size:28px;font-weight:1000;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,#67e8f9,#c084fc,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ssUpdatingShimmer 3s linear infinite;">School Social is updating</div>
+<div style="margin-top:10px;font-size:12px;line-height:1.65;color:rgba(255,255,255,.7);">We’re making improvements right now. Please check back soon.</div>
+<div style="margin:20px auto 16px;width:min(300px,80%);height:5px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;"><div style="height:100%;width:42%;border-radius:999px;background:linear-gradient(90deg,#22e5ff,#a855f7,#ff2f8e);animation:ssUpdatingProgress 1.35s ease-in-out infinite;"></div></div>
+<div style="margin-top:18px;text-align:left;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);">
+<div style="font-size:9px;font-weight:900;letter-spacing:.7px;color:rgba(255,255,255,.5);margin-bottom:7px;">OWNER UNLOCK CODE</div>
+<div style="display:flex;gap:7px;align-items:center;"><input id="ss-updating-unlock-code" type="password" autocomplete="off" placeholder="Enter unlock code" style="flex:1;min-width:0;min-height:38px;padding:0 11px;border-radius:11px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.28);color:#fff;outline:none;"><button id="ss-updating-unlock-btn" type="button" class="btn btn-gold btn-sm" style="min-height:38px;padding:0 14px;">Unlock</button></div>
+<div id="ss-updating-unlock-status" style="font-size:8px;color:rgba(255,255,255,.48);min-height:14px;margin-top:6px;text-align:center;"></div>
+</div></div></div>
+<style id="ss-updating-screen-style">
+@keyframes ssUpdatingCardIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes ssUpdatingPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08);filter:drop-shadow(0 0 18px rgba(34,229,255,.32))}}
+@keyframes ssUpdatingShimmer{to{background-position:250% center}}
+@keyframes ssUpdatingProgress{0%{transform:translateX(-120%)}100%{transform:translateX(310%)}}
+@keyframes ssUpdatingFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(30px,-24px,0) scale(1.12)}}
+.ss-updating-orb{position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(55px);opacity:.2;pointer-events:none}.ss-updating-orb-a{background:#22e5ff;top:-80px;left:-60px;animation:ssUpdatingFloat 6s ease-in-out infinite}.ss-updating-orb-b{background:#a855f7;right:-80px;bottom:-90px;animation:ssUpdatingFloat 7s ease-in-out infinite reverse}
+#ss-global-updating-overlay.ss-updating-visible{display:flex!important;animation:ssUpdatingOverlayIn .35s ease-out both}@keyframes ssUpdatingOverlayIn{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#ss-global-updating-overlay *,#ss-global-updating-overlay{animation:none!important}}
+</style>
+
 
     <!-- ==================== LOCKDOWN OVERLAY ==================== -->
     <div id="lockdown-overlay">
@@ -6466,7 +6657,7 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
             </div>
             <div id="box-login" class="auth-box">
                 <div class="auth-title">Sign In</div>
-                <input type="text" id="login-username" class="input" placeholder="Username" autocomplete="username" />
+                <input type="text" id="login-username" class="input" placeholder="Username" autocomplete="username webauthn" />
                 <div id="login-password-section">
                     <input type="password" id="login-pass" class="input" placeholder="Password" autocomplete="current-password" />
                     <div class="forgot-link" id="forgot-password-link"> Forgot password?</div>
@@ -6475,16 +6666,18 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
                 <div style="display:flex;align-items:center;gap:8px;margin:2px 0;color:var(--text-muted);font-size:9px;text-transform:uppercase;letter-spacing:1px;">
                     <span style="height:1px;flex:1;background:var(--border-soft);"></span><span>OR</span><span style="height:1px;flex:1;background:var(--border-soft);"></span>
                 </div>
-                <button id="btn-show-biometric-login" class="btn btn-cyan btn-block" type="button">🔐 Sign In With Biometrics</button>
+                <button id="btn-show-biometric-login" class="btn btn-cyan btn-block" type="button">🔐 Use Device Biometrics</button>
                 <div id="owner-biometric-login-wrap" style="display:none;flex-direction:column;gap:6px;margin-top:2px;">
                     <button id="btn-owner-biometric-login" class="btn btn-secondary btn-block" type="button">👑 Use Owner Biometric</button>
                     <div id="owner-biometric-login-status" style="font-size:9px;color:var(--text-muted);text-align:center;min-height:16px;"></div>
                 </div>
                 <div id="biometric-login-section" style="display:none;flex-direction:column;gap:8px;padding:10px;border:1px solid rgba(34,229,255,.13);border-radius:16px;background:linear-gradient(145deg,rgba(34,229,255,.045),rgba(168,85,247,.035));">
+                    <div id="ss-school-network-note">School/restricted networks can block optional biometric services. Password login does not depend on that service.</div>
                     <div style="text-align:center;font-size:18px;line-height:1;filter:drop-shadow(0 0 12px rgba(34,229,255,.35));">◉</div>
                     <div style="font-size:10px;font-weight:850;color:#fff;text-align:center;letter-spacing:.3px;">Biometric Sign-In</div>
                     <div style="font-size:9px;color:var(--text-secondary);line-height:1.45;text-align:center;">Enter your username, then scan your face. Your biometric enrollment is securely stored with your account.</div>
                     <div id="biometric-login-status" style="font-size:9px;color:var(--text-muted);text-align:center;min-height:18px;"></div>
+                    <div style="font-size:8px;color:var(--text-muted);text-align:center;line-height:1.35;">Device biometrics use your browser's built-in secure authenticator. If your browser/network does not support it, the existing face method remains available.</div>
                     <button id="btn-login-biometric" class="btn btn-cyan btn-block" type="button" disabled>Scan Face &amp; Sign In</button>
                     <button id="btn-cancel-biometric-login" class="btn btn-secondary btn-block" type="button">Use Password Instead</button>
                 </div>
@@ -6510,7 +6703,7 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
                 </div>
                 <button type="button" id="btn-signup" class="btn btn-primary btn-block">Register</button>
                 <div id="signup-biometric-area" style="display:none;flex-direction:column;gap:8px;">
-                    <button id="btn-setup-biometrics" class="btn btn-cyan btn-block" type="button">🔐 Setup Biometrics For This Account</button>
+                    <button id="btn-setup-biometrics" class="btn btn-cyan btn-block" type="button">🔐 Setup Device Biometrics For This Account</button>
                     <div id="signup-biometric-status" style="font-size:10px;color:var(--text-muted);text-align:center;line-height:1.4;"></div>
                 </div>
                 <p class="auth-switch">Already registered? <span id="switch-to-login">Sign In</span></p>
@@ -6980,11 +7173,24 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
                             <div class="ss-chat-header">
                                 <div class="ss-chat-title">
                                     <strong id="group-chat-title">Group Chat</strong>
-                                    <span id="group-chat-members-summary">Members</span>
                                 </div>
                                 <div class="ss-chat-actions">
-                                    <button id="group-chat-info" class="btn btn-secondary btn-sm" type="button">👥 Members</button>
+                                    <div id="group-chat-theme-wrap" style="position:relative;display:inline-block;z-index:100;">
+                                        <button id="group-chat-theme" class="btn btn-secondary btn-sm" type="button">🎨 Theme</button>
+                                        <div id="group-chat-theme-menu" class="ss-group-theme-menu" aria-label="Group chat themes">
+                                            <button type="button" class="ss-theme-option" data-theme="default"><span class="ss-theme-dot" style="--theme-preview:#64748b"></span>Classic</button>
+                                            <button type="button" class="ss-theme-option" data-theme="neon"><span class="ss-theme-dot" style="--theme-preview:#22d3ee"></span>Neon</button>
+                                            <button type="button" class="ss-theme-option" data-theme="sunset"><span class="ss-theme-dot" style="--theme-preview:#fb7185"></span>Sunset</button>
+                                            <button type="button" class="ss-theme-option" data-theme="ocean"><span class="ss-theme-dot" style="--theme-preview:#38bdf8"></span>Ocean</button>
+                                            <button type="button" class="ss-theme-option" data-theme="forest"><span class="ss-theme-dot" style="--theme-preview:#34d399"></span>Forest</button>
+                                            <button type="button" class="ss-theme-option" data-theme="galaxy"><span class="ss-theme-dot" style="--theme-preview:#a78bfa"></span>Galaxy</button>
+                                            <button type="button" class="ss-theme-option" data-theme="rose"><span class="ss-theme-dot" style="--theme-preview:#fb7185"></span>Rose</button>
+                                            <button type="button" class="ss-theme-option" data-theme="gold"><span class="ss-theme-dot" style="--theme-preview:#facc15"></span>Gold</button>
+                                        </div>
+                                    </div>
                                     <button id="group-chat-call" class="btn btn-cyan btn-sm" type="button" title="Start group FaceTime">📹 FaceTime</button>
+                                    <button id="group-chat-leave" class="btn btn-secondary btn-sm" type="button">🚪 Leave</button>
+                                    <button id="group-chat-delete" class="btn btn-secondary btn-sm ss-group-danger" type="button" style="display:none;">🗑️ Delete</button>
                                     <button id="group-chat-back" class="btn btn-secondary btn-sm" type="button">← Back</button>
                                 </div>
                             </div>
@@ -6993,10 +7199,13 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
                             <div id="group-typing-indicator" class="ss-typing-indicator" aria-live="polite" style="display:none;"><span class="ss-typing-dots"><i></i><i></i><i></i></span><span id="group-typing-text">Someone is typing…</span></div>
                             <div class="flex-row ss-group-composer" style="position:relative;">
                                 <input type="text" id="group-chat-input" class="input" placeholder="Message the group…" autocomplete="off" />
-                                <button type="button" id="group-reaction-quick" class="emote-picker-btn" title="Quick reaction">❤️</button>
+                                <button type="button" id="group-reaction-quick" class="emote-picker-btn" title="Emojis">😊</button>
+                                <button type="button" id="group-photo-btn" class="emote-picker-btn ss-group-photo-btn" title="Add a photo">📷</button>
+                                <input type="file" id="group-photo-input" accept="image/*" style="display:none;">
+                                <div class="emote-picker-dropdown ss-group-emote-dropdown" id="group-emote-picker-dropdown" aria-label="Group chat emojis"></div>
                                 <button id="btn-send-group" class="btn btn-primary" type="button">Send</button>
                             </div>
-                            <div class="ss-group-privacy-note">👑 Owner moderation is available as a clearly labeled moderation feature; it is not a hidden or undisclosed message channel.</div>
+                            <div class="ss-group-privacy-note">Type <code style="background:var(--bg-input);padding:1px 6px;border-radius:4px;">/clear</code> and press Enter to clear the group (creator/admin only).</div>
                         </div>
                     </div>
                 </div>
@@ -7175,7 +7384,7 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
                 <div class="glass-card" style="display:flex;flex-direction:column;gap:8px;">
                     <div class="section-title">🔐 Security</div>
                     <button type="button" id="btn-toggle-change-password" class="btn btn-secondary btn-block" style="padding:9px;">Change Password</button>
-                    <button id="btn-account-biometrics" class="btn btn-cyan btn-block" style="padding:9px;" type="button">🔐 Setup Biometrics For This Account</button>
+                    <button id="btn-account-biometrics" class="btn btn-cyan btn-block" style="padding:9px;" type="button">🔐 Setup Device Biometrics For This Account</button>
                     <div id="account-biometrics-status" style="font-size:10px;color:var(--text-muted);text-align:center;line-height:1.4;"></div>
                     <div id="change-password-form" class="change-password-form">
                         <input type="password" id="cp-current-pass" class="input" placeholder="Current password" />
@@ -7475,6 +7684,15 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
 </div>
 
 
+                                <div id="ss-owner-updating-screen" class="admin-owner-section" style="margin-top:10px;border-color:rgba(255,165,0,.28);background:linear-gradient(145deg,rgba(255,165,0,.055),rgba(168,85,247,.035));">
+                                    <div class="owner-title">🛠️ Updating Screen <span class="owner-only-badge">Owner Only</span></div>
+                                    <div style="font-size:8px;color:var(--text-secondary);line-height:1.45;margin-bottom:8px;">Show a full-screen update notice to everyone on School Social. It stays active across navigation and reloads until the unlock code is entered.</div>
+                                    <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap;">
+                                        <button id="btn-owner-updating-screen" class="btn btn-danger btn-sm" type="button" style="min-height:34px;padding:0 14px;">🛠️ Turn Updating Screen On</button>
+                                        <span id="owner-updating-screen-state" style="font-size:9px;font-weight:900;color:var(--text-muted);">Checking…</span>
+                                    </div>
+                                </div>
+
                                 <div class="admin-owner-grid" id="owner-stats-grid">
                                     <div class="owner-stat"><div class="num" id="ostats-users">0</div><div class="lbl">Total Users</div></div>
                                     <div class="owner-stat"><div class="num" id="ostats-posts">0</div><div class="lbl">Total Posts</div></div>
@@ -7760,7 +7978,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             Your account is ready. Biometrics are optional — choose what you want to do next.
         </div>
         <div class="post-signup-biometric-actions">
-            <button id="post-signup-setup-biometrics" class="btn btn-cyan btn-block" type="button">🔐 Setup Biometrics Now</button>
+            <button id="post-signup-setup-biometrics" class="btn btn-cyan btn-block" type="button">🔐 Setup Device Biometrics Now</button>
             <button id="post-signup-skip-biometrics" class="btn btn-secondary btn-block post-signup-later" type="button">Do It Later</button>
         </div>
         <div style="font-size:8px;color:var(--text-muted);line-height:1.45;margin-top:12px;">
@@ -7862,6 +8080,29 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
 .ss-creator-compose{border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(0,0,0,.16);padding:9px}.ss-post-caption{border:0!important;background:transparent!important;box-shadow:none!important;min-height:86px;resize:none;font-size:14px!important;padding:7px!important}.ss-post-meta{display:flex;justify-content:space-between;color:var(--text-muted);font-size:8px;padding:3px 6px 0}.ss-post-media-row{display:flex;gap:7px;margin-top:9px}.ss-media-pick{display:flex;align-items:center;justify-content:center;min-width:92px;padding:0 12px;border-radius:12px;border:1px solid rgba(34,229,255,.18);background:rgba(34,229,255,.07);color:#8befff;font-size:9px;font-weight:900;cursor:pointer}.ss-post-preview{position:relative;margin-top:9px;padding:7px;border:1px solid rgba(255,255,255,.08);border-radius:17px;background:rgba(0,0,0,.2);overflow:hidden}.ss-post-preview img{width:100%;max-height:300px;object-fit:cover;border-radius:14px;display:block}.ss-preview-label{font-size:7px;font-weight:1000;letter-spacing:1px;color:var(--text-muted);padding:2px 4px 7px}.ss-preview-remove{position:absolute;right:12px;top:32px;width:28px;height:28px;border:0;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;cursor:pointer}.ss-creator-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}.ss-creator-bottom>div{font-size:8px;color:var(--text-muted)}
 @media(max-width:520px){.ss-creator-studio{border-radius:20px;padding:13px}.ss-post-media-row{flex-direction:column}.ss-media-pick{min-height:38px}.ss-creator-bottom{align-items:stretch}.ss-creator-bottom .btn{flex:1}}
 </style>
+
+<script id="ss-school-network-guard">
+(function(){
+  // School-network friendly behavior: never let an optional third-party service
+  // keep the app in a loading state. This does not bypass network filtering.
+  window.SS_SCHOOL_NETWORK = {
+    online: navigator.onLine,
+    secure: window.isSecureContext === true,
+    optionalBlocked: new Set(),
+    markBlocked(name){ this.optionalBlocked.add(String(name)); },
+    canUseCamera(){ return !!(window.isSecureContext && navigator.mediaDevices?.getUserMedia); }
+  };
+  function status(){ window.SS_SCHOOL_NETWORK.online=navigator.onLine; }
+  window.addEventListener('online',status,{passive:true});
+  window.addEventListener('offline',status,{passive:true});
+  window.addEventListener('error',e=>{
+    const src=e?.target?.src||e?.target?.href||'';
+    if(/cdn\.jsdelivr\.net|unpkg\.com|instagram\.com|youtube\.com|spotify\.com|soundcloud\.com|floot\.app/i.test(src)){
+      window.SS_SCHOOL_NETWORK.markBlocked(src);
+    }
+  },true);
+})();
+</script>
 
 <!-- ==================== SCRIPTS ==================== -->
     <!-- INDEPENDENT AUTH BOOTSTRAP: password sign-in must never depend on the full app module. -->
@@ -7975,7 +8216,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
                 return ssBiometricHealthCache.ok;
             }
             const controller = new AbortController();
-            const timer = setTimeout(() => controller.abort(), 5000);
+            const timer = setTimeout(() => controller.abort(), 2200);
             try {
                 const response = await fetch(`${SS_BIOMETRIC_API}/biometric_health`, {
                     method: 'GET',
@@ -8004,12 +8245,12 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
             // The gateway intentionally uses text/plain so Safari and school networks
             // do not have to perform a JSON/Authorization CORS preflight.
             // Temporary network/5xx failures are retried before reporting an outage.
-            const maxAttempts = 3;
+            const maxAttempts = 2;
             let lastNetworkError = null;
 
             for (let attempt = 1; attempt <= maxAttempts; attempt++) {
                 const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), 12000);
+                const timer = setTimeout(() => controller.abort(), 4500);
                 try {
                     const response = await fetch(`${SS_BIOMETRIC_API}${path}`, {
                         method: 'POST',
@@ -8050,15 +8291,31 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
                 }
             }
 
-            const healthy = await ssBiometricGatewayHealth(true);
-            const err = new Error(healthy
-                ? 'The biometric service responded after a temporary connection problem. Please try the biometric scan again.'
-                : 'The biometric service is temporarily unreachable. This can be caused by a temporary hosting/network issue or a school Wi-Fi restriction. Your normal password login is still available.');
+            // Do not perform another health request here. On restricted school networks
+            // that would make the biometric UI appear frozen for another several seconds.
+            // Normal username/password login never depends on this service.
+            const err = new Error('The biometric service is unavailable on this network. Your normal password login is still available.');
             err.cause = lastNetworkError;
             err.code = 'BIOMETRIC_GATEWAY_UNAVAILABLE';
             throw err;
         }
 
+
+        // School-network-safe biometric fallback: never attempts to bypass network controls.
+        // If the biometric gateway is unreachable, biometric sign-in falls back to the normal
+        // username/password path and Owner recovery requests remain pending for a later retry.
+        function ssShowBiometricFallback(message){
+            const status=document.getElementById('biometric-login-status') || document.getElementById('owner-biometric-login-status');
+            if(status) status.textContent=message || 'Biometric service is unavailable on this network. Password login is still available.';
+            const loginBox=document.getElementById('box-login');
+            if(loginBox) loginBox.style.display='flex';
+            const bioBox=document.getElementById('box-biometric-login');
+            if(bioBox) bioBox.style.display='none';
+            showToast('Biometrics are unavailable on this network. Use password login instead.','info');
+        }
+        async function ssCanReachBiometricGateway(){
+            try{return await ssBiometricGatewayHealth(true)}catch(_){return false}
+        }
 
         // Heavy game engines are loaded only when the game is actually opened.
         let Chess = null;
@@ -8126,10 +8383,12 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
         let groupChatUnsub = null;
         let groupListUnsub = null;
         let activeGroupChatId = null;
+        // Members for the currently open group. Always refreshed by openGroupChat().
+        let activeGroupMembers = [];
         let groupTypingTimer = null;
         let groupTypingClearTimer = null;
         let privateTypingUnsub = null;
-        const CHAT_REACTION_SET = ['❤️','😂','🔥','👍','😮','😢','👏'];
+        const CHAT_REACTION_SET = ['❤️','😂','🔥','👍','😮','😢','👏','😍','🤣','🥹','😎','🤯','😡','😭','💀','🤔','🙌','🎉','✨','💯','👀','🙏','💪','🫶','🥳','🤩','😱','😴','🤝','🫡'];
         let currentGameCleanup = null;
         let viewedProfileUid = null;
         let allUsersCache = [];
@@ -8138,6 +8397,9 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
         let customBadgesCache = [];
         let globalAnnouncement = '';
         let globalMaintenance = false;
+        let globalUpdatingScreen = false;
+        let updatingScreenUnsub = null;
+        const SS_UPDATING_UNLOCK_CODE = 'supercooladmin123';
         let adminUsers = [];
         let adminPosts = [];
         let activeGameListeners = {};
@@ -8158,7 +8420,7 @@ document.getElementById('ss-max-code-redeem')?.addEventListener('click', async (
         const EMOTE_STORE_ITEM_ID = 'chat_emote';
         let userXpBoostActive = false;
         let userXpBoostExpiry = 0;
-        const MAX_COINS = 10000000000000000;
+        const MAX_COINS = 10000000000;
         const MAX_PROMO_REDEEM_DAILY = 50;
         let promoRedemptionsToday = 0;
         let lastPromoRedemptionDate = '';
@@ -9002,11 +9264,13 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                 for (const src of sources) {
                     try {
                         await new Promise((resolve, reject) => {
+                            const timeout = setTimeout(() => reject(new Error(`Face engine timed out loading from ${src}`)), 7000);
+                            const done = (fn) => (...args) => { clearTimeout(timeout); fn(...args); };
                             const existing = document.querySelector(`script[data-school-social-face-mesh="${src}"]`);
                             if (existing) {
                                 if (window.FaceMesh) return resolve();
-                                existing.addEventListener('load', resolve, { once: true });
-                                existing.addEventListener('error', () => reject(new Error(`Face engine failed to load from ${src}`)), { once: true });
+                                existing.addEventListener('load', done(resolve), { once: true });
+                                existing.addEventListener('error', done(() => reject(new Error(`Face engine failed to load from ${src}`))), { once: true });
                                 return;
                             }
                             const script = document.createElement('script');
@@ -9014,8 +9278,8 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                             script.src = src;
                             script.crossOrigin = 'anonymous';
                             script.async = true;
-                            script.onload = () => resolve();
-                            script.onerror = () => reject(new Error(`Face engine failed to load from ${src}`));
+                            script.onload = done(() => resolve());
+                            script.onerror = done(() => reject(new Error(`Face engine failed to load from ${src}`)));
                             document.head.appendChild(script);
                         });
                         if (window.FaceMesh) return;
@@ -9151,9 +9415,19 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             const cleanTemplates = Array.isArray(templates)
                 ? templates.filter(t => Array.isArray(t) && t.length === template.length).slice(0, 8)
                 : [];
-            const result = await ssBiometricApi('/biometric_enroll', { template, templates: cleanTemplates, kind });
-            if (!result?.ok) throw new Error('The biometric server did not confirm enrollment.');
-            return result;
+            try {
+                const result = await ssBiometricApi('/biometric_enroll', { template, templates: cleanTemplates, kind });
+                if (!result?.ok) throw new Error('The biometric server did not confirm enrollment.');
+                return result;
+            } catch (err) {
+                // Enrollment on a restricted school network must not break the rest of
+                // the account setup. The local enrollment remains available on this
+                // device; cross-device/server verification will be retried later.
+                const soft = new Error('Biometric enrollment was saved on this device. Cross-device biometric sync is unavailable on this network right now.');
+                soft.code = 'BIOMETRIC_SYNC_UNAVAILABLE';
+                soft.cause = err;
+                return { ok: false, localOnly: true, error: soft };
+            }
         }
 
         async function runBiometricScan() {
@@ -9353,17 +9627,35 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
         document.getElementById('post-signup-setup-biometrics')?.addEventListener('click', async () => {
             const uid = document.getElementById('post-signup-setup-biometrics')?.dataset.uid || currentUser?.uid;
             closePostSignupBiometricPrompt();
-            if (uid) await openBiometricModal('setup', uid);
+            if (!uid) return;
+            try {
+                showToast('🔐 Set up your device biometric…', 'info');
+                await ssWebAuthnEnroll('user');
+                updateAccountBiometricStatus(uid);
+                showToast('🔐 Device biometric connected to your School Social account!', 'success');
+            } catch (err) {
+                if (err?.code==='WEBAUTHN_UNSUPPORTED' || err?.code==='WEBAUTHN_INSECURE' || err?.code==='functions/failed-precondition' || ssIsWebAuthnBackendUnavailable(err)) {
+                    showToast('Device biometric service is unavailable. Opening the face biometric setup instead…','info');
+                    await openBiometricModal('setup', uid);
+                } else {
+                    showToast(err?.message || 'Device biometric setup could not be completed.', 'error');
+                }
+            }
         });
 
         document.getElementById('post-signup-skip-biometrics')?.addEventListener('click', closePostSignupBiometricPrompt);
 
         document.getElementById('btn-account-biometrics')?.addEventListener('click', async () => {
-            if (!currentUser?.uid) {
-                showToast('Sign in to manage biometrics for this account.', 'error');
-                return;
+            if (!currentUser?.uid) { showToast('Sign in to manage biometrics for this account.', 'error'); return; }
+            try {
+                showToast('🔐 Connecting this account to your device biometric…', 'info');
+                await ssWebAuthnEnroll('user');
+                updateAccountBiometricStatus(currentUser.uid);
+                showToast('🔐 Device biometric connected!', 'success');
+            } catch (err) {
+                if (err?.code==='WEBAUTHN_UNSUPPORTED' || err?.code==='WEBAUTHN_INSECURE' || err?.code==='functions/failed-precondition' || ssIsWebAuthnBackendUnavailable(err)) { showToast('Device biometric service is unavailable. Opening the face biometric setup instead…','info'); await openBiometricModal('setup', currentUser.uid); }
+                else showToast(err?.message || 'Device biometric setup failed.', 'error');
             }
-            await openBiometricModal('setup', currentUser.uid);
         });
 
         function updateAccountBiometricStatus(uid) {
@@ -9382,11 +9674,15 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
 
         document.getElementById('btn-setup-biometrics')?.addEventListener('click', async () => {
             const uid = currentUser?.uid || document.getElementById('btn-setup-biometrics')?.dataset.uid;
-            if (!uid) {
-                showToast('Create the account first, then set up biometrics.', 'error');
-                return;
+            if (!uid) { showToast('Create the account first, then set up biometrics.', 'error'); return; }
+            try {
+                await ssWebAuthnEnroll('user');
+                updateAccountBiometricStatus(uid);
+                showToast('🔐 Device biometric connected to this account!', 'success');
+            } catch (err) {
+                if (err?.code==='WEBAUTHN_UNSUPPORTED' || err?.code==='WEBAUTHN_INSECURE' || err?.code==='functions/failed-precondition' || ssIsWebAuthnBackendUnavailable(err)) { showToast('Device biometric service is unavailable. Opening the face biometric setup instead…','info'); await openBiometricModal('setup', uid); }
+                else showToast(err?.message || 'Device biometric setup failed.', 'error');
             }
-            await openBiometricModal('setup', uid);
         });
 
         // ─── Owner biometric controls ───
@@ -9464,8 +9760,16 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     const stable=chooseStableBiometricSamples(ownerBiometricSamples,14); const template=averageBiometricSamples(stable); if(!template)throw new Error('Could not build the Owner facial template.');
                     const enrollment={biometricId:createBiometricId(),method:'mediapipe-keypoints-adaptive-multi-template-owner',template,templates:[template,...stable.slice(0,5).map(s=>s.vector)],sampleCount:stable.length,pointCount:BIOMETRIC_KEY_POINTS.length,pointIndices:[...BIOMETRIC_KEY_POINTS],createdAt:Date.now()};
                     const saved=saveAdminBiometric(currentUser.uid,enrollment);
-                    await ssEnrollBiometricServer(currentUser.uid,enrollment.template,'owner',enrollment.templates);
-                    ownerBioSetStatus(`✓ Owner biometric saved securely for this account and future devices: ${saved.biometricId}`,true); updateAdminBiometricStatus(); showToast('👑 Owner biometric saved securely for use on any supported device.','success');
+                    const synced=await ssEnrollBiometricServer(currentUser.uid,enrollment.template,'owner',enrollment.templates);
+                    if(synced?.localOnly){
+                        ownerBioSetStatus(`✓ Owner biometric saved on this device. Cross-device sync will be available when the biometric service is reachable.`,true);
+                        updateAdminBiometricStatus();
+                        showToast('👑 Owner biometric saved on this device.','success');
+                    }else{
+                        ownerBioSetStatus(`✓ Owner biometric saved securely for this account and future devices: ${saved.biometricId}`,true);
+                        updateAdminBiometricStatus();
+                        showToast('👑 Owner biometric saved securely for use on supported devices.','success');
+                    }
                 }else{
                     if(ownerBiometricPendingPasswordReset){
                         const pendingReset=ownerBiometricPendingPasswordReset;
@@ -9524,7 +9828,28 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
                     }
                 }
                 setTimeout(closeOwnerBiometricModal,900);
-            }catch(err){ownerBioSetStatus(err?.message||'Owner biometric scan failed.');showToast(err?.message||'Owner biometric scan failed.','error');}
+            }catch(err){
+                const unavailable=err?.code==='BIOMETRIC_GATEWAY_UNAVAILABLE' || /unreachable|school Wi-?Fi|network restriction|network/i.test(String(err?.message||''));
+                if(unavailable){
+                    ownerBioSetStatus('Biometric gateway is unreachable on this network. No firewall bypass was attempted. Your request was left pending; retry when the biometric service is reachable.',false);
+                    if(ownerBiometricPendingPasswordReset){
+                        ownerBiometricPendingPasswordReset=null;
+                        renderAdminResetRequests();
+                        showToast('Reset request is still open. Retry Owner approval when the biometric service is reachable.','info');
+                    }else if(ownerBiometricPendingLogin?.support){
+                        ownerBiometricPendingLogin=null;
+                        ssShowBiometricFallback('Owner biometric is unavailable on this network. Use normal password login.');
+                    }else{
+                        showToast('Owner biometric service is unavailable on this network.','info');
+                    }
+                }else{
+                    const resetWasPending=!!ownerBiometricPendingPasswordReset;
+                    if(resetWasPending) ownerBiometricPendingPasswordReset=null;
+                    ownerBioSetStatus(err?.message||'Owner biometric scan failed.');
+                    if(resetWasPending) renderAdminResetRequests();
+                    showToast(err?.message||'Owner biometric scan failed.','error');
+                }
+            }
             finally{ownerBiometricBusy=false;if(m)m.classList.remove('scanning');}
         }
         document.getElementById('ss-admin-bio-setup')?.addEventListener('click',()=>openOwnerBiometricModal('setup'));
@@ -9612,6 +9937,11 @@ const SLOT_SYMBOLS = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎', '7️⃣']
             if(!ownerLoginTargetUid){if(status)status.textContent='Enter a valid account username first.';return;}
             const ownerRecord=getAdminBiometric();
             try{
+                const gatewayOK=await ssCanReachBiometricGateway();
+                if(!gatewayOK){
+                    ssShowBiometricFallback('Owner biometric service is blocked or unavailable on this network. Use password login.');
+                    return;
+                }
                 // Skip the old target-confirmation modal: go straight to the camera.
                 // ownerUid is optional: the secure gateway can resolve the enrolled
                 // Owner identity server-side, which makes this work on a new device.
@@ -9707,6 +10037,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                     runWhenIdle(()=>loadPromoCodesUnlimited(), 5000);
                     runWhenIdle(()=>loadCustomBadges(), 5000);
                     runWhenIdle(()=>loadMaintenanceMode(), 5000);
+                    runWhenIdle(()=>loadUpdatingScreen(), 5000);
                     runWhenIdle(()=>loadActivityLog(), 5000);
                     runWhenIdle(()=>initGameCenter(), 5000);
                     runWhenIdle(()=>startShopEffectsTimer(), 5000);
@@ -9726,7 +10057,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                 if (incomingCallUnsub) { incomingCallUnsub(); incomingCallUnsub = null; }
                 endVideoCall(false);
                 if (groupListUnsub) { groupListUnsub(); groupListUnsub = null; }
-                if (groupChatUnsub) { groupChatUnsub(); groupChatUnsub = null; }
+                if (typeof groupStopListeners === 'function') groupStopListeners();
                 currentUser = null;
                 adminBiometricOwnerUid = null;
                 const bioArea = document.getElementById('signup-biometric-area');
@@ -9739,7 +10070,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                 closePostSignupBiometricPrompt();
                 [profileUnsub, feedUnsub, chatUnsub, usersUnsub, discoverUnsub, privateChatUnsub, promoUnsub,
                     promoUnsubUnlimited, announcementUnsub, adminUsersUnsub, gameInvitesUnsub, activeGamesUnsub,
-                    activityLogUnsub, systemSettingsUnsub, globalChatAnnounceUnsub, adminResetRequestsUnsub
+                    activityLogUnsub, systemSettingsUnsub, globalChatAnnounceUnsub, adminResetRequestsUnsub, updatingScreenUnsub
                 ].forEach(fn => { if (fn) { fn();
                         fn = null; } });
                 Object.values(activeGameListeners).forEach(fn => { if (fn) fn(); });
@@ -9964,43 +10295,40 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
 
         biometricLoginButton?.addEventListener('click', async () => {
             const username = document.getElementById('login-username')?.value.trim().toLowerCase();
-            if (!username || !biometricLoginUid) {
-                showToast('Enter the username for the biometric account first.', 'error');
-                return;
-            }
-            const uid = biometricLoginUid;
+            if (!username || !biometricLoginUid) { showToast('Enter the username for the biometric account first.', 'error'); return; }
             try {
                 biometricLoginButton.disabled = true;
-                biometricLoginStatus.textContent = 'Opening biometric camera…';
-                const matched = await openBiometricVerificationForLogin(uid, null);
-                if (!matched) throw new Error('That face did not match the biometric saved for this account. Try again with the camera view clear.');
-
-                biometricLoginStatus.textContent = 'Biometric verified. Signing you in…';
-                const probe = window.__ssBiometricLoginProbe;
-                const probes = window.__ssBiometricLoginProbes;
-                window.__ssBiometricLoginProbe = null;
-                window.__ssBiometricLoginProbes = null;
-                if (!Array.isArray(probe) || !probe.length) throw new Error('The face scan did not produce a usable biometric template.');
-                const result = await ssBiometricApi('/biometric_verify', {
-                    username,
-                    template: probe,
-                    templates: Array.isArray(probes) ? probes : [],
-                    kind: 'user'
-                });
-                if (!result?.customToken) throw new Error('The biometric server did not return a Firebase sign-in token.');
-                await signInWithCustomToken(auth, result.customToken);
+                biometricLoginStatus.textContent = 'Opening your device biometric…';
+                await ssWebAuthnLogin(username);
                 biometricLoginStatus.textContent = 'Signed in successfully!';
                 showToast('Welcome back! 🔐', 'success');
+                return;
             } catch (err) {
-                console.error('Biometric sign-in:', err);
-                const msg = err?.code === 'auth/invalid-credential' || err?.code === 'auth/wrong-password'
-                    ? 'The saved biometric sign-in credential is no longer valid. Sign in with your password and set up biometrics again.'
-                    : (err?.message || 'Biometric sign-in could not be completed.');
-                biometricLoginStatus.textContent = msg;
-                showToast(msg, 'error');
-            } finally {
-                if (biometricLoginButton) biometricLoginButton.disabled = false;
-            }
+                const fallbackAllowed = ['WEBAUTHN_UNSUPPORTED','WEBAUTHN_INSECURE','functions/failed-precondition','functions/not-found','functions/internal','functions/unavailable','functions/deadline-exceeded'].includes(err?.code) || ssIsWebAuthnBackendUnavailable(err);
+                if (!fallbackAllowed) {
+                    const msg=err?.message||'Device biometric sign-in failed.';
+                    biometricLoginStatus.textContent=msg;
+                    showToast(msg,'error');
+                    return;
+                }
+                biometricLoginStatus.textContent='Device biometric is unavailable here. Trying the existing face biometric…';
+                try {
+                    const matched = await openBiometricVerificationForLogin(biometricLoginUid, null);
+                    if (!matched) throw new Error('That face did not match the biometric saved for this account.');
+                    const probe=window.__ssBiometricLoginProbe, probes=window.__ssBiometricLoginProbes;
+                    window.__ssBiometricLoginProbe=null; window.__ssBiometricLoginProbes=null;
+                    if(!Array.isArray(probe)||!probe.length) throw new Error('The face scan did not produce a usable biometric template.');
+                    const result=await ssBiometricApi('/biometric_verify',{username,template:probe,templates:Array.isArray(probes)?probes:[],kind:'user'});
+                    if(!result?.customToken) throw new Error('The biometric server did not return a secure sign-in token.');
+                    await signInWithCustomToken(auth,result.customToken);
+                    biometricLoginStatus.textContent='Signed in successfully!';
+                    showToast('Welcome back! 🔐','success');
+                } catch (fallbackErr) {
+                    const msg=fallbackErr?.message||'Biometric sign-in is unavailable on this network. Use your password instead.';
+                    biometricLoginStatus.textContent=msg;
+                    showToast(msg,'error');
+                }
+            } finally { if (biometricLoginButton) biometricLoginButton.disabled=false; }
         });
 
         // Runs the existing account-specific face matcher without signing in until the
@@ -10034,6 +10362,99 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
             await signInWithEmailAndPassword(auth, email, password);
             showToast('Welcome back! ✨', 'success');
         }));
+
+        // ─── Native WebAuthn / device biometric path ───
+        // This is the primary biometric path. It does not send a face image or biometric
+        // template to Floot. The browser/device performs user verification (Face ID,
+        // Touch ID, Windows Hello, Android screen lock/passkey, etc.) and Firebase
+        // Functions verifies the signed WebAuthn assertion.
+        const SS_WEBAUTHN_AVAILABLE = typeof window !== 'undefined' && !!window.PublicKeyCredential && !!navigator.credentials;
+        const ssB64ToBytes = (value) => {
+            const s = String(value || '').replace(/-/g,'+').replace(/_/g,'/');
+            const padded = s + '='.repeat((4 - s.length % 4) % 4);
+            const bin = atob(padded);
+            return Uint8Array.from(bin, c => c.charCodeAt(0));
+        };
+        const ssBytesToB64 = (value) => {
+            const bytes = value instanceof Uint8Array ? value : new Uint8Array(value);
+            let bin=''; for(let i=0;i<bytes.length;i+=0x8000) bin += String.fromCharCode(...bytes.subarray(i,i+0x8000));
+            return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+        };
+        function ssWebAuthnCreationOptions(o){
+            const x=structuredClone(o);
+            x.challenge=ssB64ToBytes(x.challenge);
+            if(x.user?.id)x.user.id=ssB64ToBytes(x.user.id);
+            if(Array.isArray(x.excludeCredentials)) x.excludeCredentials=x.excludeCredentials.map(c=>({...c,id:ssB64ToBytes(c.id)}));
+            return x;
+        }
+        function ssWebAuthnRequestOptions(o){
+            const x=structuredClone(o);
+            x.challenge=ssB64ToBytes(x.challenge);
+            if(Array.isArray(x.allowCredentials)) x.allowCredentials=x.allowCredentials.map(c=>({...c,id:ssB64ToBytes(c.id)}));
+            return x;
+        }
+        function ssSerializeWebAuthnCredential(cred){
+            if(!cred?.response) throw new Error('The device did not return a biometric credential.');
+            const r=cred.response;
+            const out={id:cred.id,rawId:ssBytesToB64(cred.rawId),type:cred.type,response:{clientDataJSON:ssBytesToB64(r.clientDataJSON)}};
+            if('attestationObject' in r) out.response.attestationObject=ssBytesToB64(r.attestationObject);
+            if('authenticatorData' in r) out.response.authenticatorData=ssBytesToB64(r.authenticatorData);
+            if('signature' in r) out.response.signature=ssBytesToB64(r.signature);
+            if('userHandle' in r) out.response.userHandle=r.userHandle?ssBytesToB64(r.userHandle):null;
+            if(Array.isArray(cred.getTransports?.())) out.response.transports=cred.getTransports();
+            return out;
+        }
+        async function ssWebAuthnEnroll(kind='user'){
+            if(!SS_WEBAUTHN_AVAILABLE) throw Object.assign(new Error('This browser does not support device biometrics/WebAuthn.'),{code:'WEBAUTHN_UNSUPPORTED'});
+            if(!window.isSecureContext) throw Object.assign(new Error('Device biometrics require the HTTPS School Social site.'),{code:'WEBAUTHN_INSECURE'});
+            const callOptions=httpsCallable(functions,kind==='owner'?'webauthnOwnerRegisterOptions':'webauthnRegisterOptions');
+            const callVerify=httpsCallable(functions,kind==='owner'?'webauthnOwnerRegisterVerify':'webauthnRegisterVerify');
+            const options=(await callOptions({})).data;
+            const credential=await navigator.credentials.create({publicKey:ssWebAuthnCreationOptions(options)});
+            if(!credential) throw new Error('Device biometric setup was cancelled.');
+            const result=(await callVerify({credential:ssSerializeWebAuthnCredential(credential)})).data;
+            if(!result?.verified) throw new Error('The server did not confirm device biometric setup.');
+            return result;
+        }
+        async function ssWebAuthnLogin(username){
+            if(!SS_WEBAUTHN_AVAILABLE) throw Object.assign(new Error('Device biometrics are not supported in this browser.'),{code:'WEBAUTHN_UNSUPPORTED'});
+            if(!window.isSecureContext) throw Object.assign(new Error('Device biometrics require the HTTPS School Social site.'),{code:'WEBAUTHN_INSECURE'});
+            const options=(await httpsCallable(functions,'webauthnLoginOptions')({username})).data;
+            const credential=await navigator.credentials.get({publicKey:ssWebAuthnRequestOptions(options)});
+            if(!credential) throw new Error('Device biometric sign-in was cancelled.');
+            const result=(await httpsCallable(functions,'webauthnLoginVerify')({username,credential:ssSerializeWebAuthnCredential(credential)})).data;
+            if(!result?.customToken) throw new Error('The server did not return a secure sign-in token.');
+            await signInWithCustomToken(auth,result.customToken);
+            return result;
+        }
+        async function ssWebAuthnOwnerLogin(){
+            if(!SS_WEBAUTHN_AVAILABLE) throw Object.assign(new Error('Device biometrics are not supported in this browser.'),{code:'WEBAUTHN_UNSUPPORTED'});
+            if(!window.isSecureContext) throw Object.assign(new Error('Device biometrics require the HTTPS School Social site.'),{code:'WEBAUTHN_INSECURE'});
+            const options=(await httpsCallable(functions,'webauthnOwnerLoginOptions')({})).data;
+            const credential=await navigator.credentials.get({publicKey:ssWebAuthnRequestOptions(options)});
+            if(!credential) throw new Error('Owner device biometric sign-in was cancelled.');
+            const result=(await httpsCallable(functions,'webauthnOwnerLoginVerify')({credential:ssSerializeWebAuthnCredential(credential)})).data;
+            if(!result?.customToken) throw new Error('The server did not return an Owner sign-in token.');
+            await signInWithCustomToken(auth,result.customToken);
+            sessionStorage.setItem('ssOwnerBiometricAuthorized','1');
+            return result;
+        }
+        window.ssWebAuthnEnroll=ssWebAuthnEnroll;
+        window.ssWebAuthnLogin=ssWebAuthnLogin;
+        window.ssWebAuthnOwnerLogin=ssWebAuthnOwnerLogin;
+        window.ssWebAuthnSupported=()=>SS_WEBAUTHN_AVAILABLE && !!window.isSecureContext;
+
+        // Firebase callable WebAuthn functions can report `internal` when the optional
+        // server-side WebAuthn deployment is unavailable (for example on Spark). Never
+        // expose that raw Firebase error to the user. Fall back to the existing face
+        // biometric path instead. Normal password login remains independent.
+        function ssIsWebAuthnBackendUnavailable(err){
+            const code=String(err?.code||'').toLowerCase();
+            const msg=String(err?.message||'').toLowerCase();
+            return code==='functions/internal' || code==='functions/unavailable' || code==='functions/deadline-exceeded' ||
+                   code==='functions/not-found' || code==='functions/failed-precondition' ||
+                   msg.includes('internal') || msg.includes('webhook') || msg.includes('cloud function');
+        }
 
         const resetPasswordCallable = httpsCallable(functions, 'resetPasswordWithSecurityAnswer');
         let resetTargetUid = null,
@@ -10097,7 +10518,19 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
             try {
                 const verifySnap = await getDoc(doc(db, 'users', resetTargetUid));
                 if (!verifySnap.exists() || (verifySnap.data().securityAnswer || '') !== resetSecurityAnswer) throw new Error('Security answer no longer matches this account.');
-                await addDoc(collection(db, 'password_resets'), { uid: resetTargetUid, username: String(verifySnap.data().username || '').toLowerCase(), verified: true, status: 'open', source: 'school-social', requestedAt: serverTimestamp(), requestedAtMs: Date.now() });
+                const username = String(verifySnap.data().username || '').toLowerCase();
+                // Prevent duplicate open tickets if the user taps the button twice or retries.
+                let existingOpen = null;
+                // Some security-rule setups allow users to create reset tickets but do not
+                // allow them to read the whole password_resets collection. Prefer the
+                // duplicate check, but never let that optional check break ticket creation.
+                try {
+                    const existingSnap = await getDocs(query(collection(db, 'password_resets'), where('uid', '==', resetTargetUid)));
+                    existingOpen = existingSnap.docs.find(d => String(d.data().status || 'open') === 'open') || null;
+                } catch (_) { existingOpen = null; }
+                if (!existingOpen) {
+                    await addDoc(collection(db, 'password_resets'), { uid: resetTargetUid, username, verified: true, status: 'open', source: 'school-social', requestedAt: serverTimestamp(), requestedAtMs: Date.now() });
+                }
                 const status = document.getElementById('reset-status'); status.style.color='#ffd166'; status.textContent='✅ Recovery verified. Your reset request is waiting for Admin approval. No email is used.';
                 showToast('Verified — reset request sent to the Admin panel.','info'); resetSecurityAnswer=null;
                 setTimeout(()=>{boxReset.style.display='none';boxLogin.style.display='flex';},1600);
@@ -10188,10 +10621,16 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                 const newPass=prompt(`Create a temporary new password for @${btn.dataset.username} (minimum 6 characters):`);
                 if(!newPass||newPass.length<6){showToast('Password must be at least 6 characters.','error');return;}
                 if(!confirm(`Approve and reset @${btn.dataset.username}? Owner biometric authorization will complete the change.`))return;
-                btn.dataset.busy='1'; btn.disabled=true; btn.textContent='🔐 Verifying…';
+                btn.dataset.busy='1'; btn.disabled=true; btn.textContent='🔐 Opening secure reset…';
                 ownerBiometricPendingPasswordReset={uid:btn.dataset.uid,username:String(btn.dataset.username||'').toLowerCase(),newPassword:newPass,requestId:btn.dataset.id};
-                try{ await openOwnerBiometricModal('verify'); }
-                catch(err){ ownerBiometricPendingPasswordReset=null; btn.dataset.busy='0'; btn.disabled=false; btn.textContent='✅ Approve & Reset'; throw err; }
+                try{
+                    await openOwnerBiometricModal('verify');
+                    // Keep the request open until the biometric-backed password change is actually completed.
+                    btn.textContent='👑 Waiting for Owner verification…';
+                }catch(err){
+                    ownerBiometricPendingPasswordReset=null;btn.dataset.busy='0';btn.disabled=false;btn.textContent='✅ Approve & Reset';
+                    showToast(err?.message||'Could not start the password reset approval.','error');
+                }
             }));
         }
         function loadAdminResetRequests(){
@@ -12486,11 +12925,33 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
 
         // ─── Private + Group Chat ───
         function formatChatTime(ts) {
-            try { return ts?.toDate?.()?.toLocaleTimeString?.([], {hour:'numeric', minute:'2-digit'}) || 'Sending…'; } catch { return 'Sending…'; }
+            try {
+                if (ts?.toDate) return ts.toDate().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+                if (ts?.seconds != null) return new Date(Number(ts.seconds)*1000).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+                if (typeof ts === 'number' || typeof ts === 'string') return new Date(Number(ts)).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+            } catch {}
+            return 'Sending…';
+        }
+        function normalizeGroupMessage(raw, id='') {
+            const m = raw && typeof raw === 'object' ? raw : {};
+            const senderUid = m.senderUid || m.senderId || m.uid || m.authorUid || m.authorId || '';
+            const message = m.message ?? m.text ?? m.content ?? m.body ?? '';
+            const createdAt = m.createdAt || m.timestamp || m.sentAt || m.created_at || null;
+            let createdAtMs = Number(m.createdAtMs || m.timestampMs || m.sentAtMs || 0);
+            if (!createdAtMs && createdAt?.toMillis) { try { createdAtMs = createdAt.toMillis(); } catch {} }
+            if (!createdAtMs && createdAt?.seconds != null) createdAtMs = Number(createdAt.seconds) * 1000;
+            return {...m, id, senderUid, message:String(message ?? ''), createdAt, createdAtMs};
         }
         function safeText(v){ return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
         function chatUser(uid){ return allUsersCache.find(x=>x.uid===uid) || {}; }
         function groupMemberName(uid){ const u=chatUser(uid); return u.username || uid?.slice?.(0,7) || 'member'; }
+function groupChatPeopleLabel(group){
+    const ids=Array.isArray(group?.members)?group.members:[];
+    const names=ids.map(uid=>uid===currentUser?.uid?'You':'@'+groupMemberName(uid));
+    if(!names.length)return 'Group chat';
+    if(names.length<=3)return names.join(' · ');
+    return names.slice(0,3).join(' · ')+` · +${names.length-3} more`;
+}
         function isOwnerProfile(profile){ return hasRoleBadge('Owner', profile) || hasRoleBadge('owner', profile); }
         function reactionMap(msg){ return (msg && msg.reactions && typeof msg.reactions==='object') ? msg.reactions : {}; }
         async function toggleMessageReaction(ref, msg, emoji){
@@ -12553,14 +13014,27 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
             input.onblur=()=>setTypingDoc(ref,currentUser?.uid,false);
         }
 
+        function renderPendingChatMessage(id,msg,members,isGroup=false,partnerUid=''){
+            const fake={id,data:()=>msg};
+            const el=renderChatMessage(fake,members,isGroup,partnerUid);
+            el.classList.add('ss-message-pending');
+            el.dataset.pendingId=id;
+            el.querySelectorAll('.chat-delete-btn,.ss-reaction-row').forEach(x=>x.remove());
+            const meta=el.querySelector('.ss-msg-meta');
+            if(meta){const st=meta.querySelector('.ss-message-status'); if(st) st.textContent='Sending…'; else {const span=document.createElement('span');span.className='ss-message-status';span.textContent='Sending…';meta.appendChild(span);}}
+            return el;
+        }
         function renderChatMessage(docSnap, members, isGroup=false, partnerUid=''){
-            const msg=docSnap.data(); const isMe=msg.senderUid===currentUser?.uid; const div=document.createElement('div');
+            const msg=normalizeGroupMessage(docSnap?.data?.() || {}, docSnap?.id || '');
+            const isMe=msg.senderUid===currentUser?.uid; const div=document.createElement('div');
             div.className=`chat-msg ${isMe?'me':''}`; div.style.position='relative';
-            const sender = isMe ? 'You' : (isGroup ? '@'+groupMemberName(msg.senderUid) : '@'+groupMemberName(partnerUid));
-            const bubble=document.createElement('div'); bubble.className='chat-bubble'; bubble.textContent=msg.message||'';
+            div.dataset.messageId=docSnap?.id || '';
+            const sender = isMe ? 'You' : (isGroup ? '@'+(msg.senderName||msg.username||groupMemberName(msg.senderUid)) : '@'+groupMemberName(partnerUid));
+            const bubble=document.createElement('div'); bubble.className='chat-bubble';
+            if(msg.type==='image'&&msg.imageUrl){const im=document.createElement('img');im.className='ss-chat-image';im.src=msg.imageUrl;im.alt='Photo';im.loading='lazy';im.onclick=()=>window.open(msg.imageUrl,'_blank','noopener');bubble.appendChild(im);if(msg.message){const cap=document.createElement('div');cap.textContent=msg.message;cap.style.marginTop='5px';bubble.appendChild(cap)}}else{bubble.textContent=msg.message||'';}
             const head=document.createElement('span'); head.className='chat-sender'; head.textContent=sender;
             div.appendChild(head); div.appendChild(bubble);
-            const meta=document.createElement('div'); meta.className='ss-msg-meta'; meta.innerHTML=`<span>${formatChatTime(msg.createdAt)}</span>${messageStatus(msg,members)}`;
+            const meta=document.createElement('div'); meta.className='ss-msg-meta'; meta.innerHTML=`<span>${formatChatTime(msg.createdAt||{toDate:()=>new Date(Number(msg.createdAtMs||Date.now()))})}</span>${messageStatus(msg,members)}`;
             if(isMe || isCurrentUserAdmin()){
                 const del=document.createElement('button'); del.className='chat-delete-btn'; del.type='button'; del.textContent='✕'; del.dataset.msgId=docSnap.id;
                 del.onclick=async e=>{e.stopPropagation();if(!confirm('Delete this message?'))return;try{await deleteDoc(doc(db,isGroup?'group_chats':'private_chats', ...(isGroup?[activeGroupChatId,'messages',docSnap.id]:[[currentUser.uid,partnerUid].sort().join('_'),'messages',docSnap.id]))); }catch(err){showToast('Failed to delete message.','error')}};
@@ -12571,6 +13045,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
 
         let privateChatPeople = [];
         let privateChatPeopleUnsub = null;
+        const privateLocalPending = new Map();
 
         async function loadUserList(filter = '') {
             if (!currentUser) return;
@@ -12670,6 +13145,16 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                         frag.appendChild(fallback);
                     }
                 });
+                const liveIds = new Set(docs.map(ds=>ds.id));
+                privateLocalPending.forEach((_,id)=>{
+                    const liveDoc = snap.docs.find(d=>d.id===id);
+                    if(liveDoc && !liveDoc.metadata?.hasPendingWrites) privateLocalPending.delete(id);
+                });
+                privateLocalPending.forEach((pending,id)=>{
+                    if(liveIds.has(id)) return;
+                    try{frag.appendChild(renderPendingChatMessage(id,pending,[currentUser.uid,partnerUid],false,partnerUid));}
+                    catch(err){console.error('Pending private message render failed:',err);}
+                });
                 stream.innerHTML = '';
                 stream.appendChild(frag);
                 stream.scrollTop = stream.scrollHeight;
@@ -12684,157 +13169,494 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
             input.onkeydown=e=>{if(e.key==='Enter'){const val=input.value.trim();if(val==='/games'){e.preventDefault();openGameChallengeModal(partnerUid,partnerUsername);input.value='';}}};
         }
 
+        // ============================================================
+        // GROUP CHAT — CLEAN REBUILD
+        // Firestore is the single source of truth. There is deliberately
+        // no optimistic-message cache: the live snapshot is responsible
+        // for displaying messages after Firestore accepts them.
+        // ============================================================
         let groupCreateSelectedIds = [];
+        let groupMessageUnsub = null;
+        let groupTypingUnsub = null;
+        let groupListError = null;
+
+        function groupStopListeners(){
+            try{ groupMessageUnsub?.(); }catch(_){ }
+            try{ groupTypingUnsub?.(); }catch(_){ }
+            groupMessageUnsub=null;
+            groupTypingUnsub=null;
+            if(groupChatUnsub){ try{groupChatUnsub()}catch(_){} groupChatUnsub=null; }
+            if(window._groupTypingUnsub){ try{window._groupTypingUnsub()}catch(_){} window._groupTypingUnsub=null; }
+        }
+
+        function groupMessageTime(raw){
+            const m=raw&&typeof raw==='object'?raw:{};
+            if(m.createdAt?.toMillis) { try{return Number(m.createdAt.toMillis())}catch(_){} }
+            if(m.createdAt?.seconds!=null) return Number(m.createdAt.seconds)*1000;
+            for(const k of ['createdAtMs','timestampMs','sentAtMs']){
+                const n=Number(m[k]); if(Number.isFinite(n)&&n>0)return n;
+            }
+            for(const k of ['timestamp','sentAt','created_at']){
+                const v=m[k];
+                if(v?.toMillis){try{return Number(v.toMillis())}catch(_){} }
+                if(v?.seconds!=null)return Number(v.seconds)*1000;
+                if(typeof v==='number'){const n=Number(v);if(n>0)return n}
+            }
+            return 0;
+        }
+
+        function groupNormalizeMessage(ds){
+            const raw=ds?.data?.()||{};
+            const senderUid=raw.senderUid||raw.senderId||raw.uid||raw.authorUid||raw.authorId||'';
+            return {
+                id:ds?.id||raw.id||'',
+                senderUid,
+                senderName:String(raw.senderName||raw.username||raw.authorName||groupMemberName(senderUid)||'member'),
+                senderVerified:!!(raw.senderVerified||raw.verified),
+                message:String(raw.message??raw.text??raw.content??raw.body??''),
+                type:raw.type||'text',
+                imageUrl:String(raw.imageUrl||raw.photoUrl||''),
+                storagePath:String(raw.storagePath||''),
+                createdAt:raw.createdAt||raw.timestamp||raw.sentAt||raw.created_at||null,
+                createdAtMs:groupMessageTime(raw),
+                readBy:Array.isArray(raw.readBy)?raw.readBy:[],
+                reactions:raw.reactions&&typeof raw.reactions==='object'?raw.reactions:{},
+                memberUids:Array.isArray(raw.memberUids)?raw.memberUids:[]
+            };
+        }
+
+        function groupTimeLabel(m){
+            const ms=Number(m?.createdAtMs||0);
+            try{
+                if(ms>0)return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+                return formatChatTime(m?.createdAt);
+            }catch(_){return 'Just now'}
+        }
+
         async function ensureGroupUsersLoaded(){
             if(!currentUser)return [];
             try{
                 const snap=await getDocs(collection(db,'users'));
-                const map=new Map();
-                allUsersCache.forEach(u=>{if(u?.uid)map.set(u.uid,u)});
+                const map=new Map(allUsersCache.filter(u=>u?.uid).map(u=>[u.uid,u]));
                 snap.forEach(ds=>{
                     const u={uid:ds.id,...ds.data()};
-                    if(u.uid!==currentUser.uid&&!u.banned&&u.username)map.set(u.uid,u);
+                    if(!u.banned&&u.username)map.set(u.uid,u);
                 });
                 allUsersCache=[...map.values()];
-            }catch(e){console.warn('Group user refresh failed:',e)}
+            }catch(err){console.warn('Group user lookup unavailable:',err)}
             return allUsersCache;
         }
+
         function renderGroupMemberPicker(){
-            const picker=document.getElementById('group-member-picker'), search=document.getElementById('group-member-search'), selectedEl=document.getElementById('group-selected-members');
+            const picker=document.getElementById('group-member-picker');
+            const search=document.getElementById('group-member-search');
+            const selectedEl=document.getElementById('group-selected-members');
             if(!picker||!selectedEl)return;
-            const term=(search?.value||'').trim().toLowerCase(), selected=new Set(groupCreateSelectedIds);
+            const term=String(search?.value||'').trim().toLowerCase();
+            const selected=new Set(groupCreateSelectedIds);
             selectedEl.innerHTML='';
             if(selected.size){
-                const title=document.createElement('div');title.className='ss-selected-title';title.textContent=`Selected people (${selected.size})`;selectedEl.appendChild(title);
+                const title=document.createElement('div');
+                title.className='ss-selected-title'; title.textContent=`Selected people (${selected.size})`;
+                selectedEl.appendChild(title);
                 groupCreateSelectedIds.forEach(uid=>{
-                    const u=allUsersCache.find(x=>x.uid===uid)||{uid,username:uid.slice(0,7)};
-                    const chip=document.createElement('button');chip.type='button';chip.className='ss-selected-member';chip.innerHTML=`<span>@${safeText(u.username||'user')}</span><span class="ss-selected-remove">✕</span>`;
-                    chip.onclick=()=>{groupCreateSelectedIds=groupCreateSelectedIds.filter(id=>id!==uid);renderGroupMemberPicker()};selectedEl.appendChild(chip);
+                    const u=chatUser(uid);
+                    const b=document.createElement('button'); b.type='button'; b.className='ss-selected-member';
+                    b.innerHTML=`<span>@${safeText(u.username||uid.slice(0,8))}</span><span class="ss-selected-remove">✕</span>`;
+                    b.onclick=()=>{groupCreateSelectedIds=groupCreateSelectedIds.filter(x=>x!==uid);renderGroupMemberPicker()};
+                    selectedEl.appendChild(b);
                 });
             }
             picker.innerHTML='';
-            const matches=allUsersCache.filter(u=>u.uid!==currentUser?.uid&&!selected.has(u.uid)&&(!term||(u.username||'').toLowerCase().includes(term))).sort((a,b)=>(a.username||'').localeCompare(b.username||'')).slice(0,40);
+            const matches=allUsersCache
+                .filter(u=>u?.uid&&u.uid!==currentUser?.uid&&!u.banned&&!selected.has(u.uid))
+                .filter(u=>!term||String(u.username||'').toLowerCase().includes(term))
+                .sort((a,b)=>String(a.username||'').localeCompare(String(b.username||'')))
+                .slice(0,50);
             if(!matches.length){
-                const empty=document.createElement('div');empty.className='ss-member-search-empty';empty.textContent=term?'No users found. Try another username.':'Type a username to search for people.';picker.appendChild(empty);return;
+                const empty=document.createElement('div'); empty.className='ss-member-search-empty';
+                empty.textContent=term?'No users found.':'Search for people to add.'; picker.appendChild(empty); return;
             }
             matches.forEach(u=>{
-                const b=document.createElement('button');b.type='button';b.className='ss-member-pick';
-                b.innerHTML=`<span class="ss-member-avatar">${safeText((u.username||'U').charAt(0).toUpperCase())}</span><span class="ss-member-pick-name">@${safeText(u.username||'user')}</span><span class="ss-member-pick-add">＋</span>`;
-                b.onclick=()=>{if(!groupCreateSelectedIds.includes(u.uid)){groupCreateSelectedIds.push(u.uid);renderGroupMemberPicker();document.getElementById('group-member-search')?.focus()}};picker.appendChild(b);
+                const b=document.createElement('button'); b.type='button'; b.className='ss-member-pick';
+                const initial=String(u.username||'U').charAt(0).toUpperCase();
+                b.innerHTML=`<span class="ss-member-avatar">${safeText(initial)}</span><span class="ss-member-pick-name">@${safeText(u.username||'user')}</span><span class="ss-member-pick-add">＋</span>`;
+                b.onclick=()=>{if(!groupCreateSelectedIds.includes(u.uid)){groupCreateSelectedIds.push(u.uid);renderGroupMemberPicker()}};
+                picker.appendChild(b);
             });
         }
-        async function openCreateGroupModal(){
-            if(!currentUser)return;groupCreateSelectedIds=[];
-            document.getElementById('group-chat-name-input').value='';document.getElementById('group-member-search').value='';
-            document.getElementById('create-group-chat-modal').style.display='flex';
-            document.getElementById('group-member-picker').innerHTML='<div class="ss-member-search-empty">Loading people…</div>';
-            await ensureGroupUsersLoaded();renderGroupMemberPicker();setTimeout(()=>document.getElementById('group-member-search')?.focus(),50);
-        }
-        function closeCreateGroupModal(){groupCreateSelectedIds=[];document.getElementById('create-group-chat-modal').style.display='none'}
-        async function createGroupChat(){
-            const name=document.getElementById('group-chat-name-input').value.trim()||'New Group', ids=[...new Set(groupCreateSelectedIds)].filter(uid=>uid!==currentUser?.uid);
-            if(ids.length<2){showToast('Pick at least 2 other members.','error');return}
-            const members=[currentUser.uid,...ids];
-            try{const ref=await addDoc(collection(db,'group_chats'),{name:name.slice(0,50),members,createdBy:currentUser.uid,createdAt:serverTimestamp(),typing:{}});closeCreateGroupModal();showToast('👥 Group created!','success');openGroupChat(ref.id,{name,members})}
-            catch(e){console.error(e);showToast('Could not create the group. Check your connection/permissions.','error')}
-        }
-        function subscribeGroupList(){
-            if(groupListUnsub)groupListUnsub(); if(!currentUser)return;
-            groupListUnsub=onSnapshot(collection(db,'group_chats'),snap=>{const list=document.getElementById('group-chat-list');if(!list)return;list.innerHTML='';const groups=snap.docs.map(d=>({id:d.id,...d.data()})).filter(g=>Array.isArray(g.members)&&g.members.includes(currentUser.uid)).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
-                if(!groups.length){list.innerHTML='<div class="ss-chat-help" style="padding:14px;text-align:center;">No group chats yet. Create one to get started.</div>';return}
-                groups.forEach(g=>{const c=document.createElement('div');c.className='ss-group-card';c.innerHTML=`<div><div class="ss-group-card-title">👥 ${safeText(g.name||'Group')}</div><div class="ss-group-card-meta">${(g.members||[]).length} members · ${g.createdBy===currentUser.uid?'Created by you':'Group chat'}</div></div><span>›</span>`;c.onclick=()=>openGroupChat(g.id,g);list.appendChild(c)});
-            });
-        }
-        async function openGroupChat(groupId,groupData){
-            if(groupChatUnsub)groupChatUnsub(); activeGroupChatId=groupId;
-            const ref=doc(db,'group_chats',groupId); let data=groupData;
-            try{const snap=await getDoc(ref);if(snap.exists())data={id:snap.id,...snap.data()};}catch{}
-            if(!data||!(data.members||[]).includes(currentUser.uid)){showToast('You are not a member of this group.','error');return}
-            document.getElementById('group-chat-list').style.display='none';document.getElementById('group-chat-box').style.display='block';document.getElementById('group-chat-title').textContent='👥 '+(data.name||'Group Chat');
-            const members=data.members||[];document.getElementById('group-chat-members-summary').textContent=`${members.length} members`;
-            renderGroupMembers(members);
-            const stream=document.getElementById('group-chat-stream');const typingWrap=document.getElementById('group-typing-indicator');const typingText=document.getElementById('group-typing-text');
-            const msgRef=collection(db,'group_chats',groupId,'messages');
-            // Avoid an orderBy query here. Older messages may not have createdAt and
-            // some Firestore rule/index configurations reject the ordered query.
-            groupChatUnsub=onSnapshot(msgRef,snap=>{
-                const frag=document.createDocumentFragment(),unread=[];
-                const docs=[...snap.docs].sort((a,b)=>{
-                    const at=a.data()?.createdAt?.toMillis?.() ?? 0;
-                    const bt=b.data()?.createdAt?.toMillis?.() ?? 0;
-                    return at-bt || String(a.id).localeCompare(String(b.id));
-                });
-                docs.forEach(ds=>{
-                    const m=ds.data()||{};
-                    if(m.senderUid!==currentUser.uid&&!(m.readBy||[]).includes(currentUser.uid))unread.push(ds.id);
-                    try{frag.appendChild(renderChatMessage(ds,members,true));}catch(err){console.error('Group message render failed:',err);}
-                });
-                stream.innerHTML='';stream.appendChild(frag);stream.scrollTop=stream.scrollHeight;
-                if(unread.length) markMessagesRead(`group_chats/${groupId}/messages`,unread);
-            },err=>{
-                console.error('Group chat message listener failed:',err);
-                stream.innerHTML='<div class="empty-state" style="padding:18px;text-align:center;">Messages could not load. Check your connection or Firestore permissions.</div>';
-            });
-            if(window._groupTypingUnsub)window._groupTypingUnsub();window._groupTypingUnsub=setupTypingListener(ref,members,typingText,typingWrap);
-            const input=document.getElementById('group-chat-input');bindTyping(input,ref,members);
-        }
-        function renderGroupMembers(members){const el=document.getElementById('group-chat-members');el.innerHTML='';members.forEach(uid=>{const chip=document.createElement('span');chip.className='ss-member-chip';const p=chatUser(uid);const owner=isOwnerProfile(p);chip.innerHTML=`@${safeText(p.username||uid.slice(0,7))}${owner?'<span class="role">OWNER</span>':''}`;el.appendChild(chip)})}
-        document.getElementById('btn-send-private').addEventListener('click', withLoading('btn-send-private', async()=>{
-            const input=document.getElementById('private-chat-input');let msg=input.value.trim();
-            if(!msg||!privateChatPartner)return;
-            if(msg==='/games'){openGameChallengeModal(privateChatPartner,'friend');input.value='';return}
-            const chatId=[currentUser.uid,privateChatPartner].sort().join('_');
-            const stream=document.getElementById('private-chat-stream');
-            const optimisticId=`local_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-            const optimistic={senderUid:currentUser.uid,message:msg,createdAt:null,readBy:[currentUser.uid],reactions:{}};
-            let optimisticEl=null;
-            try{
-                optimisticEl=renderChatMessage({id:optimisticId,data:()=>optimistic},[currentUser.uid,privateChatPartner],false,privateChatPartner);
-                optimisticEl.dataset.optimistic='true';
-                stream?.appendChild(optimisticEl); if(stream) stream.scrollTop=stream.scrollHeight;
-            }catch(renderErr){console.error('Private optimistic render failed:',renderErr);}
-            input.value='';
-            try{
-                await addDoc(collection(db,'private_chats',chatId,'messages'),{...optimistic,createdAt:serverTimestamp()});
-                await setTypingDoc(doc(db,'private_chats',chatId),currentUser.uid,false);
-            }catch(e){
-                optimisticEl?.remove();
-                console.error('Private message send failed:',e);
-                showToast(`Could not send message: ${e?.code||'Firestore error'}`,'error');
-            }
-        }));
-        document.getElementById('private-chat-input').addEventListener('keydown',e=>{if(e.key==='Enter'){const val=e.target.value.trim();if(val==='/games'&&privateChatPartner){e.preventDefault();openGameChallengeModal(privateChatPartner,'friend');e.target.value='';return}document.getElementById('btn-send-private').click()}});
 
+        async function openCreateGroupModal(){
+            if(!currentUser){showToast('Please sign in first.','error');return}
+            groupCreateSelectedIds=[];
+            const name=document.getElementById('group-chat-name-input');
+            const search=document.getElementById('group-member-search');
+            const modal=document.getElementById('create-group-chat-modal');
+            const picker=document.getElementById('group-member-picker');
+            if(name)name.value=''; if(search)search.value=''; if(modal)modal.style.display='flex';
+            if(picker)picker.innerHTML='<div class="ss-member-search-empty">Loading people…</div>';
+            await ensureGroupUsersLoaded(); renderGroupMemberPicker();
+            setTimeout(()=>search?.focus(),40);
+        }
+
+        function closeCreateGroupModal(){
+            groupCreateSelectedIds=[];
+            const modal=document.getElementById('create-group-chat-modal'); if(modal)modal.style.display='none';
+        }
+
+        async function createGroupChat(){
+            if(!currentUser)return;
+            const name=String(document.getElementById('group-chat-name-input')?.value||'').trim().slice(0,50)||'New Group';
+            const ids=[...new Set(groupCreateSelectedIds)].filter(uid=>uid&&uid!==currentUser.uid);
+            if(ids.length<1){showToast('Pick at least 1 other member.','error');return}
+            const members=[currentUser.uid,...ids];
+            const button=document.getElementById('btn-confirm-create-group');
+            if(button?.dataset.busy==='1')return;
+            if(button){button.dataset.busy='1';button.disabled=true}
+            try{
+                const now=Date.now();
+                const ref=await addDoc(collection(db,'group_chats'),{
+                    name,members,createdBy:currentUser.uid,createdAt:serverTimestamp(),createdAtMs:now,
+                    typing:{},theme:'default',updatedAt:serverTimestamp()
+                });
+                closeCreateGroupModal();
+                showToast('👥 Group created!','success');
+                await openGroupChat(ref.id,{id:ref.id,name,members,createdBy:currentUser.uid,theme:'default'});
+            }catch(err){
+                console.error('Create group failed:',err);
+                showToast(`Could not create the group (${err?.code||'Firestore error'}).`,'error');
+            }finally{
+                if(button){button.dataset.busy='0';button.disabled=false}
+            }
+        }
+
+        function renderGroupList(snap){
+            const list=document.getElementById('group-chat-list'); if(!list)return;
+            list.innerHTML=''; groupListError=null;
+            const groups=snap.docs.map(d=>({id:d.id,...d.data()}))
+                .filter(g=>Array.isArray(g.members)&&g.members.includes(currentUser?.uid))
+                .sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));
+            if(!groups.length){
+                const empty=document.createElement('div'); empty.className='ss-chat-help';
+                empty.style.cssText='padding:20px;text-align:center;'; empty.textContent='No group chats yet. Create one to get started.';
+                list.appendChild(empty); return;
+            }
+            groups.forEach(g=>{
+                const card=document.createElement('button'); card.type='button'; card.className='ss-group-card';
+                card.style.cssText+='width:100%;text-align:left;display:flex;align-items:center;justify-content:space-between;';
+                const title=document.createElement('div'); title.className='ss-group-card-title'; title.textContent='👥 '+(g.name||'Group');
+                const meta=document.createElement('div'); meta.className='ss-group-card-meta'; meta.textContent=groupChatPeopleLabel(g);
+                const left=document.createElement('div'); left.append(title,meta);
+                const arrow=document.createElement('span'); arrow.textContent='›';
+                card.append(left,arrow); card.onclick=()=>openGroupChat(g.id,g); list.appendChild(card);
+            });
+        }
+
+        function subscribeGroupList(){
+            if(groupListUnsub){try{groupListUnsub()}catch(_){} groupListUnsub=null}
+            const list=document.getElementById('group-chat-list');
+            if(list)list.innerHTML='<div class="ss-chat-help" style="padding:20px;text-align:center;">Loading group chats…</div>';
+            if(!currentUser)return;
+            groupListUnsub=onSnapshot(collection(db,'group_chats'),renderGroupList,err=>{
+                console.error('Group list listener failed:',err);
+                groupListError=err;
+                if(list){
+                    list.innerHTML='';
+                    const box=document.createElement('div'); box.className='empty-state'; box.style.cssText='padding:20px;text-align:center;';
+                    const msg=document.createElement('div'); msg.textContent=`Could not load group chats (${err?.code||'Firestore error'}).`;
+                    const retry=document.createElement('button'); retry.type='button'; retry.className='btn btn-secondary'; retry.style.marginTop='10px'; retry.textContent='Retry'; retry.onclick=subscribeGroupList;
+                    box.append(msg,retry); list.appendChild(box);
+                }
+            });
+        }
+
+        function renderGroupMembers(members){
+            const el=document.getElementById('group-chat-members'); if(!el)return;
+            el.innerHTML='';
+            (members||[]).forEach(uid=>{
+                const p=chatUser(uid); const chip=document.createElement('span'); chip.className='ss-member-chip';
+                chip.textContent='@'+(p.username||uid.slice(0,8));
+                if(isOwnerProfile(p)){const role=document.createElement('span');role.className='role';role.textContent='OWNER';chip.appendChild(role)}
+                el.appendChild(chip);
+            });
+        }
+
+        function groupRenderReactions(parent,msg,ref){
+            const row=document.createElement('div'); row.className='ss-reaction-row';
+            Object.entries(msg.reactions||{}).forEach(([emoji,users])=>{
+                if(!Array.isArray(users)||!users.length)return;
+                const b=document.createElement('button'); b.type='button'; b.className='ss-reaction'+(users.includes(currentUser?.uid)?' active':'');
+                b.textContent=`${emoji} ${users.length}`;
+                b.onclick=async()=>{try{await toggleMessageReaction(ref,msg,emoji)}catch(err){console.error(err);showToast('Could not update reaction.','error')}};
+                row.appendChild(b);
+            });
+            const add=document.createElement('button'); add.type='button'; add.className='ss-reaction'; add.textContent='＋'; add.title='Add reaction';
+            add.onclick=()=>showReactionPicker(add,ref,msg); row.appendChild(add); parent.appendChild(row);
+        }
+
+        function renderOneGroupMessage(ds,members){
+            const m=groupNormalizeMessage(ds); const mine=m.senderUid===currentUser?.uid;
+            const row=document.createElement('div'); row.className=`chat-msg ${mine?'me':''}`; row.dataset.messageId=m.id; row.style.position='relative';
+            const sender=document.createElement('span'); sender.className='chat-sender';
+            sender.textContent=mine?'You':'@'+m.senderName;
+            if(m.senderVerified){const badge=document.createElement('span');badge.textContent=' ✓';badge.title='Verified';sender.appendChild(badge)}
+            const bubble=document.createElement('div'); bubble.className='chat-bubble';
+            if(m.type==='image'&&m.imageUrl){
+                const img=document.createElement('img'); img.className='ss-chat-image'; img.src=m.imageUrl; img.alt='Photo'; img.loading='lazy';
+                img.onerror=()=>{img.style.display='none';const fallback=document.createElement('div');fallback.textContent='Photo could not load.';bubble.appendChild(fallback)};
+                img.onclick=()=>window.open(m.imageUrl,'_blank','noopener,noreferrer'); bubble.appendChild(img);
+                if(m.message){const cap=document.createElement('div');cap.textContent=m.message;cap.style.marginTop='6px';bubble.appendChild(cap)}
+            }else{
+                bubble.textContent=m.message;
+            }
+            const meta=document.createElement('div'); meta.className='ss-msg-meta';
+            const time=document.createElement('span'); time.textContent=groupTimeLabel(m); meta.appendChild(time);
+            if(mine){
+                const seen=(members||[]).filter(uid=>uid!==currentUser.uid).every(uid=>m.readBy.includes(uid));
+                const status=document.createElement('span'); status.className=`ss-message-status ${seen?'seen':''}`; status.textContent=seen?'✓✓ Seen':'✓✓ Delivered'; meta.appendChild(status);
+            }
+            if(mine||isCurrentUserAdmin()){
+                const del=document.createElement('button'); del.type='button'; del.className='chat-delete-btn'; del.textContent='✕'; del.title='Delete message';
+                del.onclick=async e=>{e.stopPropagation();if(!confirm('Delete this message?'))return;try{await deleteDoc(doc(db,'group_chats',activeGroupChatId,'messages',m.id))}catch(err){console.error(err);showToast('Could not delete message.','error')}};
+                meta.appendChild(del);
+            }
+            row.append(sender,bubble,meta);
+            groupRenderReactions(row,m,doc(db,'group_chats',activeGroupChatId,'messages',m.id));
+            return row;
+        }
+
+        async function markGroupMessagesRead(groupId,docs){
+            if(!currentUser||!docs.length)return;
+            await Promise.all(docs.filter(ds=>{const m=groupNormalizeMessage(ds);return m.senderUid!==currentUser.uid&&!m.readBy.includes(currentUser.uid)}).map(ds=>
+                updateDoc(doc(db,'group_chats',groupId,'messages',ds.id),{readBy:arrayUnion(currentUser.uid)}).catch(()=>{})
+            ));
+        }
+
+        function startGroupTypingListener(groupRef,members){
+            const textEl=document.getElementById('group-typing-text'); const wrap=document.getElementById('group-typing-indicator');
+            if(groupTypingUnsub){try{groupTypingUnsub()}catch(_){} groupTypingUnsub=null}
+            if(!textEl||!wrap)return;
+            groupTypingUnsub=onSnapshot(groupRef,snap=>{
+                const typing=snap.data()?.typing||{};
+                const names=(members||[]).filter(uid=>uid!==currentUser?.uid&&typing[uid]).map(groupMemberName);
+                if(names.length){textEl.textContent=names.length===1?`${names[0]} is typing…`:`${names.slice(0,2).join(', ')}${names.length>2?' and others':''} are typing…`;wrap.style.display='flex'}
+                else wrap.style.display='none';
+            },()=>{wrap.style.display='none'});
+        }
+
+        function bindGroupTyping(input,groupRef){
+            if(!input)return;
+            input.oninput=()=>{
+                if(!currentUser)return;
+                clearTimeout(groupTypingTimer);
+                setTypingDoc(groupRef,currentUser.uid,true);
+                groupTypingTimer=setTimeout(()=>setTypingDoc(groupRef,currentUser.uid,false),1000);
+            };
+            input.onblur=()=>setTypingDoc(groupRef,currentUser.uid,false);
+        }
+
+        async function openGroupChat(groupId,groupData={}){
+            if(!currentUser||!groupId)return;
+            groupStopListeners();
+            activeGroupChatId=groupId;
+            const stream=document.getElementById('group-chat-stream');
+            if(stream)stream.innerHTML='<div class="ss-chat-help" style="padding:20px;text-align:center;">Loading messages…</div>';
+            let data={id:groupId,...groupData};
+            try{
+                const snap=await getDoc(doc(db,'group_chats',groupId));
+                if(!snap.exists()){showToast('That group no longer exists.','error');activeGroupChatId=null;return}
+                data={id:snap.id,...snap.data()};
+            }catch(err){
+                console.error('Open group failed:',err);showToast(`Could not open group (${err?.code||'Firestore error'}).`,'error');return;
+            }
+            const members=Array.isArray(data.members)?[...data.members]:[];
+            if(!members.includes(currentUser.uid)){showToast('You are not a member of this group.','error');activeGroupChatId=null;return}
+            activeGroupMembers=members;
+            document.getElementById('group-chat-list').style.display='none';
+            document.getElementById('group-chat-box').style.display='block';
+            document.getElementById('group-chat-title').textContent='👥 '+(data.name||'Group Chat');
+            renderGroupMembers(members);
+            const del=document.getElementById('group-chat-delete'); if(del)del.style.display=data.createdBy===currentUser.uid?'inline-flex':'none';
+            applyGroupTheme(data.theme||'default');
+            const groupRef=doc(db,'group_chats',groupId);
+            startGroupTypingListener(groupRef,members); bindGroupTyping(document.getElementById('group-chat-input'),groupRef);
+
+            const messagesRef=collection(db,'group_chats',groupId,'messages');
+            groupMessageUnsub=onSnapshot(messagesRef,snap=>{
+                const docs=[...snap.docs].sort((a,b)=>{
+                    const at=groupMessageTime(a.data()),bt=groupMessageTime(b.data());
+                    return at-bt||String(a.id).localeCompare(String(b.id));
+                });
+                if(!stream)return;
+                const frag=document.createDocumentFragment();
+                if(!docs.length){
+                    const empty=document.createElement('div');empty.className='empty-state';empty.style.cssText='padding:20px;text-align:center;';empty.textContent='No messages yet. Send the first message!';frag.appendChild(empty);
+                }else{
+                    docs.forEach(ds=>{try{frag.appendChild(renderOneGroupMessage(ds,members))}catch(err){console.error('Group render error:',err)}});
+                }
+                stream.replaceChildren(frag);stream.scrollTop=stream.scrollHeight;
+                markGroupMessagesRead(groupId,docs);
+            },err=>{
+                console.error('Group message listener failed:',err);
+                if(stream){stream.innerHTML='';const box=document.createElement('div');box.className='empty-state';box.style.cssText='padding:20px;text-align:center;';const msg=document.createElement('div');msg.textContent=`Messages could not load (${err?.code||'Firestore error'}).`;const retry=document.createElement('button');retry.type='button';retry.className='btn btn-secondary';retry.style.marginTop='10px';retry.textContent='Retry';retry.onclick=()=>openGroupChat(groupId,data);box.append(msg,retry);stream.appendChild(box)}
+            });
+            groupChatUnsub=groupMessageUnsub;
+        }
+
+        function closeGroupChat(){
+            groupStopListeners();
+            if(activeGroupChatId) setTypingDoc(doc(db,'group_chats',activeGroupChatId),currentUser?.uid,false);
+            activeGroupChatId=null;activeGroupMembers=[];
+            const box=document.getElementById('group-chat-box'),list=document.getElementById('group-chat-list'),stream=document.getElementById('group-chat-stream');
+            if(box)box.style.display='none'; if(list)list.style.display='grid'; if(stream)stream.innerHTML='';
+        }
+
+        const GROUP_THEMES=new Set(['default','neon','sunset','ocean','forest','galaxy','rose','gold']);
+        function applyGroupTheme(theme){
+            const box=document.getElementById('group-chat-box');if(!box)return;
+            const t=GROUP_THEMES.has(theme)?theme:'default';
+            box.className='ss-group-box'+(t!=='default'?' ss-theme-'+t:'');
+            box.dataset.theme=t;
+            const accents={default:'#7dd3fc',neon:'#22d3ee',sunset:'#fb7185',ocean:'#38bdf8',forest:'#34d399',galaxy:'#a78bfa',rose:'#fb7185',gold:'#facc15'};
+            const backgrounds={default:'transparent',neon:'radial-gradient(circle at 15% 10%,rgba(34,211,238,.24),transparent 34%),linear-gradient(135deg,rgba(14,165,233,.22),rgba(168,85,247,.22))',sunset:'linear-gradient(135deg,rgba(249,115,22,.24),rgba(236,72,153,.22))',ocean:'linear-gradient(135deg,rgba(6,182,212,.24),rgba(59,130,246,.22))',forest:'linear-gradient(135deg,rgba(34,197,94,.22),rgba(16,185,129,.20))',galaxy:'radial-gradient(circle at 80% 15%,rgba(217,70,239,.25),transparent 35%),linear-gradient(135deg,rgba(99,102,241,.26),rgba(30,41,59,.34))',rose:'linear-gradient(135deg,rgba(244,63,94,.24),rgba(236,72,153,.22))',gold:'linear-gradient(135deg,rgba(234,179,8,.24),rgba(249,115,22,.22))'};
+            box.style.setProperty('--ss-theme-accent',accents[t]);
+            box.style.setProperty('--ss-chat-bg',backgrounds[t]);
+            document.querySelectorAll('#group-chat-theme-menu .ss-theme-option').forEach(btn=>{
+                const active=(btn.dataset.theme||'default')===t;
+                btn.classList.toggle('active',active);
+                btn.setAttribute('aria-pressed',active?'true':'false');
+            });
+        }
+        async function saveGroupTheme(theme){
+            if(!activeGroupChatId||!currentUser)return;
+            const t=GROUP_THEMES.has(theme)?theme:'default'; const box=document.getElementById('group-chat-box');const old=box?.dataset.theme||'default';applyGroupTheme(t);
+            document.getElementById('group-chat-theme-menu')?.classList.remove('open');
+            try{await updateDoc(doc(db,'group_chats',activeGroupChatId),{theme:t,updatedAt:serverTimestamp()});showToast('🎨 Group theme updated.','success')}
+            catch(err){applyGroupTheme(old);console.error(err);showToast('Could not save the group theme.','error')}
+        }
+
+        async function leaveGroupChat(){
+            const id=activeGroupChatId;if(!id||!currentUser)return;
+            if(!confirm('Leave this group chat? You will need to be invited again to return.'))return;
+            try{
+                const ref=doc(db,'group_chats',id),snap=await getDoc(ref);if(!snap.exists())throw new Error('GROUP_NOT_FOUND');
+                const g=snap.data()||{},members=(Array.isArray(g.members)?g.members:[]).filter(uid=>uid!==currentUser.uid);
+                if(!members.length)await deleteDoc(ref);else await updateDoc(ref,{members,updatedAt:serverTimestamp()});
+                closeGroupChat();showToast('🚪 You left the group.','success');
+            }catch(err){console.error(err);showToast(`Could not leave the group (${err?.code||'Firestore error'}).`,'error')}
+        }
+
+        async function deleteGroupChat(){
+            const id=activeGroupChatId;if(!id||!currentUser)return;
+            try{
+                const groupRef=doc(db,'group_chats',id),snap=await getDoc(groupRef);if(!snap.exists())throw new Error('GROUP_NOT_FOUND');
+                if(snap.data()?.createdBy!==currentUser.uid){showToast('Only the group creator can delete this group.','error');return}
+                if(!confirm('Delete this group chat and all of its messages? This cannot be undone.'))return;
+                const messages=await getDocs(collection(db,'group_chats',id,'messages'));
+                const batch=writeBatch(db);messages.forEach(ds=>batch.delete(ds.ref));batch.delete(groupRef);await batch.commit();
+                closeGroupChat();
+                if(adminGroupMonitorActiveId===id)closeAdminGroupMonitor();
+                renderAdminGroupMonitorList();
+                showToast('🗑️ Group deleted.','success');
+            }catch(err){console.error(err);showToast(`Could not delete the group (${err?.code||'Firestore error'}).`,'error')}
+        }
+
+        async function clearGroupChat(){
+            if(!currentUser||!activeGroupChatId)return;
+            const groupId=activeGroupChatId;
+            try{
+                const groupSnap=await getDoc(doc(db,'group_chats',groupId));
+                if(!groupSnap.exists()){showToast('That group no longer exists.','error');return}
+                const group=groupSnap.data()||{};
+                const canClear=group.createdBy===currentUser.uid||isCurrentUserAdmin();
+                if(!canClear){showToast('Only the group creator or an admin can use /clear.','error');return}
+                const messagesSnap=await getDocs(collection(db,'group_chats',groupId,'messages'));
+                if(messagesSnap.empty){showToast('Chat is already clear.','info');return}
+                if(!confirm(`Clear all ${messagesSnap.size} message${messagesSnap.size===1?'':'s'} from this group? This cannot be undone.`))return;
+                const docs=messagesSnap.docs;
+                for(let i=0;i<docs.length;i+=450){
+                    const batch=writeBatch(db);
+                    docs.slice(i,i+450).forEach(ds=>batch.delete(ds.ref));
+                    await batch.commit();
+                }
+                await updateDoc(doc(db,'group_chats',groupId),{updatedAt:serverTimestamp(),lastMessage:'',lastMessageAt:serverTimestamp(),lastMessageBy:''}).catch(()=>{});
+                showToast('🧹 Group chat cleared.','success');
+            }catch(err){
+                console.error('Clear group failed:',err);
+                showToast(`Could not clear the chat (${err?.code||'Firestore error'}).`,'error');
+            }
+        }
+
+        async function uploadGroupPhoto(file){
+            if(!file||!activeGroupChatId||!currentUser)return;
+            if(!file.type.startsWith('image/')){showToast('Please choose an image.','error');return}
+            if(file.size>8*1024*1024){showToast('Photo must be 8 MB or smaller.','error');return}
+            const groupId=activeGroupChatId;
+            try{
+                showToast('📷 Uploading photo…','info');
+                const ext=(file.name.split('.').pop()||'jpg').replace(/[^a-zA-Z0-9]/g,'')||'jpg';
+                const path=`group-chat-photos/${groupId}/${currentUser.uid}/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+                const storageRef=ref(storage,path);await uploadBytes(storageRef,file,{contentType:file.type});const url=await getDownloadURL(storageRef);
+                await sendGroupMessage({type:'image',imageUrl:url,storagePath:path,message:''});showToast('📷 Photo sent.','success');
+            }catch(err){console.error('Group photo failed:',err);showToast(`Could not send photo (${err?.code||'storage error'}).`,'error')}
+        }
+
+        async function sendGroupMessage(payload={}){
+            if(!currentUser||!activeGroupChatId)throw new Error('GROUP_NOT_OPEN');
+            const groupId=activeGroupChatId;
+            const groupSnap=await getDoc(doc(db,'group_chats',groupId));
+            if(!groupSnap.exists())throw new Error('GROUP_NOT_FOUND');
+            const group=groupSnap.data()||{};const members=Array.isArray(group.members)?group.members:[];
+            if(!members.includes(currentUser.uid))throw new Error('NOT_A_MEMBER');
+            let text=String(payload.message??'').trim();if(text)text=filterSwearWords(text);
+            const type=payload.type==='image'?'image':'text';if(type==='text'&&!text)throw new Error('EMPTY_MESSAGE');if(type==='image'&&!payload.imageUrl)throw new Error('IMAGE_URL_MISSING');
+            let username=currentUserProfile?.username||currentUser.displayName||'user',verified=!!currentUserProfile?.verified;
+            try{const p=await getDoc(doc(db,'users',currentUser.uid));if(p.exists()){const d=p.data()||{};username=d.username||username;verified=!!d.verified}}catch(_){ }
+            const now=Date.now();
+            const data={senderUid:currentUser.uid,senderName:username,senderVerified:verified,message:text,type,imageUrl:payload.imageUrl||'',storagePath:payload.storagePath||'',memberUids:members,readBy:[currentUser.uid],reactions:{},createdAtMs:now,createdAt:serverTimestamp()};
+            const ref=await addDoc(collection(db,'group_chats',groupId,'messages'),data);
+            await updateDoc(doc(db,'group_chats',groupId),{updatedAt:serverTimestamp(),lastMessage:type==='image'?'📷 Photo':text.slice(0,160),lastMessageAt:serverTimestamp(),lastMessageBy:currentUser.uid}).catch(()=>{});
+            await setTypingDoc(doc(db,'group_chats',groupId),currentUser.uid,false);
+            return ref.id;
+        }
+
+        // One event handler per group-chat control. Everything above is the new engine.
         document.getElementById('btn-create-group-chat')?.addEventListener('click',openCreateGroupModal);
         document.getElementById('group-member-search')?.addEventListener('input',renderGroupMemberPicker);
         document.getElementById('create-group-chat-close')?.addEventListener('click',closeCreateGroupModal);
         document.getElementById('btn-confirm-create-group')?.addEventListener('click',createGroupChat);
-        document.getElementById('group-chat-back')?.addEventListener('click',()=>{if(groupChatUnsub)groupChatUnsub();if(window._groupTypingUnsub)window._groupTypingUnsub();activeGroupChatId=null;document.getElementById('group-chat-box').style.display='none';document.getElementById('group-chat-list').style.display='grid';document.getElementById('group-chat-stream').innerHTML='';});
-        document.getElementById('group-chat-info')?.addEventListener('click',()=>{const el=document.getElementById('group-chat-members');el.style.display=el.style.display==='none'?'flex':'none'});
-        document.getElementById('group-chat-call')?.addEventListener('click',()=>startGroupVideoCall(activeGroupChatId));
+        document.getElementById('group-chat-back')?.addEventListener('click',closeGroupChat);
+        document.getElementById('group-chat-call')?.addEventListener('click',()=>activeGroupChatId&&startGroupVideoCall(activeGroupChatId));
+        /* Theme controls use the hardened delegated handler appended after the group engine. */
+        document.getElementById('group-chat-leave')?.addEventListener('click',leaveGroupChat);
+        document.getElementById('group-chat-delete')?.addEventListener('click',deleteGroupChat);
+        document.getElementById('group-photo-btn')?.addEventListener('click',()=>document.getElementById('group-photo-input')?.click());
+        document.getElementById('group-photo-input')?.addEventListener('change',e=>{const f=e.target.files?.[0];if(f)uploadGroupPhoto(f);e.target.value=''})
         document.getElementById('btn-send-group')?.addEventListener('click',async()=>{
-            const input=document.getElementById('group-chat-input');const msg=input.value.trim();
-            if(!msg||!activeGroupChatId||!currentUser)return;
-            const stream=document.getElementById('group-chat-stream');
-            const optimisticId=`local_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-            const optimistic={senderUid:currentUser.uid,message:msg,createdAt:null,readBy:[currentUser.uid],reactions:{}};
-            let optimisticEl=null;
-            try{
-                optimisticEl=renderChatMessage({id:optimisticId,data:()=>optimistic},(await getDoc(doc(db,'group_chats',activeGroupChatId))).data()?.members||[currentUser.uid],true);
-                optimisticEl.dataset.optimistic='true';
-                stream?.appendChild(optimisticEl); if(stream) stream.scrollTop=stream.scrollHeight;
-            }catch(renderErr){console.error('Group optimistic render failed:',renderErr);}
-            input.value='';
-            try{
-                await addDoc(collection(db,'group_chats',activeGroupChatId,'messages'),{...optimistic,createdAt:serverTimestamp()});
-                await setTypingDoc(doc(db,'group_chats',activeGroupChatId),currentUser.uid,false);
-            }catch(e){
-                optimisticEl?.remove();
-                console.error('Group message send failed:',e);showToast(`Could not send message: ${e?.code||'Firestore error'}`,'error');
-            }
+            const input=document.getElementById('group-chat-input'),button=document.getElementById('btn-send-group');if(!input||!currentUser||!activeGroupChatId)return;
+            const text=input.value.trim();if(!text||button?.dataset.busy==='1')return;
+            if(text.toLowerCase()==='/clear'){input.value='';await clearGroupChat().catch(err=>console.error(err));input.focus();return;}
+            if(button){button.dataset.busy='1';button.disabled=true}
+            try{await sendGroupMessage({message:text});input.value='';}
+            catch(err){console.error('Group send failed:',err);showToast(`Could not send message (${err?.code||err?.message||'Firestore error'}).`,'error')}
+            finally{if(button){button.dataset.busy='0';button.disabled=false}input.focus()}
         });
-        document.getElementById('group-chat-input')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('btn-send-group').click()}});
-        document.getElementById('group-reaction-quick')?.addEventListener('click',()=>{const input=document.getElementById('group-chat-input');input.value+=(input.value?' ':'')+'❤️';input.focus()});
+        document.getElementById('group-chat-input')?.addEventListener('keydown',e=>{
+            if(e.key!=='Enter'||e.shiftKey)return;
+            e.preventDefault();
+            const input=e.currentTarget;
+            const value=input.value.trim();
+            if(value.toLowerCase()==='/clear'){input.value='';clearGroupChat();return;}
+            document.getElementById('btn-send-group')?.click();
+        });
+        document.getElementById('group-reaction-quick')?.addEventListener('click',e=>{
+            e.stopPropagation();const dropdown=document.getElementById('group-emote-picker-dropdown');if(!dropdown)return;dropdown.innerHTML='';
+            [...new Set([...(typeof DEFAULT_EMOTES!=='undefined'?DEFAULT_EMOTES:[]),...(typeof unlockedEmotes!=='undefined'?unlockedEmotes:[]),...CHAT_REACTION_SET])].forEach(emote=>{const b=document.createElement('button');b.type='button';b.className='emote-option';b.textContent=emote;b.onclick=ev=>{ev.stopPropagation();const input=document.getElementById('group-chat-input');if(input){input.value+=(input.value?' ':'')+emote;input.focus()}dropdown.classList.remove('open')};dropdown.appendChild(b)});
+            dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click',e=>{const d=document.getElementById('group-emote-picker-dropdown'),b=document.getElementById('group-reaction-quick');if(d&&!d.contains(e.target)&&e.target!==b)d.classList.remove('open')});
+        // Group subscription is started by the authenticated-app startup code.
+
         document.getElementById('private-chat-search')?.addEventListener('input',e=>renderPrivateChatPeople(e.target.value));
         document.getElementById('private-chat-search-clear')?.addEventListener('click',()=>{const input=document.getElementById('private-chat-search');if(input){input.value='';input.focus();renderPrivateChatPeople('')}});
         document.getElementById('private-chat-refresh')?.addEventListener('click',()=>loadUserList(document.getElementById('private-chat-search')?.value||''));
@@ -13917,11 +14739,11 @@ function ssDrawHandOverlay(hand){
 function ssSetHandOverlayVisible(v){const c=document.getElementById('hand-landmark-canvas'),b=document.getElementById('btn-toggle-hand-overlay');if(!c||!b)return;c.classList.toggle('hidden',!v);b.classList.toggle('active',v);b.textContent=v?'🖐️ Hands':'🖐️ Show hands';if(!v)c.getContext('2d')?.clearRect(0,0,c.width,c.height);else ssSyncHandOverlayBox()}
 document.getElementById('btn-toggle-hand-overlay')?.addEventListener('click',()=>{const c=document.getElementById('hand-landmark-canvas');ssSetHandOverlayVisible(c?.classList.contains('hidden'))});
 window.addEventListener('resize',()=>{if(document.getElementById('video-call-modal')?.classList.contains('show')){ssSyncHandOverlayBox();const c=document.getElementById('hand-landmark-canvas');if(c&&!c.classList.contains('hidden'))c.getContext('2d')?.clearRect(0,0,c.width,c.height)}},{passive:true});
-async function ssLoadPose(){if(window.Pose)return true;return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js';s.onload=()=>resolve(true);s.onerror=reject;document.head.appendChild(s)})}
+async function ssLoadPose(){if(window.Pose)return true;return new Promise((resolve,reject)=>{const s=document.createElement('script');let done=false;const finish=(fn,v)=>{if(done)return;done=true;clearTimeout(t);fn(v)};const t=setTimeout(()=>finish(reject,new Error('Pose engine timed out (network restriction or outage).')),7000);s.src='https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js';s.onload=()=>finish(resolve,true);s.onerror=()=>finish(reject,new Error('Pose engine could not load.'));s.async=true;document.head.appendChild(s)})}
 async function ssStartGestureRecognition(){
   if(ssGestureTimer||!localCallStream||!ssGestureEnabled)return;const video=document.getElementById('local-video');if(!video)return;
   try{
-    if(!window.Hands)await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js';s.onload=resolve;s.onerror=reject;document.head.appendChild(s)});
+    if(!window.Hands)await new Promise((resolve,reject)=>{const s=document.createElement('script');let done=false;const t=setTimeout(()=>{if(done)return;done=true;reject(new Error('Hands engine timed out (network restriction or outage).'))},7000);s.src='https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js';s.onload=()=>{if(done)return;done=true;clearTimeout(t);resolve()};s.onerror=()=>{if(done)return;done=true;clearTimeout(t);reject(new Error('Hands engine could not load.'))};s.async=true;document.head.appendChild(s)});
     ssGestureHands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`});ssGestureHands.setOptions({maxNumHands:2,modelComplexity:1,minDetectionConfidence:.48,minTrackingConfidence:.48});
     ssGestureHands.onResults(r=>{const hands=r.multiHandLandmarks||[];const h=hands[0];ssDrawHandOverlay(h);const two=ssTwoHandGesture(hands);if(two!=='unknown')ssGestureStableHandle(two);else if(h)ssGestureStableHandle(ssGestureName(h))});
     try{await ssLoadPose();ssGesturePose=new Pose({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}`});ssGesturePose.setOptions({modelComplexity:0,smoothLandmarks:true,enableSegmentation:false,minDetectionConfidence:.42,minTrackingConfidence:.42});ssGesturePose.onResults(r=>{const g=ssPoseGesture(r.poseLandmarks);if(g!=='unknown')ssGestureStableHandle(g)})}catch(e){console.warn('Far-distance pose gestures unavailable:',e)}
@@ -13932,108 +14754,163 @@ async function ssStartGestureRecognition(){
 function ssStopGestureRecognition(){if(ssGestureTimer){clearInterval(ssGestureTimer);ssGestureTimer=null}try{ssGestureHands?.close?.()}catch(_){}try{ssGesturePose?.close?.()}catch(_){}ssGestureHands=null;ssGesturePose=null;ssGestureLast={name:'',at:0};ssGestureCandidate={name:'',since:0};ssGestureBusy=false;ssGesturePoseBusy=false;document.getElementById('hand-landmark-canvas')?.getContext('2d')?.clearRect(0,0,9999,9999);ssStopSmartZoom()}
 function ssHandleRemoteGesture(data){const g=data?.gesture;if(!g||g.by===currentUser?.uid||Date.now()-(g.at||0)>3000)return;ssGestureHandle(g.name,true)}
 
-// ─── 3× smart head zoom ───
+// Invisible tracking surface: the detector may use this off-screen canvas, but
+// no face box, landmarks, biometric points, or camera pixels are rendered to the UI.
+const ssZoomTrackingCanvases=new WeakMap();
+function ssZoomTrackingCanvas(video){
+  let c=ssZoomTrackingCanvases.get(video);
+  if(!c){c=document.createElement('canvas');c.width=640;c.height=360;c.setAttribute('aria-hidden','true');c.style.cssText='position:fixed!important;left:-10000px!important;top:-10000px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important;';document.body.appendChild(c);ssZoomTrackingCanvases.set(video,c);}
+  return c;
+}
+// ─── Adaptive 3× smart face zoom (invisible tracking) ───
+// The detector is used only as a tracking signal. Nothing is drawn over the face.
+let ssSmartZoomFaceDetector=null, ssSmartZoomDetectorMode='none';
 function ssSmartZoomSetStatus(t,show=true){const e=document.getElementById('ss-smart-zoom-status');if(!e)return;e.textContent=t;e.classList.toggle('show',show)}
-const ssSmartZoomCenters=new WeakMap(), ssSmartZoomLost=new WeakMap();
+const ssSmartZoomCenters=new WeakMap(), ssSmartZoomLost=new WeakMap(), ssSmartZoomScales=new WeakMap();
+const SS_SMART_ZOOM_MAX=3, SS_SMART_ZOOM_MIN=1;
+
+function ssSmartZoomBoxTarget(box){
+  if(!box)return null;
+  // MediaPipe Face Detection returns a normalized bounding box for the face.
+  const x=Number(box.xCenter??box.xMin??0.5), y=Number(box.yCenter??box.yMin??0.5);
+  const w=Number(box.width??0), h=Number(box.height??0);
+  if(!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(w)||!Number.isFinite(h)||w<=0)return null;
+  return {x:Math.max(0,Math.min(1,x)),y:Math.max(0,Math.min(1,y)),faceWidth:Math.max(.001,w),faceHeight:Math.max(.001,h)};
+}
 function ssSmartZoomHeadTarget(landmarks){
-  if(!Array.isArray(landmarks)||landmarks.length<20)return null;
-  // MediaPipe Face Mesh: use a compact head region (forehead/cheeks/chin)
-  // instead of the whole body. This keeps the person's face centered at 3×.
+  if(!Array.isArray(landmarks)||landmarks.length<264)return null;
   const ids=[10,152,234,454,33,263,1,4,61,291];
   const pts=ids.map(i=>landmarks[i]).filter(p=>p&&Number.isFinite(p.x)&&Number.isFinite(p.y));
   if(pts.length<5)return null;
   const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
   const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
-  const nose=landmarks[1];
-  const eyeL=landmarks[33],eyeR=landmarks[263];
+  const nose=landmarks[1],eyeL=landmarks[33],eyeR=landmarks[263];
   let x=(minX+maxX)/2,y=minY+(maxY-minY)*.50;
-  // Prefer the eye/nose geometry when available; it is steadier than the outer contour.
-  if(nose&&eyeL&&eyeR){
-    x=(eyeL.x+eyeR.x+nose.x)/3;
-    y=(eyeL.y+eyeR.y+nose.y)/3 + (maxY-minY)*.10;
-  }
-  return {x,y};
+  if(nose&&eyeL&&eyeR){x=(eyeL.x+eyeR.x+nose.x)/3;y=(eyeL.y+eyeR.y+nose.y)/3+(maxY-minY)*.10}
+  return {x,y,faceWidth:Math.max(.001,maxX-minX),faceHeight:Math.max(.001,maxY-minY)};
 }
-function ssSmartZoomApply(video,landmarks){
-  if(!video||!ssSmartZoomEnabled)return;
-  const target=ssSmartZoomHeadTarget(landmarks);
-  if(!target){
-    const lost=(ssSmartZoomLost.get(video)||0)+1;ssSmartZoomLost.set(video,lost);
-    return;
-  }
-  ssSmartZoomLost.set(video,0);
-  const cx=Math.max(.16,Math.min(.84,target.x)),cy=Math.max(.16,Math.min(.84,target.y));
-  const prev=ssSmartZoomCenters.get(video)||{x:.5,y:.5};
-  // Smooth enough to avoid shaking, but fast enough to follow a moving head.
-  const alpha=.42;
-  const nx=prev.x+(cx-prev.x)*alpha,ny=prev.y+(cy-prev.y)*alpha;
-  ssSmartZoomCenters.set(video,{x:nx,y:ny});
+function ssSmartZoomApply(video,target){
+  if(!video||!ssSmartZoomEnabled||!target)return;
+  let prev=ssSmartZoomCenters.get(video)||{x:.5,y:.5};
+  let scale=ssSmartZoomScales.get(video)||1;
+  const cx=Math.max(.03,Math.min(.97,target.x)),cy=Math.max(.03,Math.min(.97,target.y));
+  // Far-away faces are smaller, so increase magnification. Keep a little headroom
+  // so the face stays comfortably inside the frame instead of filling it completely.
+  const faceW=Math.max(.018,Math.min(.95,target.faceWidth));
+  const desired=Math.max(1,Math.min(SS_SMART_ZOOM_MAX,.38/faceW));
+  prev={x:prev.x+(cx-prev.x)*.38,y:prev.y+(cy-prev.y)*.38};
+  scale=scale+(desired-scale)*.34;
+  ssSmartZoomCenters.set(video,prev);ssSmartZoomScales.set(video,scale);ssSmartZoomLost.set(video,0);
 
-  const rect=video.getBoundingClientRect();
-  const w=Math.max(1,rect.width),h=Math.max(1,rect.height),s=SS_SMART_ZOOM_SCALE;
-  // With scale(s) around the center, this pixel translation keeps the detected
-  // head at the visual center. This is more reliable than percentage transforms.
-  const tx=-(nx-.5)*w*(s-1),ty=-(ny-.5)*h*(s-1);
-  video.style.objectPosition='50% 50%';
-  video.style.transformOrigin='50% 50%';
-  video.style.transform=`translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0) scale(${s})`;
-  video.style.willChange='transform';
+  const rect=video.getBoundingClientRect(),w=Math.max(1,rect.width),h=Math.max(1,rect.height);
+  // Work in the video's normalized source coordinates, then account for object-fit:cover.
+  // The old implementation changed only transform-origin, which could leave a far-away
+  // face near the edge of the screen. We now calculate the exact translation required
+  // to bring the detected face toward the center after magnification.
+  const vw=video.videoWidth||w,vh=video.videoHeight||h;
+  const cover=Math.max(w/vw,h/vh),rw=vw*cover,rh=vh*cover;
+  const px=cx*rw+(w-rw)/2,py=cy*rh+(h-rh)/2;
+  const s=Math.max(1,Math.min(SS_SMART_ZOOM_MAX,scale));
+  const tx=(w/2-px)*(s-1),ty=(h/2-py)*(s-1);
+  const transform=`translate3d(${tx.toFixed(1)}px,${ty.toFixed(1)}px,0) scale3d(${s.toFixed(3)},${s.toFixed(3)},1)`;
+  video.style.setProperty('transform-origin','50% 50%','important');
+  video.style.setProperty('transform',transform,'important');
+  video.style.setProperty('-webkit-transform',transform,'important');
+  video.style.setProperty('will-change','transform');
+  video.style.setProperty('backface-visibility','hidden');
+  video.dataset.ssSmartZoom='1';
+}
+function ssSmartZoomHold(video){
+  if(!video)return;
+  const lost=(ssSmartZoomLost.get(video)||0)+1;ssSmartZoomLost.set(video,lost);
+  // Hold the last good face position for a while; only relax toward 1× after
+  // detection has really disappeared.
+  if(lost>14){
+    const scale=ssSmartZoomScales.get(video)||1;
+    ssSmartZoomScales.set(video,scale+(1-scale)*.035);
+    const p=ssSmartZoomCenters.get(video)||{x:.5,y:.5};
+    ssSmartZoomApply(video,{x:p.x,y:p.y,faceWidth:Math.max(.018,.38/Math.max(1,scale))});
+  }
+}
+function ssSmartZoomApplyFaceMesh(video,landmarks){
+  const target=ssSmartZoomHeadTarget(landmarks);if(target)ssSmartZoomApply(video,target);else ssSmartZoomHold(video);
 }
 function ssSmartZoomReset(){
   document.querySelectorAll('#remote-video,#group-call-remote-grid video').forEach(v=>{
-    v.style.transform='';v.style.transformOrigin='50% 50%';v.style.objectPosition='50% 50%';v.style.willChange='';
-    ssSmartZoomCenters.delete(v);ssSmartZoomLost.delete(v);
+    v.style.removeProperty('transform');v.style.removeProperty('-webkit-transform');v.style.removeProperty('transform-origin');v.style.removeProperty('will-change');v.style.removeProperty('backface-visibility');delete v.dataset.ssSmartZoom;
+    ssSmartZoomCenters.delete(v);ssSmartZoomLost.delete(v);ssSmartZoomScales.delete(v);
+  });
+}
+async function ssLoadFaceDetectionForZoom(){
+  if(window.FaceDetection)return true;
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script');let done=false;
+    const finish=(fn,v)=>{if(done)return;done=true;clearTimeout(t);fn(v)};
+    const t=setTimeout(()=>finish(reject,new Error('Face detection engine timed out.')),7000);
+    s.src='https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js';s.async=true;
+    s.onload=()=>finish(resolve,!!window.FaceDetection);s.onerror=()=>finish(reject,new Error('Face detection engine could not load.'));
+    document.head.appendChild(s);
   });
 }
 async function ssLoadFaceMeshForZoom(){
   if(window.FaceMesh)return true;
-  if(window.__ssSmartZoomFaceMeshPromise)return window.__ssSmartZoomFaceMeshPromise;
-  window.__ssSmartZoomFaceMeshPromise=new Promise((resolve,reject)=>{
-    const src='https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js';
-    const old=document.querySelector('script[data-ss-smart-zoom-face-mesh]');
-    if(old){old.addEventListener('load',()=>resolve(true),{once:true});old.addEventListener('error',reject,{once:true});return}
-    const s=document.createElement('script');s.src=src;s.async=true;s.crossOrigin='anonymous';s.dataset.ssSmartZoomFaceMesh='1';
-    s.onload=()=>resolve(true);s.onerror=reject;document.head.appendChild(s);
-  });
-  return window.__ssSmartZoomFaceMeshPromise;
+  if(typeof loadFaceMeshEngine==='function'){await loadFaceMeshEngine();if(window.FaceMesh)return true;}
+  throw new Error('Face tracking engine unavailable.');
 }
 async function ssStartSmartZoom(){
   if(ssSmartZoomTimer)return;
-  ssSmartZoomEnabled=true;document.getElementById('btn-smart-zoom')?.classList.add('ss-smart-zoom-on');
-  ssSmartZoomSetStatus('Smart Zoom 3× • loading head tracker',true);
+  ssSmartZoomEnabled=true;document.getElementById('btn-smart-zoom')?.classList.add('ss-smart-zoom-on');ssSmartZoomSetStatus('Smart Zoom • finding face…',true);
   try{
-    await ssLoadFaceMeshForZoom();
-    ssSmartZoomPose=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
-    ssSmartZoomPose.setOptions({maxNumFaces:1,refineLandmarks:true,minDetectionConfidence:.35,minTrackingConfidence:.35});
-    ssSmartZoomPose.onResults(r=>{const v=window.__ssSmartZoomCurrentVideo;if(v)ssSmartZoomApply(v,r.multiFaceLandmarks?.[0]||null)});
-    ssSmartZoomTimer=setInterval(ssSmartZoomScan,220);
-    ssSmartZoomScan();
-  }catch(e){console.warn('Smart head zoom unavailable:',e);ssSmartZoomSetStatus('Smart Zoom unavailable',true)}
+    // Full-range MediaPipe face detection is specifically useful when a person
+    // moves farther from the camera. It produces only a box; no face landmarks
+    // are drawn or shown to the user.
+    await ssLoadFaceDetectionForZoom();
+    ssSmartZoomFaceDetector=new FaceDetection({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${f}`});
+    ssSmartZoomFaceDetector.setOptions({model:'full',minDetectionConfidence:.08});
+    ssSmartZoomFaceDetector.onResults(r=>{
+      const v=window.__ssSmartZoomCurrentVideo;
+      const faces=r?.detections||[];
+      const d=faces[0];
+      const target=ssSmartZoomBoxTarget(d?.boundingBox||d?.locationData?.relativeBoundingBox);
+      if(v){if(target)ssSmartZoomApply(v,target);else ssSmartZoomHold(v)}
+    });
+    ssSmartZoomDetectorMode='face-detection';
+    ssSmartZoomTimer=setInterval(ssSmartZoomScan,105);ssSmartZoomScan();
+  }catch(e){
+    console.warn('Full-range face detection unavailable, trying Face Mesh fallback:',e);
+    try{
+      await ssLoadFaceMeshForZoom();
+      ssSmartZoomFaceDetector=new FaceMesh({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`});
+      ssSmartZoomFaceDetector.setOptions({maxNumFaces:1,refineLandmarks:false,minDetectionConfidence:.18,minTrackingConfidence:.18});
+      ssSmartZoomFaceDetector.onResults(r=>{const v=window.__ssSmartZoomCurrentVideo;if(v)ssSmartZoomApplyFaceMesh(v,r.multiFaceLandmarks?.[0]||null)});
+      ssSmartZoomDetectorMode='face-mesh-fallback';
+      ssSmartZoomTimer=setInterval(ssSmartZoomScan,105);ssSmartZoomScan();
+    }catch(err){console.warn('Smart Zoom unavailable:',err);ssSmartZoomSetStatus('Smart Zoom unavailable on this network',true)}
+  }
 }
 async function ssSmartZoomScan(){
-  if(!ssSmartZoomEnabled||!ssSmartZoomPose||ssSmartZoomBusy)return;
-  const vs=[],rv=document.getElementById('remote-video');
-  if(rv?.srcObject)vs.push(rv);
+  if(!ssSmartZoomEnabled||!ssSmartZoomFaceDetector||ssSmartZoomBusy)return;
+  const vs=[],rv=document.getElementById('remote-video');if(rv?.srcObject)vs.push(rv);
   document.querySelectorAll('#group-call-remote-grid video').forEach(v=>{if(v.srcObject)vs.push(v)});
-  if(!vs.length)return;
-  ssSmartZoomBusy=true;
+  if(!vs.length)return;ssSmartZoomBusy=true;
   try{
     for(const v of vs.slice(0,6)){
       if(v.readyState<2||v.videoWidth<2||v.videoHeight<2)continue;
       window.__ssSmartZoomCurrentVideo=v;
-      await ssSmartZoomPose.send({image:v});
+      // Feed a normalized hidden frame to the far-range detector. This gives the
+      // detector a consistent input size while keeping the tracking layer invisible.
+      const tc=ssZoomTrackingCanvas(v),ctx=tc.getContext('2d',{willReadFrequently:false});
+      if(ctx){ctx.drawImage(v,0,0,tc.width,tc.height);await ssSmartZoomFaceDetector.send({image:tc});}
+      else await ssSmartZoomFaceDetector.send({image:v});
     }
-    window.__ssSmartZoomCurrentVideo=null;
   }catch(e){}finally{
     window.__ssSmartZoomCurrentVideo=null;ssSmartZoomBusy=false;
-    ssSmartZoomSetStatus(`Smart Zoom ${SS_SMART_ZOOM_SCALE}× • head tracking`,true);
+    const active=vs.find(v=>ssSmartZoomScales.has(v));const s=active?ssSmartZoomScales.get(active):1;
+    ssSmartZoomSetStatus(`Smart Zoom • ${s.toFixed(1)}× • ${ssSmartZoomDetectorMode==='face-detection'?'far-face tracking':'tracking'}`,true);
   }
 }
-function ssStopSmartZoom(){
-  if(ssSmartZoomTimer){clearInterval(ssSmartZoomTimer);ssSmartZoomTimer=null}
-  try{ssSmartZoomPose?.close?.()}catch(_){}ssSmartZoomPose=null;ssSmartZoomReset();ssSmartZoomSetStatus('Smart Zoom off',false)
-}
-function ssToggleSmartZoom(){const b=document.getElementById('btn-smart-zoom');ssSmartZoomEnabled=!ssSmartZoomEnabled;if(ssSmartZoomEnabled){b?.classList.add('ss-smart-zoom-on');if(localCallStream)ssStartSmartZoom();ssSmartZoomSetStatus('Smart Zoom 3× • ON',true)}else{b?.classList.remove('ss-smart-zoom-on');ssStopSmartZoom()}}
+function ssStopSmartZoom(){if(ssSmartZoomTimer){clearInterval(ssSmartZoomTimer);ssSmartZoomTimer=null}try{ssSmartZoomFaceDetector?.close?.()}catch(_){}ssSmartZoomFaceDetector=null;ssSmartZoomDetectorMode='none';ssSmartZoomReset();ssSmartZoomSetStatus('Smart Zoom off',false)}
+function ssToggleSmartZoom(){const b=document.getElementById('btn-smart-zoom');ssSmartZoomEnabled=!ssSmartZoomEnabled;if(ssSmartZoomEnabled){b?.classList.add('ss-smart-zoom-on');ssStartSmartZoom()}else{b?.classList.remove('ss-smart-zoom-on');ssStopSmartZoom()}}
 document.getElementById('btn-smart-zoom')?.addEventListener('click',ssToggleSmartZoom);
 
 document.getElementById('btn-video-call')?.addEventListener('click', () => {
@@ -16818,6 +17695,63 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                 showToast(`Maintenance mode ${!globalMaintenance ? 'enabled' : 'disabled'}.`, 'info');
             }));
 
+        // ─── Global Updating Screen ───
+        async function loadUpdatingScreen() {
+            if (updatingScreenUnsub) updatingScreenUnsub();
+            const ref = doc(db, 'app_settings', 'updating_screen');
+            updatingScreenUnsub = onSnapshot(ref, (snap) => {
+                globalUpdatingScreen = snap.exists() && snap.data()?.enabled === true;
+                renderUpdatingScreen();
+                const state = document.getElementById('owner-updating-screen-state');
+                const btn = document.getElementById('btn-owner-updating-screen');
+                if (state) state.textContent = globalUpdatingScreen ? '🟠 Updating screen is ON' : '🟢 Updating screen is OFF';
+                if (btn) btn.textContent = globalUpdatingScreen ? '🛠️ Updating Screen Is On' : '🛠️ Turn Updating Screen On';
+            }, (error) => console.warn('Updating screen listener error:', error));
+        }
+
+        function renderUpdatingScreen() {
+            const overlay = document.getElementById('ss-global-updating-overlay');
+            if (!overlay) return;
+            if (globalUpdatingScreen) {
+                overlay.classList.add('ss-updating-visible');
+                overlay.setAttribute('aria-hidden', 'false');
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+            } else {
+                overlay.classList.remove('ss-updating-visible');
+                overlay.style.display = 'none';
+                overlay.setAttribute('aria-hidden', 'true');
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.getElementById('btn-owner-updating-screen')?.addEventListener('click', async () => {
+            if (!isCurrentUserOwner()) { showToast('Only the Owner can activate the Updating Screen.', 'error'); return; }
+            try {
+                await setDoc(doc(db, 'app_settings', 'updating_screen'), { enabled:true, updatedAt:serverTimestamp(), updatedBy:currentUser?.uid || null }, { merge:true });
+                showToast('Updating Screen is now active for everyone.', 'success');
+            } catch (error) { showToast(`Could not activate Updating Screen: ${error.message || error}`, 'error'); }
+        });
+
+        document.getElementById('ss-updating-unlock-btn')?.addEventListener('click', async () => {
+            const input = document.getElementById('ss-updating-unlock-code');
+            const status = document.getElementById('ss-updating-unlock-status');
+            const code = String(input?.value || '').trim();
+            if (code !== SS_UPDATING_UNLOCK_CODE) {
+                if (status) status.textContent = '❌ Incorrect unlock code.';
+                if (input) { input.value=''; input.focus(); }
+                return;
+            }
+            try {
+                await setDoc(doc(db, 'app_settings', 'updating_screen'), { enabled:false, updatedAt:serverTimestamp(), updatedBy:currentUser?.uid || null, unlockedWithCode:true }, { merge:true });
+                if (status) status.textContent = '✅ Updating Screen disabled.';
+                if (input) input.value='';
+                showToast('Updating Screen disabled.', 'success');
+            } catch (error) { if (status) status.textContent = 'Could not disable the Updating Screen.'; }
+        });
+        document.getElementById('ss-updating-unlock-code')?.addEventListener('keydown', (event) => { if (event.key === 'Enter') document.getElementById('ss-updating-unlock-btn')?.click(); });
+
         // ─── Promo Codes ───
         async function loadPromoCodes() {
             if (promoUnsub) promoUnsub();
@@ -17619,13 +18553,21 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             const resetPassBtn = content.querySelector('#admin-reset-password-btn');
             if (resetPassBtn) {
                 resetPassBtn.addEventListener('click', async () => {
+                    if (resetPassBtn.dataset.busy==='1') return;
                     if (!isCurrentUserOwnerOrCoOwner()) { showToast('Owner or Co-Owner authorization is required for password resets.', 'error'); return; }
                     const newPass = prompt(`Create a temporary new password for @${user.username} (minimum 6 characters):`);
                     if (!newPass || newPass.length < 6) { showToast('Password must be at least 6 characters.', 'error'); return; }
                     if (!confirm(`Approve a password reset for @${user.username}? Your Owner biometric will authorize the change.`)) return;
-                    const ticket = await addDoc(collection(db,'password_resets'), {uid:user.uid,username:String(user.username||'').toLowerCase(),verified:true,status:'open',source:'admin-user-panel',requestedAt:serverTimestamp(),requestedAtMs:Date.now(),adminRequestedBy:currentUser.uid});
-                    ownerBiometricPendingPasswordReset = { uid:user.uid, username:String(user.username||'').toLowerCase(), newPassword:newPass, requestId:ticket.id };
-                    await openOwnerBiometricModal('verify');
+                    resetPassBtn.dataset.busy='1';resetPassBtn.disabled=true;resetPassBtn.textContent='🔐 Verifying…';
+                    try{
+                        const existingSnap=await getDocs(query(collection(db,'password_resets'),where('uid','==',user.uid)));
+                        const existing=existingSnap.docs.find(d=>String(d.data().status||'open')==='open');
+                        const ticket=existing||await addDoc(collection(db,'password_resets'),{uid:user.uid,username:String(user.username||'').toLowerCase(),verified:true,status:'open',source:'admin-user-panel',requestedAt:serverTimestamp(),requestedAtMs:Date.now(),adminRequestedBy:currentUser.uid});
+                        ownerBiometricPendingPasswordReset={uid:user.uid,username:String(user.username||'').toLowerCase(),newPassword:newPass,requestId:ticket.id};
+                        await openOwnerBiometricModal('verify');
+                    }catch(err){
+                        ownerBiometricPendingPasswordReset=null;showToast(err?.message||'Could not start the password reset.','error');
+                    }finally{resetPassBtn.dataset.busy='0';resetPassBtn.disabled=false;resetPassBtn.textContent='🔑 Reset Password';}
                 });
             }
             const viewPostsBtn = content.querySelector('#admin-view-user-posts');
@@ -17811,6 +18753,30 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             return hay.includes(search.toLowerCase());
         }
 
+        async function deleteAdminGroupChat(groupId,groupName='Group Chat'){
+            if(!canUseOwnerGroupMonitor()||!groupId)return;
+            if(!confirm(`Delete “${groupName}” and all of its messages? This cannot be undone.`))return;
+            try{
+                const groupRef=doc(db,'group_chats',groupId);
+                const snap=await getDoc(groupRef);
+                if(!snap.exists()){showToast('That group is already deleted.','info');return;}
+                const messagesSnap=await getDocs(collection(db,'group_chats',groupId,'messages'));
+                const docs=messagesSnap.docs;
+                for(let i=0;i<docs.length;i+=450){
+                    const batch=writeBatch(db);
+                    docs.slice(i,i+450).forEach(ds=>batch.delete(ds.ref));
+                    await batch.commit();
+                }
+                await deleteDoc(groupRef);
+                if(activeGroupChatId===groupId)closeGroupChat();
+                if(adminGroupMonitorActiveId===groupId)closeAdminGroupMonitor();
+                showToast('🗑️ Group deleted from Admin Panel.','success');
+            }catch(err){
+                console.error('Admin group delete failed:',err);
+                showToast(`Could not delete group (${err?.code||err?.message||'Firestore error'}).`,'error');
+            }
+        }
+
         function renderAdminGroupMonitorList(){
             const list=document.getElementById('admin-group-monitor-list');
             if(!list) return;
@@ -17824,8 +18790,9 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                 const card=document.createElement('div'); card.className='ss-admin-group-card';
                 const names=(g.members||[]).slice(0,4).map(uid=>'@'+groupMemberName(uid));
                 const extra=Math.max(0,(g.members||[]).length-4);
-                card.innerHTML=`<div><div class="ss-admin-group-card-title">👥 ${safeText(g.name||'Group Chat')}</div><div class="ss-admin-group-card-meta">${(g.members||[]).length} members · ${names.map(safeText).join(', ')}${extra?` +${extra} more`:''}</div></div><span class="ss-admin-group-card-arrow">›</span>`;
+                card.innerHTML=`<div style="min-width:0;flex:1;"><div class="ss-admin-group-card-title">👥 ${safeText(g.name||'Group Chat')}</div><div class="ss-admin-group-card-meta">${(g.members||[]).length} members · ${names.map(safeText).join(', ')}${extra?` +${extra} more`:''}</div></div><div style="display:flex;align-items:center;gap:6px;flex:0 0 auto;"><button type="button" class="btn btn-danger btn-sm ss-admin-group-delete" title="Delete group" style="min-height:30px;padding:0 9px;">🗑️</button><span class="ss-admin-group-card-arrow">›</span></div>`;
                 card.addEventListener('click',()=>openAdminGroupMonitor(g));
+                card.querySelector('.ss-admin-group-delete')?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();deleteAdminGroupChat(g.id,g.name||'Group Chat');});
                 list.appendChild(card);
             });
         }
@@ -17838,6 +18805,9 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             if(adminGroupMonitorUnsub) adminGroupMonitorUnsub();
             adminGroupMonitorUnsub=onSnapshot(collection(db,'group_chats'),snap=>{
                 adminGroupMonitorGroups=snap.docs.map(d=>({id:d.id,...d.data()}));
+                if(adminGroupMonitorActiveId && !adminGroupMonitorGroups.some(g=>g.id===adminGroupMonitorActiveId)){
+                    closeAdminGroupMonitor();
+                }
                 renderAdminGroupMonitorList();
             },err=>{
                 console.error('Owner group monitor:',err);
@@ -17916,6 +18886,13 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
                     loadAdminActivityTicker(); }
                 if (tab === 'promos') { updatePromoLimitStatus(); }
                 if (tab === 'group-monitor') { loadAdminGroupMonitor(); }
+                requestAnimationFrame(()=>{
+                    const rail=btn.closest('.admin-tabs');
+                    if(rail){
+                        const left=btn.offsetLeft-(rail.clientWidth-btn.offsetWidth)/2;
+                        rail.scrollTo({left:Math.max(0,left),behavior:'smooth'});
+                    }
+                });
             });
         });
 
@@ -22236,7 +23213,172 @@ document.addEventListener('DOMContentLoaded', () => {
   html.is-booting .home-command-hero:after,
   html.is-booting .home-command-hero:before{animation:none!important}
 }
+
+/* Group/private chat delivery polish */
+.ss-message-pending{opacity:.78;transform:translateY(0);animation:ssMessageIn .16s ease-out;}
+.ss-message-pending .ss-message-status{font-size:10px;opacity:.8;margin-left:6px;}
+@keyframes ssMessageIn{from{opacity:0;transform:translateY(5px)}to{opacity:.78;transform:translateY(0)}}
+.ss-group-composer{gap:8px;align-items:center;padding:10px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);}
+.ss-group-composer #group-chat-input{flex:1;min-width:0;border-radius:13px;}
+.ss-group-composer #btn-send-group{min-width:72px;border-radius:12px;font-weight:800;}
+.ss-group-composer #group-reaction-quick{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;}
+</style>
+<script id="ss-school-network-diagnostics">
+(function(){
+  window.ssSchoolNetworkCheck=function(){
+    const g=window.SS_SCHOOL_NETWORK||{};
+    return {
+      online:navigator.onLine,
+      secure:window.isSecureContext===true,
+      camera:!!(window.isSecureContext&&navigator.mediaDevices?.getUserMedia),
+      optionalFailures:[...(g.optionalBlocked||[])].slice(-10)
+    };
+  };
+})();
+</script>
+
+
+<style id="ss-gc-total-revamp">
+/* School Social — Group Chat 2.0 */
+.ss-group-box{position:relative;overflow:hidden;border-radius:24px!important;border:1px solid rgba(125,211,252,.14)!important;background:linear-gradient(145deg,rgba(10,15,28,.96),rgba(5,8,18,.98))!important;box-shadow:0 22px 70px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.06)!important}
+.ss-group-box:before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 12% 8%,rgba(34,211,238,.13),transparent 28%),radial-gradient(circle at 88% 12%,rgba(139,92,246,.12),transparent 26%);pointer-events:none}
+.ss-group-box>*{position:relative;z-index:1}
+.ss-group-topbar{padding:18px!important;border-radius:20px!important;margin-bottom:12px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;border:1px solid rgba(255,255,255,.07)!important;box-shadow:inset 0 1px rgba(255,255,255,.04)}
+.ss-group-topbar .section-title{font-size:17px!important;font-weight:950!important;letter-spacing:-.02em}
+.ss-group-topbar .ss-chat-help{font-size:10px!important;line-height:1.5;opacity:.72}
+.ss-group-list{display:grid!important;gap:9px!important}
+.ss-group-card{min-height:68px!important;padding:13px 15px!important;border-radius:18px!important;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.018))!important;border:1px solid rgba(255,255,255,.07)!important;transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease!important;cursor:pointer}
+.ss-group-card:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.28)!important;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.ss-group-card-title{font-size:12px!important;font-weight:900!important;letter-spacing:.01em}
+.ss-group-card-meta{margin-top:4px!important;font-size:9px!important;opacity:.58}
+.ss-group-box .ss-chat-header{padding:12px 14px!important;margin-bottom:8px;border-radius:17px!important;background:rgba(255,255,255,.045)!important;border:1px solid rgba(255,255,255,.065)!important;backdrop-filter:blur(16px)}
+.ss-group-box .ss-chat-title strong{font-size:14px!important;font-weight:950!important}
+.ss-group-box .ss-chat-title span{font-size:9px!important;opacity:.58}
+.ss-group-box .ss-chat-actions{gap:6px!important}
+.ss-group-box .ss-chat-actions .btn{border-radius:11px!important;font-size:9px!important;font-weight:850!important;min-height:34px!important;padding:0 11px!important;border:1px solid rgba(255,255,255,.08)!important}
+.ss-group-stream{min-height:360px!important;max-height:58vh!important;padding:15px 12px!important;border-radius:18px!important;background:rgba(0,0,0,.17)!important;border:1px solid rgba(255,255,255,.045)!important;scroll-behavior:smooth}
+.ss-group-stream .chat-msg{max-width:min(78%,560px);margin:7px 4px!important;animation:ssGcMsgIn .18s ease-out}
+.ss-group-stream .chat-msg.me{margin-left:auto!important}
+.ss-group-stream .chat-bubble{border-radius:17px!important;padding:10px 13px!important;line-height:1.42!important;font-size:11px!important;box-shadow:0 7px 22px rgba(0,0,0,.14)!important;border:1px solid rgba(255,255,255,.055)}
+.ss-group-stream .chat-msg.me .chat-bubble{border-bottom-right-radius:6px!important;background:linear-gradient(135deg,rgba(34,211,238,.18),rgba(99,102,241,.18))!important}
+.ss-group-stream .chat-msg:not(.me) .chat-bubble{border-bottom-left-radius:6px!important;background:rgba(255,255,255,.055)!important}
+.ss-group-stream .chat-sender{font-size:8px!important;font-weight:850!important;opacity:.62;margin:0 6px 3px!important}
+.ss-group-stream .ss-msg-meta{font-size:7px!important;opacity:.5;margin-top:4px!important}
+.ss-group-composer{position:sticky!important;bottom:0;display:grid!important;grid-template-columns:minmax(0,1fr) 42px 76px!important;gap:7px!important;padding:8px!important;margin-top:9px!important;border-radius:18px!important;background:rgba(7,10,18,.9)!important;border:1px solid rgba(125,211,252,.12)!important;box-shadow:0 -12px 35px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.04)!important;backdrop-filter:blur(18px)!important}
+.ss-group-composer #group-chat-input{height:42px!important;min-height:42px!important;border-radius:13px!important;padding:0 14px!important;border:1px solid rgba(255,255,255,.07)!important;background:rgba(255,255,255,.045)!important;font-size:11px!important;outline:none!important}
+.ss-group-composer #group-chat-input:focus{border-color:rgba(34,211,238,.38)!important;box-shadow:0 0 0 3px rgba(34,211,238,.07)!important}
+.ss-group-composer #group-reaction-quick{width:42px!important;height:42px!important;border-radius:13px!important;border:1px solid rgba(255,255,255,.07)!important;background:rgba(255,255,255,.045)!important}
+.ss-group-composer #btn-send-group{height:42px!important;min-height:42px!important;border-radius:13px!important;font-size:10px!important;font-weight:950!important;box-shadow:0 7px 20px rgba(34,211,238,.12)!important}
+.ss-message-pending{opacity:.72!important}
+.ss-message-pending .chat-bubble:after{content:"";display:inline-block;width:5px;height:5px;margin-left:7px;border-radius:50%;border:1px solid currentColor;border-right-color:transparent;vertical-align:middle;animation:ssGcSpin .7s linear infinite}
+.ss-message-pending .ss-message-status{font-weight:800!important}
+.ss-group-privacy-note{opacity:.4!important;font-size:7px!important;padding:7px 2px!important}
+@keyframes ssGcMsgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes ssGcSpin{to{transform:rotate(360deg)}}
+@media(max-width:700px){.ss-group-stream{max-height:54vh!important;min-height:300px!important}.ss-group-stream .chat-msg{max-width:88%!important}.ss-group-topbar{padding:14px!important}.ss-group-composer{grid-template-columns:minmax(0,1fr) 40px 68px!important}.ss-group-box .ss-chat-actions{max-width:100%;overflow-x:auto}.ss-group-box .ss-chat-actions .btn{flex:0 0 auto!important}}
+</style>
+
+<style id="ss-groupchat-themes-v5">
+@keyframes ssGcThemeFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(1.5%, -1%, 0) scale(1.015)}}
+@keyframes ssGcThemeShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes ssGcThemePulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 0%,transparent)}50%{box-shadow:0 0 22px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 15%,transparent)}}
+@keyframes ssGcMsgIn{from{opacity:0;transform:translateY(7px) scale(.985)}to{opacity:1;transform:none}}
+.ss-group-box{--ss-text:#f8fafc;--ss-muted:rgba(248,250,252,.58);--ss-bubble-other:rgba(255,255,255,.075);--ss-bubble-me:linear-gradient(135deg,color-mix(in srgb,var(--ss-theme-accent,#22d3ee) 28%,transparent),rgba(99,102,241,.18));transition:background .35s ease,border-color .35s ease,box-shadow .35s ease!important}
+.ss-group-box::before{background:var(--ss-chat-bg,transparent)!important;background-size:180% 180%!important;animation:ssGcThemeShimmer 9s ease-in-out infinite!important;transition:opacity .35s ease!important}
+.ss-group-box.ss-theme-neon,.ss-group-box.ss-theme-galaxy{--ss-text:#f5f3ff;--ss-muted:rgba(224,231,255,.68)}
+.ss-group-box.ss-theme-sunset,.ss-group-box.ss-theme-rose{--ss-text:#fff7f8;--ss-muted:rgba(255,228,230,.7)}
+.ss-group-box.ss-theme-ocean{--ss-text:#f0f9ff;--ss-muted:rgba(186,230,253,.72)}
+.ss-group-box.ss-theme-forest{--ss-text:#ecfdf5;--ss-muted:rgba(209,250,229,.72)}
+.ss-group-box.ss-theme-gold{--ss-text:#fffbeb;--ss-muted:rgba(254,243,199,.75)}
+.ss-group-box[class*="ss-theme-"] .ss-chat-header{color:var(--ss-text)!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent) 18%,transparent)!important;background:linear-gradient(100deg,color-mix(in srgb,var(--ss-theme-accent) 10%,transparent),rgba(255,255,255,.025),color-mix(in srgb,var(--ss-theme-accent) 8%,transparent))!important;background-size:200% 100%!important;animation:ssGcThemeShimmer 7s ease-in-out infinite!important}
+.ss-group-box[class*="ss-theme-"] .ss-chat-title strong{color:var(--ss-text)!important;text-shadow:0 0 16px color-mix(in srgb,var(--ss-theme-accent) 25%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] .chat-msg{animation:ssGcMsgIn .24s ease-out both!important}
+.ss-group-box[class*="ss-theme-"] .chat-sender{color:var(--ss-theme-accent)!important;opacity:.95!important;text-shadow:0 0 10px color-mix(in srgb,var(--ss-theme-accent) 25%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] .ss-msg-meta{color:var(--ss-muted)!important}
+.ss-group-box[class*="ss-theme-"] .chat-bubble{color:var(--ss-text)!important;transition:transform .18s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease!important}
+.ss-group-box[class*="ss-theme-"] .chat-msg:not(.me) .chat-bubble{background:var(--ss-bubble-other)!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 22%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] .chat-msg.me .chat-bubble{background:var(--ss-bubble-me)!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 38%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] .chat-bubble:hover{transform:translateY(-1px);box-shadow:0 10px 28px color-mix(in srgb,var(--ss-theme-accent) 14%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] .ss-group-composer{background:color-mix(in srgb,var(--ss-theme-accent) 8%,rgba(7,10,18,.92))!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 24%,transparent)!important;box-shadow:0 -12px 35px rgba(0,0,0,.2),0 0 24px color-mix(in srgb,var(--ss-theme-accent) 7%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] #group-chat-input{color:var(--ss-text)!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 24%,transparent)!important;background:rgba(0,0,0,.16)!important}
+.ss-group-box[class*="ss-theme-"] #group-chat-input:focus{border-color:var(--ss-theme-accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--ss-theme-accent) 13%,transparent)!important}
+.ss-group-box[class*="ss-theme-"] .ss-reaction{color:var(--ss-text)!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 22%,transparent)!important;background:color-mix(in srgb,var(--ss-theme-accent) 7%,rgba(255,255,255,.035))!important}
+.ss-group-box[class*="ss-theme-"] .ss-reaction.active{background:color-mix(in srgb,var(--ss-theme-accent) 18%,transparent)!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 55%,transparent)!important}
+.ss-group-box.ss-theme-neon .chat-bubble{box-shadow:0 0 20px rgba(34,211,238,.10)!important}
+.ss-group-box.ss-theme-galaxy .chat-bubble{box-shadow:0 0 22px rgba(167,139,250,.11)!important}
+.ss-group-box.ss-theme-gold .chat-bubble{font-weight:650!important}
+.ss-group-theme-menu .ss-theme-option{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease!important}
+.ss-group-theme-menu .ss-theme-option:hover{transform:translateY(-2px) scale(1.015)!important}
+.ss-group-theme-menu .ss-theme-option.active{border-color:var(--theme-preview,#7dd3fc)!important;background:color-mix(in srgb,var(--theme-preview,#7dd3fc) 15%,rgba(255,255,255,.05))!important;box-shadow:0 0 16px color-mix(in srgb,var(--theme-preview,#7dd3fc) 18%,transparent)!important}
+.ss-theme-dot{box-shadow:0 0 10px color-mix(in srgb,var(--theme-preview,#7dd3fc) 55%,transparent)!important;transition:transform .18s ease,box-shadow .18s ease!important}
+.ss-theme-option:hover .ss-theme-dot,.ss-theme-option.active .ss-theme-dot{transform:scale(1.2)!important}
+.ss-group-box.ss-theme-neon #group-chat-theme,.ss-group-box.ss-theme-ocean #group-chat-theme,.ss-group-box.ss-theme-galaxy #group-chat-theme{animation:ssGcThemePulse 2.8s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.ss-group-box::before,.ss-group-box .ss-chat-header,.ss-group-box .chat-msg,.ss-group-box #group-chat-theme{animation:none!important}.ss-group-box .chat-bubble,.ss-theme-option{transition:none!important}}
 </style>
 </body>
 </html>
 
+<style id="ss-groupchat-controls-final-v6">
+/* Group chat controls: larger hit areas, reliable popup stacking, compact responsive layout */
+.ss-group-box{position:relative;isolation:isolate;overflow:visible!important}
+.ss-group-box .ss-chat-header{position:relative;z-index:20;display:flex!important;align-items:center!important;gap:12px!important;overflow:visible!important}
+.ss-group-box .ss-chat-title{min-width:0;flex:1 1 auto;overflow:hidden}
+.ss-group-box .ss-chat-title strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-group-box .ss-chat-actions{position:relative;z-index:30;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:7px!important;flex:0 0 auto;overflow:visible!important}
+.ss-group-box .ss-chat-actions>.btn,
+.ss-group-box #group-chat-theme{min-width:38px!important;height:38px!important;min-height:38px!important;padding:0 12px!important;border-radius:12px!important;font-size:10px!important;font-weight:900!important;line-height:1!important;cursor:pointer!important;user-select:none!important;position:relative!important;z-index:31!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:nowrap!important;pointer-events:auto!important}
+.ss-group-box .ss-chat-actions>.btn:active{transform:scale(.96)!important}
+.ss-group-box #group-chat-theme-wrap{position:relative;z-index:100}
+.ss-group-box .ss-group-theme-menu,
+.ss-group-theme-menu{position:absolute!important;z-index:99999!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;display:none!important;min-width:185px!important;max-width:calc(100vw - 28px)!important;padding:7px!important;border-radius:16px!important;overflow:hidden!important;pointer-events:none!important;background:rgba(12,16,28,.97)!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 22px 60px rgba(0,0,0,.48),0 0 28px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 10%,transparent)!important;backdrop-filter:blur(20px)!important}
+.ss-group-box .ss-group-theme-menu.open,
+.ss-group-theme-menu.open{display:grid!important;pointer-events:auto!important;animation:ssGcMenuIn .16s ease-out both!important}
+.ss-group-theme-menu .ss-theme-option{width:100%!important;min-height:38px!important;border:1px solid rgba(255,255,255,.07)!important;border-radius:11px!important;background:rgba(255,255,255,.045)!important;color:#f8fafc!important;padding:0 10px!important;display:flex!important;align-items:center!important;gap:9px!important;text-align:left!important;font-size:10px!important;font-weight:850!important;cursor:pointer!important;pointer-events:auto!important}
+.ss-group-theme-menu .ss-theme-option:active{transform:scale(.98)!important}
+.ss-group-theme-menu .ss-theme-dot{flex:0 0 10px!important;width:10px!important;height:10px!important;border-radius:50%!important;background:var(--theme-preview,#7dd3fc)!important}
+.ss-group-box .ss-group-stream{position:relative;z-index:1}
+.ss-group-box .ss-group-composer{position:relative!important;z-index:40!important}
+.ss-group-box .ss-group-composer>button{pointer-events:auto!important;cursor:pointer!important}
+.ss-group-box #group-reaction-quick,
+.ss-group-box #group-photo-btn,
+.ss-group-box #btn-send-group{display:inline-flex!important;align-items:center!important;justify-content:center!important}
+.ss-group-box .ss-group-emote-dropdown{z-index:100000!important}
+@keyframes ssGcMenuIn{from{opacity:0;transform:translateY(-5px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:700px){
+ .ss-group-box .ss-chat-header{align-items:flex-start!important;flex-wrap:wrap!important}
+ .ss-group-box .ss-chat-title{width:100%;flex:1 0 100%}
+ .ss-group-box .ss-chat-actions{width:100%;justify-content:flex-start!important;overflow-x:auto!important;overflow-y:visible!important;flex-wrap:nowrap!important;padding:2px 2px 5px!important;scrollbar-width:none!important}
+ .ss-group-box .ss-chat-actions::-webkit-scrollbar{display:none!important}
+ .ss-group-box .ss-chat-actions>.btn,.ss-group-box #group-chat-theme{flex:0 0 auto!important;height:36px!important;min-height:36px!important;padding:0 11px!important}
+ .ss-group-box .ss-group-theme-menu,.ss-group-theme-menu{position:fixed!important;top:auto!important;right:12px!important;bottom:82px!important;left:auto!important;max-width:calc(100vw - 24px)!important}
+}
+@media(prefers-reduced-motion:reduce){.ss-group-theme-menu.open{animation:none!important}}
+</style>
+<script>
+/* Final group-control hardening: use delegated handlers so controls keep working after rerenders. */
+(function(){
+  const menu=()=>document.getElementById('group-chat-theme-menu');
+  const themeBtn=()=>document.getElementById('group-chat-theme');
+  document.addEventListener('click',function(e){
+    const option=e.target.closest?.('#group-chat-theme-menu .ss-theme-option');
+    if(option){
+      e.preventDefault(); e.stopPropagation();
+      const theme=option.dataset.theme||'default';
+      if(typeof applyGroupTheme==='function') applyGroupTheme(theme);
+      if(typeof saveGroupTheme==='function') saveGroupTheme(theme);
+      return;
+    }
+    const trigger=e.target.closest?.('#group-chat-theme');
+    if(trigger){
+      e.preventDefault(); e.stopPropagation();
+      const m=menu(); if(!m)return;
+      const willOpen=!m.classList.contains('open');
+      m.classList.toggle('open',willOpen);
+      if(willOpen && typeof applyGroupTheme==='function') applyGroupTheme(document.getElementById('group-chat-box')?.dataset.theme||'default');
+      return;
+    }
+    const m=menu();
+    if(m?.classList.contains('open') && !m.contains(e.target)) m.classList.remove('open');
+  },true);
+})();
+</script>
