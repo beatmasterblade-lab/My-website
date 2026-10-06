@@ -6526,10 +6526,29 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
 @keyframes ssPendingIn{from{opacity:.35;transform:translateY(4px)}to{opacity:.82;transform:none}}
 @media(max-width:700px){.ss-group-box .ss-chat-actions{overflow-x:auto!important;scrollbar-width:none!important;padding-bottom:1px!important}.ss-group-box .ss-chat-actions::-webkit-scrollbar{display:none!important}.ss-group-box .ss-chat-actions .btn{flex:0 0 auto!important}.ss-group-composer{grid-template-columns:minmax(0,1fr) 40px 40px 68px!important}.ss-group-composer .emote-picker-btn,.ss-group-photo-btn{width:40px!important;height:40px!important}.ss-group-composer #btn-send-group{padding:0 12px!important}}
 </style>
+<style id="ss-groupchat-theme-rebuild-v5">
+.ss-group-box{--ss-theme-accent:#7dd3fc;--ss-chat-bg:transparent;position:relative!important;overflow:visible!important;isolation:isolate!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent) 24%,rgba(255,255,255,.09))!important;background:linear-gradient(180deg,rgba(12,17,30,.94),rgba(7,10,18,.94))!important;box-shadow:0 20px 60px rgba(0,0,0,.25),0 0 34px color-mix(in srgb,var(--ss-theme-accent) 8%,transparent)!important;transition:border-color .25s ease,box-shadow .25s ease,background .25s ease!important;}
+.ss-group-box::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;background:var(--ss-chat-bg);opacity:.92;transition:background .3s ease;}
+.ss-group-box .ss-chat-header{position:relative!important;z-index:20!important;display:flex!important;align-items:center!important;justify-content:space-between!important;min-width:0!important;padding:10px!important;gap:10px!important;border-radius:15px!important;background:color-mix(in srgb,var(--ss-theme-accent) 6%,rgba(8,12,22,.82))!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent) 16%,rgba(255,255,255,.08))!important;}
+.ss-group-box .ss-chat-title{min-width:0!important;flex:1 1 auto!important}.ss-group-box .ss-chat-title strong{display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;font-size:12px!important}
+.ss-group-box .ss-chat-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important;flex:0 0 auto!important;position:relative!important;z-index:50!important}
+.ss-group-action{min-height:36px!important;height:36px!important;padding:0 10px!important;border-radius:11px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;font-size:9px!important;font-weight:900!important;line-height:1!important;white-space:nowrap!important;border:1px solid rgba(255,255,255,.09)!important;box-shadow:0 5px 16px rgba(0,0,0,.12)!important;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease!important;cursor:pointer!important;touch-action:manipulation!important}
+.ss-group-action:hover{transform:translateY(-1px)!important;box-shadow:0 8px 22px rgba(0,0,0,.22)!important}.ss-group-action:active{transform:scale(.97)!important}.ss-group-action:focus-visible{outline:2px solid var(--ss-theme-accent)!important;outline-offset:2px!important}.ss-action-icon{font-size:13px!important;line-height:1!important}.ss-action-label{line-height:1!important}.ss-group-action-call{border-color:rgba(34,211,238,.4)!important;background:rgba(34,211,238,.10)!important}.ss-group-danger{border-color:rgba(239,68,68,.32)!important;background:rgba(239,68,68,.08)!important;color:#fecaca!important}
+#group-chat-theme-wrap{position:relative!important;z-index:1000!important;flex:0 0 auto!important}#group-chat-theme{min-height:36px!important;height:36px!important;padding:0 11px!important;border-radius:11px!important;font-size:9px!important;font-weight:900!important;display:inline-flex!important;align-items:center!important;gap:5px!important;cursor:pointer!important;touch-action:manipulation!important}#group-chat-theme[aria-expanded="true"]{border-color:var(--ss-theme-accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--ss-theme-accent) 10%,transparent),0 8px 24px rgba(0,0,0,.2)!important}
+.ss-group-theme-menu{position:absolute!important;top:calc(100% + 8px)!important;right:0!important;left:auto!important;z-index:2147482000!important;width:300px!important;min-width:300px!important;max-width:min(300px,calc(100vw - 24px))!important;display:none!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;padding:10px!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent) 28%,rgba(255,255,255,.13))!important;border-radius:18px!important;background:rgba(7,10,18,.985)!important;box-shadow:0 24px 70px rgba(0,0,0,.62),0 0 35px color-mix(in srgb,var(--ss-theme-accent) 9%,transparent)!important;backdrop-filter:blur(22px)!important;-webkit-backdrop-filter:blur(22px)!important}.ss-group-theme-menu.open{display:grid!important;animation:ssThemeMenuIn .18s cubic-bezier(.2,.9,.2,1)!important}
+.ss-theme-option{appearance:none!important;-webkit-appearance:none!important;min-height:46px!important;width:100%!important;padding:8px 10px!important;display:flex!important;align-items:center!important;gap:8px!important;text-align:left!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:13px!important;background:rgba(255,255,255,.045)!important;color:#fff!important;font:800 10px/1 inherit!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important;transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease!important}.ss-theme-option:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.075)!important;border-color:rgba(255,255,255,.2)!important}.ss-theme-option:active{transform:scale(.97)!important}.ss-theme-option.active{border-color:var(--theme-preview)!important;background:color-mix(in srgb,var(--theme-preview) 15%,rgba(255,255,255,.045))!important;box-shadow:0 0 18px color-mix(in srgb,var(--theme-preview) 18%,transparent)!important}.ss-theme-option.active::after{content:"✓";margin-left:auto;font-size:12px;color:var(--theme-preview)!important}.ss-theme-dot{width:14px!important;height:14px!important;min-width:14px!important;border-radius:50%!important;background:var(--theme-preview)!important;box-shadow:0 0 12px color-mix(in srgb,var(--theme-preview) 55%,transparent)!important}
+.ss-group-box.ss-theme-neon{--ss-theme-accent:#22d3ee;--ss-chat-bg:radial-gradient(circle at 12% 5%,rgba(34,211,238,.24),transparent 32%),linear-gradient(135deg,rgba(14,165,233,.16),rgba(168,85,247,.20))}.ss-group-box.ss-theme-sunset{--ss-theme-accent:#fb7185;--ss-chat-bg:linear-gradient(135deg,rgba(249,115,22,.20),rgba(236,72,153,.18))}.ss-group-box.ss-theme-ocean{--ss-theme-accent:#38bdf8;--ss-chat-bg:linear-gradient(135deg,rgba(6,182,212,.20),rgba(59,130,246,.18))}.ss-group-box.ss-theme-forest{--ss-theme-accent:#34d399;--ss-chat-bg:linear-gradient(135deg,rgba(34,197,94,.18),rgba(16,185,129,.15))}.ss-group-box.ss-theme-galaxy{--ss-theme-accent:#a78bfa;--ss-chat-bg:radial-gradient(circle at 80% 10%,rgba(217,70,239,.23),transparent 34%),linear-gradient(135deg,rgba(99,102,241,.22),rgba(30,41,59,.25))}.ss-group-box.ss-theme-rose{--ss-theme-accent:#fb7185;--ss-chat-bg:linear-gradient(135deg,rgba(244,63,94,.19),rgba(236,72,153,.17))}.ss-group-box.ss-theme-gold{--ss-theme-accent:#facc15;--ss-chat-bg:linear-gradient(135deg,rgba(234,179,8,.20),rgba(249,115,22,.15))}
+.ss-group-box.ss-theme-neon .chat-bubble,.ss-group-box.ss-theme-galaxy .chat-bubble{box-shadow:0 0 22px color-mix(in srgb,var(--ss-theme-accent) 18%,transparent)!important}.ss-group-box.ss-theme-gold .chat-bubble{box-shadow:0 0 16px rgba(250,204,21,.10)!important}.ss-group-box .ss-group-stream{position:relative!important;z-index:1!important;background:color-mix(in srgb,var(--ss-theme-accent) 4%,transparent)!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent) 10%,transparent)!important}.ss-group-box .ss-group-composer{position:relative!important;z-index:10!important}
+@keyframes ssThemeMenuIn{from{opacity:0;transform:translateY(-5px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:700px){.ss-group-box .ss-chat-header{align-items:stretch!important;flex-direction:column!important}.ss-group-box .ss-chat-actions{width:100%!important;justify-content:flex-start!important;overflow-x:auto!important;overflow-y:visible!important;flex-wrap:nowrap!important;padding:2px 2px 5px!important;scrollbar-width:none!important}.ss-group-box .ss-chat-actions::-webkit-scrollbar{display:none!important}.ss-group-action,#group-chat-theme{flex:0 0 auto!important}.ss-group-theme-menu{position:fixed!important;top:auto!important;right:12px!important;bottom:82px!important;left:12px!important;width:auto!important;min-width:0!important;max-width:none!important}}
+@media(max-width:390px){.ss-action-label{display:none!important}.ss-group-action{width:38px!important;padding:0!important}.ss-group-action-call{width:42px!important}.ss-group-theme-menu{grid-template-columns:1fr 1fr!important;gap:6px!important;padding:8px!important}.ss-theme-option{min-height:43px!important;padding:7px!important}}
+@media(prefers-reduced-motion:reduce){.ss-group-action,.ss-theme-option,.ss-group-theme-menu{transition:none!important}.ss-group-theme-menu.open{animation:none!important}}
+</style>
 </head>
 <body>
 <div id="ss-global-updating-overlay" aria-hidden="true" style="display:none;position:fixed;inset:0;z-index:2147483000;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;background:radial-gradient(circle at 50% 20%,rgba(34,229,255,.13),transparent 34%),linear-gradient(135deg,#060814,#0d1022 52%,#08050f);overflow:hidden;">
 <div class="ss-updating-orb ss-updating-orb-a"></div><div class="ss-updating-orb ss-updating-orb-b"></div>
+<button id="ss-updating-admin-access" type="button" aria-label="Admin access for updating screen" style="display:none;position:fixed;top:14px;right:14px;z-index:20;border:1px solid rgba(34,229,255,.28);background:rgba(8,12,28,.82);color:#fff;border-radius:999px;padding:9px 12px;font-size:10px;font-weight:900;letter-spacing:.2px;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.35),0 0 24px rgba(34,229,255,.1);backdrop-filter:blur(14px);">🛡️ Admin Access · Turn Off</button>
 <div style="position:relative;width:min(92vw,560px);padding:34px 26px;border-radius:28px;border:1px solid rgba(255,255,255,.14);background:rgba(8,11,24,.88);backdrop-filter:blur(22px);box-shadow:0 30px 100px rgba(0,0,0,.65),0 0 80px rgba(34,229,255,.08);text-align:center;animation:ssUpdatingCardIn .55s cubic-bezier(.2,.9,.2,1);">
 <div style="font-size:58px;line-height:1;margin-bottom:12px;animation:ssUpdatingPulse 1.8s ease-in-out infinite;">🛠️</div>
 <div style="font-size:28px;font-weight:1000;letter-spacing:-.5px;background:linear-gradient(90deg,#fff,#67e8f9,#c084fc,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:ssUpdatingShimmer 3s linear infinite;">School Social is updating</div>
@@ -6547,6 +6566,7 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
 @keyframes ssUpdatingProgress{0%{transform:translateX(-120%)}100%{transform:translateX(310%)}}
 @keyframes ssUpdatingFloat{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(30px,-24px,0) scale(1.12)}}
 .ss-updating-orb{position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(55px);opacity:.2;pointer-events:none}.ss-updating-orb-a{background:#22e5ff;top:-80px;left:-60px;animation:ssUpdatingFloat 6s ease-in-out infinite}.ss-updating-orb-b{background:#a855f7;right:-80px;bottom:-90px;animation:ssUpdatingFloat 7s ease-in-out infinite reverse}
+#ss-updating-admin-access{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}#ss-updating-admin-access:hover{transform:translateY(-1px);box-shadow:0 10px 34px rgba(0,0,0,.42),0 0 28px rgba(34,229,255,.18);background:rgba(12,20,42,.94)}#ss-updating-admin-access:active{transform:scale(.97)}#ss-updating-admin-access:disabled{opacity:.65;cursor:wait}@media(max-width:520px){#ss-updating-admin-access{top:8px;right:8px;font-size:9px;padding:8px 10px}}
 #ss-global-updating-overlay.ss-updating-visible{display:flex!important;animation:ssUpdatingOverlayIn .35s ease-out both}@keyframes ssUpdatingOverlayIn{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){#ss-global-updating-overlay *,#ss-global-updating-overlay{animation:none!important}}
 </style>
@@ -7176,22 +7196,25 @@ body{background-image:radial-gradient(circle at 15% 0%,rgba(34,229,255,.055),tra
                                 </div>
                                 <div class="ss-chat-actions">
                                     <div id="group-chat-theme-wrap" style="position:relative;display:inline-block;z-index:100;">
-                                        <button id="group-chat-theme" class="btn btn-secondary btn-sm" type="button">🎨 Theme</button>
-                                        <div id="group-chat-theme-menu" class="ss-group-theme-menu" aria-label="Group chat themes">
-                                            <button type="button" class="ss-theme-option" data-theme="default"><span class="ss-theme-dot" style="--theme-preview:#64748b"></span>Classic</button>
-                                            <button type="button" class="ss-theme-option" data-theme="neon"><span class="ss-theme-dot" style="--theme-preview:#22d3ee"></span>Neon</button>
-                                            <button type="button" class="ss-theme-option" data-theme="sunset"><span class="ss-theme-dot" style="--theme-preview:#fb7185"></span>Sunset</button>
-                                            <button type="button" class="ss-theme-option" data-theme="ocean"><span class="ss-theme-dot" style="--theme-preview:#38bdf8"></span>Ocean</button>
-                                            <button type="button" class="ss-theme-option" data-theme="forest"><span class="ss-theme-dot" style="--theme-preview:#34d399"></span>Forest</button>
-                                            <button type="button" class="ss-theme-option" data-theme="galaxy"><span class="ss-theme-dot" style="--theme-preview:#a78bfa"></span>Galaxy</button>
-                                            <button type="button" class="ss-theme-option" data-theme="rose"><span class="ss-theme-dot" style="--theme-preview:#fb7185"></span>Rose</button>
-                                            <button type="button" class="ss-theme-option" data-theme="gold"><span class="ss-theme-dot" style="--theme-preview:#facc15"></span>Gold</button>
+                                        <button id="group-chat-theme" class="btn btn-secondary btn-sm" type="button" aria-expanded="false" aria-haspopup="true" title="Choose a group theme">🎨 Theme</button>
+                                        <div id="group-chat-theme-menu" class="ss-group-theme-menu" aria-label="Group chat themes" role="menu">
+                                            <div class="ss-theme-menu-head"><div><strong>Chat theme</strong><span>Pick a look for this group</span></div><button type="button" id="group-chat-theme-close" class="ss-theme-menu-close" aria-label="Close themes">✕</button></div>
+                                            <div class="ss-theme-grid">
+                                                <button type="button" class="ss-theme-option" data-theme="default" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#64748b"><i></i></span><span><b>Classic</b><small>Clean & simple</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="neon" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#22d3ee"><i></i></span><span><b>Neon</b><small>Electric glow</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="sunset" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#fb7185"><i></i></span><span><b>Sunset</b><small>Warm gradient</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="ocean" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#38bdf8"><i></i></span><span><b>Ocean</b><small>Cool waves</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="forest" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#34d399"><i></i></span><span><b>Forest</b><small>Fresh green</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="galaxy" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#a78bfa"><i></i></span><span><b>Galaxy</b><small>Deep space</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="rose" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#fb7185"><i></i></span><span><b>Rose</b><small>Pink glow</small></span><em>✓</em></button>
+                                                <button type="button" class="ss-theme-option" data-theme="gold" role="menuitem"><span class="ss-theme-preview" style="--theme-preview:#facc15"><i></i></span><span><b>Gold</b><small>Premium shine</small></span><em>✓</em></button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button id="group-chat-call" class="btn btn-cyan btn-sm" type="button" title="Start group FaceTime">📹 FaceTime</button>
-                                    <button id="group-chat-leave" class="btn btn-secondary btn-sm" type="button">🚪 Leave</button>
-                                    <button id="group-chat-delete" class="btn btn-secondary btn-sm ss-group-danger" type="button" style="display:none;">🗑️ Delete</button>
-                                    <button id="group-chat-back" class="btn btn-secondary btn-sm" type="button">← Back</button>
+                                    <button id="group-chat-call" class="btn btn-cyan btn-sm ss-group-action ss-group-action-call" type="button" title="Start group FaceTime"><span class="ss-action-icon">📹</span><span class="ss-action-label">FaceTime</span></button>
+                                    <button id="group-chat-leave" class="btn btn-secondary btn-sm ss-group-action" type="button" title="Leave this group"><span class="ss-action-icon">🚪</span><span class="ss-action-label">Leave</span></button>
+                                    <button id="group-chat-delete" class="btn btn-secondary btn-sm ss-group-action ss-group-danger" type="button" title="Delete this group" style="display:none;"><span class="ss-action-icon">🗑️</span><span class="ss-action-label">Delete</span></button>
+                                    <button id="group-chat-back" class="btn btn-secondary btn-sm ss-group-action" type="button" title="Back to your groups"><span class="ss-action-icon">←</span><span class="ss-action-label">Back</span></button>
                                 </div>
                             </div>
                             <div id="group-chat-members" class="ss-group-members" style="display:none;"></div>
@@ -10665,6 +10688,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                 if (!snap.exists()) { currentUserProfile = null; return; }
                 const data = snap.data();
                 currentUserProfile = data;
+                if (typeof renderUpdatingScreen === 'function') renderUpdatingScreen();
                 if (window.ssCheckWealthBadges) window.ssCheckWealthBadges(data).catch(()=>{});
                 if (window.ssApplyWealthRewards) window.ssApplyWealthRewards(data).catch(()=>{});
                 const badges = data.badges || [];
@@ -11019,6 +11043,7 @@ document.getElementById('ss-admin-bio-manage')?.addEventListener('click', async 
                 if (snap.exists()) {
                     const data = snap.data();
                     currentUserProfile = data;
+                    if (typeof renderUpdatingScreen === 'function') renderUpdatingScreen();
                     if (window.ssGrantWealthRewardsNow) window.ssGrantWealthRewardsNow().catch(()=>{});
                     renderHomeSnapshot(data);
                     applyPermanentProfileEffects(data);
@@ -13515,7 +13540,10 @@ function groupChatPeopleLabel(group){
         function applyGroupTheme(theme){
             const box=document.getElementById('group-chat-box');if(!box)return;
             const t=GROUP_THEMES.has(theme)?theme:'default';
-            box.className='ss-group-box'+(t!=='default'?' ss-theme-'+t:'');
+            const themeClasses=[...GROUP_THEMES].filter(x=>x!=='default').map(x=>'ss-theme-'+x);
+            box.classList.add('ss-group-box');
+            box.classList.remove(...themeClasses);
+            if(t!=='default')box.classList.add('ss-theme-'+t);
             box.dataset.theme=t;
             const accents={default:'#7dd3fc',neon:'#22d3ee',sunset:'#fb7185',ocean:'#38bdf8',forest:'#34d399',galaxy:'#a78bfa',rose:'#fb7185',gold:'#facc15'};
             const backgrounds={default:'transparent',neon:'radial-gradient(circle at 15% 10%,rgba(34,211,238,.24),transparent 34%),linear-gradient(135deg,rgba(14,165,233,.22),rgba(168,85,247,.22))',sunset:'linear-gradient(135deg,rgba(249,115,22,.24),rgba(236,72,153,.22))',ocean:'linear-gradient(135deg,rgba(6,182,212,.24),rgba(59,130,246,.22))',forest:'linear-gradient(135deg,rgba(34,197,94,.22),rgba(16,185,129,.20))',galaxy:'radial-gradient(circle at 80% 15%,rgba(217,70,239,.25),transparent 35%),linear-gradient(135deg,rgba(99,102,241,.26),rgba(30,41,59,.34))',rose:'linear-gradient(135deg,rgba(244,63,94,.24),rgba(236,72,153,.22))',gold:'linear-gradient(135deg,rgba(234,179,8,.24),rgba(249,115,22,.22))'};
@@ -13527,12 +13555,29 @@ function groupChatPeopleLabel(group){
                 btn.setAttribute('aria-pressed',active?'true':'false');
             });
         }
-        async function saveGroupTheme(theme){
+        async function saveGroupTheme(theme, keepMenuOpen=false){
             if(!activeGroupChatId||!currentUser)return;
-            const t=GROUP_THEMES.has(theme)?theme:'default'; const box=document.getElementById('group-chat-box');const old=box?.dataset.theme||'default';applyGroupTheme(t);
-            document.getElementById('group-chat-theme-menu')?.classList.remove('open');
-            try{await updateDoc(doc(db,'group_chats',activeGroupChatId),{theme:t,updatedAt:serverTimestamp()});showToast('🎨 Group theme updated.','success')}
-            catch(err){applyGroupTheme(old);console.error(err);showToast('Could not save the group theme.','error')}
+            const t=GROUP_THEMES.has(theme)?theme:'default';
+            const box=document.getElementById('group-chat-box');
+            const old=box?.dataset.theme||'default';
+            const menu=document.getElementById('group-chat-theme-menu');
+            applyGroupTheme(t);
+            if(!keepMenuOpen){
+                menu?.classList.remove('open');
+                document.getElementById('group-chat-theme')?.setAttribute('aria-expanded','false');
+            }
+            const button=document.getElementById('group-chat-theme');
+            if(button){button.dataset.theme=t;button.innerHTML='🎨 <span class="ss-theme-button-label">'+({default:'Theme',neon:'Neon',sunset:'Sunset',ocean:'Ocean',forest:'Forest',galaxy:'Galaxy',rose:'Rose',gold:'Gold'}[t]||'Theme')+'</span>'}
+            try{
+                await updateDoc(doc(db,'group_chats',activeGroupChatId),{theme:t,updatedAt:serverTimestamp()});
+                showToast('🎨 '+({default:'Classic',neon:'Neon',sunset:'Sunset',ocean:'Ocean',forest:'Forest',galaxy:'Galaxy',rose:'Rose',gold:'Gold'}[t]||'Classic')+' theme applied.','success');
+            }catch(err){
+                // Keep the visual theme even if Firestore saving fails. The UI should never
+                // snap back just because persistence/rules are temporarily unavailable.
+                applyGroupTheme(t);
+                console.error('Group theme save failed:',err);
+                showToast('Theme changed on this screen, but could not be saved to the group.','error');
+            }
         }
 
         async function leaveGroupChat(){
@@ -13625,11 +13670,11 @@ function groupChatPeopleLabel(group){
         document.getElementById('group-member-search')?.addEventListener('input',renderGroupMemberPicker);
         document.getElementById('create-group-chat-close')?.addEventListener('click',closeCreateGroupModal);
         document.getElementById('btn-confirm-create-group')?.addEventListener('click',createGroupChat);
-        document.getElementById('group-chat-back')?.addEventListener('click',closeGroupChat);
+        document.getElementById('group-chat-back')?.addEventListener('click',()=>window.openGroupBackPanel?.());
         document.getElementById('group-chat-call')?.addEventListener('click',()=>activeGroupChatId&&startGroupVideoCall(activeGroupChatId));
         /* Theme controls use the hardened delegated handler appended after the group engine. */
-        document.getElementById('group-chat-leave')?.addEventListener('click',leaveGroupChat);
-        document.getElementById('group-chat-delete')?.addEventListener('click',deleteGroupChat);
+        document.getElementById('group-chat-leave')?.addEventListener('click',()=>window.openGroupLeavePanel?.());
+        document.getElementById('group-chat-delete')?.addEventListener('click',()=>window.openGroupDeletePanel?.());
         document.getElementById('group-photo-btn')?.addEventListener('click',()=>document.getElementById('group-photo-input')?.click());
         document.getElementById('group-photo-input')?.addEventListener('change',e=>{const f=e.target.files?.[0];if(f)uploadGroupPhoto(f);e.target.value=''})
         document.getElementById('btn-send-group')?.addEventListener('click',async()=>{
@@ -17709,10 +17754,50 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             }, (error) => console.warn('Updating screen listener error:', error));
         }
 
+        function isUpdatingScreenBypassUser() {
+            const badges = getNormalizedRoleBadges(currentUserProfile);
+            const roleText = [
+                ...badges,
+                String(currentUserProfile?.role || '').trim().toLowerCase(),
+                String(currentUserProfile?.rank || '').trim().toLowerCase()
+            ].filter(Boolean);
+            return isFullAdmin(currentUserProfile?.badges || []) || roleText.some(role =>
+                ['admin','administrator','full_admin','full-admin','owner','co_owner','co-owner','co owner','big_ferni'].includes(role)
+            );
+        }
+
+        async function disableUpdatingScreenFromAdmin() {
+            if (!isUpdatingScreenBypassUser()) {
+                showToast('Admin, Owner, or Co-Owner access is required.', 'error');
+                return;
+            }
+            const accessBtn = document.getElementById('ss-updating-admin-access');
+            if (accessBtn) { accessBtn.disabled = true; accessBtn.textContent = '⏳ Turning Off…'; }
+            try {
+                await setDoc(doc(db, 'app_settings', 'updating_screen'), {
+                    enabled:false,
+                    updatedAt:serverTimestamp(),
+                    updatedBy:currentUser?.uid || null,
+                    disabledByPrivilegedUser:true
+                }, { merge:true });
+                showToast('Updating Screen disabled for everyone.', 'success');
+            } catch (error) {
+                showToast(`Could not disable Updating Screen: ${error.message || error}`, 'error');
+            } finally {
+                if (accessBtn) { accessBtn.disabled = false; accessBtn.textContent = '🛡️ Admin Access · Turn Off'; }
+            }
+        }
+
         function renderUpdatingScreen() {
             const overlay = document.getElementById('ss-global-updating-overlay');
+            const accessBtn = document.getElementById('ss-updating-admin-access');
             if (!overlay) return;
-            if (globalUpdatingScreen) {
+            const bypass = globalUpdatingScreen && isUpdatingScreenBypassUser();
+            if (accessBtn) {
+                accessBtn.style.display = bypass ? 'block' : 'none';
+                accessBtn.onclick = bypass ? disableUpdatingScreenFromAdmin : null;
+            }
+            if (globalUpdatingScreen && !bypass) {
                 overlay.classList.add('ss-updating-visible');
                 overlay.setAttribute('aria-hidden', 'false');
                 document.documentElement.style.overflow = 'hidden';
@@ -22821,6 +22906,29 @@ document.getElementById('btn-toggle-camera')?.addEventListener('click', () => {
             initReelsFeed(true);
         });
 
+        // Expose the group-chat engine through a small window bridge.
+        // The group engine lives in a type=module script, so outside scripts
+        // cannot access its lexical functions/variables directly.
+        window.__SS_GROUP_CHAT__ = {
+            close: () => closeGroupChat(),
+            leave: () => leaveGroupChat(),
+            delete: () => deleteGroupChat(),
+            call: (id) => startGroupVideoCall(id || activeGroupChatId),
+            applyTheme: (theme) => applyGroupTheme(theme),
+            saveTheme: (theme, keepOpen) => saveGroupTheme(theme, keepOpen),
+            clear: () => clearGroupChat(),
+            get activeId(){ return activeGroupChatId; },
+            get user(){ return currentUser; }
+        };
+        // These aliases also make the actions available to older UI code.
+        window.closeGroupChat = window.__SS_GROUP_CHAT__.close;
+        window.leaveGroupChat = window.__SS_GROUP_CHAT__.leave;
+        window.deleteGroupChat = window.__SS_GROUP_CHAT__.delete;
+        window.startGroupVideoCall = window.__SS_GROUP_CHAT__.call;
+        window.applyGroupTheme = window.__SS_GROUP_CHAT__.applyTheme;
+        window.saveGroupTheme = window.__SS_GROUP_CHAT__.saveTheme;
+        window.clearGroupChat = window.__SS_GROUP_CHAT__.clear;
+
         window.__SS_CORE_READY__ = true;
     </script>
 
@@ -23315,7 +23423,68 @@ document.addEventListener('DOMContentLoaded', () => {
 .ss-group-box.ss-theme-neon #group-chat-theme,.ss-group-box.ss-theme-ocean #group-chat-theme,.ss-group-box.ss-theme-galaxy #group-chat-theme{animation:ssGcThemePulse 2.8s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){.ss-group-box::before,.ss-group-box .ss-chat-header,.ss-group-box .chat-msg,.ss-group-box #group-chat-theme{animation:none!important}.ss-group-box .chat-bubble,.ss-theme-option{transition:none!important}}
 </style>
-</body>
+<script id="ss-groupchat-controls-revamp-v7">(function(){
+  const $=id=>document.getElementById(id);
+  const closeTheme=()=>{const m=$('group-chat-theme-menu'),b=$('group-chat-theme');m?.classList.remove('open');b?.setAttribute('aria-expanded','false');};
+  const ask=async(title,message,confirmText,kind='normal')=>{
+    const ok=window.confirm(title+'\n\n'+message+'\n\nClick OK to '+confirmText+'.');
+    return ok;
+  };
+  window.openGroupLeavePanel=async()=>{if(!activeGroupChatId||!currentUser)return;closeTheme();if(!(await ask('Leave group?', 'You will be removed from this group and will need a new invitation to come back.','leave the group')))return;await leaveGroupChat();};
+  window.openGroupDeletePanel=async()=>{if(!activeGroupChatId||!currentUser)return;closeTheme();if(!(await ask('Delete group?', 'This removes the group and all messages for everyone. This action cannot be undone.','delete the group')))return;await deleteGroupChat(true);};
+  window.openGroupBackPanel=()=>{closeTheme();closeGroupChat();};
+  // Replace the delete function with a confirm-aware version; true means already confirmed by the polished UI.
+  const originalDelete=window.deleteGroupChat;
+  window.deleteGroupChat=async function(alreadyConfirmed){
+    const id=activeGroupChatId;if(!id||!currentUser)return;
+    try{
+      const groupRef=doc(db,'group_chats',id),snap=await getDoc(groupRef);if(!snap.exists()){showToast('That group is already gone.','info');closeGroupChat();return;}
+      if(snap.data()?.createdBy!==currentUser.uid){showToast('Only the group creator can delete this group.','error');return;}
+      if(!alreadyConfirmed && !(await ask('Delete group?','All messages will be permanently removed.','delete the group')))return;
+      const messages=await getDocs(collection(db,'group_chats',id,'messages'));
+      for(let i=0;i<messages.docs.length;i+=450){const batch=writeBatch(db);messages.docs.slice(i,i+450).forEach(ds=>batch.delete(ds.ref));await batch.commit();}
+      await deleteDoc(groupRef);closeGroupChat();if(typeof adminGroupMonitorActiveId!=='undefined'&&adminGroupMonitorActiveId===id)closeAdminGroupMonitor();if(typeof renderAdminGroupMonitorList==='function')renderAdminGroupMonitorList();showToast('🗑️ Group deleted for everyone.','success');
+    }catch(err){console.error(err);showToast('Could not delete the group ('+(err?.code||'Firestore error')+').','error');}
+  };
+  // The original listener references the lexical function, so make the UI listener call the upgraded global explicitly.
+  const leave=$('group-chat-leave');if(leave){leave.replaceWith(leave.cloneNode(true));$('group-chat-leave').addEventListener('click',window.openGroupLeavePanel);}
+  const del=$('group-chat-delete');if(del){del.replaceWith(del.cloneNode(true));$('group-chat-delete').addEventListener('click',window.openGroupDeletePanel);}
+  const back=$('group-chat-back');if(back){back.replaceWith(back.cloneNode(true));$('group-chat-back').addEventListener('click',window.openGroupBackPanel);}
+  const closeBtn=$('group-chat-theme-close');if(closeBtn)closeBtn.addEventListener('click',closeTheme);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTheme();});
+  const oldApply=window.applyGroupTheme;
+  // Keep the existing Firestore/theme engine, but refresh the button label and accessibility state.
+  const refreshThemeButton=()=>{const b=$('group-chat-theme'),box=$('group-chat-box');if(!b||!box)return;const t=box.dataset.theme||'default';const names={default:'Theme',neon:'Neon',sunset:'Sunset',ocean:'Ocean',forest:'Forest',galaxy:'Galaxy',rose:'Rose',gold:'Gold'};b.innerHTML='🎨 <span class="ss-theme-button-label">'+names[t]+'</span>';b.title='Current theme: '+names[t];};
+  window.setTimeout(refreshThemeButton,0);
+  const observer=new MutationObserver(refreshThemeButton);const box=$('group-chat-box');if(box)observer.observe(box,{attributes:true,attributeFilter:['class','data-theme']});
+})();</script><style id="ss-groupchat-controls-revamp-v7">
+/* Full Group Chat controls revamp */
+.ss-group-box .ss-chat-header{background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.018))!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:18px!important;padding:12px!important;box-shadow:0 10px 30px rgba(0,0,0,.16)!important}
+.ss-group-box .ss-chat-title{display:flex!important;align-items:center!important;gap:8px!important}
+.ss-group-box .ss-chat-title::before{content:'👥';width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 12%,transparent);border:1px solid color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 22%,transparent);font-size:16px;flex:0 0 auto}
+.ss-group-box .ss-chat-title strong{font-size:12px!important;letter-spacing:.1px}
+.ss-group-box .ss-chat-actions{gap:6px!important}
+.ss-group-box .ss-chat-actions>.btn,.ss-group-box #group-chat-theme{height:40px!important;min-height:40px!important;border-radius:12px!important;padding:0 12px!important;border:1px solid rgba(255,255,255,.1)!important;background:rgba(255,255,255,.045)!important;color:#f8fafc!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important}
+.ss-group-box .ss-chat-actions>.btn:hover,.ss-group-box #group-chat-theme:hover{transform:translateY(-2px)!important;background:rgba(255,255,255,.075)!important;border-color:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 35%,rgba(255,255,255,.1))!important;box-shadow:0 9px 22px rgba(0,0,0,.2),0 0 16px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 8%,transparent)!important}
+.ss-group-box #group-chat-call{background:color-mix(in srgb,#22d3ee 10%,transparent)!important;border-color:rgba(34,211,238,.28)!important}
+.ss-group-box #group-chat-leave{background:rgba(251,191,36,.06)!important;border-color:rgba(251,191,36,.2)!important}
+.ss-group-box #group-chat-delete{background:rgba(239,68,68,.07)!important;border-color:rgba(239,68,68,.28)!important;color:#fecaca!important}
+.ss-group-box #group-chat-back{background:rgba(255,255,255,.035)!important}
+.ss-group-theme-menu{width:min(390px,calc(100vw - 24px))!important;min-width:0!important;padding:12px!important;border-radius:20px!important;background:rgba(8,12,22,.98)!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 25%,rgba(255,255,255,.12))!important;box-shadow:0 26px 80px rgba(0,0,0,.62),0 0 35px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 9%,transparent)!important}
+.ss-theme-menu-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:2px 2px 10px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:10px}
+.ss-theme-menu-head strong{display:block;font-size:11px;color:#fff}.ss-theme-menu-head span{display:block;font-size:8px;color:rgba(255,255,255,.52);margin-top:2px}
+.ss-theme-menu-close{width:28px;height:28px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.05);color:#fff;cursor:pointer}
+.ss-theme-grid{display:grid!important;grid-template-columns:1fr 1fr;gap:7px}
+.ss-group-theme-menu .ss-theme-option{min-height:52px!important;padding:7px!important;border-radius:13px!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.07)!important;display:grid!important;grid-template-columns:34px minmax(0,1fr) 18px!important;align-items:center!important;gap:8px!important}
+.ss-group-theme-menu .ss-theme-option>span:nth-child(2){min-width:0}.ss-group-theme-menu .ss-theme-option b{display:block;font-size:9px}.ss-group-theme-menu .ss-theme-option small{display:block;font-size:7px;color:rgba(255,255,255,.48);margin-top:2px}.ss-group-theme-menu .ss-theme-option em{font-style:normal;font-size:13px;color:var(--theme-preview,#7dd3fc);opacity:0}.ss-group-theme-menu .ss-theme-option.active em{opacity:1}
+.ss-theme-preview{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--theme-preview),rgba(255,255,255,.08));display:grid;place-items:center;box-shadow:0 0 16px color-mix(in srgb,var(--theme-preview) 25%,transparent)}
+.ss-theme-preview i{width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.75);box-shadow:0 0 8px rgba(255,255,255,.5)}
+.ss-group-theme-menu .ss-theme-option.active{border-color:color-mix(in srgb,var(--theme-preview) 60%,rgba(255,255,255,.12))!important;background:color-mix(in srgb,var(--theme-preview) 11%,rgba(255,255,255,.035))!important}
+.ss-group-theme-menu .ss-theme-option:hover{transform:translateY(-1px) scale(1.01)!important}
+.ss-group-box.ss-theme-neon .ss-chat-title::before{animation:ssGcThemePulse 2s ease-in-out infinite}
+@media(max-width:700px){.ss-group-box .ss-chat-header{padding:10px!important}.ss-group-box .ss-chat-actions{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;overflow:visible!important}.ss-group-box .ss-chat-actions>.btn,.ss-group-box #group-chat-theme{width:100%!important;padding:0 6px!important}.ss-theme-grid{grid-template-columns:1fr 1fr}.ss-group-theme-menu{position:fixed!important;left:12px!important;right:12px!important;bottom:76px!important;top:auto!important;width:auto!important}}
+@media(max-width:390px){.ss-group-box .ss-chat-actions{grid-template-columns:repeat(4,1fr)}.ss-action-label{display:none!important}.ss-group-box .ss-chat-actions>.btn,.ss-group-box #group-chat-theme{padding:0!important}.ss-theme-grid{gap:5px}.ss-group-theme-menu .ss-theme-option{min-height:48px!important}}
+</style></body>
 </html>
 
 <style id="ss-groupchat-controls-final-v6">
@@ -23354,31 +23523,284 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 @media(prefers-reduced-motion:reduce){.ss-group-theme-menu.open{animation:none!important}}
 </style>
+<style id="ss-groupchat-final-ui-v6">
+/* Final compact control rail: centered icons, no stretched buttons. */
+.ss-group-box .ss-chat-header{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:10px!important;padding:9px 10px!important;overflow:visible!important}
+.ss-group-box .ss-chat-actions{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;flex:0 0 auto!important;overflow:visible!important}
+.ss-group-box .ss-chat-actions .ss-group-action,.ss-group-box #group-chat-theme{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;padding:0!important;margin:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;align-content:center!important;text-align:center!important;border-radius:12px!important;line-height:1!important;flex:0 0 38px!important;box-sizing:border-box!important}
+.ss-group-box .ss-group-action .ss-action-icon{display:block!important;font-size:15px!important;line-height:1!important;margin:0!important}
+.ss-group-box .ss-group-action .ss-action-label{display:none!important}
+.ss-group-box #group-chat-theme{font-size:16px!important;gap:0!important}
+.ss-group-box .ss-chat-actions button{vertical-align:middle!important;transform:none}
+.ss-group-box .ss-chat-actions button:hover{transform:translateY(-1px)!important}
+.ss-group-box .ss-chat-actions button:active{transform:scale(.94)!important}
+
+/* Tiny floating theme palette instead of the old large rectangle. */
+.ss-group-theme-menu{position:absolute!important;top:calc(100% + 7px)!important;right:0!important;left:auto!important;width:228px!important;min-width:228px!important;max-width:calc(100vw - 24px)!important;padding:8px!important;border-radius:16px!important;display:none!important;grid-template-columns:repeat(4,1fr)!important;gap:6px!important;background:rgba(7,10,18,.97)!important;border:1px solid color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 30%,rgba(255,255,255,.1))!important;box-shadow:0 18px 45px rgba(0,0,0,.55),0 0 25px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 8%,transparent)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;overflow:hidden!important}
+.ss-group-theme-menu.open{display:grid!important;animation:ssThemePeek .16s ease-out!important}
+.ss-theme-menu-head{grid-column:1/-1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:25px!important;padding:0 2px 2px!important}
+.ss-theme-menu-head strong{font-size:9px!important;line-height:1!important}.ss-theme-menu-head span{display:none!important}
+.ss-theme-menu-close{width:24px!important;height:24px!important;padding:0!important;border:0!important;border-radius:8px!important;background:rgba(255,255,255,.06)!important;color:#fff!important;display:grid!important;place-items:center!important;cursor:pointer!important;font-size:11px!important}
+.ss-theme-grid{display:contents!important}
+.ss-theme-option{width:100%!important;min-width:0!important;height:43px!important;min-height:43px!important;padding:5px 3px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:3px!important;text-align:center!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:11px!important;background:rgba(255,255,255,.045)!important;color:#fff!important;cursor:pointer!important;font:800 8px/1 inherit!important;overflow:hidden!important}
+.ss-theme-option>span:not(.ss-theme-preview){display:block!important;min-width:0!important}.ss-theme-option b{display:block!important;font-size:8px!important;line-height:1!important;white-space:nowrap!important}.ss-theme-option small{display:none!important}.ss-theme-option em{display:none!important}
+.ss-theme-preview,.ss-theme-dot{display:block!important;width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;border-radius:50%!important;background:var(--theme-preview,#64748b)!important;box-shadow:0 0 10px color-mix(in srgb,var(--theme-preview,#64748b) 55%,transparent)!important;flex:0 0 16px!important}
+.ss-theme-preview i{display:block!important;width:100%!important;height:100%!important;border-radius:inherit!important;background:linear-gradient(135deg,rgba(255,255,255,.5),transparent 45%)!important}
+.ss-theme-option.active{border-color:var(--theme-preview)!important;background:color-mix(in srgb,var(--theme-preview) 14%,rgba(255,255,255,.04))!important;box-shadow:0 0 14px color-mix(in srgb,var(--theme-preview) 20%,transparent)!important}
+.ss-theme-option.active::after{content:'✓'!important;position:absolute!important;top:3px!important;right:5px!important;font-size:8px!important;color:var(--theme-preview)!important}
+.ss-theme-option{position:relative!important}
+@keyframes ssThemePeek{from{opacity:0;transform:translateY(-4px) scale(.96)}to{opacity:1;transform:none}}
+@media(max-width:700px){.ss-group-box .ss-chat-header{grid-template-columns:1fr!important;gap:7px!important}.ss-group-box .ss-chat-title{width:100%!important}.ss-group-box .ss-chat-actions{width:100%!important;justify-content:center!important;overflow:visible!important}.ss-group-theme-menu{position:fixed!important;top:76px!important;right:10px!important;left:auto!important;width:228px!important;max-width:calc(100vw - 20px)!important}}
+@media(max-width:390px){.ss-group-box .ss-chat-actions{gap:5px!important}.ss-group-box .ss-chat-actions .ss-group-action,.ss-group-box #group-chat-theme{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;flex-basis:36px!important}.ss-group-theme-menu{width:220px!important;min-width:220px!important}}
+</style>
 <script>
-/* Final group-control hardening: use delegated handlers so controls keep working after rerenders. */
+/* Final theme controller: immediate preview, compact palette, reliable close/open behavior. */
 (function(){
   const menu=()=>document.getElementById('group-chat-theme-menu');
-  const themeBtn=()=>document.getElementById('group-chat-theme');
-  document.addEventListener('click',function(e){
+  const button=()=>document.getElementById('group-chat-theme');
+  const close=()=>{const m=menu(),b=button();if(m)m.classList.remove('open');if(b)b.setAttribute('aria-expanded','false');};
+  const open=()=>{const m=menu(),b=button();if(!m)return;m.classList.add('open');if(b)b.setAttribute('aria-expanded','true');};
+  document.addEventListener('click',async function(e){
     const option=e.target.closest?.('#group-chat-theme-menu .ss-theme-option');
     if(option){
-      e.preventDefault(); e.stopPropagation();
+      e.preventDefault();e.stopPropagation();
       const theme=option.dataset.theme||'default';
-      if(typeof applyGroupTheme==='function') applyGroupTheme(theme);
-      if(typeof saveGroupTheme==='function') saveGroupTheme(theme);
+      /* Apply locally first so the user immediately sees the theme. */
+      if(typeof applyGroupTheme==='function')applyGroupTheme(theme);
+      document.querySelectorAll('#group-chat-theme-menu .ss-theme-option').forEach(x=>x.classList.toggle('active',x===option));
+      const b=button();if(b){b.dataset.theme=theme;b.innerHTML='🎨';b.title='Theme: '+theme;}
+      /* Let the new theme visibly peek through before closing the palette. */
+      setTimeout(()=>close(),260);
+      if(window.__SS_GROUP_CHAT__){try{await window.__SS_GROUP_CHAT__.saveTheme(theme,true);}catch(err){console.error('Theme save failed',err);}}
       return;
     }
     const trigger=e.target.closest?.('#group-chat-theme');
-    if(trigger){
-      e.preventDefault(); e.stopPropagation();
-      const m=menu(); if(!m)return;
-      const willOpen=!m.classList.contains('open');
-      m.classList.toggle('open',willOpen);
-      if(willOpen && typeof applyGroupTheme==='function') applyGroupTheme(document.getElementById('group-chat-box')?.dataset.theme||'default');
+    if(trigger){e.preventDefault();e.stopPropagation();const m=menu();if(!m)return;m.classList.contains('open')?close():open();return;}
+    const closeBtn=e.target.closest?.('#group-chat-theme-close');
+    if(closeBtn){e.preventDefault();e.stopPropagation();close();return;}
+    const m=menu();if(m?.classList.contains('open')&&!m.contains(e.target)&&!button()?.contains(e.target))close();
+  },true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+})();
+</script>
+<style id="ss-groupchat-theme-visibility-fix">
+/* Make the selected theme visibly paint the chat surface instead of hiding behind the base panel. */
+.ss-group-box[class*="ss-theme-"]{
+  background:var(--ss-chat-bg)!important;
+  background-color:#0b1020!important;
+  border-color:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 42%,rgba(255,255,255,.10))!important;
+  box-shadow:0 20px 60px rgba(0,0,0,.30),0 0 42px color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 18%,transparent)!important;
+}
+.ss-group-box[class*="ss-theme-"]::before{display:none!important}
+.ss-group-box[class*="ss-theme-"] .ss-group-stream{
+  background:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 8%,rgba(7,10,18,.34))!important;
+  border-color:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 22%,rgba(255,255,255,.08))!important;
+}
+.ss-group-box[class*="ss-theme-"] .ss-group-composer{
+  background:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 10%,rgba(7,10,18,.72))!important;
+  border-color:color-mix(in srgb,var(--ss-theme-accent,#7dd3fc) 24%,rgba(255,255,255,.08))!important;
+}
+</style>
+
+<style id="ss-groupchat-last-button-theme-fix">
+/* Last-resort group-chat interaction layer.  It sits above older handlers and
+   makes the controls work even if an earlier initialization path failed. */
+#group-chat-box .ss-chat-actions button,
+#group-chat-box #group-chat-theme,
+#group-chat-theme-menu .ss-theme-option,
+#group-chat-theme-menu .ss-theme-menu-close{
+  pointer-events:auto!important;
+  position:relative!important;
+  z-index:20!important;
+  cursor:pointer!important;
+}
+#group-chat-box .ss-chat-actions{position:relative!important;z-index:30!important}
+#group-chat-theme-wrap{position:relative!important;z-index:100!important}
+#group-chat-theme-menu{z-index:10000!important}
+/* Make every non-default theme unmistakable even when the base chat has opaque children. */
+#group-chat-box.ss-theme-neon{--ss-theme-accent:#22d3ee!important;--ss-chat-bg:linear-gradient(135deg,rgba(8,145,178,.42),rgba(126,34,206,.35))!important}
+#group-chat-box.ss-theme-sunset{--ss-theme-accent:#fb7185!important;--ss-chat-bg:linear-gradient(135deg,rgba(249,115,22,.45),rgba(236,72,153,.38))!important}
+#group-chat-box.ss-theme-ocean{--ss-theme-accent:#38bdf8!important;--ss-chat-bg:linear-gradient(135deg,rgba(6,182,212,.42),rgba(37,99,235,.38))!important}
+#group-chat-box.ss-theme-forest{--ss-theme-accent:#34d399!important;--ss-chat-bg:linear-gradient(135deg,rgba(22,163,74,.42),rgba(5,150,105,.38))!important}
+#group-chat-box.ss-theme-galaxy{--ss-theme-accent:#a78bfa!important;--ss-chat-bg:radial-gradient(circle at 80% 15%,rgba(217,70,239,.45),transparent 38%),linear-gradient(135deg,rgba(79,70,229,.45),rgba(30,41,59,.55))!important}
+#group-chat-box.ss-theme-rose{--ss-theme-accent:#fb7185!important;--ss-chat-bg:linear-gradient(135deg,rgba(244,63,94,.42),rgba(219,39,119,.38))!important}
+#group-chat-box.ss-theme-gold{--ss-theme-accent:#facc15!important;--ss-chat-bg:linear-gradient(135deg,rgba(202,138,4,.42),rgba(234,88,12,.36))!important}
+#group-chat-box[class*="ss-theme-"] .ss-chat-header{background:linear-gradient(100deg,color-mix(in srgb,var(--ss-theme-accent) 24%,rgba(10,15,30,.9)),rgba(10,15,30,.72))!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 55%,rgba(255,255,255,.12))!important}
+#group-chat-box[class*="ss-theme-"] .ss-group-stream{background:linear-gradient(180deg,color-mix(in srgb,var(--ss-theme-accent) 13%,rgba(7,10,18,.92)),rgba(7,10,18,.96))!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 35%,rgba(255,255,255,.08))!important}
+#group-chat-box[class*="ss-theme-"] .ss-group-composer{background:linear-gradient(180deg,color-mix(in srgb,var(--ss-theme-accent) 18%,rgba(7,10,18,.94)),rgba(7,10,18,.98))!important;border-color:color-mix(in srgb,var(--ss-theme-accent) 45%,rgba(255,255,255,.08))!important}
+#group-chat-box[class*="ss-theme-"] .chat-msg.me .chat-bubble{box-shadow:0 0 22px color-mix(in srgb,var(--ss-theme-accent) 28%,transparent)!important}
+</style>
+<script id="ss-groupchat-last-button-theme-fix-js">
+(function(){
+  const get=(id)=>document.getElementById(id);
+  const stop=(e)=>{e.preventDefault();e.stopImmediatePropagation();};
+  const closeTheme=()=>{const m=get('group-chat-theme-menu'),b=get('group-chat-theme');m?.classList.remove('open');b?.setAttribute('aria-expanded','false');};
+
+  // Delegated handlers mean these still work if the group header is re-rendered/replaced.
+  document.addEventListener('click',async(e)=>{
+    const el=e.target?.closest?.('#group-chat-back,#group-chat-leave,#group-chat-delete,#group-chat-call');
+    if(!el || !get('group-chat-box')?.contains(el)) return;
+    if(el.id==='group-chat-back'){
+      stop(e); closeTheme();
+      if(window.__SS_GROUP_CHAT__) window.__SS_GROUP_CHAT__.close();
       return;
     }
-    const m=menu();
-    if(m?.classList.contains('open') && !m.contains(e.target)) m.classList.remove('open');
+    if(el.id==='group-chat-call'){
+      stop(e);
+      if(window.__SS_GROUP_CHAT__?.activeId){
+        try{await window.__SS_GROUP_CHAT__.call(window.__SS_GROUP_CHAT__.activeId);}catch(err){console.error(err);if(typeof showToast==='function')showToast('Could not start the group call.','error');}
+      }
+      return;
+    }
+    if(el.id==='group-chat-leave'){
+      stop(e); closeTheme();
+      if(!window.__SS_GROUP_CHAT__?.user||!window.__SS_GROUP_CHAT__?.activeId)return;
+      if(!window.confirm('Leave this group chat? You will need to be invited again to return.'))return;
+      if(window.__SS_GROUP_CHAT__)await window.__SS_GROUP_CHAT__.leave();
+      return;
+    }
+    if(el.id==='group-chat-delete'){
+      stop(e); closeTheme();
+      if(!window.__SS_GROUP_CHAT__?.user||!window.__SS_GROUP_CHAT__?.activeId)return;
+      if(!window.confirm('Delete this group chat and all of its messages? This cannot be undone.'))return;
+      if(window.__SS_GROUP_CHAT__)await window.__SS_GROUP_CHAT__.delete();
+      return;
+    }
   },true);
+
+  // Theme controller: preview immediately, keep the palette visible briefly, then persist.
+  document.addEventListener('click',async(e)=>{
+    const option=e.target?.closest?.('#group-chat-theme-menu .ss-theme-option');
+    if(!option)return;
+    stop(e);
+    const theme=option.dataset.theme||'default';
+    if(window.__SS_GROUP_CHAT__) window.__SS_GROUP_CHAT__.applyTheme(theme);
+    document.querySelectorAll('#group-chat-theme-menu .ss-theme-option').forEach(x=>{
+      const active=x===option;x.classList.toggle('active',active);x.setAttribute('aria-pressed',active?'true':'false');
+    });
+    const b=get('group-chat-theme');if(b){b.dataset.theme=theme;b.title='Current theme: '+theme;}
+    // Keep the preview visible; save without letting the save routine close it.
+    if(typeof saveGroupTheme==='function'){
+      try{await saveGroupTheme(theme,true);}catch(err){console.error('Theme persistence failed:',err);}
+    }
+    setTimeout(closeTheme,420);
+  },true);
+
+  document.addEventListener('click',(e)=>{
+    const b=e.target?.closest?.('#group-chat-theme');
+    if(b){
+      // This handler only handles the button; option handler above is separate.
+      const m=get('group-chat-theme-menu');if(!m)return;
+      e.preventDefault();e.stopImmediatePropagation();
+      const open=m.classList.toggle('open');b.setAttribute('aria-expanded',open?'true':'false');
+      return;
+    }
+    if(e.target?.closest?.('#group-chat-theme-close')){e.preventDefault();e.stopImmediatePropagation();closeTheme();return;}
+    const m=get('group-chat-theme');const menu=get('group-chat-theme-menu');
+    if(menu?.classList.contains('open') && !menu.contains(e.target) && !m?.contains(e.target)) closeTheme();
+  },true);
+
+  // Force a visual repaint after a group is opened and whenever its theme class changes.
+  const repaint=()=>{
+    const box=get('group-chat-box');if(!box)return;
+    const t=box.dataset.theme||'default';
+    box.style.setProperty('--ss-theme-active',t);
+    void box.offsetWidth;
+  };
+  new MutationObserver(repaint).observe(get('group-chat-box')||document.body,{attributes:true,attributeFilter:['class','data-theme']});
+})();
+</script>
+<!-- SS FINAL HARDWIRED GROUP BUTTON CONTROLLER -->
+<style id="ss-final-group-button-fix-css">
+#group-chat-box #group-chat-back,
+#group-chat-box #group-chat-call,
+#group-chat-box #group-chat-leave,
+#group-chat-box #group-chat-delete,
+#group-chat-box #group-chat-theme,
+#group-chat-box #group-chat-theme-close,
+#group-chat-box .ss-theme-option {
+  pointer-events:auto !important;
+  position:relative !important;
+  z-index:2147482000 !important;
+  cursor:pointer !important;
+  touch-action:manipulation !important;
+}
+</style>
+<script id="ss-final-hardwired-group-button-controller">
+(function(){
+  'use strict';
+  var bound = new WeakSet();
+  function bridge(){ return window.__SS_GROUP_CHAT__ || null; }
+  function toast(msg,type){ try{ if(typeof window.showToast==='function') window.showToast(msg,type||'error'); else console.warn(msg); }catch(e){ console.warn(msg,e); } }
+  function confirmAction(msg){ try{return window.confirm(msg);}catch(e){return true;} }
+  function bindButton(id,handler){
+    var el=document.getElementById(id); if(!el) return;
+    if(bound.has(el)) return;
+    bound.add(el);
+    el.onclick=function(e){
+      e.preventDefault(); e.stopPropagation();
+      try { var result=handler(e,el); if(result && typeof result.catch==='function') result.catch(function(err){console.error(err);toast('That button could not complete the action.','error');}); }
+      catch(err){ console.error(err); toast('That button could not complete the action.','error'); }
+      return false;
+    };
+  }
+  function bindAll(){
+    var b=bridge();
+    bindButton('group-chat-back',function(){
+      if(b && typeof b.close==='function') return b.close();
+      toast('Group chat controls are still loading. Try again in a moment.','error');
+    });
+    bindButton('group-chat-call',function(){
+      var x=bridge(),id=x&&x.activeId;
+      if(!id){ toast('Open a group chat before starting a call.','error'); return; }
+      if(x && typeof x.call==='function') return x.call(id);
+      toast('Group call controls are still loading.','error');
+    });
+    bindButton('group-chat-leave',function(){
+      var x=bridge(); if(!x || !x.activeId || !x.user){ toast('Open a group chat before leaving it.','error'); return; }
+      if(!confirmAction('Leave this group chat? You will need to be invited again to return.')) return;
+      return x.leave && x.leave();
+    });
+    bindButton('group-chat-delete',function(){
+      var x=bridge(); if(!x || !x.activeId || !x.user){ toast('Open a group chat before deleting it.','error'); return; }
+      if(!confirmAction('Delete this group chat and all of its messages? This cannot be undone.')) return;
+      return x.delete && x.delete();
+    });
+    bindButton('group-chat-theme',function(e,el){
+      var menu=document.getElementById('group-chat-theme-menu'); if(!menu) return;
+      var open=menu.classList.toggle('open'); el.setAttribute('aria-expanded',open?'true':'false');
+    });
+    bindButton('group-chat-theme-close',function(){
+      var menu=document.getElementById('group-chat-theme-menu'),btn=document.getElementById('group-chat-theme');
+      if(menu) menu.classList.remove('open'); if(btn) btn.setAttribute('aria-expanded','false');
+    });
+    document.querySelectorAll('#group-chat-theme-menu .ss-theme-option').forEach(function(el){
+      if(bound.has(el)) return; bound.add(el);
+      el.onclick=function(e){
+        e.preventDefault(); e.stopPropagation();
+        var theme=el.dataset.theme||'default',x=bridge();
+        try{
+          if(x && typeof x.applyTheme==='function') x.applyTheme(theme);
+          document.querySelectorAll('#group-chat-theme-menu .ss-theme-option').forEach(function(o){
+            var active=o===el; o.classList.toggle('active',active); o.setAttribute('aria-pressed',active?'true':'false');
+          });
+          var btn=document.getElementById('group-chat-theme');
+          if(btn){btn.dataset.theme=theme;btn.setAttribute('aria-expanded','true');}
+          if(x && typeof x.saveTheme==='function') return Promise.resolve(x.saveTheme(theme,true)).catch(function(err){console.error(err);toast('Theme changed, but could not be saved.','error');});
+        }catch(err){console.error(err);toast('Could not change the theme.','error');}
+      };
+    });
+  }
+  function start(){
+    bindAll();
+    setInterval(bindAll,700);
+    document.addEventListener('click',function(e){
+      var menu=document.getElementById('group-chat-theme-menu'),btn=document.getElementById('group-chat-theme');
+      if(!menu || !menu.classList.contains('open')) return;
+      var inside=e.target && (e.target.closest && (e.target.closest('#group-chat-theme-menu')||e.target.closest('#group-chat-theme')));
+      if(!inside){menu.classList.remove('open');if(btn)btn.setAttribute('aria-expanded','false');}
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start,{once:true}); else start();
 })();
 </script>
